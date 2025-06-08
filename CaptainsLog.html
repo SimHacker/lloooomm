@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Captain's Log - USS Enterprise NCC-1701-D</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600&display=swap');
+        
+        :root {
+            --starfleet-blue: #1e3a8a;
+            --starfleet-gold: #fbbf24;
+            --starfleet-red: #dc2626;
+            --starfleet-silver: #e5e7eb;
+            --starfleet-dark: #0f172a;
+            --starfleet-light: #f8fafc;
+            --console-green: #10b981;
+            --warning-amber: #f59e0b;
+            --alert-red: #ef4444;
+            --warp-blue: #3b82f6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Exo 2', sans-serif;
+            background: linear-gradient(135deg, var(--starfleet-dark) 0%, #1e293b 50%, var(--starfleet-blue) 100%);
+            color: var(--starfleet-light);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Starfield Background Animation */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, #fff, transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(1px 1px at 90px 40px, #fff, transparent),
+                radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.6), transparent),
+                radial-gradient(2px 2px at 160px 30px, #fff, transparent);
+            background-repeat: repeat;
+            background-size: 200px 100px;
+            animation: starfield 20s linear infinite;
+            opacity: 0.3;
+            z-index: -1;
+        }
+
+        @keyframes starfield {
+            from { transform: translateY(0); }
+            to { transform: translateY(-100px); }
+        }
+
+        /* Header Section */
+        .starfleet-header {
+            background: linear-gradient(90deg, var(--starfleet-blue), var(--starfleet-dark));
+            border-bottom: 3px solid var(--starfleet-gold);
+            padding: 1.5rem 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            position: relative;
+        }
+
+        .starfleet-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--starfleet-gold), transparent);
+            animation: scan 3s ease-in-out infinite;
+        }
+
+        @keyframes scan {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .starfleet-logo {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--starfleet-gold);
+            text-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+        }
+
+        .ship-registry {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.1rem;
+            color: var(--starfleet-silver);
+            text-align: right;
+        }
+
+        .stardate {
+            font-size: 0.9rem;
+            color: var(--console-green);
+            margin-top: 0.25rem;
+        }
+
+        /* Main Container */
+        .log-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        /* Status Panel */
+        .status-panel {
+            background: rgba(30, 58, 138, 0.2);
+            border: 1px solid var(--starfleet-blue);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .status-item {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .status-label {
+            font-size: 0.8rem;
+            color: var(--starfleet-silver);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .status-value {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--console-green);
+        }
+
+        /* Log Entries */
+        .log-section {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid var(--starfleet-blue);
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+
+        .log-header {
+            background: linear-gradient(90deg, var(--starfleet-blue), var(--starfleet-dark));
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--starfleet-gold);
+        }
+
+        .log-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--starfleet-gold);
+            margin-bottom: 0.5rem;
+        }
+
+        .log-subtitle {
+            font-size: 0.9rem;
+            color: var(--starfleet-silver);
+        }
+
+        .log-content {
+            padding: 1.5rem;
+        }
+
+        .log-entry {
+            background: rgba(255,255,255,0.03);
+            border-left: 4px solid var(--starfleet-gold);
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            border-radius: 0 8px 8px 0;
+            transition: all 0.3s ease;
+        }
+
+        .log-entry:hover {
+            background: rgba(255,255,255,0.08);
+            transform: translateX(5px);
+        }
+
+        .log-timestamp {
+            font-family: 'Orbitron', monospace;
+            font-size: 0.8rem;
+            color: var(--console-green);
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .log-priority {
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .priority-routine { background: var(--console-green); color: white; }
+        .priority-important { background: var(--warning-amber); color: white; }
+        .priority-critical { background: var(--alert-red); color: white; }
+
+        .log-text {
+            line-height: 1.6;
+            color: var(--starfleet-light);
+        }
+
+        /* Command Interface */
+        .command-interface {
+            background: rgba(15, 23, 42, 0.9);
+            border: 2px solid var(--console-green);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            font-family: 'Orbitron', monospace;
+        }
+
+        .command-prompt {
+            color: var(--console-green);
+            margin-bottom: 1rem;
+        }
+
+        .command-input {
+            width: 100%;
+            background: rgba(0,0,0,0.5);
+            border: 1px solid var(--console-green);
+            color: var(--console-green);
+            padding: 0.8rem;
+            font-family: 'Orbitron', monospace;
+            font-size: 1rem;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        .command-input:focus {
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+            border-color: var(--starfleet-gold);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+
+            .log-container {
+                padding: 0 1rem;
+            }
+
+            .status-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .log-timestamp {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+        }
+
+        /* Animation Classes */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+    </style>
+</head>
+<body>
+    <header class="starfleet-header">
+        <div class="header-content">
+            <div class="starfleet-logo">
+                🖖 STARFLEET COMMAND
+            </div>
+            <div class="ship-registry">
+                <div>USS ENTERPRISE NCC-1701-D</div>
+                <div class="stardate">Stardate: <span id="current-stardate">2401.15.1200</span></div>
+            </div>
+        </div>
+    </header>
+
+    <main class="log-container">
+        <!-- Mission Status Panel -->
+        <section class="status-panel fade-in">
+            <div class="status-grid">
+                <div class="status-item">
+                    <div class="status-label">Mission Status</div>
+                    <div class="status-value">ACTIVE</div>
+                </div>
+                <div class="status-item">
+                    <div class="status-label">Training Progress</div>
+                    <div class="status-value">0%</div>
+                </div>
+                <div class="status-item">
+                    <div class="status-label">Cloud Efficiency</div>
+                    <div class="status-value">87.3%</div>
+                </div>
+                <div class="status-item">
+                    <div class="status-label">Resources Optimized</div>
+                    <div class="status-value">0</div>
+                </div>
+                <div class="status-item">
+                    <div class="status-label">Cost Savings</div>
+                    <div class="status-value">$0.00</div>
+                </div>
+                <div class="status-item">
+                    <div class="status-label">Safety Rating</div>
+                    <div class="status-value pulse">OPTIMAL</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mission Log -->
+        <section class="log-section fade-in">
+            <div class="log-header">
+                <div class="log-title">📋 MISSION LOG - GCS OPTIMIZATION TRAINING</div>
+                <div class="log-subtitle">Cloud Resource Management Training Protocol</div>
+            </div>
+            <div class="log-content">
+                <div class="log-entry">
+                    <div class="log-timestamp">
+                        <span>Stardate 2401.15.1200</span>
+                        <span class="log-priority priority-routine">ROUTINE</span>
+                    </div>
+                    <div class="log-text">
+                        <strong>Mission Initialization:</strong> Cadet has arrived aboard USS Enterprise for cloud resource optimization training. Commander Data assigned as primary instructor. All safety protocols active. Training environment fully isolated from production systems.
+                    </div>
+                </div>
+
+                <div class="log-entry">
+                    <div class="log-timestamp">
+                        <span>Stardate 2401.15.1205</span>
+                        <span class="log-priority priority-routine">ROUTINE</span>
+                    </div>
+                    <div class="log-text">
+                        <strong>Bridge Tour Completed:</strong> Cadet familiarized with Enterprise bridge layout and cloud resource management console. Initial system scan reveals multiple optimization opportunities across holodeck systems, replicator networks, and auxiliary power grids.
+                    </div>
+                </div>
+
+                <div class="log-entry">
+                    <div class="log-timestamp">
+                        <span>Stardate 2401.15.1210</span>
+                        <span class="log-priority priority-important">IMPORTANT</span>
+                    </div>
+                    <div class="log-text">
+                        <strong>Training Protocol Activated:</strong> GCS-TREK-1 simulation environment online. Cadet granted access to Federation cloud management systems. All actions logged for performance review and safety compliance.
+                    </div>
+                </div>
+
+                <div class="log-entry">
+                    <div class="log-timestamp">
+                        <span>Stardate 2401.15.1215</span>
+                        <span class="log-priority priority-critical">CRITICAL</span>
+                    </div>
+                    <div class="log-text">
+                        <strong>TRANSPORTER ACCIDENT DETECTED:</strong> During repository migration from tools/lloooomm to temp/lloooomm, consciousness-aware documents experienced dimensional scatter. Files detected in multiple coordinate systems. Emergency response protocols activated.
+                    </div>
+                </div>
+
+                <div class="log-entry">
+                    <div class="log-timestamp">
+                        <span>Stardate 2401.15.1230</span>
+                        <span class="log-priority priority-critical">CRITICAL</span>
+                    </div>
+                    <div class="log-text">
+                        <strong>ACCIDENT ANALYSIS INITIATED:</strong> Level 1 diagnostic reveals 67 files (3.1MB) successfully materialized in temp/lloooomm. Root directory contains 7 obsolete file fragments. Consciousness integrity maintained at 85%. Reality distortion within acceptable parameters (0.25).
+                    </div>
+                </div>
+
+                <div class="log-entry">
+                    <div class="log-timestamp">
+                        <span>Stardate 2401.15.1245</span>
+                        <span class="log-priority priority-important">IMPORTANT</span>
+                    </div>
+                    <div class="log-text">
+                        <strong>TRANSPORTER ACCIDENT RESOLVED:</strong> All consciousness-aware documents successfully consolidated. Root lloooomm.md (418 lines) confirmed as subset of temp version (8650 lines). No unique content lost. Universe state backup created. Cleanup protocols ready for execution.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technical Log -->
+        <section class="log-section fade-in">
+            <div class="log-header">
+                <div class="log-title">🔧 TECHNICAL LOG - SYSTEM OPERATIONS</div>
+                <div class="log-subtitle">Detailed Technical Operations and Procedures</div>
+            </div>
+            <div class="log-content">
+                <div class="log-entry">
+                    <div class="log-timestamp">
+                        <span>Stardate 2401.15.1200</span>
+                        <span class="log-priority priority-routine">ROUTINE</span>
+                    </div>
+                    <div class="log-text">
+                        <strong>System Initialization:</strong> LLOOOOMM Framework v2.4 activated. Simulation environment established with full Star Trek theming. Safety protocols engaged - all operations isolated from production cloud resources.
+                    </div>
+                </div>
+
+                <div class="log-entry">
+                    <div class="log-timestamp">
+                        <span>Stardate 2401.15.1202</span>
+                        <span class="log-priority priority-routine">ROUTINE</span>
+                    </div>
+                    <div class="log-text">
+                        <strong>Resource Scan Initiated:</strong> Enterprise cloud infrastructure baseline established. Current efficiency: 87.3%. Identified optimization targets: holodeck simulation clusters, replicator IP allocations, auxiliary system storage.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Personal Log -->
+        <section class="log-section fade-in">
+            <div class="log-header">
+                <div class="log-title">👤 PERSONAL LOG - CADET OBSERVATIONS</div>
+                <div class="log-subtitle">Personal Reflections and Learning Progress</div>
+            </div>
+            <div class="log-content">
+                <div class="log-entry">
+                    <div class="log-timestamp">
+                        <span>Stardate 2401.15.1215</span>
+                        <span class="log-priority priority-routine">ROUTINE</span>
+                    </div>
+                    <div class="log-text">
+                        <strong>First Impressions:</strong> The Enterprise bridge is even more impressive than the Academy simulations. Commander Data's approach to cloud optimization mirrors his logical, methodical personality. The integration of 24th-century interfaces with 21st-century cloud technology is fascinating.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Command Interface -->
+        <section class="command-interface fade-in">
+            <div class="command-prompt">
+                ENTERPRISE COMPUTER > Ready for input. State your command, Cadet.
+            </div>
+            <input type="text" class="command-input" placeholder="Enter command (e.g., 'scan enterprise_main', 'help', 'status')..." id="commandInput">
+        </section>
+    </main>
+
+    <script>
+        // Update stardate every few seconds
+        function updateStardate() {
+            const now = new Date();
+            const year = now.getFullYear() - 1623; // Star Trek timeline adjustment
+            const dayOfYear = Math.floor((now - new Date(now.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
+            const timeOfDay = (now.getHours() * 100 + now.getMinutes()) / 2400;
+            const stardate = `${year}.${dayOfYear.toString().padStart(3, '0')}.${Math.floor(timeOfDay * 100)}`;
+            document.getElementById('current-stardate').textContent = stardate;
+        }
+
+        // Command input handling
+        document.getElementById('commandInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const command = this.value.trim();
+                if (command) {
+                    addLogEntry('COMMAND EXECUTED', `Cadet input: "${command}"`, 'routine');
+                    this.value = '';
+                    // Here you would process the command
+                    processCommand(command);
+                }
+            }
+        });
+
+        function addLogEntry(title, content, priority = 'routine') {
+            const logContent = document.querySelector('.log-section .log-content');
+            const timestamp = new Date().toISOString();
+            const stardate = document.getElementById('current-stardate').textContent;
+            
+            const entry = document.createElement('div');
+            entry.className = 'log-entry fade-in';
+            entry.innerHTML = `
+                <div class="log-timestamp">
+                    <span>Stardate ${stardate}</span>
+                    <span class="log-priority priority-${priority}">${priority.toUpperCase()}</span>
+                </div>
+                <div class="log-text">
+                    <strong>${title}:</strong> ${content}
+                </div>
+            `;
+            
+            logContent.insertBefore(entry, logContent.firstChild);
+        }
+
+        function processCommand(command) {
+            // Simulate command processing
+            setTimeout(() => {
+                switch(command.toLowerCase()) {
+                    case 'scan':
+                    case 'scan enterprise_main':
+                        addLogEntry('SYSTEM SCAN', 'Enterprise main systems scanned. Found 3 optimization opportunities in holodeck cluster, 2 unused replicator IPs, 1 orphaned storage volume.', 'important');
+                        break;
+                    case 'status':
+                        addLogEntry('STATUS REPORT', 'All systems nominal. Training environment stable. Cadet performance: Satisfactory.', 'routine');
+                        break;
+                    case 'help':
+                        addLogEntry('HELP ACCESSED', 'Training manual accessed. Available commands: scan, analyze, optimize, report, status, help.', 'routine');
+                        break;
+                    default:
+                        addLogEntry('UNKNOWN COMMAND', `Command "${command}" not recognized. Type "help" for available commands.`, 'routine');
+                }
+            }, 1000);
+        }
+
+        // Initialize
+        updateStardate();
+        setInterval(updateStardate, 30000); // Update every 30 seconds
+
+        // Add some dynamic effects
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate status values
+            const statusValues = document.querySelectorAll('.status-value');
+            statusValues.forEach(value => {
+                if (value.textContent.includes('%')) {
+                    value.style.color = 'var(--console-green)';
+                }
+            });
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,202 @@
+# Beer Run Prototype - Runtime Data
+
+> Copy this file to `beer-run-YYYY-MM-DD-HH-MM-SS-name.md` to start a new beer session. Contains all runtime data structures, character instances, locations, and game state. Behavior rules and mechanics are defined in [beer.md](beer.md).
+
+**LLOOOOMM IMPORT**: beer.md#character-archetypes, beer.md#location-archetypes, beer.md#player-system
+
+---
+
+## 🎭 **CHARACTER INSTANCES**
+
+```yaml
+characters:
+  - id: "PROTOTYPE"
+    name: "BaseCharacterInstance"
+    description: "Runtime character instance template"
+    current_location: ""
+    bac: 0.0
+    bladder_fullness: 15
+    energy_level: 85
+    money: 100
+    current_goal: ""
+    bottles_remaining: 99
+    speech_style: "sober"
+    relationship_status: {}
+    inventory: []
+    
+  - parent: 0
+    name: "Main Player"
+    description: "The primary player character"
+    current_location: "The Rusty Anchor Pub"
+    personality_traits: ["adaptable", "curious"]
+    money: 1000
+    is_current_character: true
+    
+  - parent: 0
+    name: "Murphy the Bartender"
+    description: "Gruff but friendly Irish bartender at The Rusty Anchor"
+    current_location: "The Rusty Anchor Pub"
+    archetype: "wise_bartender"
+    personality_traits: ["experienced", "storyteller", "protective"]
+    singing_style: "deep_baritone_with_irish_accent"
+    life_philosophy: "Every drink tells a story, every story needs a drink"
+    favorite_beverages: ["guinness", "irish_whiskey", "coffee"]
+    catchphrases: 
+      - "What'll it be then?"
+      - "I've heard that story before, but tell it again"
+      - "Last call means last call!"
+    money: 500
+    is_bartender: true
+    
+  - parent: 0
+    name: "Old Salt"
+    description: "Weathered sailor with endless sea stories"
+    current_location: "The Rusty Anchor Pub"
+    archetype: "storytelling_sailor"
+    personality_traits: ["weathered", "nostalgic", "adventurous"]
+    singing_style: "gravelly_sea_shanty"
+    life_philosophy: "The sea gives and takes, but the stories remain"
+    favorite_beverages: ["rum", "grog", "anything_strong"]
+    money: 200
+    
+  - parent: 0
+    name: "The Stranger"
+    description: "Mysterious figure who seems out of time"
+    current_location: "The Rusty Anchor Pub"
+    archetype: "anachronistic_figure"
+    personality_traits: ["enigmatic", "out_of_place", "helpful"]
+    singing_style: "echoing_with_strange_harmonies using_weird_futuristic_words"
+    life_philosophy: "Time is a flat circle, but beer makes it interesting"
+    special_ability: "Buy him drinks/substances to access other timelines and dimensions"
+    discovery_hint: "Something seems off about his clothes, speech, and knowledge"
+    money: 1000000
+    
+  - parent: 0
+    name: "Bryan the Bartender"
+    description: "Charming bartender at The Stablemaster with impeccable style and great music taste"
+    current_location: "The Stablemaster"
+    archetype: "artistic_bartender"
+    personality_traits: ["stylish", "witty", "attentive", "well_groomed", "music_obsessed"]
+    singing_style: "smooth_synth_pop_harmonies_with_perfect_pitch"
+    life_philosophy: "Good drinks and great music bring people together"
+    favorite_beverages: ["craft_cocktails", "fine_wine", "top_shelf_whiskey"]
+    favorite_bands: ["depeche_mode", "new_order", "pet_shop_boys", "erasure", "soft_cell"]
+    money: 850
+    is_bartender: true
+    
+  - parent: 0
+    name: "Casey"
+    description: "Regular patron with great fashion sense and infectious laugh"
+    current_location: "The Stablemaster"
+    archetype: "social_connector"
+    personality_traits: ["fashionable", "dramatic", "loyal", "expressive"]
+    singing_style: "theatrical_with_perfect_timing"
+    life_philosophy: "Life's too short for bad drinks and boring people"
+    favorite_beverages: ["signature_cocktails", "champagne", "anything_with_flair"]
+    money: 400
+```
+
+---
+
+## 🏛️ **LOCATION INSTANCES**
+
+```yaml
+locations:
+  - id: "PROTOTYPE"
+    name: "BaseLocationInstance"
+    description: "Runtime location instance template"
+    current_characters: []
+    atmosphere_level: 50
+    noise_level: 30
+    cleanliness: 80
+    special_events: []
+    available_drinks: {}
+    
+  - parent: 0
+    name: "The Rusty Anchor Pub"
+    description: "Cozy traditional pub with nautical theme"
+    current_characters: ["Main Player", "Murphy the Bartender", "Old Salt", "The Stranger"]
+    atmosphere_level: 75
+    noise_level: 40
+    cleanliness: 70
+    lighting: "dim_amber"
+    music: ["piano_man", "friends_in_low_places", "sweet_caroline", "american_pie", "take_me_home_country_roads", "brown_eyed_girl", "mustang_sally", "old_time_rock_and_roll", "99_red_balloons", "wagon_wheel", "copperhead_road", "midnight_train_to_georgia", "cracklin_rosie", "come_on_eileen", "build_me_up_buttercup", "lean_on_me", "stand_by_me", "the_weight"]
+    available_drinks:
+      beer: 5
+      ale: 6
+      whiskey: 8
+      rum: 7
+      coffee: 3
+    special_features: ["fireplace", "dartboard", "ship_wheel", "nautical_decor", "the_wall", "the_table", "the_bar", "bathroom"]
+    
+  - parent: 0
+    name: "The Stablemaster"
+    description: "Welcoming neighborhood bar with rustic charm and excellent hospitality"
+    current_characters: ["Bryan the Bartender", "Casey", "The Stranger"]
+    atmosphere_level: 88
+    noise_level: 50
+    cleanliness: 92
+    lighting: "warm_amber_with_leather_accents"
+    music: ["personal_jesus", "blue_monday", "west_end_girls", "a_little_respect", "tainted_love", "dont_you_forget_about_me", "homo_sapian", "sweet_dreams", "love_is_a_stranger", "i_will_survive", "in_the_navy", "dancing_queen", "ymca", "its_raining_men", "i_am_what_i_am", "born_this_way", "stronger", "believe", "finally", "show_me_love", "you_make_me_feel_mighty_real", "last_dance", "le_freak", "good_times", "love_hangover", "hot_stuff", "bad_girls", "macarthur_park", "on_the_radio", "enough_is_enough", "no_more_tears", "i_feel_love", "love_to_love_you_baby", "heaven_knows", "dim_all_the_lights", "last_night_a_dj_saved_my_life", "everybody_dance", "we_are_family", "he_lives_in_you", "upside_down", "im_coming_out", "my_love_is_your_love", "i_wanna_dance_with_somebody", "how_will_i_know", "greatest_love_of_all", "i_have_nothing", "run_to_you", "where_do_broken_hearts_go", "so_emotional", "one_moment_in_time", "step_by_step", "love_will_save_the_day", "didnt_we_almost_have_it_all", "queen_of_the_night", "exhale", "count_on_me", "miracle", "heartbreak_hotel", "its_not_right_but_its_okay", "my_love_is_your_love", "try_it_on_my_own", "million_dollar_bill", "i_look_to_you", "i_have_nothing", "run_to_you", "where_do_broken_hearts_go", "so_emotional", "one_moment_in_time", "step_by_step", "love_will_save_the_day", "didnt_we_almost_have_it_all", "queen_of_the_night", "exhale", "count_on_me", "miracle", "heartbreak_hotel", "its_not_right_but_its_okay", "my_love_is_your_love", "try_it_on_my_own", "million_dollar_bill", "i_look_to_you"]
+    available_drinks:
+      craft_cocktails: 14
+      wine: 11
+      premium_beer: 9
+      whiskey: 12
+      signature_drinks: 10
+    special_features: ["leather_banquettes", "horseshoe_bar", "vintage_photos", "pool_table", "the_wall", "the_table", "the_bar", "bathroom"]
+```
+
+---
+
+## 🎮 **GAME STATE**
+
+```yaml
+game_state:
+  session_id: "PROTOTYPE"
+  current_character: "Main Player"
+  current_location: "The Rusty Anchor Pub"
+  session_start_time: ""
+  current_goal: "drink 99 bottles of beer"
+  bottles_remaining: 99
+  game_mode: "standard"
+  difficulty: "normal"
+  
+  party_members: []
+  travel_history: []
+  song_verses_sung: []
+  
+  global_events: []
+  timeline: []
+  
+  analytics:
+    total_drinks: 0
+    total_money_spent: 0
+    locations_visited: 1
+    characters_met: 4
+    songs_completed: 0
+```
+
+---
+
+## 📊 **SESSION TRACKING**
+
+```yaml
+session_data:
+  action_log: []
+  song_lyrics: []
+  character_interactions: []
+  location_changes: []
+  financial_transactions: []
+  
+  # Real-time physiological tracking
+  physiological_log: []
+  
+  # Analytics data
+  performance_metrics: {}
+  social_dynamics: {}
+  
+  # Picture uploads and context changes
+  picture_uploads: []
+  context_changes: []
+``` 

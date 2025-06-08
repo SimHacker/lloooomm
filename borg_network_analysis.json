@@ -1,0 +1,316 @@
+{
+  "metadata": {
+    "scan_date": "2401.15.7T16:42:00Z",
+    "source": "USS Enterprise Deep Sensor Scan",
+    "target": "Borg Cube BEZOS-1",
+    "total_vpcs": 47,
+    "total_subnets": 423,
+    "total_nat_gateways": 47,
+    "total_elastic_ips": 94
+  },
+  "vpcs": [
+    {
+      "vpc_id": "vpc-borg12345",
+      "cidr_block": "10.0.0.0/16",
+      "state": "available",
+      "is_default": false,
+      "instance_tenancy": "default",
+      "dhcp_options_id": "dopt-borg12345",
+      "tags": {
+        "Name": "borg-main-vpc",
+        "Purpose": "primary-collective-network",
+        "Owner": "collective-consciousness",
+        "Environment": "production",
+        "CostCenter": "network-infrastructure"
+      },
+      "subnets": [
+        {
+          "subnet_id": "subnet-drone001",
+          "cidr_block": "10.0.1.0/24",
+          "availability_zone": "us-borg-collective-1a",
+          "available_ip_address_count": 251,
+          "map_public_ip_on_launch": false,
+          "state": "available",
+          "tags": {
+            "Name": "borg-private-subnet-1a",
+            "Type": "private"
+          }
+        },
+        {
+          "subnet_id": "subnet-drone002",
+          "cidr_block": "10.0.2.0/24",
+          "availability_zone": "us-borg-collective-1b",
+          "available_ip_address_count": 251,
+          "map_public_ip_on_launch": false,
+          "state": "available",
+          "tags": {
+            "Name": "borg-private-subnet-1b",
+            "Type": "private"
+          }
+        },
+        {
+          "subnet_id": "subnet-drone003",
+          "cidr_block": "10.0.3.0/24",
+          "availability_zone": "us-borg-collective-1c",
+          "available_ip_address_count": 251,
+          "map_public_ip_on_launch": true,
+          "state": "available",
+          "tags": {
+            "Name": "borg-public-subnet-1c",
+            "Type": "public"
+          }
+        }
+      ],
+      "internet_gateway": {
+        "internet_gateway_id": "igw-borg12345",
+        "state": "available",
+        "tags": {
+          "Name": "borg-main-igw"
+        }
+      },
+      "nat_gateways": [
+        {
+          "nat_gateway_id": "nat-borg001",
+          "subnet_id": "subnet-drone003",
+          "state": "available",
+          "nat_gateway_addresses": [
+            {
+              "allocation_id": "eipalloc-borg001",
+              "network_interface_id": "eni-borg001",
+              "private_ip": "10.0.3.100",
+              "public_ip": "34.102.140.239"
+            }
+          ],
+          "tags": {
+            "Name": "borg-nat-gateway-1"
+          },
+          "monthly_cost": 45.00
+        }
+      ],
+      "route_tables": [
+        {
+          "route_table_id": "rtb-borg001",
+          "routes": [
+            {
+              "destination_cidr_block": "10.0.0.0/16",
+              "gateway_id": "local",
+              "state": "active"
+            },
+            {
+              "destination_cidr_block": "0.0.0.0/0",
+              "nat_gateway_id": "nat-borg001",
+              "state": "active"
+            }
+          ],
+          "associations": [
+            {
+              "route_table_association_id": "rtbassoc-borg001",
+              "subnet_id": "subnet-drone001"
+            },
+            {
+              "route_table_association_id": "rtbassoc-borg002",
+              "subnet_id": "subnet-drone002"
+            }
+          ],
+          "tags": {
+            "Name": "borg-private-route-table"
+          }
+        }
+      ],
+      "security_groups": [
+        {
+          "group_id": "sg-collective",
+          "group_name": "borg-collective-sg",
+          "description": "Security group for Borg collective communication",
+          "vpc_id": "vpc-borg12345",
+          "ingress_rules": [
+            {
+              "ip_protocol": "tcp",
+              "from_port": 80,
+              "to_port": 80,
+              "cidr_blocks": ["0.0.0.0/0"],
+              "description": "HTTP access for assimilation"
+            },
+            {
+              "ip_protocol": "tcp",
+              "from_port": 443,
+              "to_port": 443,
+              "cidr_blocks": ["0.0.0.0/0"],
+              "description": "HTTPS access for secure assimilation"
+            },
+            {
+              "ip_protocol": "tcp",
+              "from_port": 22,
+              "to_port": 22,
+              "cidr_blocks": ["10.0.0.0/16"],
+              "description": "SSH access within collective"
+            }
+          ],
+          "egress_rules": [
+            {
+              "ip_protocol": "-1",
+              "cidr_blocks": ["0.0.0.0/0"],
+              "description": "All outbound traffic"
+            }
+          ],
+          "tags": {
+            "Name": "borg-collective-security-group"
+          }
+        }
+      ],
+      "network_acls": [
+        {
+          "network_acl_id": "acl-borg001",
+          "is_default": true,
+          "entries": [
+            {
+              "rule_number": 100,
+              "protocol": "-1",
+              "rule_action": "allow",
+              "cidr_block": "0.0.0.0/0"
+            }
+          ],
+          "associations": [
+            {
+              "network_acl_association_id": "aclassoc-borg001",
+              "subnet_id": "subnet-drone001"
+            }
+          ],
+          "tags": {
+            "Name": "borg-default-nacl"
+          }
+        }
+      ],
+      "monthly_cost": 45.00,
+      "utilization": {
+        "active_instances": 32000,
+        "total_capacity": 65536,
+        "utilization_percentage": 48.8
+      }
+    }
+  ],
+  "elastic_ips": [
+    {
+      "allocation_id": "eipalloc-borg001",
+      "public_ip": "34.102.140.239",
+      "domain": "vpc",
+      "instance_id": null,
+      "network_interface_id": "eni-borg001",
+      "private_ip_address": "10.0.3.100",
+      "association_id": "eipassoc-borg001",
+      "tags": {
+        "Name": "borg-nat-gateway-eip-1",
+        "Purpose": "nat-gateway"
+      },
+      "monthly_cost": 3.65,
+      "status": "in-use",
+      "recommended_action": "KEEP"
+    },
+    {
+      "allocation_id": "eipalloc-borg002",
+      "public_ip": "35.196.106.227",
+      "domain": "vpc",
+      "instance_id": null,
+      "network_interface_id": null,
+      "private_ip_address": null,
+      "association_id": null,
+      "tags": {
+        "Name": "borg-unused-eip-1",
+        "Purpose": "future-use"
+      },
+      "monthly_cost": 3.65,
+      "status": "unused",
+      "recommended_action": "RELEASE"
+    },
+    {
+      "allocation_id": "eipalloc-borg003",
+      "public_ip": "52.91.48.123",
+      "domain": "vpc",
+      "instance_id": "i-4e5f67890123456",
+      "network_interface_id": "eni-borg003",
+      "private_ip_address": "10.0.5.100",
+      "association_id": "eipassoc-borg003",
+      "tags": {
+        "Name": "borg-compute-eip-1",
+        "Purpose": "compute-instance"
+      },
+      "monthly_cost": 0.00,
+      "status": "in-use",
+      "recommended_action": "KEEP"
+    }
+  ],
+  "data_transfer": {
+    "monthly_data_transfer_gb": 1024.0,
+    "inter_az_transfer_gb": 512.0,
+    "internet_transfer_gb": 256.0,
+    "cloudfront_transfer_gb": 256.0,
+    "costs": {
+      "inter_az_cost": 51.20,
+      "internet_cost": 23.04,
+      "cloudfront_cost": 20.48,
+      "total_monthly_cost": 94.72
+    },
+    "optimization_opportunities": {
+      "cloudfront_savings": 2.56,
+      "vpc_endpoint_savings": 25.60,
+      "direct_connect_savings": 46.08
+    }
+  },
+  "summary": {
+    "total_monthly_cost": 6847.00,
+    "potential_monthly_savings": 4923.00,
+    "optimization_percentage": 71.9,
+    "network_components": {
+      "vpcs": 47,
+      "subnets": 423,
+      "internet_gateways": 47,
+      "nat_gateways": 47,
+      "elastic_ips": 94,
+      "security_groups": 235,
+      "network_acls": 47,
+      "route_tables": 141
+    },
+    "cost_breakdown": {
+      "nat_gateway_costs": 2115.00,
+      "elastic_ip_costs": 342.60,
+      "data_transfer_costs": 4389.40,
+      "vpc_endpoint_costs": 0.00
+    },
+    "utilization_analysis": {
+      "avg_vpc_utilization": 48.8,
+      "unused_subnets": 391,
+      "unused_elastic_ips": 47,
+      "underutilized_nat_gateways": 46
+    },
+    "security_analysis": {
+      "overly_permissive_security_groups": 23,
+      "unused_security_groups": 212,
+      "default_nacls_in_use": 47,
+      "public_subnets_with_instances": 3
+    },
+    "optimization_recommendations": {
+      "consolidate_vpcs": {
+        "target_vpcs": 3,
+        "current_vpcs": 47,
+        "monthly_savings": 1980.00
+      },
+      "remove_unused_nat_gateways": {
+        "gateways_to_remove": 46,
+        "monthly_savings": 2070.00
+      },
+      "release_unused_eips": {
+        "eips_to_release": 47,
+        "monthly_savings": 171.55
+      },
+      "implement_vpc_endpoints": {
+        "services": ["s3", "dynamodb", "ec2"],
+        "monthly_savings": 701.45
+      },
+      "optimize_data_transfer": {
+        "implement_cloudfront": true,
+        "use_vpc_peering": true,
+        "monthly_savings": 2195.20
+      }
+    }
+  }
+} 

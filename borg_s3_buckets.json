@@ -1,0 +1,282 @@
+{
+  "metadata": {
+    "scan_date": "2401.15.7T16:42:00Z",
+    "source": "USS Enterprise Deep Sensor Scan",
+    "target": "Borg Cube BEZOS-1",
+    "total_buckets": 47,
+    "total_storage_tb": 12.0,
+    "wrong_storage_class_percentage": 99.7
+  },
+  "s3_buckets": [
+    {
+      "bucket_name": "borg-assimilation-data-001",
+      "creation_date": "2024-01-01T00:00:00Z",
+      "region": "us-borg-collective-1",
+      "versioning_status": "Enabled",
+      "encryption_status": "AES256",
+      "kms_key_id": "arn:aws:kms:us-borg-collective-1:123456789012:key/borg-key-001",
+      "public_access_block": {
+        "block_public_acls": true,
+        "ignore_public_acls": true,
+        "block_public_policy": true,
+        "restrict_public_buckets": true
+      },
+      "lifecycle_configuration": null,
+      "replication_configuration": null,
+      "tags": {
+        "Name": "primary-assimilation-storage",
+        "Purpose": "drone-consciousness-backup",
+        "Owner": "collective-consciousness",
+        "Environment": "production",
+        "CostCenter": "data-storage"
+      },
+      "total_size_bytes": 12884901888,
+      "total_size_gb": 12000.0,
+      "object_count": 47392,
+      "storage_class_distribution": {
+        "STANDARD": 0.1,
+        "STANDARD_IA": 0.1,
+        "GLACIER": 0.1,
+        "DEEP_ARCHIVE": 99.7
+      },
+      "monthly_cost": 156.80,
+      "access_pattern": "DAILY_RETRIEVAL",
+      "retrieval_cost_monthly": 45000.00,
+      "recommended_action": "MIGRATE_TO_STANDARD",
+      "potential_savings": 30146.00,
+      "access_frequency": {
+        "daily_requests": 47392,
+        "weekly_requests": 331744,
+        "monthly_requests": 1421760
+      }
+    },
+    {
+      "bucket_name": "borg-backup-assimilation-002",
+      "creation_date": "2024-01-02T00:00:00Z",
+      "region": "us-borg-collective-1",
+      "versioning_status": "Enabled",
+      "encryption_status": "AES256",
+      "kms_key_id": "arn:aws:kms:us-borg-collective-1:123456789012:key/borg-key-001",
+      "public_access_block": {
+        "block_public_acls": true,
+        "ignore_public_acls": true,
+        "block_public_policy": true,
+        "restrict_public_buckets": true
+      },
+      "lifecycle_configuration": null,
+      "replication_configuration": {
+        "role": "arn:aws:iam::123456789012:role/replication-role",
+        "rules": [
+          {
+            "id": "ReplicateEverything",
+            "status": "Enabled",
+            "destination": {
+              "bucket": "arn:aws:s3:::borg-backup-assimilation-003"
+            }
+          }
+        ]
+      },
+      "tags": {
+        "Name": "backup-assimilation-storage",
+        "Purpose": "redundant-drone-backup",
+        "Owner": "collective-consciousness",
+        "Environment": "backup",
+        "CostCenter": "redundancy"
+      },
+      "total_size_bytes": 12884901888,
+      "total_size_gb": 12000.0,
+      "object_count": 47392,
+      "storage_class_distribution": {
+        "STANDARD": 0.0,
+        "STANDARD_IA": 0.0,
+        "GLACIER": 0.0,
+        "DEEP_ARCHIVE": 100.0
+      },
+      "monthly_cost": 156.80,
+      "access_pattern": "NEVER_ACCESSED",
+      "retrieval_cost_monthly": 0.00,
+      "recommended_action": "DELETE_DUPLICATE",
+      "potential_savings": 156.80,
+      "access_frequency": {
+        "daily_requests": 0,
+        "weekly_requests": 0,
+        "monthly_requests": 0
+      }
+    },
+    {
+      "bucket_name": "borg-queen-personal-storage",
+      "creation_date": "2023-12-15T00:00:00Z",
+      "region": "us-borg-collective-1",
+      "versioning_status": "Enabled",
+      "encryption_status": "SSE-KMS",
+      "kms_key_id": "arn:aws:kms:us-borg-collective-1:123456789012:key/borg-queen-key",
+      "public_access_block": {
+        "block_public_acls": true,
+        "ignore_public_acls": true,
+        "block_public_policy": true,
+        "restrict_public_buckets": true
+      },
+      "lifecycle_configuration": {
+        "rules": [
+          {
+            "id": "QueenDataRetention",
+            "status": "Enabled",
+            "expiration": {
+              "days": 2555
+            }
+          }
+        ]
+      },
+      "replication_configuration": null,
+      "tags": {
+        "Name": "queen-personal-storage",
+        "Purpose": "royal-consciousness-backup",
+        "Owner": "borg-queen",
+        "Environment": "royal",
+        "CostCenter": "royal-chamber",
+        "Classification": "HIGHLY_CONFIDENTIAL"
+      },
+      "total_size_bytes": 5368709120,
+      "total_size_gb": 5000.0,
+      "object_count": 23696,
+      "storage_class_distribution": {
+        "STANDARD": 50.0,
+        "STANDARD_IA": 30.0,
+        "GLACIER": 15.0,
+        "DEEP_ARCHIVE": 5.0
+      },
+      "monthly_cost": 234.50,
+      "access_pattern": "WEEKLY_ACCESS",
+      "retrieval_cost_monthly": 1200.00,
+      "recommended_action": "OPTIMIZE_TIERING",
+      "potential_savings": 117.25,
+      "access_frequency": {
+        "daily_requests": 156,
+        "weekly_requests": 1092,
+        "monthly_requests": 4680
+      }
+    },
+    {
+      "bucket_name": "borg-web-assets-static",
+      "creation_date": "2024-01-10T00:00:00Z",
+      "region": "us-borg-collective-1",
+      "versioning_status": "Disabled",
+      "encryption_status": "AES256",
+      "kms_key_id": null,
+      "public_access_block": {
+        "block_public_acls": false,
+        "ignore_public_acls": false,
+        "block_public_policy": false,
+        "restrict_public_buckets": false
+      },
+      "lifecycle_configuration": null,
+      "replication_configuration": null,
+      "website_configuration": {
+        "index_document": "we-are-borg.html",
+        "error_document": "resistance-is-futile.html"
+      },
+      "tags": {
+        "Name": "borg-web-assets",
+        "Purpose": "static-website-hosting",
+        "Owner": "collective-consciousness",
+        "Environment": "production",
+        "CostCenter": "web-presence"
+      },
+      "total_size_bytes": 1048576,
+      "total_size_gb": 0.001,
+      "object_count": 3,
+      "storage_class_distribution": {
+        "STANDARD": 100.0,
+        "STANDARD_IA": 0.0,
+        "GLACIER": 0.0,
+        "DEEP_ARCHIVE": 0.0
+      },
+      "monthly_cost": 0.023,
+      "access_pattern": "MONTHLY_ACCESS",
+      "retrieval_cost_monthly": 0.00,
+      "recommended_action": "KEEP_OPTIMIZED",
+      "potential_savings": 0.00,
+      "access_frequency": {
+        "daily_requests": 0.4,
+        "weekly_requests": 2.8,
+        "monthly_requests": 12
+      },
+      "objects": [
+        {
+          "key": "we-are-borg.html",
+          "size": 524288,
+          "last_modified": "2024-01-10T12:00:00Z",
+          "storage_class": "STANDARD",
+          "content_type": "text/html"
+        },
+        {
+          "key": "resistance-is-futile.html",
+          "size": 262144,
+          "last_modified": "2024-01-10T12:00:00Z",
+          "storage_class": "STANDARD",
+          "content_type": "text/html"
+        },
+        {
+          "key": "borg-cube.jpg",
+          "size": 262144,
+          "last_modified": "2024-01-10T12:00:00Z",
+          "storage_class": "STANDARD",
+          "content_type": "image/jpeg"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "total_monthly_cost": 45219.00,
+    "potential_monthly_savings": 30146.00,
+    "optimization_percentage": 66.7,
+    "buckets_by_purpose": {
+      "primary_storage": 1,
+      "backup_storage": 23,
+      "archive_storage": 15,
+      "web_hosting": 3,
+      "logging": 2,
+      "temp_storage": 3
+    },
+    "storage_class_analysis": {
+      "total_in_deep_archive": 11.97,
+      "should_be_standard": 11.85,
+      "should_be_ia": 0.10,
+      "should_be_glacier": 0.02,
+      "misclassified_percentage": 99.0
+    },
+    "access_pattern_analysis": {
+      "daily_access_buckets": 1,
+      "weekly_access_buckets": 1,
+      "monthly_access_buckets": 3,
+      "never_accessed_buckets": 42
+    },
+    "cost_breakdown": {
+      "storage_costs": 15073.00,
+      "retrieval_costs": 30146.00,
+      "request_costs": 0.00,
+      "data_transfer_costs": 0.00
+    },
+    "optimization_recommendations": {
+      "migrate_to_standard": {
+        "buckets": 1,
+        "data_size_tb": 12.0,
+        "monthly_savings": 30146.00
+      },
+      "delete_duplicates": {
+        "buckets": 23,
+        "data_size_tb": 276.0,
+        "monthly_savings": 3608.80
+      },
+      "implement_intelligent_tiering": {
+        "buckets": 47,
+        "estimated_savings": 2260.95
+      },
+      "consolidate_buckets": {
+        "target_buckets": 5,
+        "current_buckets": 47,
+        "management_savings": 420.00
+      }
+    }
+  }
+}

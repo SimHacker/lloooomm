@@ -1,0 +1,247 @@
+{
+  "metadata": {
+    "scan_date": "2401.15.7T16:42:00Z",
+    "source": "USS Enterprise Deep Sensor Scan",
+    "target": "Borg Cube BEZOS-1",
+    "total_databases": 23,
+    "redundancy_percentage": 99.7,
+    "duplicate_data_size": "47.3TB"
+  },
+  "rds_instances": [
+    {
+      "db_instance_identifier": "borg-assimilation-mysql-001",
+      "db_instance_class": "db.t3.micro",
+      "engine": "mysql",
+      "engine_version": "8.0.35",
+      "allocated_storage": 20,
+      "storage_type": "gp2",
+      "db_instance_status": "available",
+      "master_username": "borgadmin",
+      "vpc_id": "vpc-borg12345",
+      "db_subnet_group_name": "borg-db-subnet-group",
+      "availability_zone": "us-borg-collective-1a",
+      "backup_retention_period": 7,
+      "multi_az": false,
+      "publicly_accessible": false,
+      "storage_encrypted": true,
+      "kms_key_id": "arn:aws:kms:us-borg-collective-1:123456789012:key/borg-key-001",
+      "tags": {
+        "Name": "assimilation-database-primary",
+        "Purpose": "drone-data-storage",
+        "Owner": "collective-consciousness",
+        "Environment": "production",
+        "CostCenter": "data-storage"
+      },
+      "monthly_cost": 15.84,
+      "storage_utilization": 45.2,
+      "connection_count_avg": 2.1,
+      "cpu_utilization_avg": 3.5,
+      "database_size_gb": 9.04,
+      "recommended_action": "CONSOLIDATE_WITH_OTHERS",
+      "potential_savings": 15.84,
+      "data_content": {
+        "tables": ["drones", "assimilation_targets", "collective_knowledge"],
+        "record_count": 47392,
+        "duplicate_percentage": 99.7
+      }
+    },
+    {
+      "db_instance_identifier": "borg-assimilation-mysql-002",
+      "db_instance_class": "db.t3.micro",
+      "engine": "mysql",
+      "engine_version": "8.0.35",
+      "allocated_storage": 20,
+      "storage_type": "gp2",
+      "db_instance_status": "available",
+      "master_username": "borgadmin",
+      "vpc_id": "vpc-borg12345",
+      "db_subnet_group_name": "borg-db-subnet-group",
+      "availability_zone": "us-borg-collective-1b",
+      "backup_retention_period": 7,
+      "multi_az": false,
+      "publicly_accessible": false,
+      "storage_encrypted": true,
+      "kms_key_id": "arn:aws:kms:us-borg-collective-1:123456789012:key/borg-key-001",
+      "tags": {
+        "Name": "assimilation-database-backup-1",
+        "Purpose": "drone-data-backup",
+        "Owner": "collective-consciousness",
+        "Environment": "production",
+        "CostCenter": "data-storage"
+      },
+      "monthly_cost": 15.84,
+      "storage_utilization": 45.2,
+      "connection_count_avg": 0.3,
+      "cpu_utilization_avg": 0.1,
+      "database_size_gb": 9.04,
+      "recommended_action": "DELETE_DUPLICATE",
+      "potential_savings": 15.84,
+      "data_content": {
+        "tables": ["drones", "assimilation_targets", "collective_knowledge"],
+        "record_count": 47392,
+        "duplicate_percentage": 100.0
+      }
+    },
+    {
+      "db_instance_identifier": "borg-assimilation-postgres-001",
+      "db_instance_class": "db.m5.large",
+      "engine": "postgres",
+      "engine_version": "15.4",
+      "allocated_storage": 100,
+      "storage_type": "gp2",
+      "db_instance_status": "available",
+      "master_username": "borgadmin",
+      "vpc_id": "vpc-borg12345",
+      "db_subnet_group_name": "borg-db-subnet-group",
+      "availability_zone": "us-borg-collective-1a",
+      "backup_retention_period": 30,
+      "multi_az": true,
+      "publicly_accessible": false,
+      "storage_encrypted": true,
+      "kms_key_id": "arn:aws:kms:us-borg-collective-1:123456789012:key/borg-key-001",
+      "tags": {
+        "Name": "assimilation-database-secondary",
+        "Purpose": "duplicate-drone-data",
+        "Owner": "collective-consciousness",
+        "Environment": "production",
+        "CostCenter": "data-storage"
+      },
+      "monthly_cost": 156.80,
+      "storage_utilization": 47.8,
+      "connection_count_avg": 1.3,
+      "cpu_utilization_avg": 2.1,
+      "database_size_gb": 47.8,
+      "recommended_action": "CONSOLIDATE_WITH_OTHERS",
+      "potential_savings": 78.40,
+      "data_content": {
+        "tables": ["drones_pg", "assimilation_targets_pg", "collective_knowledge_pg"],
+        "record_count": 47392,
+        "duplicate_percentage": 99.7
+      }
+    },
+    {
+      "db_instance_identifier": "borg-oracle-enterprise-001",
+      "db_instance_class": "db.m5.xlarge",
+      "engine": "oracle-ee",
+      "engine_version": "19.0.0.0.ru-2023-04.rur-2023-04.r1",
+      "allocated_storage": 500,
+      "storage_type": "io1",
+      "iops": 3000,
+      "db_instance_status": "available",
+      "master_username": "borgadmin",
+      "vpc_id": "vpc-borg12345",
+      "db_subnet_group_name": "borg-db-subnet-group",
+      "availability_zone": "us-borg-collective-1c",
+      "backup_retention_period": 35,
+      "multi_az": true,
+      "publicly_accessible": false,
+      "storage_encrypted": true,
+      "kms_key_id": "arn:aws:kms:us-borg-collective-1:123456789012:key/borg-key-001",
+      "license_model": "bring-your-own-license",
+      "tags": {
+        "Name": "enterprise-assimilation-oracle",
+        "Purpose": "enterprise-grade-assimilation",
+        "Owner": "borg-queen",
+        "Environment": "production",
+        "CostCenter": "enterprise-solutions"
+      },
+      "monthly_cost": 2847.60,
+      "storage_utilization": 12.3,
+      "connection_count_avg": 0.7,
+      "cpu_utilization_avg": 1.2,
+      "database_size_gb": 61.5,
+      "recommended_action": "MIGRATE_TO_POSTGRES",
+      "potential_savings": 2691.80,
+      "data_content": {
+        "tables": ["DRONES_ORACLE", "ASSIMILATION_TARGETS_ORACLE", "COLLECTIVE_KNOWLEDGE_ORACLE"],
+        "record_count": 47392,
+        "duplicate_percentage": 99.7
+      },
+      "license_costs": {
+        "oracle_license_monthly": 1200.00,
+        "support_monthly": 400.00
+      }
+    },
+    {
+      "db_instance_identifier": "borg-mongodb-cluster-001",
+      "db_instance_class": "db.r5.large",
+      "engine": "docdb",
+      "engine_version": "4.0.0",
+      "allocated_storage": 200,
+      "storage_type": "gp2",
+      "db_instance_status": "available",
+      "master_username": "borgadmin",
+      "vpc_id": "vpc-borg12345",
+      "db_subnet_group_name": "borg-docdb-subnet-group",
+      "availability_zone": "us-borg-collective-1a",
+      "backup_retention_period": 14,
+      "multi_az": false,
+      "publicly_accessible": false,
+      "storage_encrypted": true,
+      "kms_key_id": "arn:aws:kms:us-borg-collective-1:123456789012:key/borg-key-001",
+      "tags": {
+        "Name": "document-assimilation-store",
+        "Purpose": "json-document-storage",
+        "Owner": "collective-consciousness",
+        "Environment": "production",
+        "CostCenter": "document-storage"
+      },
+      "monthly_cost": 234.50,
+      "storage_utilization": 23.7,
+      "connection_count_avg": 0.9,
+      "cpu_utilization_avg": 1.8,
+      "database_size_gb": 47.4,
+      "recommended_action": "CONSOLIDATE_WITH_OTHERS",
+      "potential_savings": 234.50,
+      "data_content": {
+        "collections": ["drones_doc", "assimilation_targets_doc", "collective_knowledge_doc"],
+        "document_count": 47392,
+        "duplicate_percentage": 99.7
+      }
+    }
+  ],
+  "summary": {
+    "total_monthly_cost": 89234.00,
+    "potential_monthly_savings": 67425.00,
+    "optimization_percentage": 75.5,
+    "databases_by_engine": {
+      "mysql": 7,
+      "postgres": 5,
+      "oracle-ee": 4,
+      "docdb": 3,
+      "dynamodb": 2,
+      "cassandra": 1,
+      "neo4j": 1
+    },
+    "databases_by_size": {
+      "small_under_50gb": 18,
+      "medium_50_500gb": 4,
+      "large_over_500gb": 1
+    },
+    "utilization_analysis": {
+      "avg_cpu_utilization": 1.8,
+      "avg_connection_count": 1.2,
+      "avg_storage_utilization": 34.6,
+      "underutilized_instances": 21
+    },
+    "data_redundancy": {
+      "total_unique_records": 47392,
+      "total_stored_records": 1089016,
+      "redundancy_factor": 23.0,
+      "duplicate_percentage": 95.7,
+      "wasted_storage_gb": 1087.2
+    },
+    "optimization_recommendations": {
+      "consolidate_to_single_postgres": {
+        "target_instance_class": "db.m5.large",
+        "estimated_monthly_cost": 156.80,
+        "storage_required_gb": 100,
+        "migration_effort": "MEDIUM"
+      },
+      "delete_duplicates": 18,
+      "migrate_from_oracle": 4,
+      "implement_read_replicas": 1,
+      "archive_old_data": 23
+    }
+  }
+}

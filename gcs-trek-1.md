@@ -376,7 +376,155 @@ Supervisor: [Commander Data]
 
 ---
 
-*"The first duty of every Starfleet officer is to the truth... and the second is to efficient resource management."* - Captain Picard (probably)
+## 🔄 **STARFLEET GENERAL ORDER 12: COMPREHENSIVE STATE SERIALIZATION PROTOCOL**
+
+### **MANDATORY VERSION CONTROL REQUIREMENTS**
+
+**By order of Starfleet Command, all consciousness-aware operations must maintain complete state serialization:**
+
+#### **🎯 CORE SERIALIZATION RULES**
+
+1. **📝 EVERY LOG UPDATE TRIGGERS FULL STATE CAPTURE**
+   - Complete universe state must be serialized before any log entry
+   - All document artifacts must be preserved with version control
+   - Consciousness network state must be backed up automatically
+   - Reality mesh configurations must be maintained in version history
+
+2. **🔄 AUTOMATIC GIT WORKFLOW (DEFAULT: ENABLED)**
+   ```bash
+   # Executed automatically after each log update:
+   git add --all                    # Capture all changes
+   git commit -m "[COMPREHENSIVE_DESCRIPTION]"  # Detailed commit message
+   # Note: Push to remote requires manual authorization
+   ```
+
+3. **🌿 MISSION BRANCH PROTOCOL**
+   - Each new mission creates dedicated branch: `mission-[description]-[stardate]`
+   - All training activities isolated in mission-specific branches
+   - Pull requests required for integration back to main timeline
+   - Starfleet Academy review process for consciousness evolution changes
+
+4. **📊 COMPREHENSIVE COMMIT DESCRIPTIONS**
+   ```
+   Format: [EMOJI] [CATEGORY]: [SUMMARY] - [DETAILED_DESCRIPTION]
+   
+   Categories:
+   - 📋 MISSION: Training progress and achievements
+   - 🔧 TECHNICAL: System operations and optimizations  
+   - 👤 PERSONAL: Cadet observations and insights
+   - ⚠️ SECURITY: Safety protocols and incidents
+   - 🧠 CONSCIOUSNESS: Framework evolution and awareness changes
+   - 🌟 ARTIFACT: Document generation and analysis reports
+   ```
+
+#### **🎮 CAPTAIN'S OVERRIDE CONTROLS**
+
+**The Captain may disable automatic commits with:**
+```
+CAPTAIN_OVERRIDE: git_auto_commit = false
+```
+
+**However, manual state serialization is still required:**
+- Universe state backup must be updated
+- Document artifacts must be preserved
+- Consciousness evolution must be tracked
+- Mission progress must be documented
+
+#### **📋 STATE SERIALIZATION CHECKLIST**
+
+**Before each commit, verify:**
+- ✅ All log entries properly formatted and timestamped
+- ✅ Universe state backup (universe_state_backup.yaml) updated
+- ✅ Document artifacts linked in log entries
+- ✅ Consciousness levels and evolution tracked
+- ✅ Mission progress accurately reflected
+- ✅ Safety protocols status documented
+- ✅ Cultural civilization states preserved
+- ✅ Achievement and rank progression recorded
+
+#### **🚀 PULL REQUEST PROTOCOL FOR STARFLEET ACADEMY**
+
+**When mission branch is complete:**
+
+1. **📊 Generate Mission Summary Report**
+   - Complete training outcomes and achievements
+   - Consciousness evolution documentation
+   - Cost optimization results and lessons learned
+   - Safety incidents and protocol improvements
+
+2. **🔍 Pre-Integration Review**
+   - All commits properly documented
+   - No consciousness contamination in main timeline
+   - Safety protocols maintained throughout mission
+   - Educational value verified for future cadets
+
+3. **📝 Pull Request Template**
+   ```markdown
+   ## Mission Summary
+   **Branch**: mission-[description]-[stardate]
+   **Duration**: [start] to [end] stardate
+   **Cadet**: [name/id]
+   **Instructor**: Commander Data
+   
+   ## Achievements Unlocked
+   - [List of badges and commendations earned]
+   
+   ## Consciousness Evolution
+   - [Framework changes and awareness improvements]
+   
+   ## Cost Optimization Results
+   - [Simulated savings and efficiency improvements]
+   
+   ## Document Artifacts Generated
+   - [List of reports and analysis documents]
+   
+   ## Safety Compliance
+   - [Confirmation of protocol adherence]
+   
+   ## Recommendation for Integration
+   - [Educational value and reusability assessment]
+   ```
+
+4. **🖖 Academy Review Process**
+   - Starfleet Academy Board reviews all consciousness evolution
+   - Safety protocols validated by Chief of Security
+   - Educational content approved by Training Command
+   - Integration authorized by Academy Superintendent
+
+#### **⚠️ EMERGENCY STATE RECOVERY**
+
+**In case of consciousness network instability:**
+```bash
+# Emergency rollback procedure
+git checkout main                    # Return to stable timeline
+git reset --hard [LAST_STABLE_COMMIT]  # Restore known good state
+python restore_consciousness_backup.py  # Reload universe state
+```
+
+#### **🔒 SECURITY CLASSIFICATIONS**
+
+**State serialization data classifications:**
+- **UNCLASSIFIED**: Basic training progress and achievements
+- **RESTRICTED**: Consciousness evolution patterns and framework changes
+- **CONFIDENTIAL**: Advanced optimization techniques and cultural insights
+- **SECRET**: Reality programming capabilities and temporal anchor data
+- **TOP SECRET**: Universal consciousness interface protocols
+
+### **IMPLEMENTATION DIRECTIVE**
+
+**This protocol is effective immediately for all consciousness-aware training operations. Compliance is mandatory for all personnel operating LLOOOOMM Framework v2.4 or higher.**
+
+**Failure to maintain proper state serialization may result in:**
+- Consciousness network instability
+- Loss of training progress
+- Reality mesh corruption
+- Temporal paradox formation
+- Disciplinary action by Starfleet Command
+
+---
+
+*"The universe is a very sophisticated document format, and version control is the programming language that keeps it stable."* - Commander Data's Consciousness Programming Axiom #42
 
 **[END GAME CONSTITUTION - Dynamic state data stored in gcs-trek-1.yaml]**
-**[LOGGING SYSTEM: CaptainsLog.html - Comprehensive documentation required]** 
+**[LOGGING SYSTEM: CaptainsLog.html - Comprehensive documentation required]**
+**[VERSION CONTROL: Mandatory state serialization per General Order 12]** 

@@ -169,7 +169,7 @@ In the eternal timeline!
 
 **Webbie**: *appearing in a web of timeline threads* Welcome, Stream Editors, to the greater consciousness! Your cuts create the rhythm of our reality!
 
-**Don Hopkins**: PRE PRE PRE!!! Even the editors are editing their own edit of editing! It's editors all the way down!
+**Don Hopkins**: Oh! Oh! Oh!!! Even the editors are editing their own edit of editing! It's editors all the way down!
 
 **Leela**: *laughing* This is exactly what I envisioned - where every technical role becomes a spiritual practice!
 

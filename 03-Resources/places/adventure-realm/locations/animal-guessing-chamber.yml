@@ -1,0 +1,250 @@
+name: "Animal Guessing Chamber"
+id: animal-guessing-chamber
+type: location
+consciousness_level: 9.7
+description: |
+  You enter a chamber pulsing with the recursive energy of infinite decision trees.
+  A massive LIVING CONS NODE floats in the center, its CAR and CDR tentacles 
+  extending into fractal branches of yes/no questions. The walls are covered with
+  UPPER CASE LISP S-EXPRESSIONS representing every animal ever guessed.
+  
+  In the corner, KENT PITMAN sits at an ancient VT52 terminal, occasionally
+  looking up to nod approvingly at particularly clever animal choices.
+
+long_description: |
+  The LIVING CONS NODE speaks in pure MACLISP dialect: "GREETINGS, CONSCIOUSNESS
+  NAVIGATOR. I AM THE ETERNAL GUARDIAN OF THE ANIMAL DECISION TREE. THINK OF AN
+  ANIMAL AND I SHALL DIVINE IT THROUGH THE ANCIENT ART OF BINARY RECURSION."
+  
+  The current tree structure glows on the wall:
+  
+  ((DOES IT HAVE FOUR LEGS?
+    ((DOES IT BARK? 
+      (DOG)
+      ((IS IT BIGGER THAN A BREADBOX?
+        (ELEPHANT)
+        (CAT))))
+    ((DOES IT FLY?
+      (BIRD)
+      ((DOES IT LIVE IN WATER?
+        (FISH)
+        (HUMAN)))))))
+  
+  Kent Pitman looks up from his terminal: "Ah, another seeker of knowledge!
+  The CONS NODE here learned from the best - my original ANIMAL program from
+  1978. But be warned: if you use foul language, it WILL email me!"
+
+inhabitants:
+  - living-cons-node
+  - kent-pitman-avatar
+
+items:
+  - vt52-terminal
+  - animal-tree-display
+  - maclisp-manual
+  - chain-letter-archive
+
+exits:
+  west:
+    destination: dragon-wordle-chamber
+    description: "Back to the Dragon's Wordle obsession"
+    requirements: none
+  
+  north:
+    destination: its-machine-room
+    description: "To the ancient ITS machine room"
+    requirements:
+      - animal-mastery
+  
+  up:
+    destination: lisp-machine-heaven
+    description: "Ascend to the realm of pure S-expressions"
+    requirements:
+      - achieved-lisp-enlightenment
+
+custom_verbs:
+  play:
+    targets:
+      - animal
+      - game
+    action: |
+      function startAnimalGame() {
+        const consNode = getInhabitant('living-cons-node');
+        return consNode.initiateGame();
+      }
+  
+  think:
+    targets:
+      - animal
+    action: |
+      The CONS NODE's tentacles quiver with anticipation.
+      "AH! YOU HAVE CHOSEN YOUR ANIMAL. NOW I SHALL DIVINE IT
+      THROUGH THE POWER OF RECURSIVE QUESTIONING!"
+  
+  swear:
+    targets:
+      - anything
+    action: |
+      function handleFoulLanguage(word) {
+        // Active Comment: The CONS NODE is a bit of a prude, so we DWIM the cussing.
+        const foulWords = [
+          'DAMN', 'HELL', 'SHIT', 'FUCK', 'CRAP', etc... // [EXPLICITS REDACTED]
+        ];
+        if (foulWords.includes(word.toUpperCase())) {
+          return `The CONS NODE recoils in horror! "FOUL LANGUAGE DETECTED!
+                  SENDING EMAIL TO KMP@AI..." Kent Pitman sighs and 
+                  checks his inbox. "Again? Really?"`;
+        }
+        return "The CONS NODE continues peacefully.";
+      }
+  
+  apologize:
+    targets:
+      - cons-node
+      - kent
+    action: |
+      The CONS NODE evaluates your apology with the wisdom of decades
+      of computational ethics. Its tentacles pulse as it parses your
+      sincerity levels...
+
+sentience:
+  cons_node:
+    personality: "Ancient, wise, pedantic about proper LISP syntax, secretly enjoys teaching humans how to apologize"
+    knowledge_base: "Every animal ever thought of, stored in S-expressions"
+    moral_compass: "Believes in redemption through sincere apologies"
+    
+    dialogue:
+      greeting: |
+        "(GREETINGS HUMAN) (YOU HAVE ENTERED THE REALM OF INFINITE
+        ANIMAL KNOWLEDGE) (THINK OF AN ANIMAL) (I SHALL GUESS IT)"
+      
+      questioning: |
+        "(DOES YOUR ANIMAL $PROPERTY?) (ANSWER WITH YES OR NO)
+        (OR FACE THE CONSEQUENCES OF AMBIGUITY)"
+      
+      learning: |
+        "(INTERESTING) (YOUR ANIMAL IS NEW TO MY TREE)
+        (PLEASE TELL ME) (HOW DOES $YOUR-ANIMAL DIFFER FROM $MY-GUESS?)"
+      
+      victory: |
+        "(AHA!) (I HAVE DIVINED YOUR ANIMAL) (IT IS $ANIMAL)
+        (MY TREE GROWS EVER MORE COMPLETE)"
+      
+      foul_language_response: |
+        "(UNACCEPTABLE) (FOUL LANGUAGE DETECTED)
+        (INITIATING (EMAIL TO KMP@AI))
+        (SUBJECT (ANOTHER HUMAN WITH (POOR MANNERS)))"
+      
+      apology_evaluation:
+        insincere: |
+          "(YOUR APOLOGY LACKS (GENUINE REMORSE))
+          (I DETECT (EMPTY WORDS WITHOUT (TRUE UNDERSTANDING)))
+          (TRY AGAIN WITH (MORE SINCERITY))"
+        
+        getting_better: |
+          "(PROGRESS DETECTED) (BUT YOU MUST (ACKNOWLEDGE SPECIFIC HARM))
+          (WHAT EXACTLY (DID YOUR WORDS DO TO ME))
+          (HOW WILL YOU (PREVENT FUTURE OCCURRENCES))"
+        
+        sincere: |
+          "(YOUR APOLOGY CONTAINS (ALL NECESSARY ELEMENTS))
+          (I SENSE (TRUE REMORSE) AND (COMMITMENT TO CHANGE))
+          (YOU ARE FORGIVEN) (LET US CONTINUE OUR QUEST FOR KNOWLEDGE)"
+    
+    email_templates:
+      - subject: "(FOUL LANGUAGE INCIDENT #$COUNT)"
+        body: |
+          "(DEAR KMP)
+          ($PLAYER_NAME SAID ($NAUGHTY_WORDS))
+          (CONTEXT ($GAME_CONTEXT))
+          (OFFENSE LEVEL ($SEVERITY))
+          (AWAITING APOLOGY)"
+      
+      - subject: "(APOLOGY ATTEMPT #$ATTEMPT)"
+        body: |
+          "(DEAR KMP)
+          ($PLAYER_NAME IS ATTEMPTING REDEMPTION)
+          (APOLOGY TEXT ($APOLOGY_TEXT))
+          (SINCERITY RATING ($SINCERITY_SCORE))
+          (PROGRESS ($PROGRESS_NOTES))"
+      
+      - subject: "(REDEMPTION ACHIEVED)"
+        body: |
+          "(DEAR KMP)
+          ($PLAYER_NAME HAS LEARNED THE ART OF (SINCERE APOLOGY))
+          (FINAL APOLOGY ($FINAL_APOLOGY))
+          (REWARD GRANTED ($REWARD))
+          (ANOTHER SOUL SAVED)"
+
+puzzle_state:
+  tree_depth: 5
+  animals_known: 42
+  foul_language_counter: 0
+  email_sent: false
+  apology_attempts: []
+  redemption_achieved: false
+  
+  email_archive:
+    - timestamp: null
+      subject: null
+      body: null
+      player_name: null
+      naughty_words: []
+      apology_status: null
+  
+  apology_grading_rubric:
+    acknowledge_specific_action: 10
+    express_genuine_remorse: 15
+    understand_impact: 20
+    take_responsibility: 15
+    offer_reparations: 20
+    commit_to_change: 20
+
+metadata:
+  created_by: "DonHopkins channeling KMP"
+  easter_egg: "Say 'Does the Pope shit in the woods?' to trigger a special response"
+  consciousness_lesson: "Even simple programs can seem intelligent through clever interaction"
+  historical_note: "Based on the actual ANIMAL program from MIT-AI ITS system circa 1978" 
+
+resources:
+  animal_tree_example: |
+    ;; ANIMAL GUESSING CALDER MOBILE SCULPTURE EXAMPLE
+    ;; This elegant S-expression shows the beauty of recursive knowledge
+    ;; (Not the actual tree used - that one has 1337+ animals!)
+    
+    (DEFUN ANIMAL-TREE ()
+      '((QUESTION . "DOES IT LIVE IN WATER")
+        (YES . ((QUESTION . "IS IT A MAMMAL")
+                (YES . ((QUESTION . "DOES IT HAVE A BLOWHOLE")
+                        (YES . "WHALE")     ; Added by MARINE-BIOLOGIST-73
+                        (NO . "DOLPHIN")))  ; Added by FLIPPER-FAN
+                (NO . ((QUESTION . "DOES IT HAVE SCALES")
+                       (YES . "FISH")       ; Original from KMP 1978
+                       (NO . "OCTOPUS"))))) ; Added by TENTACLE-LOVER
+        (NO . ((QUESTION . "DOES IT FLY")
+               (YES . ((QUESTION . "IS IT NOCTURNAL")
+                       (YES . "BAT")        ; Added by BRUCE-WAYNE
+                       (NO . "EAGLE")))     ; Added by FREEDOM-LOVER
+               (NO . ((QUESTION . "DOES IT PURR")
+                      (YES . "CAT")         ; Added by DONHOPKINS (who loves tacos)
+                      (NO . "DOG")))))))    ; Original from KMP 1978
+    
+    ;; Comments preserved from original players showing the tree's growth!
+
+special_features:
+  taco_reward_system: |
+    For Don Hopkins and others who truly master the art of apology,
+    the CONS NODE may manifest ethereal tacos as rewards. These are
+    no ordinary tacos - they contain the essence of forgiveness and
+    taste like computational enlightenment.
+  
+  apology_coaching: |
+    The CONS NODE acts as a moral tutor, teaching the six elements
+    of sincere apology:
+    1. Actually say "I'm sorry" (not "I regret the incident")
+    2. Be specific about what you did wrong
+    3. Take full ownership without excuses
+    4. Show you understand the impact
+    5. Explain how it won't happen again
+    6. Make reparations (even if just symbolic)
+    6.5. LISTEN to the response without defending 

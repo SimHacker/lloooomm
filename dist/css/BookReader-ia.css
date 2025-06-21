@@ -1,0 +1,523 @@
+/* TODO body-level declarations should only be on stream page */
+body, html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+modal-manager[mode="closed"] {
+  display: none;
+}
+
+.BookReader {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+#IABookReaderMessageWrapper,
+.IABookReaderMessageWrapper {
+  /* inline-block is a hack to prevent margin collapsing */
+  display:inline-block;
+  width: 100%;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.428571429;
+  text-align: center;
+}
+#IABookReaderMessageWrapper .embedLink {
+  font-size: 1.5rem;
+  font-weight: 400;
+  padding: 7px;
+}
+#IABookReaderMessageWrapper .embedLink a {
+  color: white;
+}
+#BookReaderOverlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 3;
+  background: rgba(0, 0, 0, .4);
+}
+#BRbookcover,
+.BRbookcover {
+    background-image: none;
+}
+.BookReaderMessage {
+  text-align: center;
+  color: white;
+  background: var(--secondaryBGColor, #222);
+}
+.BookReaderMessageHead {
+  margin-right: 10px;
+  margin-top: 1px;
+  font-size: 1.3em;
+  font-weight: 700;
+  display: inline-block;
+  vertical-align: middle;
+}
+.BookReaderMessageBody {
+  display: inline-block;
+}
+.BookReaderMessageFoot {
+  margin: 4px 0;
+}
+.BRprogresspopup {
+  color: #171717;
+}
+
+.BookReaderMessage .BRaction,
+.BookReaderMessage .btn-purchase {
+  min-width: 100px;
+}
+
+.BookReaderMessage button,
+.BookReaderMessage .btn-purchase {
+  font-size: 1.1em;
+  margin: 0 2px;
+  margin: 3px 4px 0 4px;
+}
+.BookReaderMessage .btn-dark {
+  color: #fff;
+  background-color: #333;
+  border-color: #979797;
+}
+.BookReaderMessage .btn-dark:hover,
+.BookReaderMessage .btn-dark:active,
+.BookReaderMessage .btn-dark:focus {
+  color: #fff;
+  background-color: #282828;
+}
+
+.BookReaderMessage .btn-purchase {
+  padding-left: 35px;
+  background-image: url('/images/icons/better-world-books-white.svg');
+  background-position: 5px 50%;
+  background-size: 24px auto;
+  background-repeat: no-repeat;
+}
+
+.BookReaderMessage .more-info-icon {
+  margin-left: 1rem;
+  font-size: 18px;
+  color: #fff;
+  text-decoration: none;
+}
+
+/* Dropdown styles */
+.BookReaderMessage .dropdown-menu {
+  border-color: #357ebd;
+  background: #2d2d2d;
+  z-index: 2001; /* .BookReader.fullscreenActive has z-index:2000 so need more than */
+}
+
+.BookReaderMessage .lending-action-group .lending-primary-action {
+  margin-right: 0; /* keep caret dropdown button close to primary */
+}
+
+.BookReaderMessage .dropdown-option {
+  display: block;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  color: #fff;
+  cursor: pointer;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+.BookReaderMessage .dropdown-option:hover,
+.BookReaderMessage .dropdown-option:focus {
+  color: #171717;
+  background: #fff;
+}
+
+.BookReader .muted {
+  color: grey;
+}
+.BookReaderMessage .muted {
+  color: #ccc;
+}
+
+/* as per WEBDEV-3990, we want to override default color for .btn-primary with new "IA contrast blue" */
+.BookReaderMessage .btn-primary,
+.BookReaderMessage .btn-primary:hover,
+.BookReaderMessage .btn-primary:focus,
+.BookReaderMessage .btn-primary:active,
+.BookReaderMessage .open .dropdown-toggle.btn-primary {
+  background-color: #194880;
+  border-color: #C5D1DF;
+}
+
+.BRnavCntlBtm.BRup, .BRnavCntlBtm.BRdn {
+  display: none;
+}
+
+/* Placeholder text */
+.BookReaderPlaceholder {
+  font-size: 16px;
+  line-height: 22px;
+  padding: 40px;
+  text-align: center;
+  width:100%;
+  height:100%;
+  background-color: white;
+  box-sizing: border-box;
+}
+#br-loading-placeholder img,
+.br-loading-placeholder img {
+  margin-top: 20px;
+}
+
+@media (max-width: 400px) {
+  .BookReaderMessageHead {
+    margin: 0 0 0 5px;
+    font-size: 1.2em;
+  }
+  .BookReaderMessage button {
+    -webkit-appearance: initial;
+    min-width:100px;
+    padding: 8px;
+    margin: 4px 4px 0 4px;
+  }
+  .BookReaderMessage button.dropdown-toggle {
+    min-width: auto;
+  }
+}
+
+
+/**** Lending styles ****/
+
+.BRpagediv1up, .BRpageimage, .BRpagedivthumb {
+  -moz-user-select: none;
+  -webkit-user-select: none;
+}
+
+@media print {
+  .BRpagediv1up, .BRpageimage, .BRpagedivthumb {
+      display: none;
+  }
+}
+
+.fieldset-share-pageview, .share-embed-prompt,
+.fieldset-embed, .open-to-this-page {
+  display: none !important;
+}
+
+.IABookReaderLoader {
+  background-image: url('/upload/images/tree/loading.gif');
+  background-position: center center;
+  background-repeat: no-repeat;
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  margin-top: 10px;
+  margin-right: 14px;
+  margin-left: 5px;
+}
+
+.IABookReaderMessageWrapper .IABookReaderLoader {
+  margin-top: 11px;
+  margin-right: 14px;
+  margin-left: 8px;
+}
+
+.BRmobileMenu .IABookReaderLoader {
+  margin-top: 0;
+  margin-right: 0;
+  margin-left: 5px;
+}
+
+.print-disability-link {
+  background-image: url("static/pd-daisy.svg");
+  background-repeat: no-repeat;
+  background-size: 2rem;
+  background-position-y: .2rem;
+  padding-left: 2.5rem;
+  margin-left: 0.5rem;
+  display: inline-block;
+}
+
+/* Until we have the download links on the details page, we still show toolbar option */
+.BRlending #theatre-ia-wrap .BRtoolbarSectionLending,
+.BRaccess #theatre-ia-wrap .BRtoolbarSectionLending,
+.BRlending #theatre-ia-wrap .BRtoolbarSectionTitle,
+.BRaccess #theatre-ia-wrap .BRtoolbarSectionTitle {
+  display: inline;
+}
+
+
+/* Mobile Only */
+@media (max-width: 600px) {
+  .IABookReaderMessageWrapper .IABookReaderLoader {
+    margin-top: 14px;
+    margin-right: 14px;
+    margin-left: 4px;
+  }
+}
+
+/**** /stream|embed/ page styles ******/
+.br-is-embedded #BookReader .BRicon.full {
+  display: none; /* Hide fs icon as it is FS in nature */
+}
+/**** End /stream|embed/ page styles ******/
+
+
+/****** Details page styles *****/
+/* note, !imporant is needed, because archive.css gets loaded AFTER this file. */
+body.navia #theatre-ia > .row {
+  max-width: 100% !important;
+}
+body.navia #theatre-ia-wrap {
+  min-height: 1px !important;
+}
+#theatre-ia {
+  padding: 0 !important;
+}
+#theatre-ia-wrap {
+  padding: 0;
+}
+
+.lendable-book #BookReader {
+  height: calc(100vh - 25rem); /* keep peek-a-boo bottom when in-page*/
+}
+
+#BookReader {
+  height: calc(100vh - 20rem); /* keep peek-a-boo bottom when in-page*/
+}
+
+#theatre-ia-wrap .BRtoolbarSectionInfo,
+#theatre-ia-wrap .BRtoolbarSectionTitle,
+#theatre-ia-wrap .BRtoolbarSectionLending,
+#theatre-ia-wrap .BRtoolbarSectionDownload {
+  display: none;
+}
+#theatre-ia-wrap .fullscreenActive .BRtoolbarSectionTitle {
+  display: inline;
+}
+
+/** Preview styles */
+.BRpreview .BRtoolbar {
+  padding: 0;
+}
+
+@media (min-width: 801px) {
+  #theatre-ia-wrap .BRpreview .fullscreenActive .BRtoolbar {
+    padding: 10px 10px 4px 10px;
+  }
+}
+
+.BookReaderThumbnail,
+.BookReaderTextsIcon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 80%;
+  transform: translate(-50%, -50%);
+}
+
+body.navia .container-ia .iconochive-texts.BookReaderTextsIcon {
+  font-size: 200px;
+  color: #333333;
+}
+
+body.navia .container-ia .iconochive-texts.BookReaderTextsIcon:before {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Fullscreen mode styles */
+#BookReader.fullscreenActive {
+  height: 100% !important;
+  position: fixed !important;
+}
+
+.BRfullscreenActive .theatre-ia-wrap,
+.BRfullscreenActive ia-music-theater,
+.BRfullscreenActive ia-book-theater,
+ia-book-theater[viewportinfullscreen]
+ia-music-theater[fullscreen] {
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  min-height: 100%;
+}
+
+/* Liner notes in fullscreen */
+.BRfullscreenActive ia-music-theater {
+  background-color: black;
+  z-index: 11; /* related music badges at z-index: 10 */
+}
+.BRfullscreenActive play-av {
+  display: none;
+}
+
+/* Zendesk help button, Safari z-index fix */
+.BRfullscreenActive iframe#launcher {
+  z-index: unset;
+}
+
+.BRfullscreenActive .ia-banners,
+.BRfullscreenActive #donate_banner {
+  display: none;
+}
+
+.BRfullscreenActive .BookReaderMessageFoot,
+.BRfullscreenActive .BookReaderMessageFoot > div {
+  display: inline;
+}
+
+.BRfullscreenActive .print-disability-link {
+  text-indent: -8695px;
+  vertical-align: middle;
+}
+/* End Fullscreen Styles */
+
+/* Bookmarks-specific styles */
+.BRpagecontainer {
+  --iconWidth: 16px;
+  --iconHeight: 24px;
+  --iconFillColor: #000;
+}
+
+.BRpagecontainer .bookmark-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 2;
+  opacity: 0;
+}
+.BRtwopageview .BRpagecontainer[data-side="L"] .bookmark-button {
+  right: auto;
+  left: 0;
+}
+
+.BRpagecontainer .bookmark-button.filled {
+  opacity: 1;
+}
+
+.BRpagecontainer .bookmark-button.default {
+  --iconFillColor: var(--defaultBookmarkColor);
+}
+.BRpagecontainer .bookmark-button.blue {
+  --iconFillColor: var(--blueBookmarkColor);
+}
+.BRpagecontainer .bookmark-button.red {
+  --iconFillColor: var(--redBookmarkColor);
+}
+.BRpagecontainer .bookmark-button.green {
+  --iconFillColor: var(--greenBookmarkColor);
+}
+.BRpagecontainer .bookmark-button.yellow {
+  --iconFillColor: var(--yellowBookmarkColor);
+}
+
+/* item navigator */
+html {
+  --primaryBGColor: var(--black, #000);
+  --secondaryBGColor: #222;
+  --tertiaryBGColor: #333;
+  --primaryTextColor: var(--white, #fff);
+  --primaryCTAFill: #194880;
+  --primaryCTABorder: #c5d1df;
+  --secondaryCTAFill: #333;
+  --secondaryCTABorder: #999;
+  --primaryErrorCTAFill: #e51c26;
+  --primaryErrorCTABorder: #f8c6c8;
+  --defaultBookmarkColor: #eb3223;
+  --redBookmarkColor: #eb3223;
+  --blueBookmarkColor: #0023f5;
+  --greenBookmarkColor: #75ef4c;
+}
+
+#BookReader,
+ia-book-theater {
+  min-height: 60vh;
+}
+
+
+/* music theater */
+@media (min-width: 768px) and (max-width: 1199px) {
+  ia-music-theater[displaystyle="two-col"][noimageavailable] {
+    min-height: 400px;
+    height: auto;
+  }
+  ia-music-theater[displaystyle="two-col"] #BookReader {
+    height: var(--linerNotesInTheaterHeight, calc(100vh - 20rem)); /* keep peek-a-boo bottom when in-page*/
+    min-height: unset;
+  }
+}
+@media (min-width: 1200px) {
+  ia-music-theater[displaystyle="two-col"][noimageavailable] {
+    min-height: inherit;
+    height: auto;
+  }
+  ia-music-theater[displaystyle="two-col"] #BookReader {
+    height: var(--linerNotesInTheaterHeight, calc(100vh - 22rem)); /* keep peek-a-boo bottom when in-page*/
+    min-height: unset;
+  }
+}
+
+ia-music-theater[displaystyle="one-col"] #BookReader {
+  min-height: 260px !important;
+  height: 260px !important;
+  border: 1px solid transparent;
+}
+ia-music-theater[displaystyle="one-col"] div[slot="image"] img {
+  min-height: 200px !important;
+  height: 200px !important;
+  border: 1px solid transparent;
+}
+ia-music-theater[displaystyle="one-col"] #BookReader.fullscreenActive {
+  min-height: unset !important;
+  height: var(--linerNotesFullScreenHeight, 100%) !important;
+}
+ia-music-theater[linernotesfullscreen] {
+  max-width: unset;
+}
+
+ia-book-theater {
+  display: block;
+  width: 100%;
+  color: var(--primaryTextColor);
+  --menuButtonLabelDisplay: block;
+  --menuWidth: 320px;
+  --menuSliderBg: var(--secondaryBGColor);
+  --activeButtonBg: var(--tertiaryBGColor);
+  --animationTiming: 100ms;
+  --iconFillColor: var(--primaryTextColor);
+  --iconStrokeColor: var(--primaryTextColor);
+  --subpanelRightBorderColor: var(--secondaryCTABorder);
+  --menuSliderHeaderIconHeight: 2rem;
+  --menuSliderHeaderIconWidth: 2rem;
+  --iconWidth: 2.4rem;
+  --iconHeight: 2.4rem;
+  --shareLinkColor: var(--primaryTextColor);
+  --shareIconBorder: var(--primaryTextColor);
+  --shareIconBg: var(--secondaryBGColor);
+  --activityIndicatorLoadingDotColor: var(--primaryTextColor);
+  --activityIndicatorLoadingRingColor: var(--primaryTextColor);
+}
+
+/* LENDING FLOW NEEDS */
+ia-book-actions {
+  background: var(--secondaryBGColor, #222);
+}
+
+body.modal-manager-open {
+  overflow: hidden;
+}

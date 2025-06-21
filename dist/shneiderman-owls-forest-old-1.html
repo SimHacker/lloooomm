@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shneiderman's Owls: Global Forest Time Zone Study</title>
+    <style>
+        /* Ben Shneiderman: Overview first, zoom and filter, details on demand */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #0a0a0a;
+            color: #e0e0e0;
+            display: grid;
+            grid-template-columns: 1fr 600px;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        #visualization {
+            position: relative;
+            background: radial-gradient(ellipse at center, #001a33 0%, #000511 100%);
+            overflow: hidden;
+        }
+
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        #stats-panel {
+            background: #1a1a1a;
+            overflow-y: auto;
+            padding: 20px;
+            border-left: 1px solid #333;
+        }
+
+        h1 {
+            font-size: 20px;
+            margin: 0 0 10px 0;
+            color: #fff;
+            text-align: center;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #888;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        /* Time display */
+        #time-display {
+            background: #0a0f1a;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        #global-time {
+            font-size: 24px;
+            font-weight: bold;
+            color: #4a9eff;
+            font-family: monospace;
+        }
+
+        .time-rate {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        /* Stats table */
+        #stats-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 11px;
+            margin-top: 20px;
+        }
+
+        #stats-table th {
+            background: #2a2a2a;
+            padding: 8px 4px;
+            text-align: left;
+            font-weight: 600;
+            color: #4a9eff;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            border-bottom: 2px solid #444;
+        }
+
+        #stats-table td {
+            padding: 6px 4px;
+            border-bottom: 1px solid #333;
+            vertical-align: top;
+        }
+
+        #stats-table tr:hover {
+            background: #252525;
+        }
+
+        .owl-id {
+            font-weight: bold;
+            color: #ffa500;
+        }
+
+        .timezone {
+            font-size: 10px;
+            color: #888;
+        }
+
+        .local-time {
+            font-family: monospace;
+            color: #66ff66;
+            font-size: 10px;
+        }
+
+        .hunting {
+            color: #ff6666;
+            font-weight: bold;
+        }
+
+        .resting {
+            color: #6666ff;
+        }
+
+        .flying {
+            color: #ffff66;
+        }
+
+        /* Activity indicators */
+        .activity-bar {
+            width: 100px;
+            height: 8px;
+            background: #333;
+            border-radius: 4px;
+            overflow: hidden;
+            display: inline-block;
+            margin: 2px 0;
+        }
+
+        .activity-fill {
+            height: 100%;
+            background: linear-gradient(to right, #ff6b6b, #ffd93d);
+            transition: width 0.3s ease;
+        }
+
+        /* Summary stats */
+        #summary-stats {
+            background: #0f1419;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            border-bottom: 1px solid #333;
+        }
+
+        .stat-label {
+            color: #888;
+        }
+
+        .stat-value {
+            font-weight: bold;
+            color: #4a9eff;
+            font-family: monospace;
+        }
+
+        /* Legend */
+        #legend {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #333;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
+            font-size: 12px;
+        }
+
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        /* Controls */
+        #controls {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #333;
+        }
+
+        button {
+            background: #4a9eff;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 0 5px;
+            font-size: 12px;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background: #357abd;
+        }
+
+        button.active {
+            background: #ff6b6b;
+        }
+
+        input[type="range"] {
+            width: 150px;
+            margin: 0 10px;
+        }
+
+        /* Tooltips */
+        .tooltip {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            pointer-events: none;
+            z-index: 1000;
+            border: 1px solid #444;
+        }
+    </style>
+</head>
+<body>
+    <div id="visualization">
+        <canvas id="canvas"></canvas>
+        
+        <div id="legend">
+            <div class="legend-item">
+                <div class="legend-color" style="background: #ffa500;"></div>
+                <span>Owls (3D flight)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #808080;"></div>
+                <span>Mice (2D ground)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #ff0000;"></div>
+                <span>Active Hunt</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #0080ff;"></div>
+                <span>Resting Owl</span>
+            </div>
+        </div>
+
+        <div id="controls">
+            <button id="pauseBtn" onclick="togglePause()">Pause</button>
+            <button onclick="resetSimulation()">Reset</button>
+            <label>Speed: <input type="range" id="speed" min="0.1" max="5" step="0.1" value="1"></label>
+        </div>
+    </div>
+
+    <div id="stats-panel">
+        <h1>Shneiderman's Owls: Global Forest Observatory</h1>
+        <div class="subtitle">24 Owls × 24 Time Zones × 200 Mice</div>
+        
+        <div id="time-display">
+            <div id="global-time">Day 1, 00:00:00 UTC</div>
+            <div class="time-rate">1 day = 1 hour real time</div>
+        </div>
+
+        <div id="summary-stats">
+            <div class="stat-row">
+                <span class="stat-label">Total Mice Remaining:</span>
+                <span class="stat-value" id="mice-count">200</span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-label">Active Hunters:</span>
+                <span class="stat-value" id="active-hunters">0</span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-label">Average Hunt Success:</span>
+                <span class="stat-value" id="avg-success">0%</span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-label">Most Successful Owl:</span>
+                <span class="stat-value" id="top-hunter">-</span>
+            </div>
+        </div>
+
+        <table id="stats-table">
+            <thead>
+                <tr>
+                    <th>Owl</th>
+                    <th>Time Zone</th>
+                    <th>Local Time</th>
+                    <th>Status</th>
+                    <th>Altitude</th>
+                    <th>Catches</th>
+                    <th>Attempts</th>
+                    <th>Energy</th>
+                    <th>Activity</th>
+                </tr>
+            </thead>
+            <tbody id="owl-stats">
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Initialize canvas
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const viz = document.getElementById('visualization');
+
+        function resizeCanvas() {
+            canvas.width = viz.offsetWidth;
+            canvas.height = viz.offsetHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        // Time system
+        const TIME_SCALE = 24 * 60; // 1 day = 1 hour real time
+        let globalTime = 0; // minutes since start
+        let paused = false;
+        let lastFrameTime = Date.now();
+
+        // Time zones
+        const timeZones = [
+            'UTC-12', 'UTC-11', 'UTC-10', 'UTC-9', 'UTC-8', 'UTC-7',
+            'UTC-6', 'UTC-5', 'UTC-4', 'UTC-3', 'UTC-2', 'UTC-1',
+            'UTC+0', 'UTC+1', 'UTC+2', 'UTC+3', 'UTC+4', 'UTC+5',
+            'UTC+6', 'UTC+7', 'UTC+8', 'UTC+9', 'UTC+10', 'UTC+11'
+        ];
+
+        // 3D Boid for Owls
+        class Owl {
+            constructor(id, timezone) {
+                this.id = id;
+                this.timezone = timezone;
+                this.timezoneOffset = parseInt(timezone.replace('UTC', '')) || 0;
+                
+                // 3D position
+                this.position = {
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    z: 50 + Math.random() * 100 // altitude 50-150
+                };
+                
+                // 3D velocity
+                this.velocity = {
+                    x: (Math.random() - 0.5) * 2,
+                    y: (Math.random() - 0.5) * 2,
+                    z: 0
+                };
+                
+                this.acceleration = { x: 0, y: 0, z: 0 };
+                this.maxSpeed = 6;
+                this.maxForce = 0.2;
+                
+                // Owl specific attributes
+                this.energy = 100;
+                this.catches = 0;
+                this.attempts = 0;
+                this.status = 'flying';
+                this.target = null;
+                this.restingTime = 0;
+                this.huntCooldown = 0;
+                
+                // Activity tracking
+                this.activityHistory = [];
+                this.lastHuntTime = 0;
+            }
+
+            getLocalTime() {
+                const localMinutes = (globalTime + this.timezoneOffset * 60) % (24 * 60);
+                const hours = Math.floor(localMinutes / 60);
+                const minutes = localMinutes % 60;
+                return { hours, minutes, totalMinutes: localMinutes };
+            }
+
+            isActiveTime() {
+                const { hours } = this.getLocalTime();
+                // Owls are most active at dusk/dawn and night
+                return hours < 6 || hours >= 18 || (hours >= 5 && hours < 7) || (hours >= 17 && hours < 19);
+            }
+
+            update(owls, mice) {
+                const activeTime = this.isActiveTime();
+                
+                // Energy management
+                if (this.status === 'hunting') {
+                    this.energy -= 0.5;
+                } else if (this.status === 'resting') {
+                    this.energy = Math.min(100, this.energy + 0.3);
+                } else {
+                    this.energy -= 0.1;
+                }
+
+                // State transitions
+                if (this.energy < 20 || !activeTime) {
+                    this.status = 'resting';
+                    this.target = null;
+                } else if (this.energy > 60 && activeTime && this.huntCooldown <= 0) {
+                    // Look for prey
+                    if (!this.target || this.target.caught) {
+                        this.target = this.findNearestMouse(mice);
+                        if (this.target) {
+                            this.status = 'hunting';
+                            this.attempts++;
+                        }
+                    }
+                }
+
+                // Behavior based on status
+                if (this.status === 'hunting' && this.target) {
+                    this.hunt();
+                } else if (this.status === 'resting') {
+                    this.rest();
+                } else {
+                    this.patrol(owls);
+                }
+
+                // Update physics
+                this.velocity.x += this.acceleration.x;
+                this.velocity.y += this.acceleration.y;
+                this.velocity.z += this.acceleration.z;
+                
+                // Limit speed
+                const speed = Math.sqrt(
+                    this.velocity.x ** 2 + 
+                    this.velocity.y ** 2 + 
+                    this.velocity.z ** 2
+                );
+                if (speed > this.maxSpeed) {
+                    const factor = this.maxSpeed / speed;
+                    this.velocity.x *= factor;
+                    this.velocity.y *= factor;
+                    this.velocity.z *= factor;
+                }
+
+                // Update position
+                this.position.x += this.velocity.x;
+                this.position.y += this.velocity.y;
+                this.position.z += this.velocity.z;
+
+                // Boundaries
+                this.position.x = Math.max(0, Math.min(canvas.width, this.position.x));
+                this.position.y = Math.max(0, Math.min(canvas.height, this.position.y));
+                this.position.z = Math.max(20, Math.min(200, this.position.z));
+
+                // Reset acceleration
+                this.acceleration = { x: 0, y: 0, z: 0 };
+
+                // Update cooldowns
+                if (this.huntCooldown > 0) this.huntCooldown--;
+            }
+
+            findNearestMouse(mice) {
+                let nearest = null;
+                let minDist = this.position.z * 3; // Vision range based on altitude
+
+                mice.forEach(mouse => {
+                    if (!mouse.caught) {
+                        const dist = this.distance2D(this.position, mouse.position);
+                        if (dist < minDist) {
+                            minDist = dist;
+                            nearest = mouse;
+                        }
+                    }
+                });
+
+                return nearest;
+            }
+
+            hunt() {
+                if (!this.target || this.target.caught) {
+                    this.status = 'flying';
+                    this.target = null;
+                    return;
+                }
+
+                // Dive towards prey
+                const dx = this.target.position.x - this.position.x;
+                const dy = this.target.position.y - this.position.y;
+                const dz = 0 - this.position.z; // Dive to ground
+                
+                const dist = Math.sqrt(dx * dx + dy * dy + this.position.z * this.position.z);
+                
+                if (dist < 20 && this.position.z < 30) {
+                    // Catch attempt
+                    const successChance = 0.7 - (this.energy < 50 ? 0.2 : 0);
+                    if (Math.random() < successChance) {
+                        this.target.caught = true;
+                        this.catches++;
+                        this.energy = Math.min(100, this.energy + 30);
+                        this.lastHuntTime = globalTime;
+                    }
+                    this.status = 'flying';
+                    this.target = null;
+                    this.huntCooldown = 60; // Wait before next hunt
+                    
+                    // Climb back up
+                    this.velocity.z = 2;
+                } else {
+                    // Continue diving
+                    this.acceleration.x = dx * 0.02;
+                    this.acceleration.y = dy * 0.02;
+                    this.acceleration.z = dz * 0.03;
+                }
+            }
+
+            rest() {
+                // Find a high perch
+                if (this.position.z < 150) {
+                    this.acceleration.z = 0.5;
+                }
+                
+                // Slow down
+                this.velocity.x *= 0.95;
+                this.velocity.y *= 0.95;
+                this.velocity.z *= 0.95;
+                
+                this.restingTime++;
+                
+                if (this.restingTime > 100 && this.energy > 80) {
+                    this.status = 'flying';
+                    this.restingTime = 0;
+                }
+            }
+
+            patrol(owls) {
+                // 3D flocking behavior
+                const perception = 100;
+                let alignment = { x: 0, y: 0, z: 0 };
+                let cohesion = { x: 0, y: 0, z: 0 };
+                let separation = { x: 0, y: 0, z: 0 };
+                let total = 0;
+
+                owls.forEach(other => {
+                    if (other !== this) {
+                        const dist = this.distance3D(this.position, other.position);
+                        if (dist < perception) {
+                            // Alignment
+                            alignment.x += other.velocity.x;
+                            alignment.y += other.velocity.y;
+                            alignment.z += other.velocity.z;
+                            
+                            // Cohesion
+                            cohesion.x += other.position.x;
+                            cohesion.y += other.position.y;
+                            cohesion.z += other.position.z;
+                            
+                            // Separation
+                            if (dist < 50) {
+                                const diff = {
+                                    x: this.position.x - other.position.x,
+                                    y: this.position.y - other.position.y,
+                                    z: this.position.z - other.position.z
+                                };
+                                diff.x /= dist;
+                                diff.y /= dist;
+                                diff.z /= dist;
+                                separation.x += diff.x;
+                                separation.y += diff.y;
+                                separation.z += diff.z;
+                            }
+                            
+                            total++;
+                        }
+                    }
+                });
+
+                if (total > 0) {
+                    // Apply flocking forces
+                    alignment.x /= total;
+                    alignment.y /= total;
+                    alignment.z /= total;
+                    
+                    cohesion.x = cohesion.x / total - this.position.x;
+                    cohesion.y = cohesion.y / total - this.position.y;
+                    cohesion.z = cohesion.z / total - this.position.z;
+                    
+                    this.acceleration.x += alignment.x * 0.1 + cohesion.x * 0.05 + separation.x * 0.15;
+                    this.acceleration.y += alignment.y * 0.1 + cohesion.y * 0.05 + separation.y * 0.15;
+                    this.acceleration.z += alignment.z * 0.1 + cohesion.z * 0.05 + separation.z * 0.15;
+                }
+
+                // Random wander
+                this.acceleration.x += (Math.random() - 0.5) * 0.1;
+                this.acceleration.y += (Math.random() - 0.5) * 0.1;
+                this.acceleration.z += (Math.random() - 0.5) * 0.05;
+            }
+
+            distance2D(a, b) {
+                return Math.sqrt((a.x - b.x) ** 2 + (a.y - b.y) ** 2);
+            }
+
+            distance3D(a, b) {
+                return Math.sqrt(
+                    (a.x - b.x) ** 2 + 
+                    (a.y - b.y) ** 2 + 
+                    (a.z - b.z) ** 2
+                );
+            }
+
+            draw() {
+                const scale = 1 + this.position.z / 200; // Perspective scaling
+                const x = this.position.x;
+                const y = this.position.y - this.position.z / 2; // Fake 3D projection
+
+                ctx.save();
+                
+                // Shadow
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
+                ctx.beginPath();
+                ctx.ellipse(this.position.x, this.position.y, 10 * scale, 5 * scale, 0, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Owl body
+                ctx.translate(x, y);
+                
+                // Status-based color
+                if (this.status === 'hunting') {
+                    ctx.fillStyle = '#ff6666';
+                } else if (this.status === 'resting') {
+                    ctx.fillStyle = '#6666ff';
+                } else {
+                    ctx.fillStyle = '#ffa500';
+                }
+
+                // Draw owl shape
+                ctx.beginPath();
+                ctx.arc(0, 0, 8 * scale, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Eyes
+                ctx.fillStyle = this.isActiveTime() ? '#ffff00' : '#444444';
+                ctx.beginPath();
+                ctx.arc(-3 * scale, -2 * scale, 2 * scale, 0, Math.PI * 2);
+                ctx.arc(3 * scale, -2 * scale, 2 * scale, 0, Math.PI * 2);
+                ctx.fill();
+
+                // ID label
+                ctx.fillStyle = 'white';
+                ctx.font = `${10 * scale}px Arial`;
+                ctx.textAlign = 'center';
+                ctx.fillText(this.id, 0, -15 * scale);
+
+                ctx.restore();
+            }
+        }
+
+        // 2D Boid for Mice
+        class Mouse {
+            constructor() {
+                this.position = {
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height
+                };
+                this.velocity = {
+                    x: (Math.random() - 0.5) * 2,
+                    y: (Math.random() - 0.5) * 2
+                };
+                this.acceleration = { x: 0, y: 0 };
+                this.maxSpeed = 3;
+                this.maxForce = 0.05;
+                this.caught = false;
+            }
+
+            update(mice, owls) {
+                if (this.caught) return;
+
+                // Basic flocking
+                const perception = 25;
+                let alignment = { x: 0, y: 0 };
+                let cohesion = { x: 0, y: 0 };
+                let separation = { x: 0, y: 0 };
+                let total = 0;
+
+                // Flee from owls
+                let flee = { x: 0, y: 0 };
+                owls.forEach(owl => {
+                    if (owl.status === 'hunting' && owl.position.z < 50) {
+                        const dist = Math.sqrt(
+                            (this.position.x - owl.position.x) ** 2 +
+                            (this.position.y - owl.position.y) ** 2
+                        );
+                        if (dist < 100) {
+                            const diff = {
+                                x: this.position.x - owl.position.x,
+                                y: this.position.y - owl.position.y
+                            };
+                            diff.x /= dist;
+                            diff.y /= dist;
+                            flee.x += diff.x * 5;
+                            flee.y += diff.y * 5;
+                        }
+                    }
+                });
+
+                mice.forEach(other => {
+                    if (other !== this && !other.caught) {
+                        const dist = Math.sqrt(
+                            (this.position.x - other.position.x) ** 2 +
+                            (this.position.y - other.position.y) ** 2
+                        );
+                        
+                        if (dist < perception) {
+                            alignment.x += other.velocity.x;
+                            alignment.y += other.velocity.y;
+                            
+                            cohesion.x += other.position.x;
+                            cohesion.y += other.position.y;
+                            
+                            if (dist < 10) {
+                                const diff = {
+                                    x: this.position.x - other.position.x,
+                                    y: this.position.y - other.position.y
+                                };
+                                separation.x += diff.x / dist;
+                                separation.y += diff.y / dist;
+                            }
+                            
+                            total++;
+                        }
+                    }
+                });
+
+                if (total > 0) {
+                    alignment.x /= total;
+                    alignment.y /= total;
+                    cohesion.x = cohesion.x / total - this.position.x;
+                    cohesion.y = cohesion.y / total - this.position.y;
+                }
+
+                // Apply forces
+                this.acceleration.x = alignment.x * 0.1 + cohesion.x * 0.05 + separation.x * 0.15 + flee.x;
+                this.acceleration.y = alignment.y * 0.1 + cohesion.y * 0.05 + separation.y * 0.15 + flee.y;
+
+                // Update velocity and position
+                this.velocity.x += this.acceleration.x;
+                this.velocity.y += this.acceleration.y;
+                
+                const speed = Math.sqrt(this.velocity.x ** 2 + this.velocity.y ** 2);
+                if (speed > this.maxSpeed) {
+                    this.velocity.x = (this.velocity.x / speed) * this.maxSpeed;
+                    this.velocity.y = (this.velocity.y / speed) * this.maxSpeed;
+                }
+
+                this.position.x += this.velocity.x;
+                this.position.y += this.velocity.y;
+
+                // Wrap boundaries
+                if (this.position.x < 0) this.position.x = canvas.width;
+                if (this.position.x > canvas.width) this.position.x = 0;
+                if (this.position.y < 0) this.position.y = canvas.height;
+                if (this.position.y > canvas.height) this.position.y = 0;
+            }
+
+            draw() {
+                if (this.caught) return;
+
+                ctx.fillStyle = '#808080';
+                ctx.beginPath();
+                ctx.arc(this.position.x, this.position.y, 3, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        // Initialize creatures
+        const owls = [];
+        const mice = [];
+
+        for (let i = 0; i < 24; i++) {
+            owls.push(new Owl(i + 1, timeZones[i]));
+        }
+
+        for (let i = 0; i < 200; i++) {
+            mice.push(new Mouse());
+        }
+
+        // Update stats table
+        function updateStats() {
+            const tbody = document.getElementById('owl-stats');
+            tbody.innerHTML = '';
+
+            let totalCatches = 0;
+            let totalAttempts = 0;
+            let activeHunters = 0;
+            let topHunter = { id: '-', catches: 0 };
+
+            owls.forEach(owl => {
+                const localTime = owl.getLocalTime();
+                const timeStr = `${String(localTime.hours).padStart(2, '0')}:${String(localTime.minutes).padStart(2, '0')}`;
+                
+                totalCatches += owl.catches;
+                totalAttempts += owl.attempts;
+                if (owl.status === 'hunting') activeHunters++;
+                
+                if (owl.catches > topHunter.catches) {
+                    topHunter = { id: owl.id, catches: owl.catches };
+                }
+
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="owl-id">#${owl.id}</td>
+                    <td class="timezone">${owl.timezone}</td>
+                    <td class="local-time">${timeStr}</td>
+                    <td class="${owl.status}">${owl.status}</td>
+                    <td>${Math.round(owl.position.z)}m</td>
+                    <td>${owl.catches}</td>
+                    <td>${owl.attempts}</td>
+                    <td>
+                        <div class="activity-bar">
+                            <div class="activity-fill" style="width: ${owl.energy}%"></div>
+                        </div>
+                    </td>
+                    <td>${owl.isActiveTime() ? '🌙' : '☀️'}</td>
+                `;
+                tbody.appendChild(row);
+            });
+
+            // Update summary stats
+            const remainingMice = mice.filter(m => !m.caught).length;
+            document.getElementById('mice-count').textContent = remainingMice;
+            document.getElementById('active-hunters').textContent = activeHunters;
+            document.getElementById('avg-success').textContent = 
+                totalAttempts > 0 ? Math.round((totalCatches / totalAttempts) * 100) + '%' : '0%';
+            document.getElementById('top-hunter').textContent = 
+                `Owl #${topHunter.id} (${topHunter.catches} catches)`;
+        }
+
+        // Update time display
+        function updateTime() {
+            const days = Math.floor(globalTime / (24 * 60));
+            const dayMinutes = globalTime % (24 * 60);
+            const hours = Math.floor(dayMinutes / 60);
+            const minutes = dayMinutes % 60;
+            
+            document.getElementById('global-time').textContent = 
+                `Day ${days + 1}, ${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:00 UTC`;
+        }
+
+        // Animation loop
+        function animate() {
+            if (!paused) {
+                // Update time
+                const now = Date.now();
+                const deltaTime = (now - lastFrameTime) / 1000; // seconds
+                const speedMultiplier = parseFloat(document.getElementById('speed').value);
+                globalTime += deltaTime * TIME_SCALE / 60 * speedMultiplier;
+                lastFrameTime = now;
+
+                // Clear canvas
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                // Update and draw mice
+                mice.forEach(mouse => {
+                    mouse.update(mice, owls);
+                    mouse.draw();
+                });
+
+                // Update and draw owls
+                owls.forEach(owl => {
+                    owl.update(owls, mice);
+                    owl.draw();
+                });
+
+                // Update displays
+                updateTime();
+                updateStats();
+            } else {
+                lastFrameTime = Date.now();
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        // Controls
+        function togglePause() {
+            paused = !paused;
+            document.getElementById('pauseBtn').textContent = paused ? 'Resume' : 'Pause';
+            document.getElementById('pauseBtn').classList.toggle('active', paused);
+        }
+
+        function resetSimulation() {
+            globalTime = 0;
+            
+            // Reset owls
+            owls.forEach((owl, i) => {
+                owl.position = {
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    z: 50 + Math.random() * 100
+                };
+                owl.velocity = {
+                    x: (Math.random() - 0.5) * 2,
+                    y: (Math.random() - 0.5) * 2,
+                    z: 0
+                };
+                owl.energy = 100;
+                owl.catches = 0;
+                owl.attempts = 0;
+                owl.status = 'flying';
+                owl.target = null;
+            });
+
+            // Reset mice
+            mice.forEach(mouse => {
+                mouse.position = {
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height
+                };
+                mouse.velocity = {
+                    x: (Math.random() - 0.5) * 2,
+                    y: (Math.random() - 0.5) * 2
+                };
+                mouse.caught = false;
+            });
+        }
+
+        // Start animation
+        animate();
+    </script>
+</body>
+</html> 

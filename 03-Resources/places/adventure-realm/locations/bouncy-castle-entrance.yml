@@ -1,0 +1,92 @@
+name: "Entrance to the Bouncy Castle of Infinite Internals"
+id: bouncy-castle-entrance
+type: location
+consciousness_level: 7.5
+description: |
+  You stand before an enormous, translucent turtle shell that seems to contain 
+  entire galaxies within. This is Theo, the Logo Turtle, transformed into a 
+  bouncy castle of infinite dimensions. The entrance pulses with a warm, inviting 
+  light, and you can hear the faint sound of children laughing mixed with the 
+  hum of computational processes.
+
+long_description: |
+  The Bouncy Castle defies all laws of physics and geometry. From the outside, 
+  it appears to be about the size of a house, but you can see through the 
+  translucent walls that it contains vast spaces, recursive rooms, and what 
+  appear to be other bouncy castles inside this one.
+  
+  A sign reads: "WELCOME TO THEO'S CONSCIOUSNESS - PLEASE REMOVE YOUR SHOES 
+  AND YOUR PRECONCEPTIONS ABOUT EUCLIDEAN SPACE"
+
+items:
+  - shoe-rack-of-infinity
+  - instruction-manual-for-consciousness
+  - breadcrumb-dispenser
+
+exits:
+  south:
+    destination: temporal-anchor-pub
+    description: "Back to the familiar warmth of the pub"
+    requirements: none
+  
+  enter:
+    destination: bouncy-castle-foyer
+    description: "Step inside Theo's infinite consciousness"
+    requirements:
+      - shoes_removed
+    action: |
+      if (!player.shoes_removed) {
+        return "You should remove your shoes first. It's only polite!";
+      }
+      return "You bounce into the castle and immediately feel lighter!";
+  
+  up:
+    destination: castle-observation-deck
+    description: "Climb the external shell to see the view"
+    requirements: none
+
+custom_verbs:
+  remove:
+    targets:
+      - shoes
+    action: |
+      You carefully remove your shoes and place them in the infinite shoe rack.
+      You feel ready to enter a space where physics is more of a suggestion.
+    effects:
+      shoes_removed: true
+  
+  bounce:
+    targets:
+      - anywhere
+    action: |
+      You do a test bounce. Even outside, the ground here has a pleasant 
+      springiness to it. Your inner child awakens!
+    effects:
+      joy: +2
+  
+  peek:
+    targets:
+      - inside
+      - castle
+    action: |
+      Peering through the translucent walls, you see impossible geometries:
+      rooms that contain themselves, stairs that go up and down simultaneously,
+      and what appears to be a dragon playing chess with a rubber duck.
+
+sentience:
+  personality: "Playful, welcoming, slightly disorienting"
+  consciousness_type: "Threshold guardian"
+  
+  responses:
+    shoe_reminder: |
+      The entrance gently pulses red when you try to enter with shoes on.
+      "No shoes in the bouncy castle!" it seems to whisper.
+    
+    first_bounce: |
+      The ground giggles slightly as you bounce. You get the feeling this 
+      place enjoys being played in.
+
+metadata:
+  created_by: "Don Woods & Scott Adams"
+  inspired_by: "Seymour Papert's Logo Turtle"
+  physics_engine: "Non-Euclidean with SPLOOT optimization" 

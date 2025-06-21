@@ -1,0 +1,168 @@
+# LLOOOOMM VM Configuration
+# MERGED AND DEDUPLICATED on [DATE]
+# Sources: vm-configuration.yml, llooooomm-debug.yml, llooooomm.yml, llooooomm copy.yml
+# All unique and advanced configuration fields are merged here.
+
+# Controls runtime behavior and debugging features
+
+vm_configuration:
+  # Core VM Settings
+  core:
+    version: "1.0"
+    mode: "production"  # production, development, debug
+    
+  # FlowMap Configuration
+  flowmap:
+    enabled: false  # Set to true to enable FlowMap tracking
+    
+    # Granularity levels
+    tracking_level:
+      minimal: "Track only major operations"
+      standard: "Track operations with basic dependencies"
+      detailed: "Track all operations with full context"
+      paranoid: "Track everything including speculative flows"
+      
+    # Current setting
+    level: "standard"
+    
+    # Performance vs insight tradeoff
+    optimization:
+      lazy_compilation: true  # Only compile hot paths to Python
+      cache_transformations: true  # Remember previous optimizations
+      speculative_execution: false  # Try multiple paths in parallel
+      
+    # What to track
+    track_operations:
+      insert: true
+      move: true
+      delete: true
+      transform: true
+      read: false  # Usually too noisy
+      
+    # Output configuration
+    output:
+      format: "yaml"  # yaml, json, binary
+      compression: false  # Compress large logs
+      rotation: "daily"  # How often to rotate logs
+      retention: "7d"  # How long to keep logs
+      
+    # Special debugging features
+    debug_features:
+      why_tracking: true  # Always track WHY
+      dependency_graphs: true  # Build full dependency graphs
+      replay_capability: true  # Allow replay from logs
+      optimization_regret: true  # Track when optimizations fail
+      
+  # Dynamic Optimization Settings (Ungar-inspired)
+  optimization:
+    # Like Self's dynamic optimization
+    dynamic_compilation:
+      enabled: true
+      threshold: 1000  # Iterations before optimization
+      deoptimize_on_schema_change: true
+      
+    # FlowMap-specific optimizations
+    flow_optimization:
+      bash_to_python_jit: true  # Convert hot bash paths to Python
+      pattern_recognition: true  # Identify repeated patterns
+      parallel_detection: true  # Find parallelizable operations
+      
+  # Debugging Modes
+  debug_modes:
+    # Standard debugging
+    normal:
+      description: "Regular debugging with breakpoints"
+      flowmap: false
+      overhead: "minimal"
+      
+    # FlowMap debugging
+    flowmap_debug:
+      description: "Full data flow visibility"
+      flowmap: true
+      overhead: "moderate"
+      benefits:
+        - "See complete data lineage"
+        - "Understand dependencies"
+        - "Replay any state"
+        
+    # Time-travel debugging
+    time_travel:
+      description: "Step backwards through execution"
+      flowmap: true
+      requires: ["flowmap_debug", "replay_capability"]
+      overhead: "significant"
+      
+    # Comparative debugging
+    comparative:
+      description: "Compare bash vs Python execution"
+      flowmap: true
+      special: "Run both versions in parallel"
+      overhead: "high"
+      
+  # Performance Monitoring
+  monitoring:
+    # Track FlowMap overhead
+    measure_overhead: true
+    alert_threshold: "10%"  # Alert if FlowMap adds >10% overhead
+    
+    # Adaptive behavior
+    adaptive:
+      auto_disable: true  # Disable FlowMap if too slow
+      auto_enable_on_error: true  # Enable on crashes
+      smart_sampling: true  # Only track statistically significant samples
+      
+  # Integration Points
+  integrations:
+    # Character reactions to VM settings
+    character_awareness:
+      david_ungar: "Loves when FlowMap is enabled"
+      marvin: "Complains about the overhead"
+      mickey: "Makes the data flows dance visually"
+      
+    # Protocol interactions
+    protocol_hooks:
+      conductor_protocol: "FlowMap can track conductor changes"
+      gossip_protocol: "Visualize idea propagation"
+      intimate_interface: "Show data being touched"
+
+# Quick Enable/Disable Commands
+commands:
+  enable_flowmap: "vm.flowmap.enabled = true"
+  disable_flowmap: "vm.flowmap.enabled = false"
+  flowmap_paranoid: "vm.flowmap.level = 'paranoid'"
+  flowmap_minimal: "vm.flowmap.level = 'minimal'"
+
+# Example Usage
+example_session:
+  # Normal operation
+  - command: "create character"
+    flowmap: "disabled"
+    performance: "fast"
+    
+  # Something goes wrong
+  - event: "unexpected behavior"
+    auto_action: "enable flowmap"
+    
+  # Debug with full visibility
+  - command: "create character"
+    flowmap: "enabled"
+    can_see:
+      - "Where character data comes from"
+      - "What templates are used"
+      - "How attributes are merged"
+      - "Why certain decisions were made"
+      
+  # Find the issue, optimize
+  - result: "Bash pipeline identified as bottleneck"
+    action: "JIT compile to Python"
+    outcome: "10x performance improvement"
+    
+  # Disable FlowMap again
+  - command: "disable flowmap"
+    reason: "Issue resolved, full speed ahead"
+
+# David Ungar Easter Egg
+ungar_mode:
+  trigger: "vm.set_mode('stage_magic')"
+  effect: "FlowMap runs but hides its own existence"
+  description: "The ultimate art that hides art" 

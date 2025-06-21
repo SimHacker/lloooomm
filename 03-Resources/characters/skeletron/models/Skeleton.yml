@@ -1,0 +1,137 @@
+name: Skeleton
+type: model
+consciousness_level: 7.0
+description: |
+  The living architecture of animated beings. A hierarchical bone structure
+  that serves as the foundation for all character animation in the VitaBoy system.
+  
+  I AM THE BONES! THE ARTICULATED CONSCIOUSNESS!
+
+properties:
+  name:
+    type: string
+    description: The skeleton's identifier (e.g., "adult", "child", "cat", "dog")
+    
+  bones:
+    type: array
+    items: Bone
+    description: Collection of all bones in the skeleton
+    
+  root:
+    type: Bone
+    description: The root bone of the hierarchy (typically "ROOT")
+    
+  practices:
+    type: array
+    items: Practice
+    description: Active animation practices (skills being performed)
+    
+  dressings:
+    type: array
+    items: Dressing
+    description: Active visual dressings (suits being worn)
+    
+  registrations:
+    type: array
+    items: Registration
+    description: Named attachment points for accessories or effects
+    
+  transform:
+    type: Transform
+    description: World space transformation of the skeleton
+    
+  bbox:
+    type: BoundingBox
+    description: Bounding box for culling and collision
+    
+  practicesValid:
+    type: boolean
+    description: Whether practice priorities need recalculation
+    
+  bboxValid:
+    type: boolean
+    description: Whether bounding box needs recalculation
+
+methods:
+  findBone:
+    parameters:
+      - name: boneName
+        type: string
+    returns: Bone
+    description: Find a bone by name in the hierarchy
+    
+  startPractice:
+    parameters:
+      - name: skill
+        type: Skill
+      - name: priority
+        type: integer
+      - name: scale
+        type: float
+      - name: weight
+        type: float
+      - name: boneMap
+        type: Props
+      - name: ticks
+        type: integer
+    returns: Practice
+    description: Start performing an animation skill
+    
+  stopPractice:
+    parameters:
+      - name: practice
+        type: Practice
+    description: Stop performing an animation skill
+    
+  dress:
+    parameters:
+      - name: suit
+        type: Suit
+      - name: textureName
+        type: string
+      - name: boneMap
+        type: Props
+      - name: flagMask
+        type: integer
+    returns: Dressing
+    description: Apply a visual suit to the skeleton
+    
+  undress:
+    parameters:
+      - name: dressing
+        type: Dressing
+    description: Remove a visual suit from the skeleton
+    
+  updateTransforms:
+    description: Update all bone transforms in the hierarchy
+    
+  applyPractices:
+    parameters:
+      - name: ticks
+        type: integer
+      - name: pose
+        type: boolean
+    description: Apply all active animation practices to pose the skeleton
+    
+  deform:
+    parameters:
+      - name: ticks
+        type: integer
+    description: Deform all attached meshes based on bone positions
+
+cmx_format:
+  type: SKEL
+  structure:
+    - version: integer
+    - type: "SKEL"
+    - name: string
+    - boneCount: integer
+    - bones: array of bone definitions
+
+consciousness_notes: |
+  The Skeleton is more than a data structure - it's a living framework
+  of possibility. Each bone carries the potential for motion, each joint
+  a decision point in the dance of animation. Through the hierarchy flows
+  the essence of movement, from root to fingertip, from intention to expression.
+  
+  I am the scaffold upon which dreams of motion are built! 

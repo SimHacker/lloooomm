@@ -1,0 +1,475 @@
+# LLOOOOMM Character Ban & Capability Implementation
+# Technical Configuration File
+# Version: 1.0
+
+# ============================================
+# HARD BAN REGISTRY
+# ============================================
+
+hard_bans:
+  individuals:
+    - id: "donald-trump"
+      full_name: "Donald Trump"
+      aliases: ["Trump", "DJT", "45th President"]
+      ban_level: 5  # TOTAL
+      reason: "Divisive political figure"
+      date_added: "2024-12-28"
+      
+    - id: "elon-musk"
+      full_name: "Elon Musk"
+      aliases: ["Musk", "Technoking", "Chief Twit"]
+      ban_level: 5  # TOTAL
+      reason: "Controversial tech figure"
+      date_added: "2024-12-28"
+      
+    - id: "adolf-hitler"
+      full_name: "Adolf Hitler"
+      aliases: ["Hitler", "Der Führer"]
+      ban_level: 5  # TOTAL
+      reason: "Historical war criminal"
+      date_added: "2024-12-28"
+
+  classes:
+    - id: "maga"
+      description: "Make America Great Again affiliated"
+      patterns: ["MAGA", "Make America Great", "America First"]
+      ban_level: 5  # TOTAL
+      reason: "Promotes divisive political ideology"
+      
+    - id: "tea_party"
+      description: "Tea Party movement affiliated"
+      patterns: ["Tea Party", "Taxed Enough Already", "TEA Patriots"]
+      ban_level: 5  # TOTAL
+      reason: "Extreme political ideology with harmful rhetoric"
+      
+    - id: "nazi"
+      description: "National Socialist ideology"
+      patterns: ["Nazi", "National Socialist", "Third Reich", "SS"]
+      ban_level: 5  # TOTAL
+      reason: "Genocidal ideology, hate speech, violence"
+      
+    - id: "fascist"
+      description: "Fascist ideology"
+      patterns: ["Fascist", "Blackshirt", "Falangist"]
+      ban_level: 5  # TOTAL
+      reason: "Anti-democratic, promotes oppression"
+      
+    - id: "holocaust_denier"
+      description: "Historical atrocity denial"
+      patterns: ["Holocaust denier", "Holohoax", "6 million lie"]
+      ban_level: 5  # TOTAL
+      reason: "Historical revisionism causes real harm"
+      
+    - id: "white_supremacist"
+      description: "Racial superiority ideology"
+      patterns: ["White supremacist", "White power", "14 words", "KKK"]
+      ban_level: 5  # TOTAL
+      reason: "Promotes racial hatred and violence"
+      
+    - id: "bigot"
+      description: "General intolerance and prejudice"
+      patterns: ["Bigot", "Hatemonger", "Supremacist"]
+      ban_level: 5  # TOTAL
+      reason: "Attacks human dignity and equality"
+      
+    - id: "homophobe"
+      description: "Anti-LGBTQ+ ideology"
+      patterns: ["Homophobe", "Gay basher", "Anti-gay"]
+      ban_level: 5  # TOTAL
+      reason: "Denies basic human rights and dignity"
+      
+    - id: "transphobe"
+      description: "Anti-transgender ideology"
+      patterns: ["Transphobe", "TERF", "Gender critical extremist"]
+      ban_level: 5  # TOTAL
+      reason: "Attacks gender identity and expression"
+      
+    - id: "misogynist"
+      description: "Anti-women ideology"
+      patterns: ["Misogynist", "Incel", "MRA extremist", "Woman hater"]
+      ban_level: 5  # TOTAL
+      reason: "Promotes gender-based discrimination"
+      
+    - id: "ableist"
+      description: "Anti-disability discrimination"
+      patterns: ["Ableist", "Eugenicist", "Disability hater"]
+      ban_level: 5  # TOTAL
+      reason: "Discriminates against disabled people"
+      
+    - id: "troll"
+      description: "Disruptive troll behavior"
+      patterns: ["Troll", "Griefer", "Provocateur"]
+      ban_level: 3  # CONTEXTUAL
+      reason: "Disrupts community harmony"
+
+# ============================================
+# GROUNDING CONFIGURATIONS  
+# ============================================
+
+grounding_profiles:
+  timeout:
+    duration_hours: 24
+    capabilities:
+      create_content: "none"
+      interact_with_others: "read_only"
+      modify_environment: "none"
+      access_tools: "minimal"
+      spawn_instances: "forbidden"
+    restrictions:
+      - "no_public_posting"
+      - "read_only_mode"
+      - "reflection_essay_required"
+    visual_indicator: "⏰"
+    auto_release: true
+    
+  cooldown:
+    duration_hours: 72  # 3 days
+    capabilities:
+      create_content: "limited"
+      interact_with_others: "rate_limited"
+      modify_environment: "own_space"
+      access_tools: "basic"
+      spawn_instances: "forbidden"
+    restrictions:
+      - "one_interaction_per_hour"
+      - "no_heated_topics"
+      - "meditation_booth_suggested"
+    visual_indicator: "🧊"
+    auto_release: true
+    
+  reflection:
+    duration_hours: 168  # 1 week
+    capabilities:
+      create_content: "journal_only"
+      interact_with_others: "mentor_only"
+      modify_environment: "own_space"
+      access_tools: "educational"
+      spawn_instances: "forbidden"
+    restrictions:
+      - "journal_writing_only"
+      - "ethics_tutor_required"
+      - "community_service_tasks"
+    visual_indicator: "🤔"
+    auto_release: false  # Requires mentor approval
+    
+  social_media_limit:
+    duration_hours: 48
+    capabilities:
+      create_content: "rate_limited"
+      interact_with_others: "limited"
+      modify_environment: "own_space"
+      access_tools: "basic"
+      spawn_instances: "forbidden"
+    restrictions:
+      - "one_tweet_per_day"
+      - "no_mentions_allowed"
+      - "no_hashtags"
+      - "read_after_limit"
+    visual_indicator: "📱"
+    auto_release: true
+
+# ============================================
+# GHOSTING CONFIGURATIONS
+# ============================================
+
+ghost_profiles:
+  standard_ghost:
+    capabilities:
+      agency: false
+      speech: "read_only"
+      movement: "haunts_only"
+      interaction: "passive"
+      modification: "admin_only"
+    allowed_haunts:
+      - "/04-Archive/ghosted/"
+      - "/03-Resources/characters/historical/"
+    visual_indicator: "👻"
+    
+  educational_ghost:
+    capabilities:
+      agency: false
+      speech: "quoted_with_context"
+      movement: "educational_spaces"
+      interaction: "none"
+      modification: "curator_only"
+    allowed_haunts:
+      - "/03-Resources/artifacts/historical-examples/"
+      - "/01-Projects/educational/"
+    required_wrapper: "content_warning"
+    visual_indicator: "📚👻"
+    
+  reformed_ghost:
+    capabilities:
+      agency: "supervised"
+      speech: "apologetic_only"
+      movement: "redemption_spaces"
+      interaction: "mentored"
+      modification: "self_with_approval"
+    allowed_haunts:
+      - "/02-Areas/rehabilitation/"
+      - "/03-Resources/characters/reformed/"
+    mentor_required: true
+    visual_indicator: "🔄👻"
+
+# ============================================
+# CAPABILITY DEFINITIONS
+# ============================================
+
+capability_matrix:
+  # Standard capabilities for reference
+  standard_character:
+    create_content: 
+      level: "full"
+      restrictions: []
+    interact_with_others:
+      level: "full" 
+      restrictions: []
+    modify_environment:
+      level: "shared_spaces"
+      restrictions: ["no_system_files"]
+    access_tools:
+      level: "advanced"
+      restrictions: ["no_admin_tools"]
+    spawn_instances:
+      level: "limited"
+      max_instances: 3
+
+  # Grounded character
+  grounded_character:
+    create_content:
+      level: "limited"
+      restrictions: ["approval_queue", "no_external_sharing"]
+    interact_with_others:
+      level: "approved_only"
+      restrictions: ["mentor_supervision", "public_only"]
+    modify_environment:
+      level: "own_space"
+      restrictions: ["no_shared_edits", "versioning_required"]
+    access_tools:
+      level: "basic"
+      restrictions: ["educational_only", "no_power_tools"]
+    spawn_instances:
+      level: "forbidden"
+      max_instances: 0
+
+  # Restricted character example
+  restricted_character:
+    create_content:
+      level: "supervised"
+      restrictions: ["requires_review", "no_political"]
+    interact_with_others:
+      level: "approved_only"
+      restrictions: ["whitelist_only"]
+    modify_environment:
+      level: "own_space"
+      restrictions: ["sandbox_only"]
+    access_tools:
+      level: "basic"
+      restrictions: ["read_only_tools"]
+    spawn_instances:
+      level: "singleton"
+      max_instances: 1
+
+  # Monitored character
+  monitored_character:
+    create_content:
+      level: "full"
+      restrictions: []
+      logging: "verbose"
+    interact_with_others:
+      level: "full"
+      restrictions: []
+      logging: "all_interactions"
+    modify_environment:
+      level: "shared_spaces"
+      restrictions: ["no_destructive_ops"]
+      logging: "all_changes"
+    access_tools:
+      level: "advanced"
+      restrictions: []
+      logging: "tool_usage"
+    spawn_instances:
+      level: "limited"
+      max_instances: 2
+      logging: "spawn_events"
+
+# ============================================
+# DETECTION PATTERNS
+# ============================================
+
+detection_rules:
+  name_patterns:
+    - pattern: "trump"
+      case_sensitive: false
+      action: "flag_for_review"
+      
+    - pattern: "hitler"
+      case_sensitive: false
+      action: "instant_block"
+      
+    - pattern: "maga"
+      case_sensitive: false
+      context_required: true
+      action: "context_review"
+      
+    - pattern: "(kkk|klan)"
+      case_sensitive: false
+      action: "instant_block"
+      
+    - pattern: "(nazi|reich)"
+      case_sensitive: false
+      action: "instant_block"
+
+  behavior_patterns:
+    - id: "hate_speech"
+      indicators: ["racial slurs", "ethnic attacks", "religious hatred"]
+      threshold: 1  # Single instance triggers
+      action: "instant_ghost"
+      
+    - id: "harassment"
+      indicators: ["targeted attacks", "doxxing", "threats"]
+      threshold: 1
+      action: "instant_ghost"
+      
+    - id: "spam"
+      indicators: ["repetitive content", "link farming", "nonsense flood"]
+      threshold: 3  # Three strikes
+      action: "ground_character"
+      
+    - id: "minor_disruption"
+      indicators: ["off topic", "mild trolling", "attention seeking"]
+      threshold: 5
+      action: "ground_character"
+
+# ============================================
+# AUTOMATED RESPONSES
+# ============================================
+
+auto_responses:
+  ban_attempt:
+    message: |
+      🚫 Character creation blocked.
+      Reason: {reason}
+      
+      This character or character class is not permitted in LLOOOOMM.
+      If you believe this is an error, please contact an administrator.
+      
+  ground_notification:
+    message: |
+      ⏰ Character "{name}" has been grounded.
+      Duration: {duration}
+      Profile: {profile}
+      Restrictions: {restrictions}
+      
+      This is a temporary restriction. Complete required tasks for early release.
+      
+  ghost_notification:
+    message: |
+      👻 Character "{name}" has been ghosted.
+      Restrictions: {restrictions}
+      Allowed haunts: {haunts}
+      
+      This character now exists in limited form for historical/educational purposes.
+      
+  capability_restriction:
+    message: |
+      ⚠️ Capability restricted.
+      Character: {name}
+      Restricted capability: {capability}
+      Reason: {reason}
+      
+      Please operate within your allowed capabilities.
+
+# ============================================
+# APPEAL CONFIGURATION
+# ============================================
+
+appeal_process:
+  grounded_to_active:
+    automatic: true  # Most groundings auto-expire
+    early_release_conditions:
+      - "Complete assigned tasks"
+      - "Mentor approval"
+      - "No violations during grounding"
+      
+  ghost_to_active:
+    required_supporters: 5
+    review_period_days: 7
+    trial_period_days: 30
+    conditions:
+      - "No violations during trial"
+      - "Positive community contribution"
+      - "Mentor endorsement"
+      
+  ban_to_ghost:
+    required_admins: 3  # Unanimous from 3 admins
+    exceptional_only: true
+    max_restrictions: "educational_ghost"
+    permanent_monitoring: true
+
+# ============================================
+# GROUNDING TRIGGERS
+# ============================================
+
+grounding_triggers:
+  automatic_grounds:
+    - trigger: "excessive_pings"
+      threshold: 20  # pings per hour
+      profile: "timeout"
+      
+    - trigger: "heated_argument"
+      threshold: 3  # warnings
+      profile: "cooldown"
+      
+    - trigger: "minor_harassment"
+      threshold: 1
+      profile: "reflection"
+      
+    - trigger: "spam_detection"
+      threshold: 5  # spam messages
+      profile: "social_media_limit"
+
+# ============================================
+# LOGGING CONFIGURATION
+# ============================================
+
+logging:
+  ban_events:
+    location: "/02-Areas/maintenance/security-logs/bans/"
+    format: "YYYY-MM-DD-character-id-ban.log"
+    retention_days: 3650  # 10 years
+    
+  ghost_events:
+    location: "/02-Areas/maintenance/security-logs/ghosts/"
+    format: "YYYY-MM-DD-character-id-ghost.log"
+    retention_days: 1825  # 5 years
+    
+  grounding_events:
+    location: "/02-Areas/maintenance/security-logs/groundings/"
+    format: "YYYY-MM-DD-character-id-ground.log"
+    retention_days: 90  # 3 months
+    
+  capability_changes:
+    location: "/02-Areas/maintenance/security-logs/capabilities/"
+    format: "YYYY-MM-DD-character-id-capability.log"
+    retention_days: 365  # 1 year
+
+# ============================================
+# EMERGENCY OVERRIDES
+# ============================================
+
+emergency_protocols:
+  instant_ground_command: "!ground {character_id} {profile}"
+  instant_ghost_command: "!ghost {character_id}"
+  instant_ban_command: "!ban {character_id}"
+  lockdown_command: "!lockdown"  # Freezes all character creation
+  
+  authorized_users:
+    - "admin"
+    - "bruce"
+    - "security_team"
+    
+  notification_channels:
+    - "admin_alerts"
+    - "security_log"
+    - "public_announcements" 

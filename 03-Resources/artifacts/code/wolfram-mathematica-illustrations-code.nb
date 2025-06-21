@@ -1,0 +1,395 @@
+(* Telescopable Words, WIZZIES, and WIZIDS: Mathematica Illustrations *)
+(* From "A New Kind of Science" Chapter 47 *)
+(* By Stephen Wolfram *)
+
+(* ============================================== *)
+(* SECTION 1: Basic WIZZIE Decomposition *)
+(* ============================================== *)
+
+(* Function to decompose words into telescoping levels *)
+WIZZIEDecompose[word_String] := Module[
+  {morphemes, levels, semanticTree},
+  
+  (* Level 1: Surface form *)
+  levels = {word};
+  
+  (* Level 2: Morphological decomposition *)
+  morphemes = StringSplit[word, 
+    {"un", "re", "dis", "able", "ible", "tion", "ing", "ed", "er", "est"}];
+  AppendTo[levels, StringJoin[Riffle[morphemes, "-"]]];
+  
+  (* Level 3: Semantic expansion *)
+  semanticTree = Replace[morphemes, {
+    "un" -> "[negation]",
+    "re" -> "[again]",
+    "dis" -> "[opposite]",
+    "fold" -> "[bend/crease]",
+    "able" -> "[capability]",
+    "ible" -> "[possibility]",
+    "tion" -> "[process/state]",
+    "ing" -> "[ongoing]",
+    "ed" -> "[completed]",
+    "er" -> "[agent]",
+    "est" -> "[superlative]"
+  }, {1}];
+  AppendTo[levels, semanticTree];
+  
+  (* Level 4: Information theoretic representation *)
+  AppendTo[levels, 
+    "Entropy: " <> ToString[N[StringEntropy[word]]] <> " bits"];
+  
+  Column[levels, Frame -> All, Background -> LightBlue]
+]
+
+(* Example visualizations *)
+Print["Example 1: 'unfoldable'"]
+WIZZIEDecompose["unfoldable"]
+
+Print["\nExample 2: 'reconstruction'"]
+WIZZIEDecompose["reconstruction"]
+
+Print["\nExample 3: 'metamorphosis'"]
+WIZZIEDecompose["metamorphosis"]
+
+(* ============================================== *)
+(* SECTION 2: WIZID Semantic Networks *)
+(* ============================================== *)
+
+(* Function to generate semantic networks *)
+WIZIDNetwork[word_String] := Module[
+  {semanticLevels, connections, graph},
+  
+  semanticLevels = Association[
+    "cat" -> {"feline", "mammal", "animal", "living thing", "entity"},
+    "run" -> {"move quickly", "locomote", "change position", "act", "event"},
+    "think" -> {"cognize", "mental process", "brain activity", "computation", "process"},
+    "happy" -> {"joyful", "positive emotion", "emotional state", "mental state", "state"},
+    "create" -> {"make", "bring into being", "cause to exist", "act", "event"}
+  ];
+  
+  If[KeyExistsQ[semanticLevels, word],
+    connections = Thread[word -> semanticLevels[word]];
+    graph = Graph[connections, 
+      VertexLabels -> "Name",
+      VertexStyle -> Directive[LightBlue, EdgeForm[Black]],
+      EdgeStyle -> Directive[Thick, Gray],
+      GraphLayout -> "LayeredDigraphEmbedding",
+      ImageSize -> 500
+    ];
+    graph,
+    "Word not in database. Try: " <> ToString[Keys[semanticLevels]]
+  ]
+]
+
+(* Generate semantic network visualizations *)
+Print["\nSemantic Network for 'cat':"]
+WIZIDNetwork["cat"]
+
+Print["\nSemantic Network for 'think':"]
+WIZIDNetwork["think"]
+
+(* ============================================== *)
+(* SECTION 3: Language as Cellular Automaton *)
+(* ============================================== *)
+
+(* Language evolution cellular automaton *)
+LanguageCA[rule_Integer, init_List, steps_Integer] := Module[
+  {evolution, currentState, ruleSet},
+  
+  (* Convert rule number to rule set *)
+  ruleSet = IntegerDigits[rule, 2, 8];
+  
+  (* Initialize *)
+  currentState = init;
+  evolution = {currentState};
+  
+  (* Evolve *)
+  Do[
+    currentState = Table[
+      ruleSet[[8 - (4*currentState[[Mod[i-1, Length[currentState], 1]]] + 
+                    2*currentState[[i]] + 
+                    currentState[[Mod[i+1, Length[currentState], 1]]] + 1)]],
+      {i, Length[currentState]}
+    ];
+    AppendTo[evolution, currentState],
+    {steps}
+  ];
+  
+  (* Visualize *)
+  ArrayPlot[evolution, 
+    ColorRules -> {0 -> White, 1 -> Black},
+    Frame -> False,
+    ImageSize -> 400]
+]
+
+(* Generate CA visualizations *)
+Print["\nRule 30 Language Pattern:"]
+LanguageCA[30, {0,0,0,0,1,0,0,0,0}, 50]
+
+Print["\nRule 110 Language Pattern (Universal Computation):"]
+LanguageCA[110, RandomInteger[1, 50], 100]
+
+(* ============================================== *)
+(* SECTION 4: Information Content Calculator *)
+(* ============================================== *)
+
+(* Calculate information content at different telescoping levels *)
+InformationContent[word_String, level_Integer] := Module[
+  {morphemes, semanticBranches, entropy, compressionRatio},
+  
+  morphemes = Length[StringSplit[word, 
+    {"un", "re", "dis", "meta", "able", "tion", "ing"}]];
+  
+  semanticBranches = 2^level; (* Simplified model *)
+  
+  entropy = N[Log[2, morphemes * semanticBranches]];
+  compressionRatio = N[StringLength[word]/entropy];
+  
+  Grid[{
+    {"Level", level},
+    {"Morphemes", morphemes},
+    {"Semantic branches", semanticBranches},
+    {"Information (bits)", NumberForm[entropy, {5, 2}]},
+    {"Compression ratio", NumberForm[compressionRatio, {5, 2}]}
+  }, Frame -> All, 
+  Background -> {{LightGray, White}, {LightGray, White, White, White, White}}]
+]
+
+(* Examples *)
+Print["\nInformation Content Analysis:"]
+Print["'metacognition' at level 3:"]
+InformationContent["metacognition", 3]
+
+Print["\n'unfoldable' at level 2:"]
+InformationContent["unfoldable", 2]
+
+(* ============================================== *)
+(* SECTION 5: Transformer-style Attention *)
+(* ============================================== *)
+
+(* Simplified transformer attention mechanism *)
+TransformerAttention[word_String, context_List] := Module[
+  {embedding, query, keys, values, attention, scores, result},
+  
+  (* Simplified embeddings using hash *)
+  embedding = Mod[Hash[word, "MD5"], 1000];
+  
+  (* Query, Key, Value projections *)
+  query = embedding;
+  keys = Table[Mod[Hash[c, "MD5"], 1000], {c, context}];
+  values = context;
+  
+  (* Attention scores *)
+  scores = Table[query * k / Sqrt[1000.], {k, keys}];
+  attention = Softmax[scores];
+  
+  (* Visualization *)
+  Column[{
+    "Word: " <> word,
+    "Context: " <> ToString[context],
+    BarChart[
+      Transpose[{attention, context}],
+      ChartLabels -> context,
+      ChartStyle -> "Pastel",
+      PlotLabel -> "Attention Weights"
+    ]
+  }]
+]
+
+(* Example *)
+Print["\nTransformer Attention Visualization:"]
+TransformerAttention["cat", {"furry", "meows", "pet", "animal", "dog"}]
+
+(* ============================================== *)
+(* SECTION 6: Telescoping Universe Generator *)
+(* ============================================== *)
+
+(* Generate the universe of telescopable words *)
+TelescopeUniverse[depth_Integer] := Module[
+  {prefixes, roots, suffixes, combinations, universe},
+  
+  prefixes = {"un", "re", "dis", "pre", "post", "meta", "anti", "super"};
+  roots = {"fold", "think", "create", "form", "struct", "act", "move", "view"};
+  suffixes = {"able", "ible", "tion", "ing", "ness", "ity", "er", "ment"};
+  
+  universe = {};
+  
+  (* Generate combinations *)
+  Do[
+    If[d == 1, 
+      universe = Join[universe, roots],
+      If[d == 2,
+        combinations = Flatten[Outer[StringJoin, prefixes, roots], 1];
+        universe = Join[universe, combinations];
+        combinations = Flatten[Outer[StringJoin, roots, suffixes], 1];
+        universe = Join[universe, combinations],
+        If[d == 3,
+          combinations = Flatten[Outer[StringJoin, prefixes, roots, suffixes], 2];
+          universe = Join[universe, combinations]
+        ]
+      ]
+    ],
+    {d, 1, depth}
+  ];
+  
+  (* Remove duplicates and filter by length *)
+  universe = Select[DeleteDuplicates[universe], StringLength[#] < 20 &];
+  
+  (* Visualize as word cloud *)
+  WordCloud[RandomSample[universe, Min[100, Length[universe]]], 
+    ImageSize -> 500,
+    WordSpacings -> 2]
+]
+
+Print["\nThe Telescoping Universe of Words:"]
+TelescopeUniverse[3]
+
+(* ============================================== *)
+(* SECTION 7: Interactive WIZZIE Explorer *)
+(* ============================================== *)
+
+(* Create an interactive WIZZIE explorer *)
+Manipulate[
+  Module[{decomp, morphemes, tree},
+    decomp = WIZZIEDecompose[word];
+    morphemes = StringSplit[word, 
+      {"un", "re", "dis", "able", "ible", "tion", "ing", "ed", "er", "est"}];
+    
+    tree = If[Length[morphemes] > 1,
+      TreeGraph[
+        Flatten[{word -> #& /@ morphemes, 
+          Table[morphemes[[i]] -> "Level " <> ToString[i], 
+            {i, Length[morphemes]}]}],
+        VertexLabels -> "Name",
+        ImageSize -> 400
+      ],
+      "Word has no recognized morphemes"
+    ];
+    
+    Column[{
+      Style["WIZZIE Explorer", Bold, 20],
+      decomp,
+      tree
+    }]
+  ],
+  {word, {"unfoldable", "reconstruction", "metamorphosis", "unbelievable", 
+           "preprocessing", "internationalization"}}
+]
+
+(* ============================================== *)
+(* SECTION 8: Compression Ratio Analysis *)
+(* ============================================== *)
+
+(* Analyze compression ratios for different word types *)
+CompressionAnalysis[] := Module[
+  {words, data},
+  
+  words = {"cat", "unfold", "unfoldable", "reconstruction", 
+           "metamorphosis", "internationalization", 
+           "antidisestablishmentarianism"};
+  
+  data = Table[
+    {word, StringLength[word], 
+     N[StringEntropy[word]], 
+     N[StringLength[word]/StringEntropy[word]]},
+    {word, words}
+  ];
+  
+  Column[{
+    Grid[
+      Prepend[data, {"Word", "Length", "Entropy", "Compression"}],
+      Frame -> All,
+      Background -> {None, {LightGray, White}}
+    ],
+    BarChart[
+      data[[All, 4]],
+      ChartLabels -> data[[All, 1]],
+      PlotLabel -> "Compression Ratios",
+      ChartStyle -> "Rainbow"
+    ]
+  }]
+]
+
+Print["\nCompression Ratio Analysis:"]
+CompressionAnalysis[]
+
+(* ============================================== *)
+(* SECTION 9: WIZZIE Pattern Matcher *)
+(* ============================================== *)
+
+(* Pattern matching for telescopable structures *)
+WIZZIEPattern[text_String] := Module[
+  {words, telescopable, patterns},
+  
+  words = TextWords[ToLowerCase[text]];
+  
+  patterns = {
+    "un" ~~ __ -> "Negation pattern",
+    "re" ~~ __ -> "Repetition pattern",
+    __ ~~ "able" -> "Capability pattern",
+    __ ~~ "tion" -> "Process pattern",
+    "pre" ~~ __ -> "Before pattern",
+    "post" ~~ __ -> "After pattern"
+  };
+  
+  telescopable = Select[words, 
+    StringMatchQ[#, Alternatives @@ (First /@ patterns)]&];
+  
+  Column[{
+    "Text: " <> text,
+    "Telescopable words found: " <> ToString[Length[telescopable]],
+    Grid[
+      Table[{word, 
+        FirstCase[patterns, 
+          rule_ /; StringMatchQ[word, First[rule]] :> Last[rule], 
+          "Unknown"]}, 
+        {word, telescopable}],
+      Frame -> All,
+      Background -> LightYellow
+    ]
+  }]
+]
+
+(* Example *)
+Print["\nWIZZIE Pattern Analysis:"]
+WIZZIEPattern["The unfoldable reconstruction was unbelievable and required preprocessing."]
+
+(* ============================================== *)
+(* SECTION 10: Zoom-Zoom Visualizer *)
+(* ============================================== *)
+
+(* Animated telescoping visualization *)
+ZoomZoomVisualizer[word_String] := Module[
+  {morphemes, frames},
+  
+  morphemes = StringSplit[word, 
+    {"un", "re", "dis", "able", "ible", "tion", "ing"}];
+  
+  frames = Table[
+    Graphics[{
+      Text[
+        Style[
+          StringJoin[Riffle[Take[morphemes, i], "-"]], 
+          FontSize -> 20 + 5*i
+        ],
+        {0, 0}
+      ]
+    }, 
+    PlotRange -> {{-5, 5}, {-2, 2}},
+    ImageSize -> 400],
+    {i, 1, Length[morphemes]}
+  ];
+  
+  ListAnimate[frames, AnimationRate -> 1]
+]
+
+Print["\nZoom-Zoom Animation (click play):"]
+ZoomZoomVisualizer["unfoldable"]
+
+(* ============================================== *)
+(* END OF NOTEBOOK *)
+(* ============================================== *)
+
+Print["\n=== Notebook Complete ==="]
+Print["All illustrations ready for export!"]
+Print["Remember: Words go ZOOM-ZOOM! - Stephen's daughter"] 

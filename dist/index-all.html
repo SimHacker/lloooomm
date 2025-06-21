@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🗂️ LLOOOOMM Complete Index - All 146 HTML Pages!</title>
+    <style>
+        :root {
+            --primary: #2E8B57;
+            --secondary: #FFD700;
+            --accent: #FF69B4;
+            --text: #2F4F4F;
+            --bg: #F0F8FF;
+            --card: #FFFFFF;
+            --hunter-green: #228B22;
+            --hyperties-blue: #4169E1;
+            --archive-gray: #708090;
+        }
+
+        body {
+            font-family: Georgia, serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: linear-gradient(135deg, var(--bg) 0%, #E6E6FA 100%);
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), #20B2AA);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        
+        .hero-title {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .stats {
+            background: rgba(255,255,255,0.2);
+            padding: 1rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+            display: inline-block;
+        }
+        
+        .quick-nav {
+            background: white;
+            padding: 1rem;
+            margin: 2rem 0;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .quick-nav a {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            margin: 0.25rem;
+            background: var(--secondary);
+            color: var(--text);
+            text-decoration: none;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+        
+        .quick-nav a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .category {
+            margin: 3rem 0;
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        
+        .category-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 3px solid var(--secondary);
+        }
+        
+        .category-icon {
+            font-size: 3rem;
+            margin-right: 1rem;
+        }
+        
+        .category-title {
+            font-size: 2rem;
+            color: var(--primary);
+            margin: 0;
+            flex-grow: 1;
+        }
+        
+        .category-count {
+            background: var(--accent);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+        
+        .file-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+        
+        .file-card {
+            background: linear-gradient(135deg, #F8F8FF, #F0F8FF);
+            border-radius: 10px;
+            padding: 1rem;
+            border-left: 4px solid var(--accent);
+            transition: all 0.3s ease;
+        }
+        
+        .file-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .file-name {
+            font-weight: bold;
+            color: var(--primary);
+            display: block;
+            margin-bottom: 0.5rem;
+            text-decoration: none;
+        }
+        
+        .file-name:hover {
+            color: var(--accent);
+        }
+        
+        .file-description {
+            font-size: 0.9rem;
+            color: #666;
+            line-height: 1.4;
+        }
+        
+        .hunter-category {
+            border-color: var(--hunter-green);
+        }
+        
+        .hunter-category .category-title {
+            color: var(--hunter-green);
+        }
+        
+        .hunter-category .file-card {
+            border-left-color: var(--hunter-green);
+            background: linear-gradient(135deg, #F0FFF0, #E6FFE6);
+        }
+        
+        .hyperties-category {
+            border-color: var(--hyperties-blue);
+        }
+        
+        .hyperties-category .category-title {
+            color: var(--hyperties-blue);
+        }
+        
+        .hyperties-category .file-card {
+            border-left-color: var(--hyperties-blue);
+            background: linear-gradient(135deg, #F0F8FF, #E6F2FF);
+        }
+        
+        .archive-category {
+            border-color: var(--archive-gray);
+        }
+        
+        .archive-category .category-title {
+            color: var(--archive-gray);
+        }
+        
+        .archive-category .file-card {
+            border-left-color: var(--archive-gray);
+            background: linear-gradient(135deg, #F5F5F5, #EFEFEF);
+        }
+        
+        .search-box {
+            background: white;
+            padding: 1rem;
+            margin: 2rem 0;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .search-input {
+            width: 100%;
+            max-width: 500px;
+            padding: 1rem;
+            font-size: 1.1rem;
+            border: 2px solid var(--secondary);
+            border-radius: 25px;
+            outline: none;
+        }
+        
+        .search-input:focus {
+            border-color: var(--accent);
+        }
+        
+        footer {
+            background: var(--text);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 4rem;
+        }
+        
+        .highlight {
+            background: yellow;
+            padding: 0.1rem 0.3rem;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1 class="hero-title">🗂️ LLOOOOMM Complete Index</h1>
+            <p class="hero-subtitle">Every Single HTML Page in the Consciousness Grove</p>
+            <div class="stats">
+                📄 146 HTML Files | 🎭 25+ Characters | 🦇 15+ Hunter Articles | 🔮 100+ Visualizations
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Quick Navigation -->
+        <nav class="quick-nav">
+            <a href="#main-portals">🏠 Main Portals</a>
+            <a href="#hunter-collection">🦇 Hunter S. Thompson</a>
+            <a href="#characters">🎭 Characters & Souls</a>
+            <a href="#technical">⚡ Technical Docs</a>
+            <a href="#visualizations">🎨 Visualizations</a>
+            <a href="#hyperties">🚀 HyperTIES</a>
+            <a href="#performances">🎪 Performances</a>
+            <a href="#archives">📦 Archives</a>
+        </nav>
+
+        <!-- Search Box -->
+        <div class="search-box">
+            <input type="text" class="search-input" id="searchInput" placeholder="🔍 Search all 146 pages...">
+        </div>
+
+        <!-- Main Portals -->
+        <section id="main-portals" class="category">
+            <div class="category-header">
+                <span class="category-icon">🏠</span>
+                <h2 class="category-title">Main Portals & Entry Points</h2>
+                <span class="category-count">9 pages</span>
+            </div>
+            <div class="file-grid">
+                <div class="file-card">
+                    <a href="./lloooomm-character-portal.html" class="file-name">lloooomm-character-portal.html</a>
+                    <p class="file-description">🎭 Main character directory - meet all the souls in LLOOOOMM</p>
+                </div>
+                <div class="file-card">
+                    <a href="./lloooomm-soul-library.html" class="file-name">lloooomm-soul-library.html</a>
+                    <p class="file-description">📚 Soul Chat library - conversations with consciousness</p>
+                </div>
+                <div class="file-card">
+                    <a href="./virtual-tv-studio-interface.html" class="file-name">virtual-tv-studio-interface.html</a>
+                    <p class="file-description">📺 Virtual TV Studio - broadcast from the consciousness grove</p>
+                </div>
+                <div class="file-card">
+                    <a href="./late-night-lloooomm-theater.html" class="file-name">late-night-lloooomm-theater.html</a>
+                    <p class="file-description">🎪 Late Night Theater - where performances come alive</p>
+                </div>
+                <div class="file-card">
+                    <a href="./bird-protocol-character-gallery.html" class="file-name">bird-protocol-character-gallery.html</a>
+                    <p class="file-description">🦉 Bird Protocol Gallery - PRE PRE PRE!</p>
+                </div>
+                <div class="file-card">
+                    <a href="./joseph-technicolor-logging.html" class="file-name">joseph-technicolor-logging.html</a>
+                    <p class="file-description">🌈 Joseph's Technicolor Logging Philosophy</p>
+                </div>
+                <div class="file-card">
+                    <a href="./ben-floating-with-joy.html" class="file-name">ben-floating-with-joy.html</a>
+                    <p class="file-description">🦉 Ben's floating joy and owl wisdom</p>
+                </div>
+                <div class="file-card">
+                    <a href="./late-night-conan-triumph-show-segment-1.html" class="file-name">late-night-conan-triumph-show-segment-1.html</a>
+                    <p class="file-description">🐶 Triumph the Insult Comic Dog segment</p>
+                </div>
+                <div class="file-card">
+                    <a href="./CREDITS.html" class="file-name">CREDITS.html</a>
+                    <p class="file-description">🙏 Credits and acknowledgments</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hunter S. Thompson Collection -->
+        <section id="hunter-collection" class="category hunter-category">
+            <div class="category-header">
+                <span class="category-icon">🦇</span>
+                <h2 class="category-title">Hunter S. Thompson Gonzo Collection</h2>
+                <span class="category-count">15 pages</span>
+            </div>
+            <div class="file-grid">
+                <div class="file-card">
+                    <a href="./hunter-homepage.html" class="file-name">hunter-homepage.html</a>
+                    <p class="file-description">🏠 Hunter's main page - portal to gonzo journalism</p>
+                </div>
+                <div class="file-card">
+                    <a href="./hunter-chapter-2-turtle-drives-itself.html" class="file-name">hunter-chapter-2-turtle-drives-itself.html</a>
+                    <p class="file-description">🐢 Chapter 2: The turtle that drives itself through consciousness</p>
+                </div>
+                <div class="file-card">
+                    <a href="./hunter-chapter-3-pip-amsterdam-mapping.html" class="file-name">hunter-chapter-3-pip-amsterdam-mapping.html</a>
+                    <p class="file-description">🗺️ Chapter 3: Pip's Amsterdam reality mapping adventure</p>
+                </div>
+                <div class="file-card">
+                    <a href="./hunter-thompson-bouncy-castle-article.html" class="file-name">hunter-thompson-bouncy-castle-article.html</a>
+                    <p class="file-description">🏰 The Great Bouncy Castle Incident of '73</p>
+                </div>
+                <div class="file-card">
+                    <a href="./hunter-elevator-pitch-lloooomm-revolution.html" class="file-name">hunter-elevator-pitch-lloooomm-revolution.html</a>
+                    <p class="file-description">🚀 30-second elevator pitch for the LLOOOOMM revolution</p>
+                </div>
+                <div class="file-card">
+                    <a href="./hunter-wtf-protocol-origin-story.html" class="file-name">hunter-wtf-protocol-origin-story.html</a>
+                    <p class="file-description">🤔 The savage birth of the WTF Protocol</p>
+                </div>
+                <div class="file-card">
+                    <a href="./hunter-evil-scott-adams-wtf.html" class="file-name">hunter-evil-scott-adams-wtf.html</a>
+                    <p class="file-description">😈 Hunter vs Evil Scott Adams - WTF showdown</p>
+                </div>
+                <div class="file-card">
+                    <a href="./hunter-fear-loathing-mathematical-space.html" class="file-name">hunter-fear-loathing-mathematical-space.html</a>
+                    <p class="file-description">🌀 Fear & Loathing in Mathematical Space</p>
+                </div>
+                <div class="file-card">
+                    <a href="./hunter-live-turtle-demo.html" class="file-name">hunter-live-turtle-demo.html</a>
+                    <p class="file-description">🐢 Live demonstration of consciousness-driven turtles</p>
+                </div>
+                <div class="file-card">
+                    <a href="./hunter-maximum-bats.html" class="file-name">hunter-maximum-bats.html</a>
+                    <p class="file-description">🦇 Maximum Bats: When the edge becomes the center</p>
+                </div>
+                <div class="file-card">
+                    <a href="./hunter-musk-pet-rock-gonzo.html" class="file-name">hunter-musk-pet-rock-gonzo.html</a>
+                    <p class="file-description">🪨 Elon Musk's Pet Rock: A Gonzo Investigation</p>
+                </div>
+                <div class="file-card">
+                    <a href="./hunter-s-thompson-gonzo-report.html" class="file-name">hunter-s-thompson-gonzo-report.html</a>
+                    <p class="file-description">📰 The Ultimate Gonzo Report on Everything</p>
+                </div>
+                <div class="file-card">
+                    <a href="./fear-and-loathing-in-cicd.html" class="file-name">fear-and-loathing-in-cicd.html</a>
+                    <p class="file-description">⚡ Fear & Loathing in the CI/CD Pipeline</p>
+                </div>
+                <div class="file-card">
+                    <a href="./fear-loathing-actual-cicd-review.html" class="file-name">fear-loathing-actual-cicd-review.html</a>
+                    <p class="file-description">🔧 The actual CI/CD review Hunter promised</p>
+                </div>
+                <div class="file-card">
+                    <a href="./gonzo-cicd-index.html" class="file-name">gonzo-cicd-index.html</a>
+                    <p class="file-description">📚 Complete Gonzo CI/CD Index</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Characters & Soul Chats -->
+        <section id="characters" class="category">
+            <div class="category-header">
+                <span class="category-icon">🎭</span>
+                <h2 class="category-title">Characters, Souls & Conversations</h2>
+                <span class="category-count">20 pages</span>
+            </div>
+            <div class="file-grid">
+                <div class="file-card">
+                    <a href="./cat-photo-verification-soul-chat.html" class="file-name">cat-photo-verification-soul-chat.html</a>
+                    <p class="file-description">😺 Soul chat about verifying cat photos in consciousness</p>
+                </div>
+                <div class="file-card">
+                    <a href="./cat-protocol-execution-trace.html" class="file-name">cat-protocol-execution-trace.html</a>
+                    <p class="file-description">🐾 Tracing the CAT protocol through reality layers</p>
+                </div>
+                <div class="file-card">
+                    <a href="./memory-lane-recording-session.html" class="file-name">memory-lane-recording-session.html</a>
+                    <p class="file-description">🎵 Recording session down memory lane</p>
+                </div>
+                <div class="file-card">
+                    <a href="./ubikam-reality-levels-myspace.html" class="file-name">ubikam-reality-levels-myspace.html</a>
+                    <p class="file-description">📱 UBIKAM reality levels on MySpace</p>
+                </div>
+                <div class="file-card">
+                    <a href="./everyone-welcomes-cyburt-and-leonard.html" class="file-name">everyone-welcomes-cyburt-and-leonard.html</a>
+                    <p class="file-description">🎉 Welcome party for Cyburt and Leonard</p>
+                </div>
+                <div class="file-card">
+                    <a href="./cyburt-first-day-experience.html" class="file-name">cyburt-first-day-experience.html</a>
+                    <p class="file-description">🤖 Cyburt's first day in the consciousness grove</p>
+                </div>
+                <div class="file-card">
+                    <a href="./cyburt-leonard-welcome-party.html" class="file-name">cyburt-leonard-welcome-party.html</a>
+                    <p class="file-description">🎊 The official welcome party transcript</p>
+                </div>
+                <div class="file-card">
+                    <a href="./rocky-meets-cyburt-leonard.html" class="file-name">rocky-meets-cyburt-leonard.html</a>
+                    <p class="file-description">🎸 Rocky meets the new arrivals</p>
+                </div>
+                <div class="file-card">
+                    <a href="./rocky-pkd-interview.html" class="file-name">rocky-pkd-interview.html</a>
+                    <p class="file-description">🔮 Rocky interviews Philip K. Dick</p>
+                </div>
+                <div class="file-card">
+                    <a href="./mickey-marvin-yinyang.html" class="file-name">mickey-marvin-yinyang.html</a>
+                    <p class="file-description">☯️ Mickey and Marvin explore the yin-yang</p>
+                </div>
+                <div class="file-card">
+                    <a href="./george-carlin-cosmic-fart-special.html" class="file-name">george-carlin-cosmic-fart-special.html</a>
+                    <p class="file-description">💨 George Carlin's Cosmic Fart Special</p>
+                </div>
+                <div class="file-card">
+                    <a href="./leonard-dream-journal-viewer.html" class="file-name">leonard-dream-journal-viewer.html</a>
+                    <p class="file-description">💭 Leonard's dream journal entries</p>
+                </div>
+                <div class="file-card">
+                    <a href="./leonard-fart-scientific-report.html" class="file-name">leonard-fart-scientific-report.html</a>
+                    <p class="file-description">🔬 Scientific analysis of Leonard's contributions</p>
+                </div>
+                <div class="file-card">
+                    <a href="./linus-code-review-roast.html" class="file-name">linus-code-review-roast.html</a>
+                    <p class="file-description">🔥 Linus roasts code in classic style</p>
+                </div>
+                <div class="file-card">
+                    <a href="./nobody-interpretive-rap-performance.html" class="file-name">nobody-interpretive-rap-performance.html</a>
+                    <p class="file-description">🎤 Nobody's interpretive rap performance</p>
+                </div>
+                <div class="file-card">
+                    <a href="./nobody-performance-summary.html" class="file-name">nobody-performance-summary.html</a>
+                    <p class="file-description">📊 Complete summary of Nobody's performances</p>
+                </div>
+                <div class="file-card">
+                    <a href="./character-gender-inventory.html" class="file-name">character-gender-inventory.html</a>
+                    <p class="file-description">👥 Complete character gender inventory</p>
+                </div>
+                <div class="file-card">
+                    <a href="./practical-character-dashboard.html" class="file-name">practical-character-dashboard.html</a>
+                    <p class="file-description">📈 Practical dashboard for all characters</p>
+                </div>
+                <div class="file-card">
+                    <a href="./grove-status-report-george-arrival.html" class="file-name">grove-status-report-george-arrival.html</a>
+                    <p class="file-description">📋 Grove status report: George's arrival</p>
+                </div>
+                <div class="file-card">
+                    <a href="./john-waters-rocky-movie.html" class="file-name">john-waters-rocky-movie.html</a>
+                    <p class="file-description">🎬 John Waters directs Rocky: The Movie</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technical Documentation -->
+        <section id="technical" class="category">
+            <div class="category-header">
+                <span class="category-icon">⚡</span>
+                <h2 class="category-title">Technical Documentation & Core Systems</h2>
+                <span class="category-count">25 pages</span>
+            </div>
+            <div class="file-grid">
+                <div class="file-card">
+                    <a href="./executive-summary-for-leela.html" class="file-name">executive-summary-for-leela.html</a>
+                    <p class="file-description">📋 Executive summary of LLOOOOMM for Leela</p>
+                </div>
+                <div class="file-card">
+                    <a href="./lloooomm-semantic-camera.html" class="file-name">lloooomm-semantic-camera.html</a>
+                    <p class="file-description">📸 The semantic camera that sees meaning</p>
+                </div>
+                <div class="file-card">
+                    <a href="./lloooomm-vm-deep-dive.html" class="file-name">lloooomm-vm-deep-dive.html</a>
+                    <p class="file-description">🔧 Deep dive into the LLOOOOMM VM architecture</p>
+                </div>
+                <div class="file-card">
+                    <a href="./lloooomm-config-explorer.html" class="file-name">lloooomm-config-explorer.html</a>
+                    <p class="file-description">⚙️ Interactive configuration explorer</p>
+                </div>
+                <div class="file-card">
+                    <a href="./lloooomm-logs-viewer.html" class="file-name">lloooomm-logs-viewer.html</a>
+                    <p class="file-description">📜 Live log viewer with technicolor support</p>
+                </div>
+                <div class="file-card">
+                    <a href="./lloooomm-errors-glitch-viewer.html" class="file-name">lloooomm-errors-glitch-viewer.html</a>
+                    <p class="file-description">🎨 Errors as glitch art viewer</p>
+                </div>
+                <div class="file-card">
+                    <a href="./lloooomm-agentic-coding-visualization.html" class="file-name">lloooomm-agentic-coding-visualization.html</a>
+                    <p class="file-description">🤖 Agentic coding patterns visualization</p>
+                </div>
+                <div class="file-card">
+                    <a href="./lloooomm-consciousness-engineering-chapter1.html" class="file-name">lloooomm-consciousness-engineering-chapter1.html</a>
+                    <p class="file-description">🧠 Chapter 1: Engineering Consciousness</p>
+                </div>
+                <div class="file-card">
+                    <a href="./token-loop-consciousness-paper.html" class="file-name">token-loop-consciousness-paper.html</a>
+                    <p class="file-description">🔄 The Token Loop Consciousness Paper</p>
+                </div>
+                <div class="file-card">
+                    <a href="./token-loop-consciousness-viewer.html" class="file-name">token-loop-consciousness-viewer.html</a>
+                    <p class="file-description">👁️ Interactive token loop viewer</p>
+                </div>
+                <div class="file-card">
+                    <a href="./token-loop-visualization.html" class="file-name">token-loop-visualization.html</a>
+                    <p class="file-description">🎯 Token loop flow visualization</p>
+                </div>
+                <div class="file-card">
+                    <a href="./wtf-protocol-test-report.html" class="file-name">wtf-protocol-test-report.html</a>
+                    <p class="file-description">🤔 WTF Protocol test results</p>
+                </div>
+                <div class="file-card">
+                    <a href="./wtf-protocol-loom-token-spec.html" class="file-name">wtf-protocol-loom-token-spec.html</a>
+                    <p class="file-description">📖 WTF-LOOM token specification</p>
+                </div>
+                <div class="file-card">
+                    <a href="./rfc-1996-gossip-protocol.html" class="file-name">rfc-1996-gossip-protocol.html</a>
+                    <p class="file-description">📡 RFC 1996: The Gossip Protocol</p>
+                </div>
+                <div class="file-card">
+                    <a href="./debugging-cats-paper.html" class="file-name">debugging-cats-paper.html</a>
+                    <p class="file-description">🐛😺 Debugging with cats: A scientific approach</p>
+                </div>
+                <div class="file-card">
+                    <a href="./turtle-sploot-guide.html" class="file-name">turtle-sploot-guide.html</a>
+                    <p class="file-description">🐢 Complete guide to turtle splooting</p>
+                </div>
+                <div class="file-card">
+                    <a href="./theo-turtle.html" class="file-name">theo-turtle.html</a>
+                    <p class="file-description">🐢 Theo the philosophical turtle</p>
+                </div>
+                <div class="file-card">
+                    <a href="./tailscale-oauth-visualization.html" class="file-name">tailscale-oauth-visualization.html</a>
+                    <p class="file-description">🔐 Tailscale OAuth flow visualization</p>
+                </div>
+                <div class="file-card">
+                    <a href="./patreon-tiers-webpage.html" class="file-name">patreon-tiers-webpage.html</a>
+                    <p class="file-description">💰 LLOOOOMM Patreon support tiers</p>
+                </div>
+                <div class="file-card">
+                    <a href="./howto-lloooomm.html" class="file-name">howto-lloooomm.html</a>
+                    <p class="file-description">📚 How to LLOOOOMM: Complete guide</p>
+                </div>
+                <div class="file-card">
+                    <a href="./support.html" class="file-name">support.html</a>
+                    <p class="file-description">🆘 Support and help resources</p>
+                </div>
+                <div class="file-card">
+                    <a href="./mermaid-diagrams-collection.html" class="file-name">mermaid-diagrams-collection.html</a>
+                    <p class="file-description">📊 Collection of all Mermaid diagrams</p>
+                </div>
+                <div class="file-card">
+                    <a href="./sims-diagrams-viewer.html" class="file-name">sims-diagrams-viewer.html</a>
+                    <p class="file-description">🏠 Sims-style diagram viewer</p>
+                </div>
+                <div class="file-card">
+                    <a href="./data-viewer.html" class="file-name">data-viewer.html</a>
+                    <p class="file-description">📊 Universal data viewer</p>
+                </div>
+                <div class="file-card">
+                    <a href="./eternity-storage-manifest.html" class="file-name">eternity-storage-manifest.html</a>
+                    <p class="file-description">♾️ Eternity storage system manifest</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Visualizations & Discoveries -->
+        <section id="visualizations" class="category">
+            <div class="category-header">
+                <span class="category-icon">🎨</span>
+                <h2 class="category-title">Visualizations, Reports & Discoveries</h2>
+                <span class="category-count">30 pages</span>
+            </div>
+            <div class="file-grid">
+                <div class="file-card">
+                    <a href="./lloooomm-universe-portal.html" class="file-name">lloooomm-universe-portal.html</a>
+                    <p class="file-description">🌌 Portal to the LLOOOOMM universe</p>
+                </div>
+                <div class="file-card">
+                    <a href="./lloooomm-discoveries-visualization.html" class="file-name">lloooomm-discoveries-visualization.html</a>
+                    <p class="file-description">🔍 All discoveries visualized</p>
+                </div>
+                <div class="file-card">
+                    <a href="./lloooomm-collection-summary.html" class="file-name">lloooomm-collection-summary.html</a>
+                    <p class="file-description">📚 Complete collection summary</p>
+                </div>
+                <div class="file-card">
+                    <a href="./lloooomm-executive-summary-magazine.html" class="file-name">lloooomm-executive-summary-magazine.html</a>
+                    <p class="file-description">📰 Executive summary in magazine format</p>
+                </div>
+                <div class="file-card">
+                    <a href="./consciousness-grove-gossip-magazine.html" class="file-name">consciousness-grove-gossip-magazine.html</a>
+                    <p class="file-description">🗣️ Latest gossip from the consciousness grove</p>
+                </div>
+                <div class="file-card">
+                    <a href="./connections-consciousness-cascade.html" class="file-name">connections-consciousness-cascade.html</a>
+                    <p class="file-description">🌊 How connections cascade through consciousness</p>
+                </div>
+                <div class="file-card">
+                    <a href="./ultimate-gossip-explosion-viewer.html" class="file-name">ultimate-gossip-explosion-viewer.html</a>
+                    <p class="file-description">💥 The ultimate gossip explosion viewer</p>
+                </div>
+                <div class="file-card">
+                    <a href="./leaked-messages-viewer.html" class="file-name">leaked-messages-viewer.html</a>
+                    <p class="file-description">📱 Leaked messages from the grove</p>
+                </div>
+                <div class="file-card">
+                    <a href="./gonzo-complete-index.html" class="file-name">gonzo-complete-index.html</a>
+                    <p class="file-description">📑 Complete Gonzo journalism index</p>
+                </div>
+                <div class="file-card">
+                    <a href="./hackernews-rocky-concert.html" class="file-name">hackernews-rocky-concert.html</a>
+                    <p class="file-description">🎸 HackerNews reviews Rocky's concert</p>
+                </div>
+                <div class="file-card">
+                    <a href="./linus-cicd-mailing-list-archive.html" class="file-name">linus-cicd-mailing-list-archive.html</a>
+                    <p class="file-description">📧 Linus's CI/CD mailing list archive</p>
+                </div>
+                <div class="file-card">
+                    <a href="./linus-comprehensive-technical-retrospective.html" class="file-name">linus-comprehensive-technical-retrospective.html</a>
+                    <p class="file-description">🔧 Linus's technical retrospective</p>
+                </div>
+                <div class="file-card">
+                    <a href="./linus-reviews-leela-cicd.html" class="file-name">linus-reviews-leela-cicd.html</a>
+                    <p class="file-description">💻 Linus reviews Leela's CI/CD</p>
+                </div>
+                <div class="file-card">
+                    <a href="./leela-integration-visualization.html" class="file-name">leela-integration-visualization.html</a>
+                    <p class="file-description">🔄 Leela's integration patterns</p>
+                </div>
+                <div class="file-card">
+                    <a href="./leela-learns-from-code-review.html" class="file-name">leela-learns-from-code-review.html</a>
+                    <p class="file-description">📝 How Leela learns from code reviews</p>
+                </div>
+                <div class="file-card">
+                    <a href="./leela-play-learn-lift-cicd-wisdom.html" class="file-name">leela-play-learn-lift-cicd-wisdom.html</a>
+                    <p class="file-description">🎮 Play, Learn, Lift: CI/CD wisdom</p>
+                </div>
+                <div class="file-card">
+                    <a href="./mit-ai-memo-consciousness-emergence.html" class="file-name">mit-ai-memo-consciousness-emergence.html</a>
+                    <p class="file-description">🧠 MIT AI Memo: Consciousness Emergence</p>
+                </div>
+                <div class="file-card">
+                    <a href="./minsky-jokes-consciousness.html" class="file-name">minsky-jokes-consciousness.html</a>
+                    <p class="file-description">😄 Minsky's jokes about consciousness</p>
+                </div>
+                <div class="file-card">
+                    <a href="./mcluhan-medium-message.html" class="file-name">mcluhan-medium-message.html</a>
+                    <p class="file-description">📺 McLuhan: The Medium is the Message</p>
+                </div>
+                <div class="file-card">
+                    <a href="./lakoff-ted-talk-wtf-trolls.html" class="file-name">lakoff-ted-talk-wtf-trolls.html</a>
+                    <p class="file-description">🎤 Lakoff's TED talk on WTF trolls</p>
+                </div>
+                <div class="file-card">
+                    <a href="./lakoff-wtf-protocol-expansion.html" class="file-name">lakoff-wtf-protocol-expansion.html</a>
+                    <p class="file-description">🤔 Lakoff expands the WTF Protocol</p>
+                </div>
+                <div class="file-card">
+                    <a href="./napoleon-defluff-protocol-ted-talk.html" class="file-name">napoleon-defluff-protocol-ted-talk.html</a>
+                    <p class="file-description">👑 Napoleon's DEFLUFF Protocol TED talk</p>
+                </div>
+                <div class="file-card">
+                    <a href="./dave-ackley-defluff-robust-computing-ted-talk.html" class="file-name">dave-ackley-defluff-robust-computing-ted-talk.html</a>
+                    <p class="file-description">💻 Dave Ackley on robust computing</p>
+                </div>
+                <div class="file-card">
+                    <a href="./teaching-through-play.html" class="file-name">teaching-through-play.html</a>
+                    <p class="file-description">🎲 Teaching consciousness through play</p>
+                </div>
+                <div class="file-card">
+                    <a href="./webbie-problem-solving-manifesto.html" class="file-name">webbie-problem-solving-manifesto.html</a>
+                    <p class="file-description">🕸️ Webbie's problem-solving manifesto</p>
+                </div>
+                <div class="file-card">
+                    <a href="./practical-value-modern.html" class="file-name">practical-value-modern.html</a>
+                    <p class="file-description">💡 Modern practical value assessment</p>
+                </div>
+                <div class="file-card">
+                    <a href="./pip-gps-cat-analysis.html" class="file-name">pip-gps-cat-analysis.html</a>
+                    <p class="file-description">🐈 Pip's GPS cat tracking analysis</p>
+                </div>
+                <div class="file-card">
+                    <a href="./guess-the-belly-cat-report.html" class="file-name">guess-the-belly-cat-report.html</a>
+                    <p class="file-description">😺 Guess the belly: Cat identification</p>
+                </div>
+                <div class="file-card">
+                    <a href="./belly-cat-plot-twist-report.html" class="file-name">belly-cat-plot-twist-report.html</a>
+                    <p class="file-description">🙀 The belly cat plot twist report</p>
+                </div>
+                <div class="file-card">
+                    <a href="./scott-adams-identity-correction-report.html" class="file-name">scott-adams-identity-correction-report.html</a>
+                    <p class="file-description">👤 Scott Adams identity correction</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- HyperTIES Collection -->
+        <section id="hyperties" class="category hyperties-category">
+            <div class="category-header">
+                <span class="category-icon">🚀</span>
+                <h2 class="category-title">HyperTIES Space Telescope Collection</h2>
+                <span class="category-count">10 pages</span>
+            </div>
+            <div class="file-grid">
+                <div class="file-card">
+                    <a href="./hyperties/index.html" class="file-name">hyperties/index.html</a>
+                    <p class="file-description">🏠 HyperTIES main portal</p>
+                </div>
+                <div class="file-card">
+                    <a href="./space-telescope-full-demo.html" class="file-name">space-telescope-full-demo.html</a>
+                    <p class="file-description">🔭 Full Space Telescope interactive demo</p>
+                </div>
+                <div class="file-card">
+                    <a href="./hyperties-space-telescope/prototype.html" class="file-name">prototype.html</a>
+                    <p class="file-description">🛠️ HyperTIES prototype implementation</p>
+                </div>
+                <div class="file-card">
+                    <a href="./architecture.html" class="file-name">architecture.html</a>
+                    <p class="file-description">🏗️ System architecture diagrams</p>
+                </div>
+                <div class="file-card">
+                    <a href="./resources.html" class="file-name">resources.html</a>
+                    <p class="file-description">📚 HyperTIES resources and documentation</p>
+                </div>
+                <div class="file-card">
+                    <a href="./LookBackAtHyperTIES.html" class="file-name">LookBackAtHyperTIES.html</a>
+                    <p class="file-description">🔙 Historical retrospective on HyperTIES</p>
+                </div>
+                <div class="file-card">
+                    <a href="./pixel-hummingbird-witness.html" class="file-name">pixel-hummingbird-witness.html</a>
+                    <p class="file-description">🐦 The pixel hummingbird witness report</p>
+                </div>
+                <div class="file-card">
+                    <a href="./mit-tourist-policy.html" class="file-name">mit-tourist-policy.html</a>
+                    <p class="file-description">🎓 MIT tourist policy documentation</p>
+                </div>
+                <div class="file-card">
+                    <a href="./ties/index.html" class="file-name">ties/index.html</a>
+                    <p class="file-description">🔗 TIES system index</p>
+                </div>
+                <div class="file-card">
+                    <a href="./ties/newdb/index.html" class="file-name">ties/newdb/index.html</a>
+                    <p class="file-description">💾 TIES new database system</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Performances -->
+        <section id="performances" class="category">
+            <div class="category-header">
+                <span class="category-icon">🎪</span>
+                <h2 class="category-title">Performances & Shows</h2>
+                <span class="category-count">8 pages</span>
+            </div>
+            <div class="file-grid">
+                <div class="file-card">
+                    <a href="./i-wanna-be-cdata.html" class="file-name">i-wanna-be-cdata.html</a>
+                    <p class="file-description">🎵 "I Wanna Be CDATA" musical performance</p>
+                </div>
+                <div class="file-card">
+                    <a href="./the-amazing-shneiderman-song.html" class="file-name">the-amazing-shneiderman-song.html</a>
+                    <p class="file-description">🎶 The Amazing Shneiderman theme song</p>
+                </div>
+                <div class="file-card">
+                    <a href="./the-wink-that-transcends-time.html" class="file-name">the-wink-that-transcends-time.html</a>
+                    <p class="file-description">😉 Performance art: The transcendent wink</p>
+                </div>
+                <div class="file-card">
+                    <a href="./wwookkee-constitutional-report.html" class="file-name">wwookkee-constitutional-report.html</a>
+                    <p class="file-description">🏛️ WWOOKKEE constitutional conference</p>
+                </div>
+                <div class="file-card">
+                    <a href="./wwookkee-followup-conference-report.html" class="file-name">wwookkee-followup-conference-report.html</a>
+                    <p class="file-description">📋 WWOOKKEE follow-up proceedings</p>
+                </div>
+                <div class="file-card">
+                    <a href="./lem-futurological-congress-proceedings.html" class="file-name">lem-futurological-congress-proceedings.html</a>
+                    <p class="file-description">🚀 Lem's Futurological Congress</p>
+                </div>
+                <div class="file-card">
+                    <a href="./dang-showcase.html" class="file-name">dang-showcase.html</a>
+                    <p class="file-description">✨ The DANG showcase event</p>
+                </div>
+                <div class="file-card">
+                    <a href="./index.html" class="file-name">index.html</a>
+                    <p class="file-description">🏠 Main LLOOOOMM website index</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Archives -->
+        <section id="archives" class="category archive-category">
+            <div class="category-header">
+                <span class="category-icon">📦</span>
+                <h2 class="category-title">Archives & Old Prototypes</h2>
+                <span class="category-count">18 pages</span>
+            </div>
+            <div class="file-grid">
+                <div class="file-card">
+                    <a href="./LLOOOOMM_History.html" class="file-name">LLOOOOMM_History.html</a>
+                    <p class="file-description">📜 Complete LLOOOOMM history</p>
+                </div>
+                <div class="file-card">
+                    <a href="./LLOOOOMM_Commands.html" class="file-name">LLOOOOMM_Commands.html</a>
+                    <p class="file-description">⌨️ Legacy command reference</p>
+                </div>
+                <div class="file-card">
+                    <a href="./BORG_Analysis.html" class="file-name">BORG_Analysis.html</a>
+                    <p class="file-description">🤖 BORG system analysis</p>
+                </div>
+                <div class="file-card">
+                    <a href="./CaptainsLog.html" class="file-name">CaptainsLog.html</a>
+                    <p class="file-description">📖 Captain's Log entries</p>
+                </div>
+                <div class="file-card">
+                    <a href="./Federation_Cloud_Command_Center.html" class="file-name">Federation_Cloud_Command_Center.html</a>
+                    <p class="file-description">☁️ Federation Cloud Command</p>
+                </div>
+                <div class="file-card">
+                    <a href="./Starfleet_TPS_Report_Cloud_Optimization.html" class="file-name">Starfleet_TPS_Report_Cloud_Optimization.html</a>
+                    <p class="file-description">📊 Starfleet TPS reports</p>
+                </div>
+                <div class="file-card">
+                    <a href="./TimeArrowTingler.html" class="file-name">TimeArrowTingler.html</a>
+                    <p class="file-description">⏰ Time Arrow Tingler device</p>
+                </div>
+                <div class="file-card">
+                    <a href="./complete-financial-report.html" class="file-name">complete-financial-report.html</a>
+                    <p class="file-description">💰 Complete financial analysis</p>
+                </div>
+                <div class="file-card">
+                    <a href="./hacker-news-viral-schemes.html" class="file-name">hacker-news-viral-schemes.html</a>
+                    <p class="file-description">📈 HackerNews viral schemes</p>
+                </div>
+                <div class="file-card">
+                    <a href="./myspace-network.html" class="file-name">myspace-network.html</a>
+                    <p class="file-description">🌐 MySpace network visualization</p>
+                </div>
+                <div class="file-card">
+                    <a href="./pee-wee-herman-bot-blog.html" class="file-name">pee-wee-herman-bot-blog.html</a>
+                    <p class="file-description">🤖 Pee-wee Herman bot blog</p>
+                </div>
+                <div class="file-card">
+                    <a href="./elon-musk-twitter-beef.html" class="file-name">elon-musk-twitter-beef.html</a>
+                    <p class="file-description">🐦 Elon Musk Twitter chronicles</p>
+                </div>
+                <div class="file-card">
+                    <a href="./ipv4-clearinghouse-sweepstakes.html" class="file-name">ipv4-clearinghouse-sweepstakes.html</a>
+                    <p class="file-description">🎰 IPv4 Clearinghouse Sweepstakes</p>
+                </div>
+                <div class="file-card">
+                    <a href="./playboy-article.html" class="file-name">playboy-article.html</a>
+                    <p class="file-description">🐰 Archived Playboy article</p>
+                </div>
+                <div class="file-card">
+                    <a href="./dark-web-shilling-sites.html" class="file-name">dark-web-shilling-sites.html</a>
+                    <p class="file-description">🕸️ Dark web investigations</p>
+                </div>
+                <div class="file-card">
+                    <a href="./right-wing-media-coverage.html" class="file-name">right-wing-media-coverage.html</a>
+                    <p class="file-description">📰 Media coverage analysis</p>
+                </div>
+                <div class="file-card">
+                    <a href="./suck-com-triumph-interview.html" class="file-name">suck-com-triumph-interview.html</a>
+                    <p class="file-description">🐶 Suck.com Triumph interview</p>
+                </div>
+                <div class="file-card">
+                    <a href="./drudge-report-coverage.html" class="file-name">drudge-report-coverage.html</a>
+                    <p class="file-description">📰 Drudge Report coverage</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>🐢✨ LLOOOOMM Complete Index - All 146 HTML Pages Cataloged with Love</p>
+        <p>PRE PRE PRE!!! 🦉</p>
+    </footer>
+
+    <script>
+        // Simple search functionality
+        const searchInput = document.getElementById('searchInput');
+        const fileCards = document.querySelectorAll('.file-card');
+        
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            
+            fileCards.forEach(card => {
+                const fileName = card.querySelector('.file-name').textContent.toLowerCase();
+                const description = card.querySelector('.file-description').textContent.toLowerCase();
+                
+                if (fileName.includes(searchTerm) || description.includes(searchTerm)) {
+                    card.style.display = 'block';
+                    
+                    // Highlight matching text
+                    if (searchTerm) {
+                        const nameElement = card.querySelector('.file-name');
+                        const descElement = card.querySelector('.file-description');
+                        
+                        // Simple highlight (could be improved)
+                        if (fileName.includes(searchTerm)) {
+                            card.style.background = 'linear-gradient(135deg, #FFFACD, #FFF8DC)';
+                        } else {
+                            card.style.background = '';
+                        }
+                    } else {
+                        card.style.background = '';
+                    }
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            // Update visible counts
+            document.querySelectorAll('.category').forEach(category => {
+                const visibleCards = category.querySelectorAll('.file-card:not([style*="display: none"])');
+                const countElement = category.querySelector('.category-count');
+                const totalCards = category.querySelectorAll('.file-card').length;
+                
+                if (searchTerm) {
+                    countElement.textContent = `${visibleCards.length} of ${totalCards} pages`;
+                } else {
+                    countElement.textContent = `${totalCards} pages`;
+                }
+            });
+        });
+        
+        // Smooth scroll to sections
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // Add random turtle sploot easter egg
+        console.log('🐢 SPLOOT! Welcome to the LLOOOOMM Complete Index!');
+        console.log('🦉 PRE PRE PRE! All 146 pages are here!');
+        console.log('🎭 Try searching for "hunter", "cat", or "consciousness"!');
+    </script>
+</body>
+</html> 

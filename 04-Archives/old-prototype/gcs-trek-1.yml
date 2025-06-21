@@ -1,0 +1,416 @@
+# GCS-TREK-1 World State Database
+# Starfleet Training Simulation - USS Enterprise NCC-1701-D
+# Stardate: 2401.15.1200
+# Classification: Training Exercise - Safe Environment
+# Instructor: Commander Data, Operations Officer
+
+# =============================================================================
+# MISSION METADATA
+# =============================================================================
+mission:
+  id: "gcs-trek-1"
+  name: "Cloud Resource Optimization Training"
+  stardate: "2401.15.1200"
+  earth_date: "2024-01-15T12:00:00Z"
+  status: "ACTIVE"
+  classification: "TRAINING_EXERCISE"
+  safety_level: "SAFE_SIMULATION"
+  
+  # Mission parameters
+  objectives:
+    - "Master cloud resource discovery and analysis"
+    - "Practice safe optimization procedures" 
+    - "Understand cost management principles"
+    - "Experience decision-making under pressure"
+  
+  # Current progress tracking
+  progress:
+    completion_percentage: 0
+    objectives_completed: 0
+    total_objectives: 4
+    current_phase: "INITIALIZATION"
+
+# =============================================================================
+# PERSONNEL AND CREW
+# =============================================================================
+personnel:
+  cadet:
+    name: "Training Cadet"
+    rank: "CADET"
+    status: "ACTIVE"
+    location: "BRIDGE"
+    current_station: "CLOUD_RESOURCE_CONSOLE"
+    training_level: "BEGINNER"
+    
+    # Performance metrics
+    performance:
+      commands_executed: 0
+      optimizations_completed: 0
+      errors_made: 0
+      safety_violations: 0
+      efficiency_rating: 0.0
+      
+    # Achievement tracking
+    achievements:
+      badges_earned: []
+      scenarios_completed: []
+      cultures_experienced: ["federation"]
+      
+  instructor:
+    name: "Commander Data"
+    rank: "LIEUTENANT_COMMANDER"
+    position: "OPERATIONS_OFFICER"
+    status: "ACTIVE"
+    location: "BRIDGE"
+    current_duty: "TRAINING_SUPERVISION"
+
+# =============================================================================
+# SHIP SYSTEMS AND INFRASTRUCTURE
+# =============================================================================
+enterprise:
+  registry: "NCC-1701-D"
+  class: "GALAXY"
+  status: "OPERATIONAL"
+  location: "STARBASE_74_ORBIT"
+  
+  # Current system status
+  systems:
+    warp_core:
+      status: "ONLINE"
+      efficiency: 97.3
+      power_output: "NOMINAL"
+      
+    life_support:
+      status: "OPTIMAL"
+      atmosphere: "CLASS_M_STANDARD"
+      temperature: 21.1  # Celsius
+      
+    shields:
+      status: "STANDBY"
+      strength: 100.0
+      frequency: "ROTATING"
+      
+    weapons:
+      status: "STANDBY"
+      phasers: "POWERED_DOWN"
+      torpedoes: "LOADED"
+
+# =============================================================================
+# CLOUD INFRASTRUCTURE SIMULATION
+# =============================================================================
+cloud_infrastructure:
+  # Federation cloud projects
+  projects:
+    enterprise_ncc_1701_d_main:
+      name: "Enterprise Main Systems"
+      environment: "PRODUCTION"
+      status: "ACTIVE"
+      monthly_cost: 15420.00
+      optimization_potential: 2313.00
+      
+      # Resource breakdown
+      resources:
+        compute_instances:
+          - name: "bridge-command-console"
+            type: "n1-standard-4"
+            status: "RUNNING"
+            cost_monthly: 146.00
+            utilization: 87.3
+            
+          - name: "holodeck-simulation-1"
+            type: "n1-standard-8"
+            status: "STOPPED"
+            cost_monthly: 292.00
+            utilization: 0.0
+            optimization_flag: "UNUSED"
+            
+          - name: "holodeck-simulation-2"
+            type: "n1-standard-8"
+            status: "STOPPED"
+            cost_monthly: 292.00
+            utilization: 0.0
+            optimization_flag: "UNUSED"
+            
+        static_ips:
+          - name: "bridge-command-console"
+            address: "34.102.140.239"
+            type: "EXTERNAL"
+            status: "IN_USE"
+            cost_monthly: 7.20
+            attached_to: "bridge-command-console"
+            
+          - name: "holodeck-simulation-array"
+            address: "35.237.181.64"
+            type: "EXTERNAL"
+            status: "RESERVED"
+            cost_monthly: 7.20
+            attached_to: null
+            optimization_flag: "UNUSED"
+            
+          - name: "old-replicator-test-ip"
+            address: "35.196.106.227"
+            type: "EXTERNAL"
+            status: "RESERVED"
+            cost_monthly: 7.20
+            attached_to: null
+            optimization_flag: "UNUSED"
+            
+        persistent_disks:
+          - name: "bridge-main-storage"
+            size_gb: 100
+            type: "pd-ssd"
+            status: "ATTACHED"
+            cost_monthly: 17.00
+            attached_to: "bridge-command-console"
+            
+          - name: "old-holodeck-data"
+            size_gb: 500
+            type: "pd-standard"
+            status: "UNATTACHED"
+            cost_monthly: 20.00
+            attached_to: null
+            optimization_flag: "ORPHANED"
+            
+    starfleet_academy_training:
+      name: "Starfleet Academy Training Systems"
+      environment: "DEVELOPMENT"
+      status: "ACTIVE"
+      monthly_cost: 3450.00
+      optimization_potential: 2070.00
+      
+      resources:
+        compute_instances:
+          - name: "cadet-training-sim-1"
+            type: "e2-medium"
+            status: "STOPPED"
+            cost_monthly: 24.27
+            utilization: 0.0
+            optimization_flag: "UNUSED"
+            
+        static_ips:
+          - name: "cadet-training-1"
+            address: "34.123.45.67"
+            type: "EXTERNAL"
+            status: "RESERVED"
+            cost_monthly: 7.20
+            attached_to: null
+            optimization_flag: "UNUSED"
+
+# =============================================================================
+# TRAINING SCENARIOS
+# =============================================================================
+scenarios:
+  scenario_1:
+    name: "Holodeck Resource Leak"
+    description: "Multiple holodeck programs left running, consuming unnecessary compute resources"
+    difficulty: 1  # 1-4 scale
+    status: "AVAILABLE"
+    learning_goals:
+      - "Identify unused compute instances"
+      - "Safely terminate unnecessary processes"
+      - "Understand resource monitoring"
+    
+    # Scenario-specific data
+    affected_resources:
+      - "holodeck-simulation-1"
+      - "holodeck-simulation-2"
+      - "holodeck-simulation-array"
+    
+    expected_savings: 591.20  # Monthly
+    completion_criteria:
+      - "Stop unused holodeck instances"
+      - "Release unused IP addresses"
+      - "Generate optimization report"
+      
+  scenario_2:
+    name: "Replicator Network Optimization"
+    description: "Redundant replicator IP addresses across multiple decks"
+    difficulty: 2
+    status: "LOCKED"  # Unlocked after scenario 1
+    learning_goals:
+      - "Consolidate network resources"
+      - "Avoid service disruption"
+      - "Plan optimization sequences"
+      
+  scenario_3:
+    name: "Emergency Resource Reallocation"
+    description: "Red Alert - rapidly optimize resources for battle readiness"
+    difficulty: 3
+    status: "LOCKED"
+    learning_goals:
+      - "Quick decision-making under pressure"
+      - "Priority-based resource allocation"
+      - "Emergency optimization protocols"
+      
+  scenario_4:
+    name: "Multi-Ship Fleet Optimization"
+    description: "Coordinate resource optimization across entire fleet"
+    difficulty: 4
+    status: "LOCKED"
+    learning_goals:
+      - "Large-scale optimization strategies"
+      - "Cross-project resource management"
+      - "Fleet-wide cost analysis"
+
+# =============================================================================
+# CULTURAL CIVILIZATIONS
+# =============================================================================
+civilizations:
+  current: "federation"
+  available:
+    federation:
+      name: "United Federation of Planets"
+      philosophy: "Collaborative resource optimization for the greater good"
+      emoji_set: ["🖖", "🌟", "⭐", "🚀", "🛸", "💫"]
+      greeting: "🖖 Greetings, Federation Officer!"
+      active: true
+      
+    klingon:
+      name: "Klingon Empire"
+      philosophy: "Conquer waste with honor! Destroy inefficient resources!"
+      emoji_set: ["⚔️", "🗡️", "🛡️", "💀", "🔥", "⚡"]
+      greeting: "⚔️ Qapla'! (Success!) Welcome, Warrior!"
+      active: false
+      
+    vulcan:
+      name: "Vulcan Science Academy"
+      philosophy: "Logical optimization through precise analysis"
+      emoji_set: ["🖖", "🔬", "📊", "⚖️", "🧠", "📐"]
+      greeting: "🖖 Live long and prosper. Logic dictates efficiency."
+      active: false
+      
+    ferengi:
+      name: "Ferengi Commerce Authority"
+      philosophy: "Maximum profit through ruthless cost elimination"
+      emoji_set: ["💰", "💎", "🪙", "📈", "💸", "🏦"]
+      greeting: "💰 Greetings! Let's discuss PROFIT optimization!"
+      active: false
+      
+    borg:
+      name: "Borg Collective"
+      philosophy: "Perfect efficiency through collective assimilation"
+      emoji_set: ["🤖", "🔲", "⬛", "🔗", "🧩", "⚙️"]
+      greeting: "🤖 Resistance is futile. Resources will be optimized."
+      active: false
+      
+    romulan:
+      name: "Romulan Star Empire"
+      philosophy: "Strategic optimization through superior intelligence"
+      emoji_set: ["🌟", "🗡️", "🎭", "🕵️", "🌙", "⭐"]
+      greeting: "🌟 Jolan tru. Strategic intelligence at your service."
+      active: false
+
+# =============================================================================
+# GAME STATE AND MECHANICS
+# =============================================================================
+game_state:
+  session_id: "gcs-trek-1-001"
+  start_time: "2024-01-15T12:00:00Z"
+  current_time: "2024-01-15T12:00:00Z"
+  session_duration: 0  # minutes
+  
+  # Current game mode
+  mode: "BRIDGE_TOUR"
+  location: "BRIDGE"
+  active_console: "CLOUD_RESOURCE_MANAGEMENT"
+  
+  # Safety and simulation status
+  safety:
+    simulation_mode: true
+    production_access: false
+    auto_run_enabled: false
+    confirmation_required: true
+    
+  # Performance tracking
+  metrics:
+    commands_executed: 0
+    successful_operations: 0
+    failed_operations: 0
+    total_cost_savings: 0.00
+    efficiency_improvements: 0.0
+    
+  # Achievement system
+  achievements:
+    available_badges:
+      - id: "first_contact"
+        name: "First Contact"
+        description: "Complete first optimization"
+        unlocked: false
+        
+      - id: "efficiency_expert"
+        name: "Efficiency Expert"
+        description: "Achieve 95% resource efficiency"
+        unlocked: false
+        
+      - id: "safety_officer"
+        name: "Safety Officer"
+        description: "Complete 10 optimizations without errors"
+        unlocked: false
+        
+      - id: "warp_speed"
+        name: "Warp Speed"
+        description: "Optimize resources in under 60 seconds"
+        unlocked: false
+
+# =============================================================================
+# LOGGING AND DOCUMENTATION
+# =============================================================================
+logging:
+  # Log file locations
+  files:
+    captains_log: "CaptainsLog.html"
+    technical_log: "technical_log.yaml"
+    session_state: "gcs-trek-1.yaml"
+    
+  # Logging configuration
+  config:
+    auto_log_commands: true
+    auto_log_results: true
+    auto_log_errors: true
+    log_level: "DETAILED"
+    
+  # Current session logs
+  session_logs:
+    - timestamp: "2401.15.1200"
+      type: "MISSION"
+      priority: "ROUTINE"
+      message: "Mission initialization complete. Cadet arrived aboard Enterprise."
+      
+    - timestamp: "2401.15.1205"
+      type: "TECHNICAL"
+      priority: "ROUTINE"
+      message: "Bridge tour completed. Cloud resource console activated."
+      
+    - timestamp: "2401.15.1210"
+      type: "MISSION"
+      priority: "IMPORTANT"
+      message: "Training protocol activated. GCS-TREK-1 simulation online."
+
+# =============================================================================
+# SYSTEM CONFIGURATION
+# =============================================================================
+system:
+  version: "2.4.1"
+  framework: "LLOOOOMM"
+  environment: "STARFLEET_TRAINING"
+  
+  # Feature flags
+  features:
+    multi_civilization: true
+    auto_run_simulation: true
+    real_gcs_integration: false  # Safety: disabled for training
+    advanced_scenarios: false   # Unlocked by progress
+    
+  # Integration settings
+  integrations:
+    gcloud_sdk: "simulated"
+    starfleet_database: "active"
+    holodeck_interface: "active"
+    
+# =============================================================================
+# END OF STATE FILE
+# =============================================================================
+# This file contains the complete world state for the GCS-TREK-1 simulation
+# All dynamic data, progress tracking, and configuration is stored here
+# The companion gcs-trek-1.md file contains the game constitution and rules
+# CaptainsLog.html provides the interactive interface and documentation system 

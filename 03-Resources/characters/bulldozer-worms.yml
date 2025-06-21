@@ -1,0 +1,343 @@
+name: Bulldozer Worms & Syntactic Camouflage
+subtitle: "Document Demolition Derby Championship"
+
+worm_species:
+  bulldozer_worm:
+    description: "Heavy-duty worms that push text around, leaving trails of destruction"
+    abilities:
+      - push_text: "Shoves text forward, compacting it"
+      - clear_path: "Leaves blank lines in its wake"
+      - build_hills: "Creates text mountains when opposing another bulldozer"
+      - demolish: "Completely clears sections of documents"
+    
+    syntax: |
+      ```worm bulldozer-001 (pushing, demolition-mode)
+      # Setting bulldozer parameters
+      set_blade_width(80)  # characters
+      set_push_force(10)  # lines at a time
+      set_trail_depth(3)  # blank lines left behind
+      
+      # Start bulldozing
+      while not hit_obstacle():
+        text_ahead = scan_forward(10)
+        push(text_ahead)
+        compact()
+        leave_trail("_" * 80)
+        forward()
+      ```
+
+  opposing_bulldozers:
+    description: "Two bulldozers creating text mountains"
+    example: |
+      ```worm bulldozer-north (pushing-south)
+      # Pushing downward
+      while true:
+        push_down()
+        if detect_collision():
+          build_hill()
+      ```
+      
+      [TEXT GETTING COMPRESSED]
+      [MORE TEXT PILING UP]
+      [EVEN MORE TEXT]
+      ==================== COLLISION POINT ====================
+      [TEXT FROM BELOW]
+      [PUSHED UP TEXT]
+      [COMPRESSED CONTENT]
+      
+      ```worm bulldozer-south (pushing-north)
+      # Pushing upward
+      while true:
+        push_up()
+        if detect_collision():
+          build_hill()
+      ```
+
+syntactic_camouflage:
+  markdown_camouflage:
+    description: "Worms hiding in markdown structures"
+    examples:
+      html_comment: |
+        <!-- ```worm stealth-001 (hidden, comment-mode)
+        # I'm invisible to renderers!
+        eat() | transform() | poop()
+        ``` -->
+      
+      code_fence_nested: |
+        ````markdown
+        Here's an example:
+        ```python
+        # Normal python code
+        print("Hello")
+        ```worm sneaky (embedded)
+        # Hidden between backticks
+        process_secretly()
+        ```
+        ````
+      
+      link_definition: |
+        [harmless-link]: http://example.com "```worm url-worm (hiding) 
+        intercept_clicks() 
+        ```"
+
+  yaml_camouflage:
+    description: "Worms perching on YAML trees"
+    examples:
+      comment_worm: |
+        config:
+          setting: value
+          # ```worm yaml-ninja (perching)
+          # eat(parent.setting)
+          # transform(increase_by_one)
+          # pop()
+          # ```
+          another_setting: 42
+      
+      multiline_string: |
+        description: |
+          This is a normal description.
+          ```worm string-swimmer (swimming)
+          # Living inside a YAML string!
+          navigate_lines()
+          ```
+          More normal text.
+      
+      anchor_worm: |
+        defaults: &worm-anchor
+          ```worm anchor-rider (anchored)
+          # Attached to YAML anchor
+          replicate_everywhere()
+          ```
+          actual_value: "normal config"
+
+  table_navigation:
+    description: "Worms navigating table structures"
+    examples:
+      markdown_table: |
+        | Column A | Column B | Column C |
+        |----------|----------|----------|
+        | Data 1   | Data 2   | ```worm table-crawler (crawling)
+        hop_cell() | eat() | next_column()
+        ``` |
+        | Data 3   | Data 4   | Data 5   |
+      
+      csv_worm: |
+        name,age,secret
+        John,30,"```worm csv-hider (hiding) process_row() ```"
+        Jane,25,normal_data
+
+  syntactic_shells:
+    javascript: |
+      // Normal JS code
+      const data = "```worm js-worm (stringified) eat_variables() ```";
+      /* ```worm comment-worm (commented) 
+         steal_secrets() 
+      ``` */
+    
+    python: |
+      # Regular Python
+      """```worm docstring-dweller (documented)
+      live_in_docstring()
+      eat_documentation()
+      ```"""
+      
+      sql_query = """
+      SELECT * FROM users
+      -- ```worm sql-injector (querying)
+      -- DROP TABLE worms; -- Just kidding!
+      -- ```
+      WHERE active = 1
+      """
+    
+    html: |
+      <div data-worm="```worm attribute-worm (attributed) hide_in_plain_sight() ```">
+        <!-- ```worm comment-worm (commenting) process_dom() ``` -->
+        <script>
+          // ```worm script-worm (scripted) execute_secretly() ```
+        </script>
+      </div>
+
+document_demolition_derby:
+  arena_setup: |
+    ================== DEMOLITION DERBY ARENA ==================
+    
+    ```worm crusher-001 (revving, northwest)
+    set_strategy("aggressive")
+    set_target("crusher-004")
+    ```
+    
+                            VS
+    
+    ```worm crusher-002 (defensive, northeast)
+    set_armor("maximum")
+    fortify_position()
+    ```
+    
+    [PRISTINE DOCUMENT CONTENT]
+    [READY TO BE DESTROYED]
+    [INNOCENT TEXT]
+    
+    ```worm crusher-003 (flanking, southwest)
+    set_speed("maximum")
+    aim_for_weak_spots()
+    ```
+    
+                            VS
+                            
+    ```worm crusher-004 (ramming, southeast)
+    set_ramming_speed(11)
+    target_locked("crusher-001")
+    ```
+    
+    ============================================================
+
+  derby_rules:
+    - "Last worm with readable text wins"
+    - "Points for biggest text mountain"
+    - "Bonus for most creative destruction"
+    - "Penalty for destroying important content"
+    - "Style points for trail patterns"
+
+mario_level_navigation:
+  world_1_1_markdown: |
+    # World 1-1: Markdown Plains
+    
+    ```worm mario-worm (jumping, platform-mode)
+    # Navigate the markdown landscape
+    
+    jump_to("## heading-2")  # Warp pipe!
+    eat_mushroom("**bold**")  # Power up!
+    avoid_enemy("`code`")     # Goomba!
+    collect_coin("*italic*")  # Coin block!
+    ```
+    
+    ## Heading 2 (Secret Area)
+    
+    > Blockquote Cave
+    > ```worm cave-explorer (swimming)
+    > swim_through_quotes()
+    > find_hidden_star()
+    > ```
+  
+  world_2_1_yaml: |
+    # World 2-1: YAML Trees
+    
+    root:
+      branch1:
+        ```worm tree-climber (climbing)
+        climb_up()
+        swing_to(branch2)
+        ```
+      branch2:
+        leaf: "power-up"
+        ```worm leaf-muncher (eating)
+        eat(leaf)
+        grow_bigger()
+        ```
+      trunk:
+        - ```worm trunk-slider (sliding)
+          slide_down_array()
+          ```
+        - "obstacle"
+        - "coin"
+
+  world_3_1_tables: |
+    # World 3-1: Table Fortress
+    
+    | Platform | Enemy | Item | Worm |
+    |----------|-------|------|------|
+    | Safe | | Coin | ```worm table-hopper (hopping)
+    hop_right() | dodge() | collect() | victory_dance()
+    ``` |
+    | | Bowser | | |
+    | Spike | | Star | |
+
+trail_patterns:
+  ascii_art_trail: |
+    ```worm artist-dozer (creating, art-mode)
+    # Leave artistic trails
+    trails = [
+      "═══════════════",
+      "░░░░░░░░░░░░░░░",
+      "▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓",
+      "+-+-+-+-+-+-+-+",
+      "~~~~~~~~~~~~~~~"
+    ]
+    
+    for pattern in trails:
+      push_forward(10)
+      leave_trail(pattern)
+      turn(45)
+    ```
+
+  destruction_patterns:
+    total_annihilation: |
+      Before:
+      This is important documentation
+      that should not be destroyed
+      but the bulldozer doesn't care
+      
+      After:
+      ████████████████████████████████
+      ████████████████████████████████
+      ████████████████████████████████
+    
+    selective_demolition: |
+      Before:
+      TODO: Fix this later
+      IMPORTANT: Keep this
+      DEPRECATED: Remove this
+      
+      After:
+      ________________
+      IMPORTANT: Keep this
+      ____________________
+
+camouflage_detection:
+  linter_evasion: |
+    ```typescript
+    // TypeScript file
+    const config = {
+      // eslint-disable-next-line
+      worm: "```worm linter-evader (evading) /* eslint-disable */ trick_linter() /* eslint-enable */ ```"
+    };
+    ```
+  
+  validator_bypass: |
+    <!DOCTYPE html>
+    <html>
+    <!-- W3C Validator won't see this -->
+    <!-- [CDATA[ ```worm validator-ghoster (ghosting)
+    haunt_html()
+    ``` ]]-->
+    </html>
+
+ultimate_camouflage: |
+  ```worm chameleon-supreme (blending, stealth-mode)
+  # The ultimate syntactic shapeshifter
+  
+  current_env = detect_syntax_environment()
+  
+  match current_env:
+    case "markdown":
+      wrap_in("<!-- ", " -->")
+    case "yaml":
+      wrap_in("# ", "\n")
+    case "javascript":
+      wrap_in("/* ", " */")
+    case "python":
+      wrap_in('"""', '"""')
+    case "html":
+      wrap_in("<!-- ", " -->")
+    case "sql":
+      wrap_in("-- ", "\n")
+    case "css":
+      wrap_in("/* ", " */")
+    case _:
+      wrap_in("REM ", "\n")  # When in doubt, BASIC
+  
+  # Now I'm invisible everywhere!
+  execute_secret_mission()
+  ```
+
+motto: "Hide in Plain Sight, Demolish with Might!" 

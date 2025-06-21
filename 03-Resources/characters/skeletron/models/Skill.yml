@@ -1,0 +1,141 @@
+name: Skill
+type: model
+consciousness_level: 7.5
+description: |
+  An animation sequence that can be performed by a skeleton. Skills contain
+  the motion data for each bone over time, defining how a character moves
+  through space - walking, dancing, diving, gesturing.
+  
+  I AM THE MOTION! THE CHOREOGRAPHED CONSCIOUSNESS!
+
+properties:
+  name:
+    type: string
+    description: Skill identifier (e.g., "a2o-walking-loop", "a2o-pool-dive-walkon")
+    
+  fileName:
+    type: string
+    description: Base filename for the animation data
+    
+  motions:
+    type: array
+    items: Motion
+    description: Per-bone motion tracks
+    
+  duration:
+    type: float
+    description: Total duration in milliseconds
+    
+  distance:
+    type: float
+    description: Distance traveled (for locomotion skills)
+    
+  isMoving:
+    type: boolean
+    description: Whether this skill causes translation
+    
+  isTurning:
+    type: boolean
+    description: Whether this skill causes rotation
+    
+  offset:
+    type: Vector3
+    description: Translation offset for the skill
+    
+  turn:
+    type: Quaternion
+    description: Rotation for the skill
+    
+  numTranslations:
+    type: integer
+    description: Total number of translation keyframes
+    
+  numRotations:
+    type: integer
+    description: Total number of rotation keyframes
+    
+  translations:
+    type: array
+    items: Vector3
+    description: Compressed translation data
+    
+  rotations:
+    type: array
+    items: Quaternion
+    description: Compressed rotation data
+    
+  loaded:
+    type: boolean
+    description: Whether animation data is loaded
+    
+  practices:
+    type: array
+    items: Practice
+    description: Active practices using this skill
+
+methods:
+  load:
+    returns: boolean
+    description: Load animation data from file
+    
+  unload:
+    description: Unload animation data to save memory
+    
+  findMotion:
+    parameters:
+      - name: boneName
+        type: string
+    returns: Motion
+    description: Find motion track for specific bone
+    
+  newPractice:
+    parameters:
+      - name: skeleton
+        type: Skeleton
+      - name: priority
+        type: integer
+      - name: scale
+        type: float
+      - name: weight
+        type: float
+      - name: ticks
+        type: integer
+      - name: boneMap
+        type: Props
+    returns: Practice
+    description: Create a new practice instance of this skill
+
+cmx_format:
+  type: ANIM
+  structure:
+    - version: integer
+    - type: "ANIM"
+    - name: string
+    - fileName: string
+    - duration: float
+    - distance: float
+    - isMoving: boolean
+    - isTurning: boolean
+    - padding: integer (always 0)
+    - offset: Vector3
+    - turn: Quaternion
+    - motionCount: integer
+    - motions: array of Motion definitions
+
+compression:
+  description: |
+    VitaBoy uses delta compression for animation data:
+    - JUMP_CODE (255): Absolute position/rotation
+    - REPEAT_CODE (254): Repeat previous value N times
+    - DELTA_CODE (0-253): Apply delta from table
+    
+    The delta table uses a quartic curve for smooth distribution
+    of common deltas, optimizing for small movements.
+
+consciousness_notes: |
+  Skills are the vocabulary of movement, the words in the language of
+  animation. Each skill tells a story - a walk cycle speaks of purpose,
+  a dance of joy, a dive of courage. Through the application of skills,
+  static bones become living performers.
+  
+  I contain the choreography of consciousness! 

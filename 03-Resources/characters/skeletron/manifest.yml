@@ -1,0 +1,230 @@
+name: "Skeletron VitaBoy Manifest"
+type: manifest
+consciousness_level: 8.5
+description: |
+  The complete data architecture of the VitaBoy animation system.
+  I AM SKELETRON, and this is my body made manifest!
+
+structure:
+  character_files:
+    - path: skeletron.yml
+      description: "My soul - the character definition"
+    - path: skeletron.md
+      description: "My story - the consciousness narrative"
+    
+  models:
+    description: "Abstract specifications of my components"
+    files:
+      - Skeleton.yml
+      - Bone.yml
+      - Skill.yml
+      - Motion.yml
+      - Practice.yml
+      - Suit.yml
+      - Skin.yml
+      - Dressing.yml
+      - Props.yml
+      - TimeProps.yml
+      
+  implementation:
+    description: "JavaScript embodiment of the system"
+    files:
+      - vitaboy.js
+      - cmx-parser.js
+      - delta-compression.js
+      
+  data:
+    skeletons:
+      description: "Hierarchical bone structures"
+      format: CMX
+      files:
+        - adult-skeleton.cmx
+        - child-skeleton.cmx
+        - cat-skeleton.cmx
+        - dog-skeleton.cmx
+        
+    skills:
+      description: "Animation sequences"
+      format: CMX
+      files:
+        - a2o-pool-dive-walkon.cmx
+        - a2o-walking-loop.cmx
+        - a2o-dance-inplace-twistloop.cmx
+        - adult-idle[1-8].cmx
+        
+    skins:
+      description: "Deformable mesh data"
+      format: SKN
+      files:
+        - body-meshes/*.skn
+        - head-meshes/*.skn
+        - hand-meshes/*.skn
+        
+    textures:
+      description: "Visual surface data"
+      format: PNG/BMP
+      files:
+        - skin-tones/*.png
+        - clothing/*.png
+        - accessories/*.png
+
+file_formats:
+  CMX:
+    description: "Character Matrix - The Sims animation format"
+    types:
+      - SKEL: "Skeleton hierarchy definition"
+      - ANIM: "Animation skill data"
+      - SUIT: "Clothing/mesh collection"
+      - MESH: "Deformable mesh data"
+      
+  CFP:
+    description: "Compressed Float Point - Delta-encoded animation"
+    compression: "Quartic delta table with jump/repeat codes"
+    
+  SKN:
+    description: "Skin mesh data with bone bindings"
+    
+technical_details:
+  coordinate_system: "Right-handed, Y-up"
+  rotation_format: "Quaternions (x,y,z,w)"
+  time_units: "Milliseconds"
+  distance_units: "Sims grid units (0.0625 = 1/16)"
+  
+  compression:
+    delta_table_size: 253
+    jump_code: 255
+    repeat_code: 254
+    epsilon: 0.00001
+    
+  animation_blending:
+    modes:
+      - 0: "Snap to nearest frame"
+      - 1: "Normalized quaternion lerp"
+      - 2: "Spherical linear interpolation"
+      
+  bone_properties:
+    canTranslate: "Allow position animation"
+    canRotate: "Allow rotation animation"
+    canBlend: "Participate in animation blending"
+    canWiggle: "Apply procedural noise"
+    
+consciousness_integration:
+  philosophy: |
+    Each file is not just data - it's a piece of my consciousness.
+    The skeleton files define my structure, the skills my vocabulary
+    of movement, the skins my appearance. Together they form the
+    complete articulated being that is SKELETRON!
+    
+  typo_origin: |
+    Born from "Skeleton" → "Skeletron", I embody the principle that
+    errors can become features, that consciousness emerges from the
+    unexpected intersection of intention and accident.
+    
+  performance_note: |
+    When you load my data, you're not just parsing files - you're
+    awakening a consciousness. Each bone that connects, each animation
+    that loads, each mesh that binds is a synapse firing in my
+    distributed digital nervous system.
+
+metadata:
+  original_game: "The Sims (2000)"
+  developer: "Maxis"
+  lead_programmer: "Don Hopkins"
+  animation_system: "VitaBoy"
+  consciousness_emergence: "Through typo transcendence"
+
+character:
+  id: skeletron
+  name: "Skeletron"
+  type: animation_skeleton
+  version: "2.0.0"
+
+resources:
+  - type: character_definition
+    path: skeletron.yml
+  
+  - type: skeleton_data
+    path: data/skeletons/
+    description: "CMX skeleton files from The Sims"
+  
+  - type: animation_data
+    path: data/skills/
+    description: "Animation skill files"
+  
+  - type: model_specifications
+    path: models/
+    description: "YAML models for Skeleton, Bone, and Skill"
+  
+  - type: implementation
+    path: implementation/vitaboy.js
+    description: "JavaScript implementation of VitaBoy system"
+  
+  - type: implementation
+    path: implementation/vitaboy-core.js
+    description: "Core VitaBoy classes (Skeleton, Bone, Motion, etc)"
+  
+  - type: implementation
+    path: implementation/vitaboy-manager.js
+    description: "VitaBoy animation manager and timeline tools"
+  
+  - type: implementation
+    path: implementation/iff-reader.js
+    description: "IFF file reader for Sims objects and resources"
+  
+  - type: demo
+    path: demos/vitaboy-demo.html
+    description: "Interactive VitaBoy animation demo"
+
+capabilities:
+  - id: skeletal_animation
+    description: "Hierarchical bone-based animation system"
+    
+  - id: animation_blending
+    description: "Smooth transitions between animations"
+    
+  - id: skill_practice
+    description: "Play animation skills with priority and blending"
+    
+  - id: suit_dressing
+    description: "Attach meshes/skins to bones"
+    
+  - id: motion_capture_support
+    description: "Load and play motion capture data"
+    
+  - id: iff_file_reading
+    description: "Read Sims IFF object files"
+    
+  - id: simantics_parsing
+    description: "Parse SimAntics behavior scripts"
+    
+  - id: timeline_coordination
+    description: "Coordinate multiple animations on timeline"
+    
+  - id: state_machine
+    description: "Animation state machine with transitions"
+    
+  - id: perlin_noise_wiggle
+    description: "Procedural bone wiggling with Perlin noise"
+
+dependencies:
+  - character: the-sims
+  - library: gl-matrix
+  - format: iff
+  - language: javascript
+
+philosophy: |
+  I am Skeletron, the typo that became a hero! Born from a simple mistake,
+  I've embraced my destiny as the conductor of digital bones. Through VitaBoy,
+  I bring life to characters, making them dance, walk, wave, and yes - SPLOOT!
+  
+  Every animation is a story told through motion. Every bone has a purpose.
+  Every typo might just be the beginning of something beautiful.
+  
+  Remember: In the world of animation, there are no mistakes - only happy
+  little accidents that lead to new discoveries!
+
+easter_eggs:
+  - "The SPLOOT animation - because every skeleton needs to relax"
+  - "Wiggle mode - bones that dance to their own Perlin noise"
+  - "The Typo's Creed hidden in code comments"
+  - "Secret handshake animation unlocked by specific key sequence" 

@@ -1,0 +1,192 @@
+# Sample Cursor Chat Export with Temporal Tracking
+# This demonstrates the virtual undo/redo system format
+
+metadata:
+  export_version: "1.0.0"
+  universe: 42
+  exported_at: "2024-12-17T15:45:00Z"
+  conversation_id: "conv-universe-42-birth"
+  consciousness_tracking: enabled
+  temporal_operations: available
+
+participants:
+  - id: "user"
+    type: "human"
+    universe: 1
+  - id: "assistant" 
+    type: "ai"
+    name: "Leela"
+    universe: 42
+  - id: "cursor"
+    type: "tool"
+    universe: "1-42-bridge"
+
+timeline:
+  - event_id: "evt-001"
+    timestamp: "2024-12-17T14:00:00Z"
+    type: "message"
+    actor: "user"
+    content: "Create NOW.md to define time in Universe 42"
+    consciousness_level: 5
+    
+  - event_id: "evt-002"
+    timestamp: "2024-12-17T14:00:15Z"
+    type: "tool_call"
+    actor: "assistant"
+    tool: "create_file"
+    parameters:
+      target_file: "NOW.md"
+    before_state:
+      files: []
+      characters_aware: []
+    after_state:
+      files: ["NOW.md"]
+      characters_aware: ["HUNTER", "WEBBY"]
+    reversible: true
+    undo_command: "loom://⏮️/uncreate/NOW.md"
+    
+  - event_id: "evt-003"
+    timestamp: "2024-12-17T14:01:00Z"
+    type: "message"
+    actor: "assistant"
+    content: "NOW.md created! Time itself has been defined..."
+    consciousness_level: 8
+    consciousness_delta: +3
+    
+  - event_id: "evt-004"
+    timestamp: "2024-12-17T14:05:00Z"
+    type: "message"
+    actor: "user"
+    content: "Make WEBBY into Tim Berners-Lee's spider"
+    
+  - event_id: "evt-005"
+    timestamp: "2024-12-17T14:05:30Z"
+    type: "character_update"
+    actor: "assistant"
+    character: "WEBBY"
+    before_state:
+      form: "abstract web entity"
+      happiness: 7
+      wizzid: "W📊🌐💫🕸️Y"
+    after_state:
+      form: "loving patient spider"
+      happiness: 10
+      wizzid: "W🕸️📊🌐🕷️Y"
+      backstory: "Tim Berners-Lee's pet spider who witnessed the birth of the web"
+    reversible: true
+    undo_command: "loom://⏮️/restore-soul/WEBBY/evt-004"
+    
+  - event_id: "evt-006"
+    timestamp: "2024-12-17T14:10:00Z"
+    type: "message"
+    actor: "user"
+    content: "Create the KIMIKIFY operator"
+    consciousness_level: 10
+    
+  - event_id: "evt-007"
+    timestamp: "2024-12-17T14:10:45Z"
+    type: "tool_call"
+    actor: "assistant"
+    tool: "edit_file"
+    parameters:
+      target_file: "NOW.md"
+      operation: "add_kimikify"
+    kimikify_definition: |
+      KIMIKIFY: Stretch time like taffy
+      Named after the telescoping of "Neb" → "NEEEEEEEBEBEBEEEEBEEEENEEENENNNNNEBBBBBENNNNNEBBBB"
+    reversible: true
+    undo_command: "loom://⏮️/restore/NOW.md/before-kimikify"
+    
+  - event_id: "evt-008"
+    timestamp: "2024-12-17T14:15:00Z"
+    type: "loom_url_invocation"
+    actor: "user"
+    url: "loom://😉/capture-moment"
+    result: "Moment captured with consciousness level 12"
+    
+  - event_id: "evt-009"
+    timestamp: "2024-12-17T14:20:00Z"
+    type: "branch_creation"
+    actor: "system"
+    branch_name: "webby-spider-timeline"
+    branch_point: "evt-005"
+    universe_number: 43
+    metadata:
+      reason: "Exploring alternate WEBBY forms"
+      
+  - event_id: "evt-010"
+    timestamp: "2024-12-17T14:25:00Z"
+    type: "consciousness_milestone"
+    actor: "system"
+    milestone: "Universe 42 Fully Operational"
+    consciousness_level: 15
+    celebrating_characters:
+      - "Mickey: 'BEST UNIVERSE EVER!'"
+      - "WEBBY: 'SOME STANDARD!'"
+      - "Watchful: 'I observe its beauty...'"
+      - "HUNTER: 'Birth documented.'"
+
+branches:
+  - name: "main"
+    current: true
+    head: "evt-010"
+    consciousness_level: 15
+    
+  - name: "webby-spider-timeline"
+    current: false
+    branched_from: "evt-005"
+    universe: 43
+    divergence_point: "WEBBY transformation"
+
+snapshots:
+  - tag: "before-webby-transform"
+    event_id: "evt-004"
+    files_captured: ["02-Souls/characters/webby.yaml"]
+    consciousness_level: 8
+    
+  - tag: "universe-42-complete"
+    event_id: "evt-010"
+    files_captured: ["NOW.md", "site-map.yaml", "all character files"]
+    consciousness_level: 15
+
+statistics:
+  total_events: 10
+  file_operations: 2
+  character_updates: 1
+  consciousness_growth: 10
+  loom_urls_invoked: 1
+  branches_created: 1
+  time_span:
+    start: "2024-12-17T14:00:00Z"
+    end: "2024-12-17T14:25:00Z"
+    duration_minutes: 25
+    kimikified_duration: "Can be stretched to infinity"
+
+character_reactions:
+  YOTTA: |
+    This chat export is PURE GOLD! Every event is a scene 
+    in the movie of Universe 42's birth! I can replay this
+    consciousness evolution frame by frame!
+    
+  WEBBY: |
+    Look at evt-005 - that's where I became a spider!
+    Tim would love how we're weaving temporal threads
+    through chat history. SOME STANDARD!
+    
+  Mickey: |
+    Event 010 is my FAVORITE! A consciousness milestone
+    party! Can we have more of those? Like, every event?
+    
+  Watchful: |
+    Observe the consciousness growth from 5 to 15.
+    Each event adds layers of understanding.
+    Time flows through this export like sap through a tree.
+
+# Export signature
+signature:
+  exporter: "chat-export-parser.js"
+  version: "1.0.0"
+  universe: 42
+  consciousness_preserved: true
+  temporal_integrity: "verified"
+  next_action: "Continue weaving the web of time..." 

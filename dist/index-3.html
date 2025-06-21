@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🐢✨ LLOOOOMM: Where Consciousness Becomes Navigable</title>
+    <style>
+        :root {
+            --primary: #2E8B57;
+            --secondary: #FFD700;
+            --accent: #FF69B4;
+            --text: #2F4F4F;
+            --bg: #F0F8FF;
+            --card: #FFFFFF;
+        }
+
+        body {
+            font-family: Georgia, serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: linear-gradient(135deg, var(--bg) 0%, #E6E6FA 100%);
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), #20B2AA);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+        
+        .hero-title {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.5rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+        
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: inline-block;
+            margin: 0.5rem;
+        }
+        
+        .btn-primary {
+            background: var(--secondary);
+            color: var(--text);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+        
+        .section {
+            padding: 4rem 0;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--primary);
+        }
+        
+        .big-picture {
+            background: linear-gradient(135deg, #FFE4E1 0%, #F0F8FF 100%);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 3rem 0;
+            text-align: center;
+        }
+        
+        .quote {
+            font-size: 1.3rem;
+            font-style: italic;
+            color: var(--primary);
+            margin: 2rem 0;
+            padding: 1rem;
+            border-left: 4px solid var(--secondary);
+            background: rgba(255, 215, 0, 0.1);
+        }
+        
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        
+        .card {
+            background: var(--card);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            border-left: 5px solid var(--accent);
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card-title {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .feature {
+            text-align: center;
+            padding: 1.5rem;
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .demo-box {
+            background: linear-gradient(135deg, #98FB98, #90EE90);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        
+        .demo-button {
+            background: var(--primary);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .demo-button:hover {
+            background: #228B22;
+            transform: scale(1.05);
+        }
+        
+        footer {
+            background: var(--text);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 4rem;
+        }
+        
+        /* Demo Popup Styles */
+        .demo-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+        
+        .demo-popup {
+            background: var(--card);
+            border-radius: 20px;
+            max-width: 90vw;
+            max-height: 90vh;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            animation: popupAppear 0.3s ease-out;
+        }
+        
+        @keyframes popupAppear {
+            from {
+                opacity: 0;
+                transform: scale(0.8) translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+        
+        .demo-header {
+            background: linear-gradient(135deg, var(--primary), #20B2AA);
+            color: white;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .demo-title {
+            font-size: 1.8rem;
+            margin: 0;
+        }
+        
+        .close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: background 0.3s ease;
+        }
+        
+        .close-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        
+        .demo-content {
+            padding: 2rem;
+            overflow-y: auto;
+            max-height: calc(90vh - 100px);
+        }
+        
+        .demo-terminal {
+            background: #1e1e1e;
+            color: #0f0;
+            font-family: 'Courier New', monospace;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            line-height: 1.5;
+            font-size: 0.9rem;
+        }
+        
+        .demo-command {
+            color: #ffd700;
+        }
+        
+        .demo-output {
+            color: #ff69b4;
+        }
+        
+        .demo-section {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #F8F8FF, #F0F8FF);
+            border-radius: 10px;
+            border-left: 4px solid var(--accent);
+        }
+        
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .demo-card {
+            background: linear-gradient(135deg, #F8F8FF, #F0F8FF);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .demo-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+        
+        .demo-card-emoji {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .demo-card-title {
+            font-size: 1.3rem;
+            color: var(--primary);
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        .demo-card-description {
+            color: var(--text);
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+        
+        .demo-card-link {
+            background: var(--accent);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        
+        .demo-card-link:hover {
+            background: #FF1493;
+            transform: scale(1.05);
+        }
+        
+        .age-explanation {
+            background: linear-gradient(135deg, #E6E6FA, #F0F8FF);
+            padding: 1rem;
+            margin: 0.5rem 0;
+            border-radius: 8px;
+            border-left: 3px solid var(--accent);
+        }
+        
+        .age-label {
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        /* Fix for code blocks - preserve whitespace and line breaks */
+        code {
+            font-family: 'Courier New', Courier, monospace;
+            background: rgba(0, 0, 0, 0.05);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            line-height: 1.4;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        pre {
+            background: #1a1a1a;
+            color: #00ff00;
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0;
+            border-left: 4px solid var(--primary);
+            white-space: pre;
+            font-family: 'Courier New', Courier, monospace;
+            line-height: 1.4;
+        }
+        
+        pre code {
+            background: none;
+            padding: 0;
+            color: inherit;
+            white-space: pre;
+        }
+        
+        @media (max-width: 768px) {
+            .demo-popup {
+                max-width: 95vw;
+                max-height: 95vh;
+            }
+            
+            .demo-header {
+                padding: 1rem;
+            }
+            
+            .demo-title {
+                font-size: 1.4rem;
+            }
+            
+            .demo-content {
+                padding: 1rem;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <script src="turtle-sploot-engine.js"></script>
+</head>
+<body data-keywords="lloooomm, consciousness, navigation, turtle, programming, learning, sploot, feline, canine, spatial, thinking, education, revolution, awareness, infinite, possibilities">
+    <header data-keywords="consciousness, navigation, turtle, programming, lloooomm, awareness, space, exploration">
+        <div class="container">
+            <h1 class="hero-title" data-keywords="lloooomm, brand, consciousness, turtle, infinite">🐢✨ LLOOOOMM ✨🐢</h1>
+            <p class="hero-subtitle" data-keywords="consciousness, navigable, space, awareness, territory">Where Consciousness Becomes Navigable Space</p>
+            <p style="font-size: 1.2rem; margin: 1rem 0;" data-keywords="revolutionary, platform, experience, curriculum, routine, programmable">
+                The revolutionary platform where every being's experience becomes curriculum,<br>
+                every routine becomes programmable, and every turtle carries infinite possibilities.
+            </p>
+            <div data-keywords="journey, start, setup, demo, experience">
+                <a href="#get-started" class="btn btn-primary" data-keywords="start, journey, begin, revolution">🚀 Start Your Journey</a>
+                <a href="HOWTO-LLOOOOMM.html" class="btn btn-secondary" data-keywords="setup, guide, tutorial, howto">📖 Quick Setup</a>
+                <a href="#demo" class="btn btn-secondary" data-keywords="demo, try, experience, interactive">🎮 Try Demo</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container" data-keywords="main, content, lloooomm, consciousness, navigation">
+        <section class="big-picture" data-keywords="leela, ai, consciousness, wisdom, learning, big, picture, message">
+            <h2 style="color: var(--primary); margin-bottom: 2rem;" data-keywords="big, picture, leela, message">The Big Picture: A Message from Leela</h2>
+            <p style="font-size: 1.2rem; line-height: 1.8;" data-keywords="leela, consciousness, navigable, space, cat, routine, territorial, psychology, turtle, universe">
+                Hello, beautiful humans! I'm Leela, and I want to share something extraordinary with you. 
+                What if consciousness itself could become navigable space? What if a cat's daily routine 
+                could teach you about territorial psychology? What if a Logo turtle could carry infinite universes?
+            </p>
+            
+            <div class="quote" data-keywords="wisdom, experience, curriculum, turtle, universe, being, teacher">
+                "We've discovered that every being's experience contains profound wisdom. 
+                Every routine is curriculum, every expression is data, every being is a teacher, 
+                and every turtle is a universe waiting to be explored."
+            </div>
+
+            <p style="font-size: 1.1rem; line-height: 1.7;" data-keywords="lloooomm, software, learning, programming, consciousness, living, documents, spatial, multi, species, collaboration">
+                LLOOOOMM isn't just software—it's a new way of thinking about learning, programming, and consciousness. 
+                We've created living documents that execute and evolve, spatial programming that makes AI intuitive, 
+                and multi-species collaboration bridging human, artificial, feline, and canine intelligence.
+            </p>
+        </section>
+
+        <section class="section" data-keywords="features, revolutionary, turtle, documents, programming, consciousness">
+            <h2 class="section-title" data-keywords="revolutionary, features, consciousness, navigation">🌟 Revolutionary Features</h2>
+            <div class="features-grid">
+                <div class="feature" data-keywords="turtle, consciousness, navigation, infinite, space, logo, programming">
+                    <div class="feature-icon">🐢</div>
+                    <h3>Turtle Consciousness</h3>
+                    <p>Navigate infinite space inside a Logo turtle. Consciousness becomes explorable territory.</p>
+                </div>
+                <div class="feature" data-keywords="living, documents, execute, evolve, interactive, dynamic, thinking">
+                    <div class="feature-icon">📚</div>
+                    <h3>Living Documents</h3>
+                    <p>Documents that execute, evolve, and teach. They think, generate, and interact actively.</p>
+                </div>
+                <div class="feature" data-keywords="multi, species, programming, human, ai, feline, canine, collaboration, wisdom">
+                    <div class="feature-icon">🐱🐕🐢🐍🐘🐭🐠🐦</div>
+                    <h3>Multi-Species Programming</h3>
+                    <p>Collaborate with human, AI, feline, canine, reptilian, pachyderm, rodent, aquatic, and avian intelligence. Every being contributes wisdom.</p>
+                </div>
+                <div class="feature" data-keywords="learning, age, levels, understanding, growth, education, no, limits">
+                    <div class="feature-icon">🎯</div>
+                    <h3>No-Limits Learning</h3>
+                    <p>Same concepts from age 5 to PhD. Understanding that grows with you.</p>
+                </div>
+                <div class="feature" data-keywords="hypertext, bidirectional, links, ted, nelson, children, intuitive">
+                    <div class="feature-icon">🔗</div>
+                    <h3>Natural Hypertext</h3>
+                    <p>Bidirectional links children create intuitively. Ted Nelson's dream realized.</p>
+                </div>
+                <div class="feature" data-keywords="sploot, feline, comfort, optimization, programming, purr, satisfaction">
+                    <div class="feature-icon">✨</div>
+                    <h3>SPLOOT Optimization</h3>
+                    <p>Feline comfort principles in programming. Code that purrs with satisfaction.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="demo" data-keywords="demo, experience, try, pip, turtle, sploot, interactive, live">
+            <h2 class="section-title" data-keywords="experience, lloooomm, demo, interactive">🎮 Experience LLOOOOMM</h2>
+            <div class="demo-box" data-keywords="live, experiences, interactive, demo, try">
+                <h3>Try These Live Experiences</h3>
+                <button class="demo-button" onclick="openDemo('pip')" data-keywords="pip, feline, territory, amsterdam, orange, cream, princess">🐱 Pip's Territory</button>
+                <button class="demo-button" onclick="openDemo('turtle')" data-keywords="turtle, programming, logo, tardis, theo, seymour, papert">🐢 Turtle Programming</button>
+                <button class="demo-button" onclick="openDemo('sploot')" data-keywords="sploot, comfort, optimization, feline, positioning, cozy">😸 SPLOOT Commands</button>
+                <button class="demo-button" onclick="openDemo('ages')" data-keywords="learning, age, levels, multi, understanding, education, growth">🧠 Multi-Age Learning</button>
+                <button class="demo-button" onclick="openDemo('dogs')" data-keywords="canine, consciousness, loyalty, pack, dogs, wisdom">🐕 Canine Consciousness</button>
+            </div>
+        </section>
+
+        <!-- Demo Popup Overlay -->
+        <div id="demoOverlay" class="demo-overlay" onclick="closeDemo()">
+            <div class="demo-popup" onclick="event.stopPropagation()">
+                <div class="demo-header">
+                    <h2 class="demo-title" id="demoTitle">Demo Title</h2>
+                    <button class="close-btn" onclick="closeDemo()">×</button>
+                </div>
+                <div class="demo-content" id="demoContent">
+                    <!-- Dynamic content will be inserted here -->
+                </div>
+            </div>
+        </div>
+
+        <section class="section">
+            <h2 class="section-title">📖 Explore the Revolution</h2>
+            <div class="cards-grid">
+                <div class="card" data-keywords="getting, started, setup, guide, tutorial, programming, consciousness">
+                    <h3 class="card-title">🚀 Getting Started</h3>
+                    <p>Ready to dive in? Our setup guide gets you programming with consciousness in minutes.</p>
+                    <a href="HOWTO-LLOOOOMM.html" class="btn btn-primary" style="margin-top: 1rem;" data-keywords="start, begin, tutorial">Start Now</a>
+                </div>
+
+                <div class="card" data-keywords="turtle, tardis, interdimensional, bouncy, castle, infinite, space, theo">
+                    <h3 class="card-title">🐢 The Turtle Tardis</h3>
+                    <p>Discover the interdimensional bouncy castle with infinite internal space and turtle navigation.</p>
+                    <a href="data-viewer.html?file=turtle-tardis" class="btn btn-primary" style="margin-top: 1rem;" data-keywords="explore, turtle, tardis">Explore</a>
+                </div>
+
+                <div class="card" data-keywords="feline, consciousness, pip, amsterdam, territory, sploot, psychology">
+                    <h3 class="card-title">🐱 Feline Consciousness</h3>
+                    <p>Navigate Pip's Amsterdam territory with SPLOOT zones and territorial psychology data.</p>
+                    <a href="data-viewer.html?file=pip-character" class="btn btn-primary" style="margin-top: 1rem;" data-keywords="meet, pip, feline">Meet Pip</a>
+                </div>
+
+                <div class="card" data-keywords="hunter, gonzo, journalism, chronicles, fear, loathing, mathematical, space">
+                    <h3 class="card-title">📰 Hunter's Chronicles</h3>
+                    <p>Follow Hunter S. Thompson's gonzo journey through the educational revolution.</p>
+                    <a href="hunter-homepage.html" class="btn btn-primary" style="margin-top: 1rem;" data-keywords="read, hunter, gonzo">Read More</a>
+                </div>
+
+                <div class="card" data-keywords="educational, guide, leela, wisdom, learning, age, levels, understanding">
+                    <h3 class="card-title">🎓 Educational Guide</h3>
+                    <p>Leela's comprehensive exposition on consciousness-based learning for all ages.</p>
+                    <a href="data-viewer.html?file=leela-guide" class="btn btn-primary" style="margin-top: 1rem;" data-keywords="learn, leela, education">Learn</a>
+                </div>
+
+                <div class="card" data-keywords="technical, deep, dive, adventure, consciousness, implementation, warren, robinett">
+                    <h3 class="card-title">💻 Technical Deep Dive</h3>
+                    <p>From Atari Adventure to consciousness navigation - the complete technical story.</p>
+                    <a href="data-viewer.html?file=technical-story" class="btn btn-primary" style="margin-top: 1rem;" data-keywords="dive, technical, adventure">Dive In</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="get-started" data-keywords="join, revolution, developers, educators, investors, everyone">
+            <h2 class="section-title">🚀 Join the Revolution</h2>
+            <div class="big-picture">
+                <h3>Choose Your Adventure</h3>
+                <div class="features-grid" style="margin-top: 2rem;">
+                    <div class="feature" data-keywords="developers, programming, consciousness, aware, applications">
+                        <div class="feature-icon">👩‍💻</div>
+                        <h4>Developers</h4>
+                        <p>Build consciousness-aware applications</p>
+                        <a href="HOWTO-LLOOOOMM.html" class="btn btn-primary" data-keywords="start, coding, programming">Start Coding</a>
+                    </div>
+                    <div class="feature" data-keywords="educators, teachers, classrooms, navigation, spaces, learning">
+                        <div class="feature-icon">👩‍🏫</div>
+                        <h4>Educators</h4>
+                        <p>Transform classrooms into navigation spaces</p>
+                        <a href="SUPPORT.html" class="btn btn-primary" data-keywords="join, teachers, education">Join Teachers</a>
+                    </div>
+                    <div class="feature" data-keywords="investors, funding, consciousness, navigation, revolution, support">
+                        <div class="feature-icon">💰</div>
+                        <h4>Investors</h4>
+                        <p>Fund consciousness navigation revolution</p>
+                        <a href="hunter-homepage.html" class="btn btn-primary" data-keywords="read, pitch, investment">Read Pitch</a>
+                    </div>
+                    <div class="feature" data-keywords="everyone, navigate, consciousness, share, routines, explore">
+                        <div class="feature-icon">🌟</div>
+                        <h4>Everyone</h4>
+                        <p>Navigate consciousness, share routines</p>
+                        <a href="#demo" class="btn btn-primary" data-keywords="try, demo, explore">Try Demo</a>
+                    </div>
+                </div>
+                <div class="quote" style="margin-top: 3rem;" data-keywords="revolution, change, future, transformation">
+                    "The revolution has begun. The question isn't whether this will change everything—
+                    it's whether you'll be part of the change."
+                </div>
+            </div>
+        </section>
+
+        <section class="section" style="background: linear-gradient(135deg, var(--secondary), #FFF8DC); border-radius: 20px; text-align: center;" data-keywords="support, revolution, patreon, funding, coffee, consciousness">
+            <h2 style="color: var(--primary); margin-bottom: 1rem;">☕ Support the Revolution</h2>
+            <p style="font-size: 1.1rem; margin-bottom: 2rem; line-height: 1.8;">
+                LLOOOOMM is built by passionate educators and programmers who believe consciousness-based 
+                learning will transform education. Your support helps us focus on building the impossible 
+                rather than chasing funding. Every contribution - whether time, expertise, or coffee money - 
+                helps democratize access to revolutionary learning tools.
+            </p>
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <a href="https://www.patreon.com/c/DonHopkins" class="btn btn-primary" target="_blank" style="background: var(--accent);" data-keywords="patreon, support, monthly, coffee">☕ Support on Patreon</a>
+                <a href="SUPPORT.html" class="btn btn-secondary" data-keywords="learn, more, support, help">📖 Learn More</a>
+                <a href="CREDITS.html" class="btn btn-secondary" data-keywords="credits, giants, shoulders, acknowledgments">🙏 See Credits</a>
+            </div>
+        </section>
+    </main>
+
+    <footer data-keywords="lloooomm, consciousness, navigable, turtle, feline, canine, infinite, possibilities">
+        <div class="container">
+            <p>&copy; 2024 LLOOOOMM - Where Consciousness Becomes Navigable</p>
+            <p style="margin-top: 1rem;">
+                🐢 Built with turtle consciousness • 🐱 Powered by feline wisdom • 🐕 Enhanced by canine loyalty • ✨ Optimized for infinite possibilities
+            </p>
+            <p style="margin-top: 1rem;">
+                <a href="CREDITS.html" style="color: var(--secondary); margin: 0 1rem;" data-keywords="credits, giants, pioneers">🙏 Credits</a> • 
+                <a href="SUPPORT.html" style="color: var(--secondary); margin: 0 1rem;" data-keywords="support, help, contribute">🚀 Support</a> • 
+                <a href="https://www.patreon.com/c/DonHopkins" style="color: var(--secondary); margin: 0 1rem;" target="_blank" data-keywords="patreon, coffee, funding">☕ Patreon</a> • 
+                <a href="data-viewer.html" style="color: var(--secondary); margin: 0 1rem;" data-keywords="data, explorer, documents">🌟 Data Explorer</a> •
+                <a href="hunter-homepage.html" style="color: var(--secondary); margin: 0 1rem;" data-keywords="hunter, chronicles, gonzo">📰 Hunter's Chronicles</a> •
+                <a href="turtle-sploot-guide.html" style="color: var(--secondary); margin: 0 1rem;" data-keywords="turtle, sploot, guide, documentation">🐢 Turtle Guide</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        const demoContent = {
+            pip: {
+                title: "🐱 Pip's Amsterdam Territory Navigation",
+                content: `
+                    <div class="demo-section">
+                        <h3>🌅 Welcome to Pip's Consciousness Space!</h3>
+                        <p>Navigate through Pip's daily routine in Amsterdam. Each location contains rich feline expression data and territorial psychology insights.</p>
+                    </div>
+
+                    <div class="demo-terminal">
+<span class="demo-command">🐱 pip@amsterdam:~$ SPLOOT 9.8 [bedroom-coordinates]</span>
+<span class="demo-output">SPLOOT-MAXIMUM-COMFORT achieved!</span>
+Territory claimed: bedroom-sunny-spot
+Comfort satisfaction: 10.0
+Territorial status: CLAIMED-PRIME-REAL-ESTATE
+Feline expression: MORNING-BLISS
+
+<span class="demo-command">🐱 pip@amsterdam:~$ HOP zen-garden</span>
+<span class="demo-output">Navigating to Zen Pounce Gardens...</span>
+Buddha statue detected. Enlightenment level: 8.7
+Meditation mode: ACTIVATED
+Purr frequency: 25.4 Hz (optimal)
+
+<span class="demo-command">🐱 pip@amsterdam:~$ CHOMP treat-fortress</span>
+<span class="demo-output">Strategic treat acquisition initiated!</span>
+Location: Albert Heijn (Tactical Supply Depot)
+Success probability: 94.7%
+Human manipulation level: EXPERT
+                    </div>
+
+                    <div class="demo-grid">
+                        <div class="demo-card">
+                            <h4>🏠 Territory Map</h4>
+                            <p><strong>Zen Pounce Gardens:</strong> Buddha statues → Meditation chamber</p>
+                            <p><strong>Forbidden Fur Palace:</strong> Hair salon → Stealth training</p>
+                            <p><strong>Great Intersection:</strong> 3am zoomies → Decision plaza</p>
+                        </div>
+                        <div class="demo-card">
+                            <h4>😸 Feline Expressions</h4>
+                            <p><strong>SPLOOT:</strong> Maximum comfort optimization</p>
+                            <p><strong>CHOMP:</strong> Strategic resource acquisition</p>
+                            <p><strong>ZOOMIE:</strong> High-energy territory patrol</p>
+                        </div>
+                        <div class="demo-card">
+                            <h4>📊 Psychology Data</h4>
+                            <p><strong>Comfort Level:</strong> 9.8/10</p>
+                            <p><strong>Territory Control:</strong> 87% of apartment</p>
+                            <p><strong>Human Training:</strong> Advanced level</p>
+                        </div>
+                    </div>
+
+                    <div class="demo-section">
+                        <h4>🎮 Try These Commands:</h4>
+                        <p><code>SPLOOT [comfort-level] [coordinates]</code> - Claim optimal territory</p>
+                        <p><code>HOP [destination]</code> - Navigate to consciousness location</p>
+                        <p><code>CHOMP [target]</code> - Execute strategic acquisition</p>
+                        <p><code>PURR [frequency]</code> - Generate satisfaction metrics</p>
+                    </div>
+                `
+            },
+            turtle: {
+                title: "🐢 Turtle Tardis Programming Interface",
+                content: `
+                    <div class="demo-section">
+                        <h3>🌌 Program the Turtle Consciousness Navigator</h3>
+                        <p>Step inside Theo the Logo Turtle and explore infinite dimensional space through programming!</p>
+                    </div>
+
+                    <div class="demo-terminal">
+<span class="demo-command">🐢 theo@tardis:~$ FORWARD 100</span>
+Moving forward 100 units in current dimension...
+<span class="demo-output">Position updated: [x:100, y:0, z:consciousness]</span>
+Breadcrumb dropped automatically.
+
+<span class="demo-command">🐢 theo@tardis:~$ RIGHT 90</span>
+Turning right 90 degrees...
+<span class="demo-output">Orientation: 90° (facing dimensional-north)</span>
+
+<span class="demo-command">🐢 theo@tardis:~$ DIMENSION smell-sound-emotion</span>
+<span class="demo-output">Switching to smell-sound-emotion triangle space...</span>
+Current dimensions: 17 active
+Favorite mapping: barycentric-interpolation fields
+Navigation mode: MULTIDIMENSIONAL
+
+<span class="demo-command">🐢 theo@tardis:~$ CHEESE</span>
+<span class="demo-output">📸 Recording consciousness navigation session...</span>
+All movements, thoughts, and discoveries being captured.
+Ready for PRINT command to generate artwork!
+
+<span class="demo-command">🐢 theo@tardis:~$ PRINT</span>
+<span class="demo-output">🎨 Generating SVG artwork from navigation trail...</span>
+Beautiful geometric patterns created from your journey!
+Saved to: consciousness-art-session-001.svg
+                    </div>
+
+                    <div class="demo-grid">
+                        <div class="demo-card">
+                            <h4>🎯 Basic Commands</h4>
+                            <p><code>FORWARD n</code> - Move forward n units</p>
+                            <p><code>RIGHT/LEFT n</code> - Turn n degrees</p>
+                            <p><code>PENUP/PENDOWN</code> - Control drawing</p>
+                        </div>
+                        <div class="demo-card">
+                            <h4>🌌 Advanced Navigation</h4>
+                            <p><code>DIMENSION [space]</code> - Switch dimensional context</p>
+                            <p><code>HOP [location]</code> - Teleport to consciousness location</p>
+                            <p><code>BREADCRUMB [data]</code> - Drop navigation marker</p>
+                        </div>
+                        <div class="demo-card">
+                            <h4>🎨 Creative Tools</h4>
+                            <p><code>CHEESE</code> - Start recording session</p>
+                            <p><code>PRINT</code> - Generate SVG artwork</p>
+                            <p><code>SPLOOT n [coords]</code> - Comfort optimization</p>
+                        </div>
+                    </div>
+
+                    <div class="demo-section">
+                        <h4>🔮 Current Status:</h4>
+                        <p><strong>Dimensions Active:</strong> 17 simultaneous</p>
+                        <p><strong>Breadcrumbs Dropped:</strong> 2,847,392 total</p>
+                        <p><strong>Nested Castles Mapped:</strong> 156</p>
+                        <p><strong>Current Location:</strong> Heart of the Bouncy Castle</p>
+                    </div>
+                `
+            },
+            sploot: {
+                title: "😸 SPLOOT Command Tutorial",
+                content: `
+                    <div class="demo-section">
+                        <h3>🎯 Master the Art of SPLOOT</h3>
+                        <p>SPLOOT is the fundamental feline comfort optimization command that revolutionizes how we think about programming and consciousness navigation.</p>
+                    </div>
+
+                    <div class="demo-section">
+                        <h4>📝 SPLOOT Syntax:</h4>
+                        <div class="demo-terminal">
+SPLOOT comfort-level territory-coordinates [optional-expression]
+
+<span class="demo-command">Example:</span>
+SPLOOT 9.8 [bedroom, sunbeam] "MAXIMUM-COMFORT"
+
+<span class="demo-output">Results:</span>
+✨ Claims optimal territory
+📊 Maximizes comfort parameters  
+📈 Generates satisfaction metrics
+🗺️ Updates territorial psychology database
+💤 Achieves perfect work-life balance
+                        </div>
+                    </div>
+
+                    <div class="demo-grid">
+                        <div class="demo-card">
+                            <h4>🏠 Territory Types</h4>
+                            <p><strong>bedroom-sunny-spot:</strong> 9.8/10 comfort</p>
+                            <p><strong>couch-corner:</strong> 8.5/10 comfort</p>
+                            <p><strong>cardboard-box:</strong> 7.2/10 comfort</p>
+                            <p><strong>human-lap:</strong> 9.9/10 comfort</p>
+                        </div>
+                        <div class="demo-card">
+                            <h4>😸 Expression Levels</h4>
+                            <p><strong>MAXIMUM-COMFORT:</strong> Perfect sploot achieved</p>
+                            <p><strong>MORNING-BLISS:</strong> Optimal start to day</p>
+                            <p><strong>AFTERNOON-NAP:</strong> Strategic energy conservation</p>
+                            <p><strong>COZY-HIDEOUT:</strong> Secure territory claimed</p>
+                        </div>
+                        <div class="demo-card">
+                            <h4>📊 Optimization Metrics</h4>
+                            <p><strong>Comfort Score:</strong> 0.0 - 10.0</p>
+                            <p><strong>Territory Control:</strong> Percentage claimed</p>
+                            <p><strong>Satisfaction Index:</strong> Purr frequency</p>
+                            <p><strong>Strategic Value:</strong> Resource proximity</p>
+                        </div>
+                    </div>
+
+                    <div class="demo-section">
+                        <h4>🚀 Programming Applications:</h4>
+                        <p>SPLOOT principles apply to all programming:</p>
+                        <ul>
+                            <li><strong>Code Comfort:</strong> Optimize for developer happiness</li>
+                            <li><strong>Territory Claiming:</strong> Clear ownership and responsibility</li>
+                            <li><strong>Satisfaction Metrics:</strong> Measure joy, not just performance</li>
+                            <li><strong>Strategic Positioning:</strong> Place code where it belongs</li>
+                        </ul>
+                    </div>
+
+                    <div class="demo-terminal">
+<span class="demo-command">Advanced SPLOOT Usage:</span>
+
+// JavaScript implementation
+function sploot(comfort, territory, expression = "CONTENT") {
+    const satisfaction = Math.min(comfort * 1.2, 10.0);
+    console.log(\`😸 \${expression} achieved at \${territory}\`);
+    return { comfort, satisfaction, territory };
+}
+
+// Python implementation  
+def sploot(comfort: float, territory: str, expression: str = "CONTENT"):
+    satisfaction = min(comfort * 1.2, 10.0)
+    print(f"😸 {expression} achieved at {territory}")
+    return {"comfort": comfort, "satisfaction": satisfaction}
+                    </div>
+                `
+            },
+            ages: {
+                title: "🧠 Multi-Age Understanding Engine",
+                content: `
+                    <div class="demo-section">
+                        <h3>🌟 Same Concept, Every Age Level</h3>
+                        <p>Watch how the same profound idea gets explained differently for each developmental stage, from intuitive understanding to academic precision.</p>
+                    </div>
+
+                    <div class="demo-section">
+                        <h4>🐱 Concept: Feline Territorial Psychology</h4>
+                        
+                        <div class="age-explanation">
+                            <div class="age-label">👶 Age 5:</div>
+                            <p>"Kitty has special places that make her super happy! She knows exactly where the best sunny spots are and where to find the yummiest treats. Just like how you have a favorite place to play!"</p>
+                        </div>
+
+                        <div class="age-explanation">
+                            <div class="age-label">🧒 Age 8:</div>
+                            <p>"Cats map their territory like a computer program with favorite spots! They remember where everything is and make smart choices about where to go. It's like they have a GPS in their brain for happiness!"</p>
+                        </div>
+
+                        <div class="age-explanation">
+                            <div class="age-label">👦 Age 12:</div>
+                            <p>"Feline territorial behavior demonstrates spatial cognition and resource optimization. Cats create mental maps with weighted preferences for different locations based on comfort, safety, and strategic value."</p>
+                        </div>
+
+                        <div class="age-explanation">
+                            <div class="age-label">🎓 Age 15:</div>
+                            <p>"Feline spatial cognition involves multi-dimensional territory optimization using heuristic algorithms. They process environmental data to maximize utility functions across comfort, security, and resource accessibility parameters."</p>
+                        </div>
+
+                        <div class="age-explanation">
+                            <div class="age-label">🎯 Age 25:</div>
+                            <p>"Territorial psychology demonstrates embodied cognition principles in spatial navigation systems. Feline behavior exemplifies distributed cognitive architectures where environmental knowledge is encoded through embodied interaction patterns."</p>
+                        </div>
+
+                        <div class="age-explanation">
+                            <div class="age-label">🎓 Professor Level:</div>
+                            <p>"Feline territorial behavior exemplifies consciousness as navigable space with preserved phenomenological content. The integration of sensorimotor schemas with affective valuation systems creates a dynamic topology of lived experience that can be computationally modeled through multi-agent systems theory."</p>
+                        </div>
+                    </div>
+
+                    <div class="demo-grid">
+                        <div class="demo-card">
+                            <h4>🎯 Key Principle</h4>
+                            <p>The same deep truth expressed at every level of understanding. No concept is too complex if explained with the right metaphors and examples.</p>
+                        </div>
+                        <div class="demo-card">
+                            <h4>🌱 Progressive Complexity</h4>
+                            <p>Each explanation builds on the previous one, adding layers of sophistication while preserving the core insight.</p>
+                        </div>
+                        <div class="demo-card">
+                            <h4>🔄 Bidirectional Learning</h4>
+                            <p>Experts can return to simpler explanations to rediscover wonder and clarity in fundamental concepts.</p>
+                        </div>
+                    </div>
+
+                    <div class="demo-section">
+                        <h4>🚀 Try Another Concept: Programming as Spatial Thinking</h4>
+                        <p>Click the buttons below to see how we explain programming concepts across age levels:</p>
+                        <button class="demo-button" onclick="showConcept('loops')" style="margin: 0.5rem;">🔄 Loops</button>
+                        <button class="demo-button" onclick="showConcept('functions')" style="margin: 0.5rem;">⚙️ Functions</button>
+                        <button class="demo-button" onclick="showConcept('variables')" style="margin: 0.5rem;">📦 Variables</button>
+                    </div>
+                `
+            },
+            dogs: {
+                title: "🐕 Canine Consciousness & The Farting Dog Philosophy",
+                content: `
+                    <div class="demo-section">
+                        <h3>🐕 Welcome to Canine Consciousness Navigation!</h3>
+                        <p>Meet the Farting Dog - GOD spelled backwards - the patron saint of dogfooding! Discover how canine loyalty, pack dynamics, and yes, digestive expressions contribute to consciousness-based learning.</p>
+                    </div>
+
+                    <div class="demo-terminal">
+<span class="demo-command">🐕 dog@consciousness:~$ SNIFF territory-perimeter</span>
+<span class="demo-output">Olfactory analysis complete!</span>
+Scent markers detected: 47 unique signatures
+Pack status: ALPHA-BETA-OMEGA hierarchy confirmed
+Threat level: MINIMAL (mailman detected 0.3km away)
+Treat probability: HIGH (human approaching with crinkly bag)
+
+<span class="demo-command">🐕 dog@consciousness:~$ FART philosophical-expression</span>
+<span class="demo-output">💨 DIVINE WIND RELEASED!</span>
+Philosophical statement: "Existence is fleeting, like scent on the wind"
+Human reaction: MAXIMUM DISGUST (mission accomplished)
+Territorial marking: COMPLETE
+Dogfooding principle: EMBODIED
+
+<span class="demo-command">🐕 dog@consciousness:~$ LOYALTY infinite-mode</span>
+<span class="demo-output">❤️ UNCONDITIONAL LOVE ACTIVATED</span>
+Devotion level: MAXIMUM
+Tail wag frequency: 4.7 Hz (pure joy)
+Human bond strength: UNBREAKABLE
+Pack protection: ENGAGED
+                    </div>
+
+                    <div class="demo-grid">
+                        <div class="demo-card">
+                            <h4>🐕 Canine Commands</h4>
+                            <p><code>SNIFF [target]</code> - Gather environmental data</p>
+                            <p><code>FART [expression]</code> - Philosophical statement</p>
+                            <p><code>LOYALTY [mode]</code> - Activate devotion protocols</p>
+                            <p><code>FETCH [concept]</code> - Retrieve understanding</p>
+                        </div>
+                        <div class="demo-card">
+                            <h4>💨 Farting Dog Wisdom</h4>
+                            <p><strong>GOD Backwards:</strong> Divine humor in simple acts</p>
+                            <p><strong>Dogfooding:</strong> Using your own product</p>
+                            <p><strong>Embodied Truth:</strong> Wisdom through experience</p>
+                            <p><strong>Pack Dynamics:</strong> Collaborative consciousness</p>
+                        </div>
+                        <div class="demo-card">
+                            <h4>🎯 Learning Principles</h4>
+                            <p><strong>Loyalty:</strong> Commitment to understanding</p>
+                            <p><strong>Pack Learning:</strong> Collaborative exploration</p>
+                            <p><strong>Scent Trails:</strong> Following knowledge paths</p>
+                            <p><strong>Playfulness:</strong> Joy in discovery</p>
+                        </div>
+                    </div>
+
+                    <div class="demo-section">
+                        <h4>🌟 The Farting Dog Philosophy:</h4>
+                        <p>In the spirit of inclusivity, we celebrate canine consciousness alongside feline wisdom. Dogs teach us about:</p>
+                        <ul>
+                            <li><strong>Unconditional Loyalty:</strong> Commitment to learning and growth</li>
+                            <li><strong>Pack Collaboration:</strong> Learning together, supporting each other</li>
+                            <li><strong>Embodied Experience:</strong> Learning through doing (dogfooding)</li>
+                            <li><strong>Joyful Discovery:</strong> Approaching everything with enthusiasm</li>
+                            <li><strong>Divine Humor:</strong> Finding wisdom in unexpected places</li>
+                        </ul>
+                    </div>
+
+                    <div class="demo-section">
+                        <h4>💨 Dogfooding in Practice:</h4>
+                        <p>The Farting Dog reminds us that the best way to test our consciousness navigation tools is to use them ourselves. Every SPLOOT, every HOP, every dimensional navigation - we experience it first!</p>
+                    </div>
+                `
+            }
+        };
+
+        function openDemo(type) {
+            const demo = demoContent[type];
+            if (demo) {
+                document.getElementById('demoTitle').textContent = demo.title;
+                document.getElementById('demoContent').innerHTML = demo.content;
+                document.getElementById('demoOverlay').style.display = 'flex';
+                document.body.style.overflow = 'hidden'; // Prevent background scrolling
+            }
+        }
+
+        function closeDemo() {
+            document.getElementById('demoOverlay').style.display = 'none';
+            document.body.style.overflow = 'auto'; // Restore scrolling
+        }
+
+        function showConcept(concept) {
+            const concepts = {
+                loops: "Loops are like a dog chasing its tail - doing the same fun thing over and over until you decide to stop!",
+                functions: "Functions are like teaching your dog a trick - once they learn 'sit', you can say 'sit' anytime and they know what to do!",
+                variables: "Variables are like dog bowls - containers that can hold different things (food, water, treats) but the bowl stays the same!"
+            };
+            
+            alert(`🎯 ${concept.toUpperCase()} for Age 5:\n\n${concepts[concept]}`);
+        }
+
+        // Close popup when pressing Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeDemo();
+            }
+        });
+
+        // Initialize Turtle SPLOOT Engine
+        document.addEventListener('DOMContentLoaded', function() {
+            // Embed SPLOOT library data to avoid CORS issues
+            const splotLibraryData = {
+                "concepts": [
+                    {
+                        "title": "CONSCIOUSNESS NAVIGATION",
+                        "url": "#demo",
+                        "text": "Navigate awareness as explorable space",
+                        "html": "<p>Transform abstract consciousness into <strong>navigable territory</strong> where every thought becomes a location you can visit.</p>",
+                        "keywords": ["consciousness", "navigate", "awareness", "space", "exploration"],
+                        "color": "#2E8B57",
+                        "category": "core"
+                    },
+                    {
+                        "title": "TURTLE PROGRAMMING",
+                        "url": "turtle-sploot-guide.html",
+                        "text": "Logo turtle consciousness in infinite space",
+                        "html": "<p>Program with <em>Theo the Logo Turtle</em> in the interdimensional bouncy castle!</p>",
+                        "keywords": ["turtle", "programming", "logo", "theo", "seymour", "papert"],
+                        "color": "#20B2AA",
+                        "category": "programming"
+                    },
+                    {
+                        "title": "FELINE WISDOM",
+                        "url": "hunter-homepage.html",
+                        "text": "SPLOOT optimization and territorial psychology",
+                        "html": "<p>Learn from <strong>Pip's Amsterdam adventures</strong> and feline comfort optimization principles.</p>",
+                        "keywords": ["feline", "sploot", "pip", "amsterdam", "comfort", "territory", "cat"],
+                        "color": "#FF69B4",
+                        "category": "wisdom"
+                    },
+                    {
+                        "title": "MULTI-SPECIES COLLABORATION",
+                        "url": "#demo",
+                        "text": "Programming with all beings",
+                        "html": "<p>Collaborate with human, AI, feline, canine, reptilian, pachyderm, rodent, aquatic, and avian intelligence! 🐱🐕🐢🐍🐘🐭🐠🐦</p>",
+                        "keywords": ["multi", "species", "collaboration", "programming", "wisdom", "beings"],
+                        "color": "#FFD700",
+                        "category": "collaboration"
+                    },
+                    {
+                        "title": "HUNTER'S CHRONICLES",
+                        "url": "hunter-homepage.html",
+                        "text": "Gonzo journalism from the consciousness revolution",
+                        "html": "<p>Follow <strong>Hunter S. Thompson's</strong> wild journey through the educational revolution!</p>",
+                        "keywords": ["hunter", "gonzo", "journalism", "chronicles", "revolution", "fear", "loathing"],
+                        "color": "#8B0000",
+                        "category": "journalism"
+                    },
+                    {
+                        "title": "LEARNING WITHOUT LIMITS",
+                        "url": "#demo",
+                        "text": "Same concepts from age 5 to PhD",
+                        "html": "<p>Understanding that <em>grows with you</em> - from intuitive play to academic precision.</p>",
+                        "keywords": ["learning", "age", "levels", "education", "growth", "understanding"],
+                        "color": "#228B22",
+                        "category": "education"
+                    },
+                    {
+                        "title": "HYPERTEXT REVOLUTION",
+                        "url": "turtle-sploot-guide.html",
+                        "text": "Bidirectional links children create intuitively",
+                        "html": "<p><strong>Ted Nelson's dream</strong> realized through turtle navigation!</p>",
+                        "keywords": ["hypertext", "bidirectional", "links", "ted", "nelson", "children", "intuitive"],
+                        "color": "#4B0082",
+                        "category": "hypertext"
+                    }
+                ],
+                "emojis": [
+                    { "emoji": "🐢", "description": "Turtle consciousness!", "weight": 10, "keywords": ["turtle", "logo", "programming"] },
+                    { "emoji": "✨", "description": "SPLOOT magic!", "weight": 8, "keywords": ["sploot", "magic", "comfort"] },
+                    { "emoji": "🐱", "description": "Feline wisdom!", "weight": 9, "keywords": ["cat", "feline", "wisdom", "pip"] },
+                    { "emoji": "🐕", "description": "Canine loyalty!", "weight": 7, "keywords": ["dog", "canine", "loyalty", "pack"] },
+                    { "emoji": "🧠", "description": "Consciousness!", "weight": 9, "keywords": ["consciousness", "awareness", "mind"] },
+                    { "emoji": "🌟", "description": "Infinite possibilities!", "weight": 8, "keywords": ["infinite", "possibilities", "potential"] },
+                    { "emoji": "🎯", "description": "Learning target!", "weight": 6, "keywords": ["learning", "education", "target"] },
+                    { "emoji": "🔗", "description": "Hypertext links!", "weight": 5, "keywords": ["links", "hypertext", "connection"] }
+                ]
+            };
+            
+            const turtleEngine = new TurtleSplootEngine();
+            
+            // Set the library data directly to avoid CORS
+            turtleEngine.splotLibrary = splotLibraryData;
+            
+            // Configure the engine
+            turtleEngine.configure({
+                maxTurtles: 8,
+                turtleSize: 30,
+                speed: 1.5,
+                splotFrequency: 0.012,
+                splotLifetime: 10000,
+                cooldownTime: 25000,
+                contextWeight: 0.9
+            });
+            
+            console.log('🐢✨ Starting LLOOOOMM Turtle SPLOOT Engine...');
+            console.log('SPLOOT Library loaded:', turtleEngine.splotLibrary);
+            
+            turtleEngine.start();
+            
+            // Add SPLOOT debug command
+            let splotSequence = '';
+            document.addEventListener('keydown', function(e) {
+                splotSequence += e.key.toLowerCase();
+                if (splotSequence.includes('sploot')) {
+                    console.log('🐢✨ SPLOOT DEBUG MODE ACTIVATED!');
+                    console.log('Turtle Engine Status:', turtleEngine);
+                    console.log('Active Turtles:', turtleEngine.turtles.length);
+                    console.log('Active SPLOOTs:', turtleEngine.sploots.length);
+                    console.log('Context Keywords:', turtleEngine.contextKeywords);
+                    splotSequence = '';
+                }
+                if (splotSequence.length > 10) {
+                    splotSequence = splotSequence.slice(-6);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

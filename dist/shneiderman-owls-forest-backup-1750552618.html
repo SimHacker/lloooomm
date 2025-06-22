@@ -958,9 +958,11 @@
             position: fixed;
             top: 20px;
             left: 20px;
+            width: 180px;
+            height: 180px;  /* SQUARE to match world! */
             background: rgba(0, 0, 0, 0.8);
             border: 2px solid #4a9eff;
-            border-radius: 0px;
+            border-radius: 8px;
             overflow: hidden;
             z-index: 200;
             cursor: grab;
@@ -977,8 +979,8 @@
         
         .minimap-viewport {
             position: absolute;
-            border: 2px solid #80ccff;
-            background: rgba(128, 204, 255, 0.3);
+            border: 2px solid #4a9eff;
+            background: rgba(74, 158, 255, 0.2);
             pointer-events: none;
         }
         
@@ -1613,102 +1615,22 @@
     </button>
 
     <script>
-
-
-
-        //==============================================================================
-        //
-        //  I. INITIALIZATION & GLOBAL STATE
-        //
-        //  This is the single source of truth for the simulation's state.
-        //  All variables are declared and organized here to prevent initialization
-        //  errors and improve code clarity. This structure is exemplary for teaching
-        //  how to manage state in a complex application.
-        //
-        //==============================================================================
-
-        //------------------------------------------------------------------------------
-        //  A. DOM Element Constants
-        //  References to all the necessary HTML elements, fetched once at startup.
-        //------------------------------------------------------------------------------
+        // Initialize canvas
         const canvas = document.getElementById('canvas');
         const ctx = canvas.getContext('2d');
         const viz = document.getElementById('visualization');
         const infoPanel = document.getElementById('info-panel');
         const magnetCircle = document.getElementById('magnetCircle');
         const magnetCircleInner = document.getElementById('magnetCircleInner');
+        const consoleLog = document.getElementById('console-log');
+        
+        // Edge indicators for autoscroll - declare early to avoid initialization error
         const edgeIndicators = {
-            top: document.getElementById('scroll-edge-top'),
-            bottom: document.getElementById('scroll-edge-bottom'),
-            left: document.getElementById('scroll-edge-left'),
-            right: document.getElementById('scroll-edge-right')
+            top: null,
+            bottom: null,
+            left: null,
+            right: null
         };
-        const minimap = document.getElementById('minimap');
-        const minimapCanvas = document.getElementById('minimap-canvas');
-        const minimapCtx = minimapCanvas.getContext('2d');
-        const minimapViewport = document.querySelector('.minimap-viewport');
-        const legend = document.getElementById('legend');
-
-
-        //------------------------------------------------------------------------------
-        //  B. Configuration Constants
-        //  Fixed parameters that define the simulation's behavior.
-        //------------------------------------------------------------------------------
-        const TIME_SCALE = 3600; // 1 hour of sim time per real-time second at 1x speed
-        const EDGE_SCROLL_ZONE = 80; // pixels from edge for autoscroll
-        const MAX_SCROLL_SPEED = 15; // pixels per frame for autoscroll
-        const keyScrollSpeed = 300;  // pixels per second for keyboard panning
-        const keyZoomSpeed = 0.5; // zoom factor per second for keyboard zooming
-
-
-        //------------------------------------------------------------------------------
-        //  C. Global State Variables
-        //  The mutable state of the simulation. Organized by function.
-        //------------------------------------------------------------------------------
-
-        // -- View & Camera State --
-        let panOffset = { x: 0, y: 0 };  // The viewport's center relative to the world's center
-        let viewScale = 1.0;             // The current zoom level
-        let isPanning = false;           // Is the user currently panning the view?
-        let panStart = { x: 0, y: 0 };   // The screen position where panning started
-        let keyboardScrollVelocity = { x: 0, y: 0 }; // Velocity for keyboard panning
-        let autoScrollVelocity = { x: 0, y: 0 };     // Velocity for edge-scrolling
-
-        // -- Simulation & Time State --
-        let paused = false;              // Is the simulation paused?
-        let globalTime = 0;              // The in-simulation time in seconds
-        let frameCount = 0;              // The total number of frames rendered
-        let lastFrameTime = Date.now();  // The timestamp of the last frame
-        let lastUpdateTime = 0;          // Timestamp for throttling UI updates
-        let actualSpeedMultiplier = 0.8; // The current speed multiplier from the slider
-        let trailsFade = 0.5;            // The alpha value for the trail effect
-
-        // -- Entity & Interaction State --
-        let owls = [];                   // Array of all Owl objects
-        let mice = [];                   // Array of all Mouse objects
-        let poops = [];                  // Array of all Poop objects
-        let foods = [];                  // Array of all Food objects
-        let selectedOwl = null;          // The currently selected Owl object
-        let selectedMouse = null;        // The currently selected Mouse object
-        let hoveredEntity = null;        // The entity currently under the mouse cursor
-        let isDragging = false;          // Is the user currently dragging an entity?
-        let dragTarget = null;           // The entity being dragged
-        let dragOffset = { x: 0, y: 0 }; // Offset for dragging entities
-
-        // -- UI & Settings State --
-        let currentTab = 'owls';         // The active tab in the side panel
-        let keysPressed = new Set();     // A set of all currently pressed keyboard keys
-        let minimapConfig = { owlSize: 12, mouseSize: 8 }; // Visual settings for the minimap
-
-        // -- Magnet State --
-        let isMagnetActive = false;
-        let magnetPosition = { x: 0, y: 0 };
-        let magnetNeutralZone = 25;
-        let magnetStrength = 3;
-
-
-
-
         
         // Initialize edge indicators
         edgeIndicators.top = document.getElementById('scroll-edge-top');
@@ -1716,255 +1638,27 @@
         edgeIndicators.left = document.getElementById('scroll-edge-left');
         edgeIndicators.right = document.getElementById('scroll-edge-right');
         
+        // Initialize minimap
+        const minimap = document.getElementById('minimap');
+        const minimapCanvas = document.getElementById('minimap-canvas');
+        const minimapCtx = minimapCanvas.getContext('2d');
+        const minimapViewport = document.querySelector('.minimap-viewport');
+        
+        // Minimap state
+        let minimapConfig = {
+            owlSize: 12,
+            mouseSize: 8
+        };
         let isMinimapDragging = false;
         let minimapDragStart = { x: 0, y: 0, viewX: 0, viewY: 0 };
 
-        // Interaction state
-        let isDraggingTimezone = false;
-        let timezoneDragTarget = null;
-        let timezoneDragStart = 0;
-        let isDraggingEnergy = false;
-        let energyDragTarget = null;
-        let energyDragStart = 0;
-        let isDraggingAltitude = false;
-        let altitudeDragTarget = null;
-        let altitudeDragStart = 0;
-        
-        // Zoom and pan state
-        let viewOffset = { x: 0, y: 0 };
-        
-        // Keyboard control state
-        //==============================================================================
-        //
-        //  VIEWPORT TRANSFORM AND INTERACTION MODEL
-        //  Author: The User & Gemini
-        //  Date:   2024-10-27
-        //
-        //  This section implements a "center-based" panning and zooming model.
-        //  It's designed for clarity, simplicity, and a fluid user experience.
-        //
-        //  Core Principles:
-        //
-        //  1. World Coordinates: The simulation world has a fixed size, matching the
-        //     canvas dimensions. (0,0) is the top-left corner of the world.
-        //
-        //  2. Pan Offset: The `panOffset` variable stores the {x, y} position of the
-        //     VIEWPORT'S CENTER relative to the WORLD'S CENTER, in world coordinates.
-        //     - panOffset {x: 0, y: 0} means the viewport is perfectly centered.
-        //     - panOffset {x: -100, y: 0} means the viewport's center is 100 world
-        //       units to the left of the world's center.
-        //
-        //  3. Rendering Transform: To draw, we transform the canvas context with:
-        //     a. Translate to the canvas center.
-        //     b. Scale by `viewScale`.
-        //     c. Translate by the NEGATIVE `panOffset`.
-        //
-        //  4. Panning: Panning is achieved by modifying `panOffset`. A mouse
-        //     movement to the right *subtracts* from `panOffset.x`, making the
-        //     world appear to move left under the cursor.
-        //
-        //  5. Zooming: Zooming modifies `viewScale` and adjusts `panOffset` to keep
-        //     the world coordinate under the cursor stationary.
-        //
-        //  6. Clamping: Panning is permissively clamped. The viewport's *center*
-        //     is not allowed to go beyond the world's boundaries. This elegantly
-        //     allows the viewport edges to extend past the world when zoomed in.
-        //
-        //==============================================================================
-
-
-        /**
-         * Calculates the new panOffset required to zoom towards a specific pivot point.
-         * This is the heart of the "zoom-to-cursor" logic.
-         * @param {number} pivotX - The screen X coordinate of the pivot (e.g., cursor).
-         * @param {number} pivotY - The screen Y coordinate of the pivot.
-         * @param {number} oldScale - The viewScale *before* the zoom.
-         * @param {number} newScale - The viewScale *after* the zoom.
-         */
-        function zoomToPoint(pivotX, pivotY, oldScale, newScale) {
-            // Find the world coordinate that was under the cursor before the zoom
-            const worldX = (pivotX - canvas.width / 2) / oldScale + panOffset.x;
-            const worldY = (pivotY - canvas.height / 2) / oldScale + panOffset.y;
-
-            // The new panOffset is the one that places that same world coordinate
-            // back under the cursor after the zoom.
-            panOffset.x = worldX - (pivotX - canvas.width / 2) / newScale;
-            panOffset.y = worldY - (pivotY - canvas.height / 2) / newScale;
-        }
-
-
-        /**
-         * Ensures the viewScale and panOffset stay within valid, permissive limits.
-         */
-        function constrainView() {
-            const minZoom = 1.0;
-            const maxZoom = 50.0; // An arbitrary but reasonable upper limit
-            viewScale = Math.max(minZoom, Math.min(maxZoom, viewScale));
-
-            // Clamp the viewport's CENTER to the world's boundaries.
-            const maxPanX = canvas.width / 2;
-            const maxPanY = canvas.height / 2;
-            panOffset.x = Math.max(-maxPanX, Math.min(maxPanX, panOffset.x));
-            panOffset.y = Math.max(-maxPanY, Math.min(maxPanY, panOffset.y));
-        }
-
-
-        // --- Main Canvas Interaction Handlers ---
-
-        /**
-         * Converts a screen coordinate (like a mouse click) to a world coordinate.
-         * @param {number} screenX - The event's clientX.
-         * @param {number} screenY - The event's clientY.
-         * @returns {{x: number, y: number}} The corresponding world coordinate.
-         */
-        function screenToWorld(screenX, screenY) {
-            const worldX = (screenX - canvas.width / 2) / viewScale + panOffset.x;
-            const worldY = (screenY - canvas.height / 2) / viewScale + panOffset.y;
-            return { x: worldX, y: worldY };
-        }
-
-
-        /**
-         * Handles mouse clicks on the main canvas.
-         * Manages starting panning and selecting entities.
-         */
-        function handleMouseDown(e) {
-            // Right-click and Middle-click start panning.
-            if (e.button === 2 || e.button === 1) {
-                e.preventDefault();
-                isPanning = true;
-                panStart = { x: e.clientX, y: e.clientY };
-                return;
-            }
-
-            // --- Left-click logic for entity selection/magnet would go here. ---
-            // This uses the new screenToWorld function to correctly find what was clicked.
-            // const worldPos = screenToWorld(e.clientX, e.clientY);
-            // Find entity near worldPos...
-        }
-
-        /**
-         * Handles mouse movement on the main canvas for panning.
-         */
-        function handleMouseMove(e) {
-            if (isPanning) {
-                e.preventDefault();
-                const dx = e.clientX - panStart.x;
-                const dy = e.clientY - panStart.y;
-
-                // Convert screen-space delta to world-space pan delta.
-                // A positive dx (mouse right) should decrease panOffset.x (world left).
-                panOffset.x -= dx / viewScale;
-                panOffset.y -= dy / viewScale;
-
-                // The starting point for the next delta is the current position.
-                panStart = { x: e.clientX, y: e.clientY };
-
-                constrainView();
-            }
-            // --- Logic for dragging entities would go here. ---
-        }
-
-        /**
-         * Handles releasing the mouse button to stop panning.
-         */
-        function handleMouseUp(e) {
-            isPanning = false;
-            // --- Logic for releasing dragged entities would go here. ---
-        }
-
-        /**
-         * Handles the mouse wheel for zooming on the main canvas.
-         * Zooms towards the cursor's position.
-         */
-        function handleWheel(e) {
-            e.preventDefault();
-            const oldScale = viewScale;
-            const zoomFactor = e.deltaY < 0 ? 1.1 : 0.9; // Zoom in on scroll up
-            
-            viewScale *= zoomFactor;
-            constrainView(); // Clamp scale immediately
-
-            // Adjust pan offset to keep the point under the cursor stationary
-            zoomToPoint(e.clientX, e.clientY, oldScale, viewScale);
-            constrainView(); // Clamp pan after adjustment
-        }
-
-
-        // --- Minimap Interaction Handler ---
-
-        /**
-         * Handles clicks on the minimap. Instantly centers the view on the clicked point.
-         * This single function replaces all previous minimap handlers for simplicity.
-         */
-        function handleMinimapClick(e) {
-            e.preventDefault();
-            const rect = minimap.getBoundingClientRect();
-
-            // Calculate the click position as a ratio (0.0 to 1.0) of the minimap size
-            const clickRatioX = (e.clientX - rect.left) / rect.width;
-            const clickRatioY = (e.clientY - rect.top) / rect.height;
-
-            // Convert the ratio to a world coordinate.
-            // The world's center is at (canvas.width / 2, canvas.height / 2).
-            const worldX = clickRatioX * canvas.width;
-            const worldY = clickRatioY * canvas.height;
-            
-            // Set the pan offset to center the view on this new world coordinate.
-            panOffset.x = worldX - canvas.width / 2;
-            panOffset.y = worldY - canvas.height / 2;
-
-            constrainView();
-        }
-
-
-
-
-
-        
-
         function resizeCanvas() {
-            const viz = document.getElementById('visualization');
-            const minimap = document.getElementById('minimap');
-            const legend = document.getElementById('legend');
-            const minimapCanvas = document.getElementById('minimap-canvas');
-
-            // Set main canvas size
             canvas.width = viz.offsetWidth;
             canvas.height = viz.offsetHeight;
             
-            // --- DYNAMIC MINIMAP RESIZING BASED ON IMMUTABLE TRUTHS ---
-            const MAX_MINIMAP_DIMENSION = 200; // Max width or height in pixels
-            const MINIMAP_MARGIN = 20; // The constant gap in the top-left corner
-
-            const aspectRatio = canvas.width / canvas.height;
-
-            let minimapWidth, minimapHeight;
-
-            // Calculate minimap size to fit aspect ratio within MAX_MINIMAP_DIMENSION
-            if (aspectRatio > 1) { // Landscape (wide) window
-                minimapWidth = MAX_MINIMAP_DIMENSION;
-                minimapHeight = minimapWidth / aspectRatio;
-            } else { // Portrait (tall) or square window
-                minimapHeight = MAX_MINIMAP_DIMENSION;
-                minimapWidth = minimapHeight * aspectRatio;
-            }
-
-            // Apply the dynamically calculated size to the minimap element and its canvas
-            minimap.style.width = minimapWidth + 'px';
-            minimap.style.height = minimapHeight + 'px';
-            minimapCanvas.width = minimapWidth;
-            minimapCanvas.height = minimapHeight;
-
-            // The minimap's top-left position is fixed by CSS (top: 20px, left: 20px)
-
-            // Adjust legend position to always be below the dynamically-sized minimap
-            if (legend) {
-                legend.style.top = (MINIMAP_MARGIN + minimapHeight + MINIMAP_MARGIN) + 'px';
-            }
-            
-            // Re-constrain the view after a resize to handle new boundaries
-            constrainView();
+            // Set minimap canvas size - SQUARE!
+            minimapCanvas.width = 180;
+            minimapCanvas.height = 180;
         }
         resizeCanvas();
         window.addEventListener('resize', resizeCanvas);
@@ -1986,6 +1680,48 @@
             while (entity.rotation >= 2 * Math.PI) entity.rotation -= 2 * Math.PI;
         }
 
+        // Interaction state
+        let selectedOwl = null;
+        let selectedMouse = null;
+        let hoveredEntity = null;
+        let isDragging = false;
+        let dragTarget = null;
+        let dragOffset = { x: 0, y: 0 };
+        let isMagnetActive = false;
+        let magnetPosition = { x: 0, y: 0 };
+        let isDraggingTimezone = false;
+        let timezoneDragTarget = null;
+        let timezoneDragStart = 0;
+        let isDraggingEnergy = false;
+        let energyDragTarget = null;
+        let energyDragStart = 0;
+        let isDraggingAltitude = false;
+        let altitudeDragTarget = null;
+        let altitudeDragStart = 0;
+        let currentTab = 'owls';
+        
+        // Zoom and pan state
+        let viewScale = 2; // Start zoomed in halfway
+        let viewOffset = { x: 0, y: 0 };
+        let isPanning = false;
+        let panStart = { x: 0, y: 0 };
+        let autoScrollVelocity = { x: 0, y: 0 };
+        const EDGE_SCROLL_ZONE = 80; // pixels from edge (wider for smoother ramp)
+        const MAX_SCROLL_SPEED = 15; // pixels per frame
+        
+        // Keyboard control state
+        let keyboardScrollVelocity = { x: 0, y: 0 };
+        let keyScrollSpeed = 300;  // pixels per second - increased for faster panning
+        let keyZoomSpeed = 0.5; // zoom per second
+        let keysPressed = new Set();
+        
+        // Mouse magnet configuration
+        let magnetNeutralZone = 25; // percentage of magnet radius
+        let magnetStrength = 3; // base magnetic force strength
+        
+        // Trails configuration
+        let trailsFade = 0.03125; // 0.01 = long trails, 1.0 = no trails (initialized for 50% trails)
+        
         // Feathering constants for soft fuzzy creatures
         const owlFeather = 10; // radius where owl starts fading (smaller for better painting)
         const mouseFeather = 4; // radius where mouse starts fading (smaller for better painting)
@@ -2057,6 +1793,14 @@
             '#FFA07A', // Light salmon
             '#BA55D3'  // Medium orchid
         ];
+
+        // Time system
+        const TIME_SCALE = 24 * 60; // 1 day = 1 hour real time
+        let globalTime = 0; // minutes since start
+        let paused = false;
+        let lastFrameTime = Date.now();
+        let actualSpeedMultiplier = 1;
+        let frameCount = 0;
 
         // Logging configuration
         const logConfig = {
@@ -2453,11 +2197,6 @@
         const VELOCITY_HISTORY_SIZE = 5; // Number of recent positions to track  
         const THROW_VELOCITY_SCALE = 1.0; // Multiplier for throw velocity - DOUBLED FOR ZING!
         
-        // Mouse tracking variables for throwing physics (FIXES JAVASCRIPT ERRORS!)
-        let lastMousePos = { x: 0, y: 0 };
-        let lastMouseTime = Date.now();
-        let throwVelocityHistory = [];
-        
         // Food types that can spawn from decomposed poop (using emoji nutrient keys!)
         const foodTypes = [
             // Flower seed archetype - contains array of all flower types
@@ -2467,223 +2206,32 @@
                 '💧': 10,
                 '🌱': 15 
             }},
+            
             // Individual flowers (can spawn from MIRV)
-            { 
-                emoji: '🌸', 
-                name: 'cherry blossom', 
-                nutrients: { 
-                    '🌸': '🌸', 
-                    '🌈': 5, 
-                    '🌿': 2, 
-                    '😊': 1, 
-                    '🌺': 3 
-                } 
-            },
-            { 
-                emoji: '🌼', 
-                name: 'daisy', 
-                nutrients: { 
-                    '🌸': '🌼', 
-                    '🌈': 3, 
-                    '🐝': 4, 
-                    '😊': 2, 
-                    '☀️': 1 
-                } 
-            },
-            { 
-                emoji: '🌺', 
-                name: 'hibiscus', 
-                nutrients: { 
-                    '🌸': '🌺', 
-                    '🌈': 8, 
-                    '🍯': 6, 
-                    '🏝️': 3, 
-                    '🌴': 2 
-                } 
-            },
-            { 
-                emoji: '🌻', 
-                name: 'sunflower', 
-                nutrients: { 
-                    '🌸': '🌻', 
-                    '🌰': 10, 
-                    '💧': 5, 
-                    '📏': 7, 
-                    '☀️': 8 
-                } 
-            },
-            { 
-                emoji: '🌷', 
-                name: 'tulip', 
-                nutrients: { 
-                    '🌸': '🌷', 
-                    '🌈': 6, 
-                    '🇳🇱': 4, 
-                    '💐': 2 
-                } 
-            },
-            { 
-                emoji: '🌹', 
-                name: 'rose', 
-                nutrients: { 
-                    '🌸': '🌹', 
-                    '❤️': 15, 
-                    '🥀': 3, 
-                    '💋': 5 
-                } 
-            },
-            { 
-                emoji: '💐', 
-                name: 'bouquet', 
-                nutrients: { 
-                    '🌸': '💐', 
-                    '💐': 25, 
-                    '🎉': 10, 
-                    '💝': 15 
-                } 
-            },
+            { emoji: '🌸', name: 'cherry blossom', nutrients: { '🌸': '🌸', '🌈': 5, '🌿': 2, '😊': 1, '🌺': 3 } },
+            { emoji: '🌼', name: 'daisy', nutrients: { '🌸': '🌼', '🌈': 3, '🐝': 4, '😊': 2, '☀️': 1 } },
+            { emoji: '🌺', name: 'hibiscus', nutrients: { '🌸': '🌺', '🌈': 8, '🍯': 6, '🏝️': 3, '🌴': 2 } },
+            { emoji: '🌻', name: 'sunflower', nutrients: { '🌸': '🌻', '🌰': 10, '💧': 5, '📏': 7, '☀️': 8 } },
+            { emoji: '🌷', name: 'tulip', nutrients: { '🌸': '🌷', '🌈': 6, '🇳🇱': 4, '💐': 2 } },
+            { emoji: '🌹', name: 'rose', nutrients: { '🌸': '🌹', '❤️': 15, '🥀': 3, '💋': 5 } },
+            { emoji: '💐', name: 'bouquet', nutrients: { '🌸': '💐', '💐': 25, '🎉': 10, '💝': 15 } },
             
             // Other foods
-            { 
-                emoji: '🍄', 
-                name: 'mushroom', 
-                nutrients: { 
-                    '🍜': 7, 
-                    '🦠': 3, 
-                    '✨': 1, 
-                    '🌙': 2 
-                } 
-            },
-            { 
-                emoji: '🍃', 
-                name: 'leaf', 
-                nutrients: { 
-                    '🌿': 3, 
-                    '💚': 2, 
-                    '🍂': 1, 
-                    '🌳': 1 
-                } 
-            },
-            { 
-                emoji: '🌿', 
-                name: 'herb', 
-                nutrients: { 
-                    '👅': 4, 
-                    '💊': 3, 
-                    '👃': 2, 
-                    '🍵': 2 
-                } 
-            },
-            { 
-                emoji: '🌾', 
-                name: 'grain', 
-                nutrients: { 
-                    '🍞': 8, 
-                    '⚡': 6, 
-                    '🌾': 4, 
-                    '🚜': 2 
-                } 
-            },
-            { 
-                emoji: '🥜', 
-                name: 'nut', 
-                nutrients: { 
-                    '💪': 9, 
-                    '🧈': 7, 
-                    '🦷': 5, 
-                    '🐿️': 3 
-                } 
-            },
-            { 
-                emoji: '🌰', 
-                name: 'chestnut', 
-                nutrients: { 
-                    '🔥': 5, 
-                    '🍂': 4, 
-                    '♨️': 3, 
-                    '🎃': 2 
-                } 
-            },
-            { 
-                emoji: '🫘', 
-                name: 'beans', 
-                nutrients: { 
-                    '💪': 8, 
-                    '🌿': 6, 
-                    '💨': 'fart', 
-                    '🎺': 2 
-                } 
-            },
-            { 
-                emoji: '🥕', 
-                name: 'carrot', 
-                nutrients: { 
-                    '👁️': 10, 
-                    '🟠': 5, 
-                    '🐰': 'whatsupdoc', 
-                    '🥗': 3 
-                } 
-            },
-            { 
-                emoji: '🍀', 
-                name: 'clover', 
-                nutrients: { 
-                    '🍀': 7, 
-                    '🇮🇪': 4, 
-                    '💚': 3, 
-                    '🌈': 2 
-                } 
-            },
-            { 
-                emoji: '🪨', 
-                name: 'rock', 
-                nutrients: { 
-                    '⛏️': 5, 
-                    '💎': 10, 
-                    '🧘': 2, 
-                    '🗿': 3 
-                } 
-            },
-            { 
-                emoji: '🪵', 
-                name: 'wood', 
-                nutrients: { 
-                    '🌿': 4, 
-                    '🐜': 2, 
-                    '🔥': 3, 
-                    '🌳': 5 
-                } 
-            },
-            { 
-                emoji: '🥚', 
-                name: 'egg', 
-                nutrients: { 
-                    '💪': 12, 
-                    '🥚': 3, 
-                    '❓': 5, 
-                    '🎁': ['🐣', '🐥', '🦖'] 
-                } 
-            },
-            { 
-                emoji: '🪶', 
-                name: 'feather', 
-                nutrients: { 
-                    '🕊️': 4, 
-                    '😆': 3, 
-                    '🛏️': 2, 
-                    '✒️': 1 
-                } 
-            },
-            { 
-                emoji: '💎', 
-                name: 'gem', 
-                nutrients: { 
-                    '✨': 10, 
-                    '💰': 100, 
-                    '💎': 9, 
-                    '🌟': ['✨', '💫', '⭐'] 
-                } 
-            }
+            { emoji: '🍄', name: 'mushroom', nutrients: { '🍜': 7, '🦠': 3, '✨': 1, '🌙': 2 } },
+            { emoji: '🍃', name: 'leaf', nutrients: { '🌿': 3, '💚': 2, '🍂': 1, '🌳': 1 } },
+            { emoji: '🌿', name: 'herb', nutrients: { '👅': 4, '💊': 3, '👃': 2, '🍵': 2 } },
+            { emoji: '🌾', name: 'grain', nutrients: { '🍞': 8, '⚡': 6, '🌾': 4, '🚜': 2 } },
+            { emoji: '🥜', name: 'nut', nutrients: { '💪': 9, '🧈': 7, '🦷': 5, '🐿️': 3 } },
+            { emoji: '🌰', name: 'chestnut', nutrients: { '🔥': 5, '🍂': 4, '♨️': 3, '🎃': 2 } },
+            { emoji: '🫘', name: 'beans', nutrients: { '💪': 8, '🌿': 6, '💨': 'fart', '🎺': 2 } },
+            { emoji: '🥕', name: 'carrot', nutrients: { '👁️': 10, '🟠': 5, '🐰': 'whatsupdoc', '🥗': 3 } },
+            { emoji: '🍀', name: 'clover', nutrients: { '🍀': 7, '🇮🇪': 4, '💚': 3, '🌈': 2 } },
+            { emoji: '🪨', name: 'rock', nutrients: { '⛏️': 5, '💎': 10, '🧘': 2, '🗿': 3 } },
+            { emoji: '🪵', name: 'wood', nutrients: { '🌿': 4, '🐜': 2, '🔥': 3, '🌳': 5 } },
+            { emoji: '🥚', name: 'egg', nutrients: { '💪': 12, '🥚': 3, '❓': 5, '🎁': ['🐣', '🐥', '🦖'] } },
+            { emoji: '🪶', name: 'feather', nutrients: { '🕊️': 4, '😆': 3, '🛏️': 2, '✒️': 1 } },
+            { emoji: '💎', name: 'gem', nutrients: { '✨': 10, '💰': 100, '💎': 9, '🌟': ['✨', '💫', '⭐'] } }
+        ];
         
         class Poop {
             constructor(x, y, creatureId, creatureType, poopType = 'fear', nutrients = {}, owlAltitude = 0, owlVelocity = null) {
@@ -2848,9 +2396,9 @@
                 // GREEN GLOW EFFECT! 💚
                 const glowRadius = currentSize * 1.5;
                 const glowGradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, glowRadius);
-                glowGradient.addColorStop(0, `rgba(0, 255, 0, ${opacity * 0.08})`); // Very subtle green center
-                glowGradient.addColorStop(0.3, `rgba(0, 255, 0, ${opacity * 0.05})`); // Faint green
-                glowGradient.addColorStop(0.6, `rgba(0, 255, 0, ${opacity * 0.03})`); // Barely visible green
+                glowGradient.addColorStop(0, `rgba(0, 255, 0, ${opacity * 0.3})`); // Bright green center
+                glowGradient.addColorStop(0.3, `rgba(0, 255, 0, ${opacity * 0.2})`); // Medium green
+                glowGradient.addColorStop(0.6, `rgba(0, 255, 0, ${opacity * 0.1})`); // Faint green
                 glowGradient.addColorStop(1, 'rgba(0, 255, 0, 0)'); // Transparent edge
                 
                 ctx.fillStyle = glowGradient;
@@ -2966,41 +2514,19 @@
             'UTC+6', 'UTC+7', 'UTC+8', 'UTC+9', 'UTC+10', 'UTC+11'
         ];
 
-        //==============================================================================
-        //
-        //  WIZZY ID GENERATION
-        //
-        //  This section handles the creation of the unique "wizzy" identifiers for
-        //  each creature. The logic is designed to be clean, simple, and exemplary.
-        //
-        //==============================================================================
-
-        // Define the character sets as simple, elegant strings.
-        const owlEmojis = '🦉🌳🌲🍃🌙⭐🌟🌌🦅🪶🍂🌺🌸🦜🕊️🦚🦢🪺🌾🌿';
-        const mouseEmojis = '🐭🧀🌾🌽🥜🍞🥖🍪🪨🌰🍄🥕🫘🌻🌼🍀🌱🪵🍃🫧';
+        // WIZZY ID generation
+        const owlEmojis = ['🦉', '🌳', '🌲', '🍃', '🌙', '⭐', '🌟', '🌌', '🦅', '🪶', '🍂', '🌺', '🌸', '🦜', '🕊️', '🦚', '🦢', '🪺', '🌾', '🌿'];
+        const mouseEmojis = ['🐭', '🧀', '🌾', '🌽', '🥜', '🍞', '🥖', '🍪', '🪨', '🌰', '🍄', '🥕', '🫘', '🌻', '🌼', '🍀', '🌱', '🪵', '🍃', '🫧'];
         const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-
-        /**
-         * Generates a unique "wizzy" identifier for a creature.
-         * A wizzy is a combination of a letter and an emoji (e.g., "A🦉").
-         *
-         * @param {boolean} isOwl - True if generating for an owl, false for a mouse.
-         * @returns {string} The generated wizzy ID.
-         */
-        function generateWizzy(isOwl) {
-            const letter = letters[Math.floor(Math.random() * letters.length)];
-            
-            // Select the correct emoji set.
-            const emojiSourceString = isOwl ? owlEmojis : mouseEmojis;
-            
-            // To correctly handle multi-byte emoji characters, we first convert the
-            // string into an array of its individual characters.
-            const emojiArray = Array.from(emojiSourceString);
-            
-            const emoji = emojiArray[Math.floor(Math.random() * emojiArray.length)];
-            
-            return letter + emoji;
-        }        
+        
+        function generateWizzyId(index, isOwl) {
+            const emojis = isOwl ? owlEmojis : mouseEmojis;
+            const letter1 = letters[index % 26];
+            const letter2 = letters[(index * 7 + 13) % 26];
+            const emoji1 = emojis[index % emojis.length];
+            const emoji2 = emojis[(index * 3 + 5) % emojis.length];
+            return `${letter1}${emoji1}${emoji2}${letter2}`;
+        }
 
         // Time formatting function
         function formatTime(totalMinutes) {
@@ -3031,6 +2557,47 @@
             } else {
                 // Normal to INSANE: 1x to 50x WTF!!!
                 return 1 + ((normalized - 0.5) * 98);
+            }
+        }
+        
+        // Constrain view offset to keep world in bounds
+        function constrainView() {
+            // First, calculate minimum zoom that shows entire world
+            // Since world dimensions match canvas dimensions at scale 1.0,
+            // we can't zoom out past 1.0 without showing empty space
+            const minZoom = 1.0; // Can't zoom out past this
+            
+            // Clamp zoom scale
+            if (viewScale < minZoom) {
+                viewScale = minZoom;
+                wizzyLog('random', 'Zoom limit reached - world boundary! 🌍', '🔒');
+            }
+            
+            // When zoomed out, the world should center
+            // When zoomed in, prevent scrolling past edges
+            const worldWidth = canvas.width * viewScale;
+            const worldHeight = canvas.height * viewScale;
+            const viewportWidth = canvas.width;
+            const viewportHeight = canvas.height;
+            
+            if (worldWidth <= viewportWidth) {
+                // World fits horizontally - center it
+                viewOffset.x = (viewportWidth - worldWidth) / 2;
+            } else {
+                // World is larger - constrain scrolling
+                const minX = -(worldWidth - viewportWidth);
+                const maxX = 0;
+                viewOffset.x = Math.max(minX, Math.min(maxX, viewOffset.x));
+            }
+            
+            if (worldHeight <= viewportHeight) {
+                // World fits vertically - center it
+                viewOffset.y = (viewportHeight - worldHeight) / 2;
+            } else {
+                // World is larger - constrain scrolling
+                const minY = -(worldHeight - viewportHeight);
+                const maxY = 0;
+                viewOffset.y = Math.max(minY, Math.min(maxY, viewOffset.y));
             }
         }
         
@@ -3089,94 +2656,141 @@
             }
         }
         
-
-
-
-
-        /**
-         * Draws the complete minimap, including all entities and the viewport rectangle.
-         * This function is called every frame from the main animation loop.
-         */
+        // Update minimap - FIXED SCALE VERSION
         function updateMinimap() {
-            //
-            //  Phase 1: Draw the world background
-            //
+            // Clear minimap
             minimapCtx.fillStyle = 'rgba(0, 0, 0, 0.9)';
             minimapCtx.fillRect(0, 0, minimapCanvas.width, minimapCanvas.height);
-
-            //
-            //  Phase 2: Calculate the scaling factor to fit the entire world
-            //  into the minimap with a small margin.
-            //
-            const worldWidth = canvas.width;
+            
+            // Use FIXED scale for entire world view
+            const worldWidth = canvas.width;  // Remove viewScale dependency
             const worldHeight = canvas.height;
             const minimapScale = Math.min(
                 minimapCanvas.width / worldWidth,
                 minimapCanvas.height / worldHeight
-            ) * 0.9; // Use 90% of space to leave a nice border
-
-            // Calculate the offset needed to center the scaled world inside the minimap
-            const mapOffsetX = (minimapCanvas.width - worldWidth * minimapScale) / 2;
-            const mapOffsetY = (minimapCanvas.height - worldHeight * minimapScale) / 2;
-
-            //
-            //  Phase 3: Draw all the entities (owls and mice) onto the minimap.
-            //
+            ) * 0.9; // 90% to leave some margin
+            
+            // Center the minimap content
+            const offsetX = (minimapCanvas.width - worldWidth * minimapScale) / 2;
+            const offsetY = (minimapCanvas.height - worldHeight * minimapScale) / 2;
+            
+            // Draw mice
             minimapCtx.textAlign = 'center';
             minimapCtx.textBaseline = 'middle';
             
-            // Draw mice
             mice.forEach(mouse => {
-                if (!mouse.caught && mouse.active) {
-                    const x = mapOffsetX + mouse.position.x * minimapScale;
-                    const y = mapOffsetY + mouse.position.y * minimapScale;
-                    const isSelected = selectedMouse === mouse;
+                if (!mouse.caught && mouse.active) { // Only show active mice
+                    const x = offsetX + mouse.position.x * minimapScale;
+                    const y = offsetY + mouse.position.y * minimapScale;
                     
-                    const fontSize = Math.max(1, minimapConfig.mouseSize * (isSelected ? 3 : 1));
-                    minimapCtx.font = `${fontSize}px Arial`;
-                    minimapCtx.fillStyle = isSelected ? '#ffff00' : mouse.colors.middle;
+                    if (selectedMouse === mouse) {
+                        // Draw golden halo for selected mouse
+                        minimapCtx.save();
+                        const haloRadius = minimapConfig.mouseSize * 3;
+                        const gradient = minimapCtx.createRadialGradient(x, y, 0, x, y, haloRadius);
+                        gradient.addColorStop(0, 'rgba(255, 215, 0, 0)');
+                        gradient.addColorStop(0.3, 'rgba(255, 215, 0, 0.2)');
+                        gradient.addColorStop(0.6, 'rgba(255, 215, 0, 0.1)');
+                        gradient.addColorStop(1, 'rgba(255, 215, 0, 0)');
+                        minimapCtx.fillStyle = gradient;
+                        minimapCtx.beginPath();
+                        minimapCtx.arc(x, y, haloRadius, 0, Math.PI * 2);
+                        minimapCtx.fill();
+                        minimapCtx.restore();
+                        
+                        // Draw selected mouse 3x larger
+                        const fontSize = Math.max(1, minimapConfig.mouseSize * 3);
+                        minimapCtx.font = `${fontSize}px Arial`;
+                        minimapCtx.fillStyle = '#ffff00';
+                    } else {
+                        const fontSize = Math.max(1, minimapConfig.mouseSize);
+                        minimapCtx.font = `${fontSize}px Arial`;
+                        minimapCtx.fillStyle = mouse.colors.middle; // Use mouse's middle color
+                    }
+                    
                     minimapCtx.fillText(mouse.wizzy, x, y);
                 }
             });
             
             // Draw owls
+            
             owls.forEach(owl => {
-                if (owl.active) {
-                    const x = mapOffsetX + owl.position.x * minimapScale;
-                    const y = mapOffsetY + owl.position.y * minimapScale;
-                    const isSelected = selectedOwl === owl;
-
-                    const fontSize = Math.max(1, minimapConfig.owlSize * (isSelected ? 3 : 1));
+                if (!owl.active) return; // Only show active owls
+                const x = offsetX + owl.position.x * minimapScale;
+                const y = offsetY + owl.position.y * minimapScale;
+                
+                if (selectedOwl === owl) {
+                    // Draw golden halo for selected owl
+                    minimapCtx.save();
+                    const haloRadius = minimapConfig.owlSize * 3;
+                    const gradient = minimapCtx.createRadialGradient(x, y, 0, x, y, haloRadius);
+                    gradient.addColorStop(0, 'rgba(255, 215, 0, 0)');
+                    gradient.addColorStop(0.3, 'rgba(255, 215, 0, 0.2)');
+                    gradient.addColorStop(0.6, 'rgba(255, 215, 0, 0.1)');
+                    gradient.addColorStop(1, 'rgba(255, 215, 0, 0)');
+                    minimapCtx.fillStyle = gradient;
+                    minimapCtx.beginPath();
+                    minimapCtx.arc(x, y, haloRadius, 0, Math.PI * 2);
+                    minimapCtx.fill();
+                    minimapCtx.restore();
+                    
+                    // Draw selected owl 3x larger
+                    const fontSize = Math.max(1, minimapConfig.owlSize * 3);
                     minimapCtx.font = `${fontSize}px Arial`;
-                    minimapCtx.fillStyle = isSelected ? '#ffff00' : owl.colors.middle;
-                    minimapCtx.fillText(owl.wizzy, x, y);
+                    minimapCtx.fillStyle = '#ffff00';
+                } else {
+                    const fontSize = Math.max(1, minimapConfig.owlSize);
+                    minimapCtx.font = `${fontSize}px Arial`;
+                    minimapCtx.fillStyle = owl.colors.middle; // Use owl's middle color
                 }
+                
+                minimapCtx.fillText(owl.wizzy, x, y);
             });
-
-            //
-            //  Phase 4: Calculate and draw the viewport rectangle. THIS IS THE KEY.
-            //
+            
+            // Draw magnet circles if active
+            if (isMagnetActive) {
+                const magnetX = offsetX + magnetPosition.x * minimapScale;
+                const magnetY = offsetY + magnetPosition.y * minimapScale;
+                const magnetRadius = parseFloat(document.getElementById('magnetRadius').value) * minimapScale;
+                const neutralRadius = magnetRadius * (magnetNeutralZone / 100);
+                
+                minimapCtx.save();
+                
+                // Outer magnet circle
+                minimapCtx.strokeStyle = magnetStrength < 0 ? '#ff6666' : '#66ff66';
+                minimapCtx.lineWidth = 2;
+                minimapCtx.setLineDash([10, 10]); // More dashes, smaller gaps
+                minimapCtx.beginPath();
+                minimapCtx.arc(magnetX, magnetY, magnetRadius, 0, Math.PI * 2);
+                minimapCtx.stroke();
+                
+                // Inner neutral zone circle
+                if (magnetNeutralZone > 0) {
+                    minimapCtx.beginPath();
+                    minimapCtx.arc(magnetX, magnetY, neutralRadius, 0, Math.PI * 2);
+                    minimapCtx.stroke();
+                }
+                
+                // Reset dash pattern
+                minimapCtx.setLineDash([]);
+                minimapCtx.restore();
+            }
+            
+            // Reset shadow
+            minimapCtx.shadowBlur = 0;
+            
+            // Update viewport rectangle with FIXED scale
             const viewportWidth = (canvas.width / viewScale) * minimapScale;
             const viewportHeight = (canvas.height / viewScale) * minimapScale;
-
-            // The viewport's center is the minimap's center plus the scaled panOffset.
-            const viewportCenterX = minimapCanvas.width / 2 + panOffset.x * minimapScale;
-            const viewportCenterY = minimapCanvas.height / 2 + panOffset.y * minimapScale;
-
-            // The viewport's top-left corner is its center minus half its size.
-            const viewportX = viewportCenterX - viewportWidth / 2;
-            const viewportY = viewportCenterY - viewportHeight / 2;
+            const viewportX = offsetX - (viewOffset.x / viewScale) * minimapScale;
+            const viewportY = offsetY - (viewOffset.y / viewScale) * minimapScale;
             
             minimapViewport.style.width = viewportWidth + 'px';
             minimapViewport.style.height = viewportHeight + 'px';
             minimapViewport.style.left = viewportX + 'px';
             minimapViewport.style.top = viewportY + 'px';
         }
-
-
-
-
-
+        
         // Update minimap sizes
         function updateMinimapSizes() {
             const owlSize = document.getElementById('minimap-owl-size').value;
@@ -3192,28 +2806,12 @@
             updateMinimap();
         }
         
-
-
-
-
-
-        // --- Event Listener Registration ---
-        //
-        // This is the single source of truth for all view-control-related events.
-        // It connects our new, clean handler functions to the DOM.
-        //
-
-        // Main canvas listeners for panning, zooming, and selection
-        canvas.addEventListener('mousedown', handleMouseDown);
-        canvas.addEventListener('mousemove', handleMouseMove);
-        canvas.addEventListener('mouseup', handleMouseUp);
-        canvas.addEventListener('mouseleave', handleMouseUp); // Stop panning if mouse leaves
-        canvas.addEventListener('wheel', handleWheel);
-        canvas.addEventListener('contextmenu', e => e.preventDefault()); // Prevent right-click menu
-
-        // Minimap listener for quick navigation
-        minimap.addEventListener('click', handleMinimapClick);
-
+        // Minimap interaction handlers
+        minimap.addEventListener('mousedown', handleMinimapMouseDown);
+        minimap.addEventListener('mousemove', handleMinimapMouseMove);
+        minimap.addEventListener('mouseup', handleMinimapMouseUp);
+        minimap.addEventListener('mouseleave', handleMinimapMouseUp);
+        minimap.addEventListener('wheel', handleMinimapWheel);
         
         function handleMinimapMouseDown(e) {
             const rect = minimap.getBoundingClientRect();
@@ -3594,7 +3192,7 @@
 
                 // Boundaries - BOUNCE off walls for owls!
                 const bounceDampening = 0.85; // Lose 15% speed on bounce
-                const wallMargin = 25; // Positive margin keeps owls ON SCREEN while bouncing
+                const wallMargin = 15; // Positive margin keeps owls ON SCREEN while bouncing
                 
                 // X boundaries - BOUNCE!
                 if (this.position.x <= wallMargin) {
@@ -4492,6 +4090,15 @@
                 if (this.velocity.x !== 0 || this.velocity.y !== 0) {
                     this.rotation = Math.atan2(this.velocity.y, this.velocity.x) + Math.PI / 2; // +90° so "up" points forward
                 }
+
+                this.position.x += this.velocity.x * actualSpeedMultiplier;
+                this.position.y += this.velocity.y * actualSpeedMultiplier;
+
+                // World wrapping for mice only! (helps them escape)
+                if (this.position.x < 0) this.position.x = canvas.width;
+                if (this.position.x >= canvas.width) this.position.x = 0;
+                if (this.position.y < 0) this.position.y = canvas.height;
+                if (this.position.y >= canvas.height) this.position.y = 0;
                 
                 // Check for nearby food
                 foods.forEach((food, index) => {
@@ -6498,157 +6105,377 @@
             updateSubtitle();
         }
 
-
-
-
-
-
-
-        //==============================================================================
-        //
-        //  MAIN SIMULATION LOOP
-        //
-        //  This is the new, refactored heart of the application. The old `animate`
-        //  function was a monolith; this version delegates tasks to logical helper
-        //  functions, making the program flow easy to understand.
-        //
-        //==============================================================================
-
+        // Animation loop with real-time updates
         let lastUpdateTime = 0;
-
-        /**
-         * The main animation loop, called by requestAnimationFrame.
-         * Orchestrates all per-frame updates.
-         */
         function animate() {
             const now = Date.now();
-            const deltaTime = (now - lastFrameTime) / 1000; // Time since last frame in seconds
-
-            handleViewControls(deltaTime);      // Pan and zoom the camera based on user input.
             
+            // Update time only when not paused
             if (!paused) {
-                updateSimulationState(deltaTime, now); // Advance game logic if not paused.
+                const deltaTime = (now - lastFrameTime) / 1000; // seconds
+                globalTime += deltaTime * TIME_SCALE / 60 * actualSpeedMultiplier;
+                frameCount++;
+                
+                // Clean up old escape records every 5 seconds
+                if (frameCount % 300 === 0) {
+                    const cutoff = now - 5000; // 5 seconds ago
+                    for (const [mouseId, data] of recentEscapes.entries()) {
+                        if (data.lastTime < cutoff) {
+                            recentEscapes.delete(mouseId);
+                        }
+                    }
+                }
             }
             
-            drawMainScene();                    // Render all entities to the main canvas.
-            updateUI(now);                      // Update stats, info panels, and the minimap.
-
-            lastFrameTime = now;
-            requestAnimationFrame(animate);
-        }
-
-        /**
-         * Handles all keyboard and mouse inputs that control the camera's pan and zoom.
-         * This function runs even when the simulation is paused.
-         * @param {number} deltaTime - Time elapsed since the last frame.
-         */
-        function handleViewControls(deltaTime) {
-            // Keyboard Panning
+            // Apply keyboard scrolling BEFORE updating lastFrameTime! (works even when paused)
             if (keyboardScrollVelocity.x !== 0 || keyboardScrollVelocity.y !== 0) {
-                const panAmount = keyScrollSpeed * deltaTime;
-                panOffset.x += keyboardScrollVelocity.x * panAmount / viewScale;
-                panOffset.y += keyboardScrollVelocity.y * panAmount / viewScale;
+                const deltaTime = (now - lastFrameTime) / 1000; // seconds
+                const scrollSpeed = keyScrollSpeed * deltaTime;
+                
+                // Apply scroll in SCREEN pixels (constant visual speed regardless of zoom)
+                viewOffset.x += keyboardScrollVelocity.x * scrollSpeed;
+                viewOffset.y += keyboardScrollVelocity.y * scrollSpeed;
+                
+                // Constrain view
                 constrainView();
             }
             
-            // Keyboard Zooming
-            const zoomSpeed = 1 + (keyZoomSpeed * deltaTime);
+            // Apply keyboard zooming (time-based, works when paused)
+            const deltaTime = (now - lastFrameTime) / 1000; // seconds
+            const zoomSpeed = keyZoomSpeed * deltaTime;
+            
             if (keysPressed.has('.') || keysPressed.has('>')) {
+                // Zoom in around center of view
+                const centerX = canvas.width / 2;
+                const centerY = canvas.height / 2;
                 const oldScale = viewScale;
-                viewScale *= zoomSpeed;
-                constrainView();
-                // Zoom towards the center of the screen
-                zoomToPoint(canvas.width / 2, canvas.height / 2, oldScale, viewScale);
+                viewScale = Math.min(20, viewScale * (1 + zoomSpeed));
+                
+                // Adjust offset to keep center point fixed
+                viewOffset.x = centerX - (centerX - viewOffset.x) * (viewScale / oldScale);
+                viewOffset.y = centerY - (centerY - viewOffset.y) * (viewScale / oldScale);
                 constrainView();
             } else if (keysPressed.has(',') || keysPressed.has('<')) {
+                // Zoom out around center of view
+                const centerX = canvas.width / 2;
+                const centerY = canvas.height / 2;
                 const oldScale = viewScale;
-                viewScale /= zoomSpeed;
+                const minZoom = 1.0; // Can't zoom out past 1:1 scale
+                
+                viewScale = Math.max(minZoom, viewScale / (1 + zoomSpeed));
+                
+                // Adjust offset to keep center point fixed
+                viewOffset.x = centerX - (centerX - viewOffset.x) * (viewScale / oldScale);
+                viewOffset.y = centerY - (centerY - viewOffset.y) * (viewScale / oldScale);
                 constrainView();
-                // Zoom away from the center of the screen
-                zoomToPoint(canvas.width / 2, canvas.height / 2, oldScale, viewScale);
-                constrainView();
             }
-        }
-
-        /**
-         * Advances the state of all game entities (owls, mice, etc.).
-         * This function does NOT run when the simulation is paused.
-         * @param {number} deltaTime - Time elapsed since the last frame.
-         * @param {number} now - The current timestamp from Date.now().
-         */
-        function updateSimulationState(deltaTime, now) {
-            globalTime += deltaTime * TIME_SCALE / 60 * actualSpeedMultiplier;
-            frameCount++;
-
-            // Update all entities
-            mice.forEach(mouse => mouse.update(mice, owls));
-            owls.forEach(owl => owl.update(owls, mice));
-            poops.forEach(poop => poop.update());
-            foods.forEach(food => food.update());
-
-            // --- Cleanup and State Management ---
-            for (let i = foods.length - 1; i >= 0; i--) {
-                if (foods[i].age > foods[i].lifespan) foods.splice(i, 1);
+            
+            // Manual creature control (complete keyboard control system)
+            if (!paused && (selectedOwl || selectedMouse)) {
+                const creature = selectedOwl || selectedMouse;
+                const turnSpeed = deltaTime * 3; // radians per second
+                const accelRate = deltaTime * 15; // acceleration per second
+                
+                // Auto-switch to droning mode when first selected (only once)
+                if (creature.status !== 'droning' && !creature.wasInDroneMode) {
+                    creature.status = 'droning';
+                    creature.wasInDroneMode = true;
+                    wizzyLog('random', `${creature.wizzy} enters droning mode! Full manual control activated. 🎮`, '🛸');
+                }
+                
+                // Set manual control flag when any control key is pressed
+                const controlKeys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', '.', '/', "'", '"'];
+                const hasControlInput = controlKeys.some(key => keysPressed.has(key));
+                creature.manualControl = hasControlInput;
+                
+                // Arrow key controls
+                if (keysPressed.has('ArrowUp')) {
+                    // Speed up - accelerate in current direction
+                    const accel = accelRate;
+                    creature.acceleration.x += Math.sin(creature.rotation) * accel;
+                    creature.acceleration.y += -Math.cos(creature.rotation) * accel;
+                }
+                if (keysPressed.has('ArrowDown')) {
+                    // Slow down - decelerate (brake) - NOT REVERSE!
+                    const brakeFactor = 0.85;
+                    creature.velocity.x *= brakeFactor;
+                    creature.velocity.y *= brakeFactor;
+                    if (selectedOwl) {
+                        creature.velocity.z *= brakeFactor;
+                    }
+                }
+                if (keysPressed.has('ArrowLeft')) {
+                    // Turn counter-clockwise
+                    creature.rotation -= turnSpeed;
+                    // If moving, adjust velocity direction towards new rotation
+                    if (creature.status === 'droning') {
+                        const speed = Math.sqrt(creature.velocity.x ** 2 + creature.velocity.y ** 2);
+                        if (speed > 0.1) {
+                            const rotationInfluence = 0.1; // How much turning affects direction
+                            creature.velocity.x = creature.velocity.x * (1 - rotationInfluence) + 
+                                                 Math.sin(creature.rotation) * speed * rotationInfluence;
+                            creature.velocity.y = creature.velocity.y * (1 - rotationInfluence) + 
+                                                 -Math.cos(creature.rotation) * speed * rotationInfluence;
+                        }
+                    }
+                }
+                if (keysPressed.has('ArrowRight')) {
+                    // Turn clockwise
+                    creature.rotation += turnSpeed;
+                    // If moving, adjust velocity direction towards new rotation
+                    if (creature.status === 'droning') {
+                        const speed = Math.sqrt(creature.velocity.x ** 2 + creature.velocity.y ** 2);
+                        if (speed > 0.1) {
+                            const rotationInfluence = 0.1; // How much turning affects direction
+                            creature.velocity.x = creature.velocity.x * (1 - rotationInfluence) + 
+                                                 Math.sin(creature.rotation) * speed * rotationInfluence;
+                            creature.velocity.y = creature.velocity.y * (1 - rotationInfluence) + 
+                                                 -Math.cos(creature.rotation) * speed * rotationInfluence;
+                        }
+                    }
+                }
+                
+                // Period key - full stop
+                if (keysPressed.has('.')) {
+                    creature.velocity.x = 0;
+                    creature.velocity.y = 0;
+                    if (selectedOwl) {
+                        creature.velocity.z = 0;
+                    }
+                }
+                
+                // Owl-specific altitude controls (FASTER!)
+                if (selectedOwl) {
+                    if (keysPressed.has('/')) {
+                        // Descend FAST
+                        selectedOwl.acceleration.z = -accelRate * 10;
+                    }
+                    if (keysPressed.has("'") || keysPressed.has('"')) {
+                        // Ascend FAST
+                        selectedOwl.acceleration.z = accelRate * 10;
+                    }
+                }
+                
+                // Keep rotation in bounds
+                while (creature.rotation < 0) creature.rotation += 2 * Math.PI;
+                while (creature.rotation >= 2 * Math.PI) creature.rotation -= 2 * Math.PI;
             }
-            for (let i = poops.length - 1; i >= 0; i--) {
-                if (poops[i].age > poops[i].fadeAge) poops.splice(i, 1);
-            }
-        }
-
-        /**
-         * Renders all visual elements to the main canvas.
-         */
-        function drawMainScene() {
-            // Clear the canvas with a trail effect
+            
+            // Always clear canvas and handle interactions
             ctx.fillStyle = `rgba(0, 0, 0, ${trailsFade})`;
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            // Apply the global camera transform
+            // AUTO-SCROLL TO KEEP SELECTED CREATURE VISIBLE (just inside edge scroll zone)
+            if (selectedOwl || selectedMouse) {
+                const creature = selectedOwl || selectedMouse;
+                // For owls, use their screen position, for mice use regular position
+                const worldPos = selectedOwl ? selectedOwl.getScreenPosition() : creature.position;
+                const screenPos = worldToScreen(worldPos.x, worldPos.y);
+                
+                // Keep creature just inside the edge scroll zone
+                const margin = EDGE_SCROLL_ZONE; // Full edge scroll zone as margin
+                let needsAdjustment = false;
+                let adjustX = 0, adjustY = 0;
+                
+                // If creature is outside the edge zone, pull view to keep them just inside
+                if (screenPos.x < margin) {
+                    adjustX = margin - screenPos.x;
+                    needsAdjustment = true;
+                } else if (screenPos.x > canvas.width - margin) {
+                    adjustX = (canvas.width - margin) - screenPos.x;
+                    needsAdjustment = true;
+                }
+                
+                if (screenPos.y < margin) {
+                    adjustY = margin - screenPos.y;
+                    needsAdjustment = true;
+                } else if (screenPos.y > canvas.height - margin) {
+                    adjustY = (canvas.height - margin) - screenPos.y;
+                    needsAdjustment = true;
+                }
+                
+                // Apply smooth adjustment to keep creature visible
+                if (needsAdjustment) {
+                    // Smooth the adjustment for less jarring movement
+                    const smoothFactor = 0.2; // Adjust 20% of the way each frame
+                    viewOffset.x += adjustX * smoothFactor;
+                    viewOffset.y += adjustY * smoothFactor;
+                    constrainView();
+                    wizzyLog('random', `Auto-scrolling to keep ${creature.wizzy} visible! 📍`, '👁️');
+                }
+            }
+            
+            // SOFT CONSTRAINT: Check if drone mode creature is near edge for smooth scrolling
+            let isDroneNearEdge = false;
+            if ((selectedOwl && selectedOwl.status === 'droning') || (selectedMouse && selectedMouse.status === 'droning')) {
+                const creature = selectedOwl || selectedMouse;
+                // For owls, use their screen position, for mice use regular position
+                const worldPos = selectedOwl ? selectedOwl.getScreenPosition() : creature.position;
+                const screenPos = worldToScreen(worldPos.x, worldPos.y);
+                
+                // Calculate edge scrolling for drone mode creature
+                autoScrollVelocity = { x: 0, y: 0 };
+                
+                // Left edge
+                if (screenPos.x < EDGE_SCROLL_ZONE) {
+                    autoScrollVelocity.x = (1 - screenPos.x / EDGE_SCROLL_ZONE) * MAX_SCROLL_SPEED;
+                    isDroneNearEdge = true;
+                }
+                // Right edge  
+                else if (screenPos.x > canvas.width - EDGE_SCROLL_ZONE) {
+                    autoScrollVelocity.x = -((screenPos.x - (canvas.width - EDGE_SCROLL_ZONE)) / EDGE_SCROLL_ZONE) * MAX_SCROLL_SPEED;
+                    isDroneNearEdge = true;
+                }
+                
+                // Top edge
+                if (screenPos.y < EDGE_SCROLL_ZONE) {
+                    autoScrollVelocity.y = (1 - screenPos.y / EDGE_SCROLL_ZONE) * MAX_SCROLL_SPEED;
+                    isDroneNearEdge = true;
+                }
+                // Bottom edge
+                else if (screenPos.y > canvas.height - EDGE_SCROLL_ZONE) {
+                    autoScrollVelocity.y = -((screenPos.y - (canvas.height - EDGE_SCROLL_ZONE)) / EDGE_SCROLL_ZONE) * MAX_SCROLL_SPEED;
+                    isDroneNearEdge = true;
+                }
+                
+                // Update edge indicators
+                if (isDroneNearEdge) {
+                    updateEdgeIndicators();
+                    wizzyLog('random', `Edge scroll active for ${creature.wizzy}: vx=${autoScrollVelocity.x.toFixed(1)}, vy=${autoScrollVelocity.y.toFixed(1)} 🌊`, '↔️');
+                } else {
+                    updateEdgeIndicators();
+                }
+            } else if (!isDragging && !isMagnetActive) {
+                // Reset auto-scroll when not dragging, not using magnet, and no drone near edge
+                autoScrollVelocity = { x: 0, y: 0 };
+                updateEdgeIndicators();
+            }
+            
+            // Always apply auto-scrolling for drag modes or drone mode (time-based, works when paused)
+            if ((isDragging || isMagnetActive || isDroneNearEdge) && (autoScrollVelocity.x !== 0 || autoScrollVelocity.y !== 0)) {
+                let deltaTime = (now - lastFrameTime) / 1000; // seconds
+                // Cap deltaTime to prevent huge jumps (max 1/30 second)
+                deltaTime = Math.min(deltaTime, 1/30);
+                
+                // Apply scroll in SCREEN pixels (constant visual speed regardless of zoom)
+                // autoScrollVelocity is already scaled by MAX_SCROLL_SPEED, just make it time-based
+                viewOffset.x += autoScrollVelocity.x * deltaTime * 60; // 60fps baseline
+                viewOffset.y += autoScrollVelocity.y * deltaTime * 60;
+                
+                // Apply constraints to prevent scrolling past limits
+                constrainView();
+                
+                // Update magnet circle position since view moved
+                if (isMagnetActive) {
+                    updateMagnetCircle();
+                }
+            }
+
+            // Always apply view transformations
             ctx.save();
-            ctx.translate(canvas.width / 2, canvas.height / 2);
+            ctx.translate(viewOffset.x, viewOffset.y);
             ctx.scale(viewScale, viewScale);
-            ctx.translate(-panOffset.x, -panOffset.y);
 
-            // Draw all the things, poops and food first so they are underneath
-            poops.forEach(p => p.draw());
-            foods.forEach(f => f.draw());
-            mice.forEach(m => m.draw());
-            owls.forEach(o => o.draw());
+            // Update entities only when not paused
+            if (!paused) {
+                mice.forEach(mouse => {
+                    mouse.update(mice, owls);
+                });
+                owls.forEach(owl => {
+                    owl.update(owls, mice);
+                });
+                
+                // Update poops (age them and remove old ones)
+                poops.forEach(poop => {
+                    poop.update();
+                });
+                
+                // Update foods (age them)
+                foods.forEach(food => {
+                    food.update();
+                });
+                
+                // Remove old foods
+                for (let i = foods.length - 1; i >= 0; i--) {
+                    if (foods[i].age > foods[i].lifespan) {
+                        foods.splice(i, 1);
+                    }
+                }
+                
+                // Remove faded poops (they transform into food in the update method)
+                for (let i = poops.length - 1; i >= 0; i--) {
+                    if (poops[i].age > poops[i].fadeAge) {
+                        poops.splice(i, 1);
+                    }
+                }
+                
+                // Update foods
+                foods.forEach(food => {
+                    food.update();
+                });
+                
+                // Remove expired foods
+                for (let i = foods.length - 1; i >= 0; i--) {
+                    if (foods[i].age > foods[i].lifespan) {
+                        foods.splice(i, 1);
+                    }
+                }
+            }
 
-            ctx.restore(); // Revert the camera transform
-        }
+            // Always draw everything
+            
+            // Draw poops first (so they appear under creatures)
+            poops.forEach(poop => {
+                poop.draw();
+            });
+            
+            // Draw foods (appear after poops decompose)
+            foods.forEach(food => {
+                food.draw();
+            });
+            
+            mice.forEach(mouse => {
+                mouse.draw();
+            });
+            owls.forEach(owl => {
+                owl.draw();
+            });
+            
+            ctx.restore();
 
-        /**
-         * Updates all non-canvas UI elements like the clock and info panels.
-         * @param {number} now - The current timestamp from Date.now().
-         */
-        function updateUI(now) {
             // Update displays only when not paused
             if (!paused) {
                 updateTime();
-                if (currentTab === 'owls') updateStats();
-                else if (currentTab === 'mice') updateMouseStats();
-                else if (currentTab === 'stats') updateGlobalStats();
+                
+                // Update stats based on current tab
+                if (currentTab === 'owls') {
+                    updateStats();
+                } else if (currentTab === 'mice') {
+                    updateMouseStats();
+                } else if (currentTab === 'stats') {
+                    updateGlobalStats();
+                }
             }
             
-            // Always update info panel for dragging feedback, but throttled
-            if (now - lastUpdateTime > 100) {
+            // Always update info panel for dragging feedback
+            if (now - lastUpdateTime > 100) { // Update every 100ms
                 updateInfoPanel();
                 lastUpdateTime = now;
             }
-
+            
             // Auto-save every 30 seconds
-            if (frameCount > 0 && frameCount % 1800 === 0) { // 30s @ 60fps
+            if (frameCount % (30 * 60) === 0 && frameCount > 0) { // 30 seconds at 60fps
                 saveState();
             }
             
-            // And finally, update the minimap every frame
+            // Update minimap every frame
             updateMinimap();
+
+            // Update lastFrameTime for next frame (AFTER all time-based calculations)
+            lastFrameTime = now;
+
+            requestAnimationFrame(animate);
         }
-
-
-
-
 
         // Controls
         function togglePause() {

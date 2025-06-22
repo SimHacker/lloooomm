@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTTP-MCP Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .connected { background-color: #d4edda; color: #155724; }
+        .disconnected { background-color: #f8d7da; color: #721c24; }
+        .message {
+            background-color: #e7f3ff;
+            border: 1px solid #b3d9ff;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 4px;
+        }
+        .controls {
+            margin: 20px 0;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        button:disabled {
+            background-color: #6c757d;
+            cursor: not-allowed;
+        }
+        .log {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 10px;
+            height: 300px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>HTTP-MCP Example Client</h1>
+        
+        <div id="status" class="status disconnected">
+            Disconnected
+        </div>
+        
+        <div class="controls">
+            <button id="connectBtn" onclick="connect()">Connect</button>
+            <button id="disconnectBtn" onclick="disconnect()" disabled>Disconnect</button>
+            <button id="sendBtn" onclick="sendTestMessage()" disabled>Send Test Message</button>
+            <button id="huntBtn" onclick="sendHuntMessage()" disabled>Hunt Mouse</button>
+            <button id="moveBtn" onclick="sendMoveMessage()" disabled>Move</button>
+            <button id="interactBtn" onclick="sendInteractMessage()" disabled>Interact</button>
+        </div>
+        
+        <h3>Message Log</h3>
+        <div id="log" class="log"></div>
+    </div>
+
+    <script>
+        let ws = null;
+        let browserId = null;
+        const simulationId = 'WIZZY_FOREST_WIZID';
+        const characterId = 'owl_7';
+
+        function log(message) {
+            const logDiv = document.getElementById('log');
+            const timestamp = new Date().toLocaleTimeString();
+            logDiv.innerHTML += `[${timestamp}] ${message}\n`;
+            logDiv.scrollTop = logDiv.scrollHeight;
+        }
+
+        function updateStatus(connected) {
+            const statusDiv = document.getElementById('status');
+            const connectBtn = document.getElementById('connectBtn');
+            const disconnectBtn = document.getElementById('disconnectBtn');
+            const sendBtn = document.getElementById('sendBtn');
+            const huntBtn = document.getElementById('huntBtn');
+            const moveBtn = document.getElementById('moveBtn');
+            const interactBtn = document.getElementById('interactBtn');
+
+            if (connected) {
+                statusDiv.textContent = 'Connected';
+                statusDiv.className = 'status connected';
+                connectBtn.disabled = true;
+                disconnectBtn.disabled = false;
+                sendBtn.disabled = false;
+                huntBtn.disabled = false;
+                moveBtn.disabled = false;
+                interactBtn.disabled = false;
+            } else {
+                statusDiv.textContent = 'Disconnected';
+                statusDiv.className = 'status disconnected';
+                connectBtn.disabled = false;
+                disconnectBtn.disabled = true;
+                sendBtn.disabled = true;
+                huntBtn.disabled = true;
+                moveBtn.disabled = true;
+                interactBtn.disabled = true;
+            }
+        }
+
+        function connect() {
+            try {
+                ws = new WebSocket('ws://localhost:8765');
+                
+                ws.onopen = function() {
+                    log('Connected to HTTP-MCP server');
+                    updateStatus(true);
+                };
+                
+                ws.onmessage = function(event) {
+                    const data = JSON.parse(event.data);
+                    handleMessage(data);
+                };
+                
+                ws.onclose = function() {
+                    log('Disconnected from HTTP-MCP server');
+                    updateStatus(false);
+                    ws = null;
+                    browserId = null;
+                };
+                
+                ws.onerror = function(error) {
+                    log('WebSocket error: ' + error);
+                    updateStatus(false);
+                };
+                
+            } catch (error) {
+                log('Connection error: ' + error);
+            }
+        }
+
+        function disconnect() {
+            if (ws) {
+                ws.close();
+            }
+        }
+
+        function handleMessage(data) {
+            log(`Received ${data.type} message`);
+            
+            switch (data.type) {
+                case 'welcome':
+                    browserId = data.browser_id;
+                    log(`Welcome! Browser ID: ${browserId}`);
+                    break;
+                    
+                case 'message':
+                    log(`Simulation message: ${data.data.message_name} from ${data.data.character_id}`);
+                    if (data.data.args.nutrients) {
+                        log(`Nutrients: ${JSON.stringify(data.data.args.nutrients, null, 2)}`);
+                    }
+                    break;
+                    
+                case 'echo':
+                    log(`Echo response: ${JSON.stringify(data.original)}`);
+                    break;
+                    
+                default:
+                    log(`Unknown message type: ${data.type}`);
+            }
+        }
+
+        function sendMessage(messageName, args = {}) {
+            if (!ws || !browserId) {
+                log('Not connected or no browser ID');
+                return;
+            }
+
+            const message = {
+                simulation_id: simulationId,
+                browser_id: browserId,
+                character_id: characterId,
+                message_name: messageName,
+                args: args
+            };
+
+            ws.send(JSON.stringify(message));
+            log(`Sent message: ${messageName}`);
+        }
+
+        function sendTestMessage() {
+            sendMessage('test', {
+                message: 'Hello from browser!',
+                timestamp: Date.now()
+            });
+        }
+
+        function sendHuntMessage() {
+            sendMessage('hunt_mouse', {
+                target_position: [100, 200],
+                nutrients: {
+                    sender: characterId,
+                    emotional_state: 'hungry, focused',
+                    observation: 'Spotted a juicy mouse near the oak tree',
+                    proposed_action: 'stealth_approach',
+                    request: 'What\'s the best angle for this hunt?'
+                }
+            });
+        }
+
+        function sendMoveMessage() {
+            sendMessage('move_to', {
+                position: [150, 250],
+                nutrients: {
+                    sender: characterId,
+                    emotional_state: 'curious',
+                    observation: 'Moving to a better vantage point',
+                    proposed_action: 'perch_and_observe'
+                }
+            });
+        }
+
+        function sendInteractMessage() {
+            sendMessage('interact', {
+                target: 'owl_3',
+                interaction_type: 'greeting',
+                nutrients: {
+                    sender: characterId,
+                    emotional_state: 'friendly',
+                    observation: 'Another owl is nearby',
+                    proposed_action: 'social_bonding'
+                }
+            });
+        }
+
+        // Auto-connect on page load
+        window.onload = function() {
+            log('Page loaded. Click "Connect" to start.');
+        };
+    </script>
+</body>
+</html> 

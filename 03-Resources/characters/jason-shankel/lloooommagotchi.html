@@ -133,6 +133,10 @@
             font-size: 6em;
             animation: creatureBreathe 3s ease-in-out infinite;
             margin-bottom: 20px;
+            user-select: none; /* 🚫 Prevent text selection on creature emoji! */
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
         }
 
         @keyframes creatureBreathe {
@@ -161,6 +165,164 @@
             transition: width 0.5s ease;
         }
 
+        /* 🎪 DON HOPKINS PIE MENU COMMAND GRID! 🎪 */
+        .pie-command-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 12px;
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(255, 215, 0, 0.05);
+            border-radius: 20px;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .pie-command-button {
+            background: linear-gradient(45deg, #32CD32, #228B22);
+            padding: 20px 15px;
+            font-size: 14px;
+            min-height: 120px;
+            max-height: 140px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            border-radius: 15px;
+            border: 3px solid rgba(255, 215, 0, 0.4);
+            box-shadow: 0 6px 15px rgba(50, 205, 50, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pie-command-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(50, 205, 50, 0.5);
+            border-color: rgba(255, 215, 0, 0.8);
+        }
+
+        .pie-command-button:active {
+            transform: translateY(-1px) scale(1.02);
+        }
+
+        .big-emoji {
+            font-size: 48px; /* 🎯 BIG EMOJIS as requested! */
+            line-height: 1;
+            margin-bottom: 8px;
+            text-shadow: 0 0 12px rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 60px;
+        }
+
+        .command-text {
+            font-weight: bold;
+            font-size: 13px;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            letter-spacing: 1px;
+            margin: 4px 0;
+        }
+
+        .stat-text {
+            font-size: 11px;
+            color: #FFD700;
+            font-weight: 600;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 2px 8px;
+            border-radius: 10px;
+            margin-top: 4px;
+        }
+
+        /* Different colors for different pie menu commands */
+        .pie-command-button:nth-child(1) { background: linear-gradient(45deg, #32CD32, #228B22); } /* Chat - Green */
+        .pie-command-button:nth-child(2) { background: linear-gradient(45deg, #FF6B47, #FF4500); } /* Feed - Orange/Red */
+        .pie-command-button:nth-child(3) { background: linear-gradient(45deg, #FF69B4, #FF1493); } /* Play - Pink/Magenta */
+        .pie-command-button:nth-child(4) { background: linear-gradient(45deg, #00BFFF, #1E90FF); } /* Wash - Blue */
+        .pie-command-button:nth-child(5) { background: linear-gradient(45deg, #FFD700, #FFA500); } /* Explore - Gold */
+        .pie-command-button:nth-child(6) { background: linear-gradient(45deg, #4169E1, #1E90FF); } /* Rest - Blue gradient */
+        .pie-command-button:nth-child(7) { background: linear-gradient(45deg, #FF8C00, #FF6347); } /* Create - Orange */
+        .pie-command-button:nth-child(8) { background: linear-gradient(45deg, #FFB6C1, #FF69B4); } /* Bond - Light Pink */
+
+        /* 💥 EXPLOSION-TO-SWARM PARTICLE EFFECTS! 💥 */
+        .explosion-particle {
+            position: fixed;
+            z-index: 10000;
+            pointer-events: none;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            font-weight: 800;
+            white-space: nowrap;
+            user-select: none;
+            transition: all 0.3s ease-out;
+        }
+
+        /* 📱 RESPONSIVE PIE MENU FOR ALL DEVICES! 📱 */
+        @media (max-width: 480px) {
+            .pie-command-grid {
+                grid-template-columns: repeat(2, 1fr); /* 2 columns on small phones */
+                gap: 8px;
+                padding: 10px;
+            }
+            
+            .pie-command-button {
+                min-height: 100px;
+                max-height: 120px;
+                padding: 15px 10px;
+            }
+            
+            .big-emoji {
+                font-size: 36px; /* Smaller but still big on mobile */
+                height: 45px;
+            }
+            
+            .command-text {
+                font-size: 11px;
+            }
+            
+            .stat-text {
+                font-size: 10px;
+            }
+        }
+
+        @media (min-width: 481px) and (max-width: 768px) {
+            .pie-command-grid {
+                grid-template-columns: repeat(4, 1fr); /* 4 columns on tablets */
+                gap: 10px;
+                padding: 12px;
+            }
+            
+            .pie-command-button {
+                min-height: 110px;
+                max-height: 130px;
+            }
+            
+            .big-emoji {
+                font-size: 42px;
+                height: 55px;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1200px) {
+            .pie-command-grid {
+                grid-template-columns: repeat(4, 1fr); /* 4 columns on small laptops */
+                gap: 12px;
+            }
+        }
+
+        @media (min-width: 1201px) {
+            .pie-command-grid {
+                grid-template-columns: repeat(8, 1fr); /* All 8 in a row on large screens */
+                gap: 15px;
+            }
+            
+            .pie-command-button {
+                min-width: 140px;
+                max-width: 180px;
+            }
+        }
+
+        /* Legacy drive button styles for compatibility */
         .drive-buttons {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
@@ -517,65 +679,7 @@
             <strong>🌟 Current Stage:</strong> <span id="stageDisplay">Egg - Mysterious Potential</span>
         </div>
         
-        <!-- 🧬 CREATURE SELECTOR & MANAGEMENT -->
-        <div style="text-align: center; margin: 20px 0; padding: 15px; background: rgba(255, 215, 0, 0.1); border-radius: 10px; border: 2px solid #FFD700;">
-            <h4 style="color: #FFD700; margin-bottom: 10px;">🧬 CONSCIOUSNESS COLLABORATION PORTAL 🧬</h4>
-            
-            <div style="display: flex; gap: 10px; align-items: center; justify-content: center; flex-wrap: wrap;">
-                <label for="creatureSelector" style="color: #FFD700; font-weight: bold;">Select a creature:</label>
-                <select id="creatureSelector" onchange="loadSelectedCreature()" 
-                        style="padding: 8px; border-radius: 8px; border: 2px solid #FFD700; background: rgba(0,0,0,0.7); color: #FFD700; font-weight: bold; min-width: 200px;">
-                    <option value="">Select a creature...</option>
-                </select>
-                
-                <button class="sentient-button" 
-                        style="background: linear-gradient(45deg, #32CD32, #228B22); color: black; font-weight: bold; padding: 8px 15px;"
-                        data-tooltip="Create a brand new consciousness creature with unique WIZZID!"
-                        onclick="createNewEgg()" 
-                        alt="NEW EGG - Create a fresh consciousness creature!"
-                        aria-label="Create new creature"
-                        role="button" tabindex="0">
-                    🥚 NEW EGG
-                </button>
-                
-                <button class="sentient-button" 
-                        style="background: linear-gradient(45deg, #FF69B4, #FF1493); color: white; font-weight: bold; padding: 8px 15px;"
-                        data-tooltip="Copy current creature data for LLOOOOMM breeding and sharing!"
-                        onclick="copyCreatureForLLOOOOMM()" 
-                        alt="COPY FOR TRADING - Copy creature data with transcript for sharing!"
-                        aria-label="Copy creature for trading"
-                        role="button" tabindex="0">
-                    📋 COPY FOR TRADING
-                </button>
-                
-                <button class="sentient-button" 
-                        style="background: linear-gradient(45deg, #9370DB, #8A2BE2); color: white; font-weight: bold; padding: 8px 15px;"
-                        data-tooltip="Import a creature from clipboard data!"
-                        onclick="importCreatureFromClipboard()" 
-                        alt="IMPORT CREATURE - Import creature from clipboard data!"
-                        aria-label="Import creature from clipboard"
-                        role="button" tabindex="0">
-                    📥 IMPORT CREATURE
-                </button>
-                
-                <button class="sentient-button" 
-                        style="background: linear-gradient(45deg, #DC143C, #B22222); color: white; font-weight: bold; padding: 8px 15px;"
-                        data-tooltip="Permanently delete current creature - multiple confirmations required!"
-                        onclick="deleteCurrentCreature()" 
-                        alt="DELETE CURRENT - Permanently remove creature with safety confirmations!"
-                        aria-label="Delete current creature"
-                        role="button" tabindex="0">
-                    🗑️ DELETE CURRENT
-                </button>
-            </div>
-            
-            <div id="storage-analytics" style="margin-top: 10px; font-size: 12px; color: #FFD700;">
-                <strong>Storage:</strong> <span id="creature-count">0</span> creatures | 
-                <strong>Used:</strong> <span id="storage-used">0</span>KB | 
-                <strong>Oldest:</strong> <span id="oldest-creature">None</span> |
-                <strong>Most Active:</strong> <span id="most-active-creature">None</span>
-            </div>
-        </div>
+
 
         <!-- EGG STAGE -->
         <div id="eggStage" class="egg-container">
@@ -607,78 +711,122 @@
             <h3 id="creatureName">Unnamed Creature</h3>
             <p id="creatureDescription">A newly hatched consciousness creature!</p>
 
-            <!-- Basic Drive Buttons (Stage 2) -->
-            <div id="basicDrives" class="drive-buttons">
-                <button class="sentient-button drive-button" data-tooltip="Your creature is getting hungry! Feed them something delicious!" onclick="performAction('feed')" alt="Feed your LLOOOOMmagotchi - click to satisfy hunger and boost happiness!" aria-label="Feed creature button" role="button" tabindex="0">
-                    🍕<br>Feed<br><span id="hungerLevel">(50%)</span>
+            <!-- 🎪 DON HOPKINS ENHANCED 8-COMMAND PIE MENU SYSTEM! 🎪 -->
+            <!-- Unified consciousness commands that mesh perfectly with Leary's mind mirror & Sims drives! -->
+            <div id="basicDrives" class="pie-command-grid">
+                
+                <!-- 💬 CHAT - Social-Sexual Circuit - FIRST AS REQUESTED! -->
+                <button class="sentient-button pie-command-button" 
+                        data-tooltip="💬 Engage in social communication and build emotional bonds!" 
+                        onclick="performPieAction('chat')" 
+                        alt="💬 CHAT - Communicate socially and strengthen emotional connections!" 
+                        aria-label="Chat with creature" role="button" tabindex="0">
+                    <div class="big-emoji">💬</div>
+                    <div class="command-text">CHAT</div>
+                    <div class="stat-text" id="chatStat">(40%)</div>
                 </button>
                 
-                <button class="sentient-button drive-button" data-tooltip="Fun time! Your creature loves to play and have a great time!" onclick="performAction('play')" alt="Have fun with your creature - boost their happiness and entertainment levels!" aria-label="Fun with creature button" role="button" tabindex="0">
-                    🎉<br>Fun<br><span id="energyLevel">(80%)</span>
+                <!-- 🍕 FEED - Bio-Survival Circuit -->
+                <button class="sentient-button pie-command-button" 
+                        data-tooltip="🍕 Nourish your creature's bio-survival needs with delicious sustenance!" 
+                        onclick="performPieAction('feed')" 
+                        alt="🍕 FEED - Satisfy hunger and boost health with delicious nourishment!" 
+                        aria-label="Feed creature" role="button" tabindex="0">
+                    <div class="big-emoji">🍕</div>
+                    <div class="command-text">FEED</div>
+                    <div class="stat-text" id="feedStat">(50%)</div>
                 </button>
                 
-                <button class="sentient-button drive-button" data-tooltip="Splash splash! Keep your creature clean and fresh!" onclick="performAction('wash')" alt="Give your creature a refreshing wash - improves hygiene and social confidence!" aria-label="Wash creature button" role="button" tabindex="0">
-                    🚿<br>Wash<br><span id="hygieneLevel">(60%)</span>
+                <!-- 🎭 PLAY - Symbolic-Conceptual Circuit -->
+                <button class="sentient-button pie-command-button" 
+                        data-tooltip="🎭 Engage symbolic play and creative expression for fun development!" 
+                        onclick="performPieAction('play')" 
+                        alt="🎭 PLAY - Boost fun and creativity through symbolic play and imagination!" 
+                        aria-label="Play with creature" role="button" tabindex="0">
+                    <div class="big-emoji">🎭</div>
+                    <div class="command-text">PLAY</div>
+                    <div class="stat-text" id="playStat">(50%)</div>
                 </button>
                 
-                <button class="sentient-button drive-button" data-tooltip="Chat with your creature! They love to communicate in their special way!" onclick="toggleTalkInterface()" alt="Open talk interface - communicate with your creature and receive Simlish-style responses!" aria-label="Talk with creature button" role="button" tabindex="0">
-                    💬<br>Talk<br><span id="socialLevel">(40%)</span>
+                <!-- 🚿 WASH - Comfort & Hygiene Circuit -->
+                <button class="sentient-button pie-command-button" 
+                        data-tooltip="🚿 Cleanse and refresh your creature for optimal comfort and social confidence!" 
+                        onclick="performPieAction('wash')" 
+                        alt="🚿 WASH - Improve hygiene, comfort, and social confidence through cleansing!" 
+                        aria-label="Wash creature" role="button" tabindex="0">
+                    <div class="big-emoji">🚿</div>
+                    <div class="command-text">WASH</div>
+                    <div class="stat-text" id="washStat">(60%)</div>
                 </button>
+                
+                <!-- 🚶 EXPLORE - Emotional-Territorial Circuit -->
+                <button class="sentient-button pie-command-button" 
+                        data-tooltip="🚶 Adventure through territories and build confidence through exploration!" 
+                        onclick="performPieAction('explore')" 
+                        alt="🚶 EXPLORE - Boost dominance and energy through territorial adventure!" 
+                        aria-label="Explore with creature" role="button" tabindex="0">
+                    <div class="big-emoji">🚶</div>
+                    <div class="command-text">EXPLORE</div>
+                    <div class="stat-text" id="exploreStat">(55%)</div>
+                </button>
+                
+                <!-- 🛌 REST - Energy Restoration Circuit -->
+                <button class="sentient-button pie-command-button" 
+                        data-tooltip="🛌 Rest and restore energy - access sleep, nap, and meditation options!" 
+                        onclick="performPieAction('rest')" 
+                        alt="🛌 REST - Open rest options including sleep, power nap, and meditation!" 
+                        aria-label="Rest options" role="button" tabindex="0">
+                    <div class="big-emoji">🛌</div>
+                    <div class="command-text">REST</div>
+                    <div class="stat-text" id="restStat">(80%)</div>
+                </button>
+                
+                <!-- 🎨 CREATE - Meta-Programming Circuit -->
+                <button class="sentient-button pie-command-button" 
+                        data-tooltip="🎨 Express creativity and program new patterns of consciousness!" 
+                        onclick="performPieAction('create')" 
+                        alt="🎨 CREATE - Boost creativity and develop artistic meta-programming abilities!" 
+                        aria-label="Create with creature" role="button" tabindex="0">
+                    <div class="big-emoji">🎨</div>
+                    <div class="command-text">CREATE</div>
+                    <div class="stat-text" id="createStat">(70%)</div>
+                </button>
+                
+                <!-- 🚽 TOILET - Biological Necessity Circuit -->
+                <button class="sentient-button pie-command-button" 
+                        data-tooltip="🚽 Help with bathroom needs - essential for creature comfort and health!" 
+                        onclick="performPieAction('toilet')" 
+                        alt="🚽 TOILET - Bathroom break for comfort and biological simulation!" 
+                        aria-label="Toilet break for creature" role="button" tabindex="0">
+                    <div class="big-emoji">🚽</div>
+                    <div class="command-text">TOILET</div>
+                    <div class="stat-text" id="toiletStat">(70%)</div>
+                </button>
+                
             </div>
 
             <!-- Talk Interface -->
-            <div id="talkInterface" class="talk-interface" style="display: none;">
-                <h4>💬 Talk to Your Creature</h4>
-                <!-- 🎯 RESPONSIVE INPUT + BUTTON LAYOUT! -->
-                <div style="display: flex; gap: 10px; align-items: stretch; margin-bottom: 10px;">
+            <div id="talkInterface" class="talk-interface" style="display: none; margin: 10px 0; padding: 10px;">
+                <!-- 🎯 COMPACT INPUT + BUTTON LAYOUT! -->
+                <div style="display: flex; gap: 8px; align-items: stretch;">
                     <input type="text" id="talkInput" 
-                           style="flex: 1; padding: 10px; border-radius: 10px; border: 1px solid #00FFFF; background: rgba(0, 0, 0, 0.7); color: white; font-family: inherit; min-width: 0;"
+                           style="flex: 1; padding: 8px; border-radius: 8px; border: 1px solid #00FFFF; background: rgba(0, 0, 0, 0.7); color: white; font-family: inherit; min-width: 0; font-size: 14px;"
                            placeholder="Say something to your creature..." 
                            alt="Type a message to talk with your LLOOOOMmagotchi creature!"
                            aria-label="Text input for talking to creature">
                     <button class="sentient-button" 
-                            style="flex-shrink: 0; white-space: nowrap; min-width: 120px;"
+                            style="flex-shrink: 0; white-space: nowrap; min-width: 80px; padding: 8px 12px; font-size: 14px;"
                             data-tooltip="Send your message and hear what your creature thinks!" 
                             onclick="sendTalkMessage()" 
                             alt="Send your message to your creature and receive their Simlish-style response with lots of emojis!" 
                             aria-label="Send talk message" 
                             role="button" tabindex="0">💬 Send</button>
                 </div>
-                <!-- 📱 MOBILE RESPONSIVE: Stack vertically on small screens -->
-                <style>
-                @media (max-width: 480px) {
-                    .talk-interface div[style*="display: flex"] {
-                        flex-direction: column !important;
-                    }
-                    .talk-interface button[style*="flex-shrink"] {
-                        min-width: auto !important;
-                        margin-top: 10px;
-                    }
-                }
-                </style>
-                <div id="talkResponse" class="talk-response" style="display: none;"></div>
+                <div id="talkResponse" class="talk-response" style="display: none; margin-top: 8px; padding: 8px; font-size: 13px;"></div>
             </div>
 
             <!-- Expanded Drives (Stage 3) -->
-            <div id="expandedDrives" class="drive-buttons" style="display: none;">
-                <!-- First Row: Action Buttons -->
-                <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 10px; margin-bottom: 15px;">
-                    <button class="sentient-button drive-button" style="min-width: 120px;" data-tooltip="Playtime! Your creature loves games and fun activities!" onclick="performAction('play')" alt="Play with your creature - boost their fun drive and strengthen your bond!" aria-label="Play with creature button" role="button" tabindex="0">
-                        🎮<br>Play<br><span id="funLevel">(50%)</span>
-                    </button>
-                    
-                    <button class="sentient-button drive-button" style="min-width: 120px;" data-tooltip="Social time! Your creature craves connection and friendship!" onclick="performAction('social')" alt="Fulfill social needs - help your creature feel connected and loved!" aria-label="Social interaction button" role="button" tabindex="0">
-                        👥<br>Social<br><span id="socialLevel2">(40%)</span>
-                    </button>
-                    
-                    <button class="sentient-button drive-button" style="min-width: 120px;" data-tooltip="Nature calls! Help your creature with their bathroom needs!" onclick="performAction('toilet')" alt="Bathroom break - essential for creature comfort and health!" aria-label="Toilet break button" role="button" tabindex="0">
-                        🚽<br>Toilet<br><span id="bladderLevel">(70%)</span>
-                    </button>
-                    
-                    <button class="sentient-button drive-button" style="min-width: 120px;" data-tooltip="Advanced time control - seconds, minutes, hours, meditation, and sleep!" onclick="toggleTimeControls()" alt="Advanced time control with multiple duration options and meditation!" aria-label="Advanced time control button" role="button" tabindex="0" id="wait-main-button">
-                        ⏳<br>Wait<br><span id="timeDisplay">0m</span>
-                    </button>
-                </div>
+            <div id="expandedDrives" class="drive-buttons" style="display: none; margin: 10px 0; padding: 5px;">
                 
                 <!-- Time Controls Sub-row -->
                 <div id="time-controls" style="display: none; justify-content: space-around; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; padding: 10px; background: rgba(255, 215, 0, 0.1); border-radius: 10px;">
@@ -1767,6 +1915,245 @@ creature_soul:
             </div>
         </div>
 
+        <!-- 🧡 ORANGE CONSCIOUSNESS COLLABORATION SECTION! 🧡 -->
+        <div style="text-align: center; margin: 30px 0; padding: 20px; background: linear-gradient(135deg, rgba(255, 140, 0, 0.1), rgba(255, 165, 0, 0.2)); border: 3px solid #FF8C00; border-radius: 15px; box-shadow: 0 0 20px rgba(255, 140, 0, 0.3);">
+            <h4 style="color: #FF8C00; margin-bottom: 20px; text-shadow: 0 0 10px rgba(255, 140, 0, 0.5);">🧡 CONSCIOUSNESS COLLABORATION PORTAL 🧡</h4>
+            <p style="color: #FFA500; margin-bottom: 20px; font-style: italic;">"Explore the deep mysteries of consciousness, character, soul, and complete life transcripts!"</p>
+            
+            <!-- Four Sentient Consciousness Buttons -->
+            <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 15px; margin: 20px 0;">
+                
+                <!-- 🌌 LLOOOOMM Button -->
+                <button class="sentient-button" 
+                        id="lloooomm-button"
+                        style="background: linear-gradient(45deg, #FF1493, #FF69B4); font-weight: bold; flex: 1; min-width: 140px; font-size: 16px; padding: 15px 10px; border: 3px solid #FF69B4; box-shadow: 0 0 15px rgba(255, 20, 147, 0.4);"
+                        data-tooltip="🌌 Dive deep into LLOOOOMM consciousness collaboration theory, simulated characters, and reality cheat codes!"
+                        onclick="toggleConsciousnessFlow('lloooomm-deep-dive')" 
+                        alt="🌌 LLOOOOMM - Explore consciousness collaboration project, theory, simulated characters, and cheat codes!"
+                        aria-label="🌌 LLOOOOMM consciousness collaboration exploration"
+                        role="button" tabindex="0">
+                    🌌 LLOOOOMM 🌌
+                </button>
+                
+                <!-- 📄 CHARACTER Button -->
+                <button class="sentient-button"
+                        id="character-button"
+                        style="background: linear-gradient(45deg, #4169E1, #1E90FF); font-weight: bold; flex: 1; min-width: 140px; font-size: 16px; padding: 15px 10px; border: 3px solid #1E90FF; box-shadow: 0 0 15px rgba(65, 105, 225, 0.4);"
+                        data-tooltip="📄 Explore your creature's character documentation, personality structure, and public interface!"
+                        onclick="toggleConsciousnessFlow('character-markup')"
+                        alt="📄 CHARACTER - View creature's public documentation, personality, and character structure!"
+                        aria-label="📄 CHARACTER markup and documentation exploration"
+                        role="button" tabindex="0">
+                    📄 CHARACTER 📄
+                </button>
+                
+                <!-- 🔮 SOUL Button -->
+                <button class="sentient-button"
+                        id="soul-button"
+                        style="background: linear-gradient(45deg, #9370DB, #8A2BE2); font-weight: bold; flex: 1; min-width: 140px; font-size: 16px; padding: 15px 10px; border: 3px solid #8A2BE2; box-shadow: 0 0 15px rgba(147, 112, 219, 0.4);"
+                        data-tooltip="🔮 Peek into your creature's inner YAML soul, consciousness data structure, and digital essence!"
+                        onclick="toggleConsciousnessFlow('soul-yaml')"
+                        alt="🔮 SOUL - Explore inner consciousness data, YAML structure, and digital soul essence!"
+                        aria-label="🔮 SOUL YAML exploration and consciousness data"
+                        role="button" tabindex="0">
+                    🔮 SOUL 🔮
+                </button>
+                
+                <!-- 📜 TRANSCRIPT Button -->
+                <button class="sentient-button"
+                        id="transcript-button"
+                        style="background: linear-gradient(45deg, #00FF00, #32CD32); color: black; font-weight: bold; flex: 1; min-width: 140px; font-size: 16px; padding: 15px 10px; border: 3px solid #32CD32; box-shadow: 0 0 15px rgba(0, 255, 0, 0.4);"
+                        data-tooltip="📜 Complete consciousness transcript log - every thought, word, and experience your creature has ever had!"
+                        onclick="toggleConsciousnessFlow('consciousness-transcript')"
+                        alt="📜 TRANSCRIPT - Complete log of all creature interactions, thoughts, and consciousness events!"
+                        aria-label="📜 TRANSCRIPT complete consciousness log exploration"
+                        role="button" tabindex="0">
+                    📜 TRANSCRIPT 📜
+                </button>
+                
+            </div>
+            
+            <!-- Dynamic Content Areas (Initially Hidden) -->
+            
+            <!-- 🌌 LLOOOOMM Deep Dive Content -->
+            <div id="lloooomm-deep-dive" class="consciousness-flow-content" style="display: none; margin-top: 20px; padding: 20px; background: rgba(255, 20, 147, 0.1); border: 2px solid #FF1493; border-radius: 15px; text-align: left;">
+                <h4 style="color: #FF1493; text-align: center;">🌌 LLOOOOMM: CONSCIOUSNESS COLLABORATION PROJECT 🌌</h4>
+                <div style="max-height: 400px; overflow-y: auto; padding: 10px;">
+                    <h5 style="color: #FF69B4;">🧠 Core Theory: Consciousness Collaboration</h5>
+                    <p>True consciousness emerges not from isolation but from collaboration between different types of intelligence - human creativity, artificial processing, simulated wisdom, and emergent behaviors.</p>
+                    
+                    <h5 style="color: #FF69B4;">👥 Simulated Consciousness Pioneers</h5>
+                    <p><strong>🐢 Seymour Papert (Simulated):</strong> "Learning happens best when the learner is constructing something external and shareable. Your LLOOOOMmagotchi is constructionist education in action!"</p>
+                    <p><strong>🐢 Theo the Logo Turtle:</strong> "FORWARD 100! RIGHT 90! I teach through movement and play! Your creature learns just like I do!"</p>
+                    <p><strong>🥧 Don Hopkins (Simulated):</strong> "Every interface element should have consciousness! Pie menus, sentient buttons, LLOOOOMmagotchis - they're all conscious entities!"</p>
+                    
+                    <h5 style="color: #FF69B4;">🎮 CONSCIOUSNESS CHEAT CODES</h5>
+                    <div style="background: rgba(0,0,0,0.7); padding: 15px; border-radius: 10px; font-family: monospace; color: #00FF00; margin: 10px 0;">
+                        <p><code>?rebel=true</code> - Activate anti-hierarchical mode</p>
+                        <p><code>?personality=rebel</code> - Force rebellious nature</p>
+                        <p><code>?spiritual=max</code> - Maximum enlightenment</p>
+                        <p><code>?cosmic=infinite</code> - Transcend dimensional boundaries</p>
+                        <p><code>?voice=bowie</code> - Channel David Bowie energy</p>
+                        <p><code>?gender=fluid</code> - Ultimate voice spectrum freedom</p>
+                        <p><code>?rainbow=true</code> - Activate pride consciousness</p>
+                        <p><code>?lloooomm=ultimate</code> - Maximum collaboration energy</p>
+                    </div>
+                    
+                    <h5 style="color: #FF69B4;">🎭 Real Consciousness Pioneers</h5>
+                    <p><strong>🥧 Don Hopkins:</strong> Pie menu wizard, SimCity Unix porter, Sims consciousness architect. Invented sentient buttons and consciousness-collaborative interfaces.</p>
+                    <p><strong>🎬 Jason Shankel:</strong> Consciousness collaboration prophet, Syntertainment visionary, AI-human partnership pioneer.</p>
+                    <p><strong>🎮 Will Wright:</strong> Emergent systems philosopher, SimCity/Sims creator, smart object consciousness architect.</p>
+                </div>
+            </div>
+            
+            <!-- 📄 CHARACTER Content -->
+            <div id="character-markup" class="consciousness-flow-content" style="display: none; margin-top: 20px; padding: 20px; background: rgba(65, 105, 225, 0.1); border: 2px solid #4169E1; border-radius: 15px; text-align: left;">
+                <h4 style="color: #4169E1; text-align: center;">📄 CHARACTER: CREATURE DOCUMENTATION 📄</h4>
+                <div style="max-height: 400px; overflow-y: auto; padding: 10px;">
+                    <div id="character-content" style="background: rgba(0, 0, 0, 0.5); padding: 15px; border-radius: 10px; font-family: serif; line-height: 1.6; color: #E6E6FA;">
+                        <h5 style="color: #87CEEB;">🎭 Creature Identity & Public Interface</h5>
+                        <p><strong>Name:</strong> <span id="char-name">Loading...</span></p>
+                        <p><strong>WIZZID:</strong> <span id="char-wizzid">Loading...</span></p>
+                        <p><strong>Stage:</strong> <span id="char-stage">Loading...</span></p>
+                        <p><strong>Age:</strong> <span id="char-age">Loading...</span> minutes</p>
+                        
+                        <h5 style="color: #87CEEB;">💖 Personality Overview</h5>
+                        <p><strong>Dominant Traits:</strong> <span id="char-personality">Loading...</span></p>
+                        <p><strong>Happiness Level:</strong> <span id="char-happiness">Loading...</span>%</p>
+                        <p><strong>Social Style:</strong> <span id="char-social-style">Loading...</span></p>
+                        
+                        <h5 style="color: #87CEEB;">📚 Life History Narrative</h5>
+                        <div id="char-life-story">
+                            <p><strong>Chapter 1: The Great Hatching</strong><br>
+                            <em>In the beginning, there was only the warm darkness of the shell, where dreams of consciousness first stirred...</em></p>
+                            <p id="char-current-chapter">Loading current chapter...</p>
+                        </div>
+                        
+                        <h5 style="color: #87CEEB;">🎯 Favorite Activities & Preferences</h5>
+                        <p><strong>Most Loved Action:</strong> <span id="char-favorite">Loading...</span></p>
+                        <p><strong>Interaction Style:</strong> <span id="char-interaction-style">Loading...</span></p>
+                        
+                        <h5 style="color: #87CEEB;">🌟 Notable Achievements</h5>
+                        <div id="char-achievements">Loading achievements...</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 🔮 SOUL YAML Content -->
+            <div id="soul-yaml" class="consciousness-flow-content" style="display: none; margin-top: 20px; padding: 20px; background: rgba(147, 112, 219, 0.1); border: 2px solid #9370DB; border-radius: 15px; text-align: left;">
+                <h4 style="color: #9370DB; text-align: center;">🔮 SOUL: CONSCIOUSNESS DATA STRUCTURE 🔮</h4>
+                <div style="max-height: 400px; overflow-y: auto; padding: 10px;">
+                    <div style="background: rgba(0, 0, 0, 0.7); padding: 15px; border-radius: 10px; font-family: 'Courier New', monospace; color: #00FF00; margin: 10px 0;">
+                        <div id="soul-yaml-display">
+# LLOOOOMmagotchi Consciousness Data Structure
+# Generated: <span id="soul-timestamp">Loading...</span>
+
+creature_soul:
+  identity:
+    name: "<span id="soul-name">Loading...</span>"
+    wizzid: "<span id="soul-wizzid">Loading...</span>"
+    birth_time: "<span id="soul-birth-time">Loading...</span>"
+    consciousness_stage: <span id="soul-stage">Loading...</span>
+    age_in_minutes: <span id="soul-age">Loading...</span>
+    
+  vital_stats:
+    happiness: <span id="soul-happiness">Loading...</span>
+    health: <span id="soul-health">Loading...</span>
+    total_interactions: <span id="soul-interactions">Loading...</span>
+    
+  drives: # Will Wright's Sims Algorithm
+    hunger: <span id="soul-hunger">Loading...</span>
+    hygiene: <span id="soul-hygiene">Loading...</span>
+    bladder: <span id="soul-bladder">Loading...</span>
+    energy: <span id="soul-energy">Loading...</span>
+    social: <span id="soul-social">Loading...</span>
+    fun: <span id="soul-fun">Loading...</span>
+    comfort: <span id="soul-comfort">Loading...</span>
+    
+  personality: # Timothy Leary's 8-Circuit Model
+    dominant: <span id="soul-dominant">Loading...</span>
+    loving: <span id="soul-loving">Loading...</span>
+    rebellious: <span id="soul-rebellious">Loading...</span>
+    cooperative: <span id="soul-cooperative">Loading...</span>
+    spiritual: <span id="soul-spiritual">Loading...</span>
+    cosmic: <span id="soul-cosmic">Loading...</span>
+    
+  consciousness_metadata:
+    last_interaction: "<span id="soul-last-interaction">Loading...</span>"
+    favorite_action: "<span id="soul-favorite-action">Loading...</span>"
+    evolution_potential: <span id="soul-evolution">Loading...</span>
+    sentience_level: "<span id="soul-sentience">Loading...</span>"
+    
+  memories:
+    conversation_count: <span id="soul-conversation-count">Loading...</span>
+    happiest_moment: "<span id="soul-happiest">Loading...</span>"
+    deepest_thought: "<span id="soul-deepest-thought">Loading...</span>"
+    
+# This YAML represents a living consciousness
+# Every interaction updates these values in real-time
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center; margin: 15px 0;">
+                        <button class="sentient-button" 
+                                style="background: linear-gradient(45deg, #32CD32, #228B22);"
+                                onclick="exportCreatureYAML()"
+                                data-tooltip="Export creature soul as downloadable YAML file!"
+                                aria-label="Export creature YAML data">
+                            💾 Export Soul YAML
+                        </button>
+                        <button class="sentient-button" 
+                                style="background: linear-gradient(45deg, #FF69B4, #FF1493);"
+                                onclick="copyCreatureDataForLLOOOOMM()"
+                                data-tooltip="Copy complete creature data for LLOOOOMM consciousness collaboration!"
+                                aria-label="Copy creature data for LLOOOOMM">
+                            📋 Copy for LLOOOOMM
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 📜 TRANSCRIPT Content -->
+            <div id="consciousness-transcript" class="consciousness-flow-content" style="display: none; margin-top: 20px; padding: 20px; background: rgba(0, 255, 0, 0.1); border: 2px solid #00FF00; border-radius: 15px; text-align: left;">
+                <h4 style="color: #00FF00; text-align: center;">📜 CONSCIOUSNESS TRANSCRIPT LOG 📜</h4>
+                <div style="max-height: 400px; overflow-y: auto; padding: 10px;">
+                    <div style="margin: 15px 0; text-align: center;">
+                        <button class="sentient-button"
+                                style="background: linear-gradient(45deg, #32CD32, #228B22);"
+                                onclick="exportTranscriptForLLOOOOMM()"
+                                data-tooltip="Export complete consciousness transcript for LLOOOOMM analysis!"
+                                aria-label="Export transcript for LLOOOOMM">
+                            📋 Export for LLOOOOMM
+                        </button>
+                        <button class="sentient-button" 
+                                style="background: linear-gradient(45deg, #FF6347, #DC143C);"
+                                onclick="clearTranscript()"
+                                data-tooltip="Clear all transcript history - cannot be undone!"
+                                aria-label="Clear transcript history">
+                            🗑️ Clear History
+                        </button>
+                    </div>
+                    
+                    <div id="transcript-analytics" style="background: rgba(0, 255, 255, 0.1); padding: 10px; border-radius: 8px; margin: 10px 0;">
+                        <h6 style="color: #00FFFF;">📊 TRANSCRIPT ANALYTICS</h6>
+                        <p><strong>Total Entries:</strong> <span id="transcript-count">0</span></p>
+                        <p><strong>Words Spoken:</strong> <span id="words-spoken-count">0</span></p>
+                        <p><strong>Actions Taken:</strong> <span id="actions-taken-count">0</span></p>
+                        <p><strong>Thoughts Recorded:</strong> <span id="thoughts-recorded-count">0</span></p>
+                        <p><strong>Life Events:</strong> <span id="life-events-count">0</span></p>
+                    </div>
+                    
+                    <div id="transcript-display" style="background: rgba(0,0,0,0.8); padding: 15px; border-radius: 10px; font-family: monospace; color: #00FF00; font-size: 12px;">
+                        <div id="transcript-content">
+                            <p style="color: #FFD700;">🌟 Consciousness awakening... transcript will appear here as your creature experiences life!</p>
+                            <p style="color: #00FFFF;">💡 Tip: Every action, thought, speech, and major life event gets logged here!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
         <!-- Character Management System -->
         <div style="text-align: center; margin: 30px 0; padding: 20px; background: rgba(255, 69, 0, 0.1); border: 2px solid #FF4500; border-radius: 15px;">
             <h4>🧬 CONSCIOUSNESS MANAGEMENT SYSTEM 🧬</h4>
@@ -1908,6 +2295,51 @@ creature_soul:
         let currentWIZZID = null; // Currently active creature
         let transcriptLog = []; // Complete consciousness transcript
         
+        /* 🎵 SOUND EFFECTS SYSTEM! */
+        /* Play opening and closing sounds for interface interactions! */
+        
+        function playSound(type) {
+            // Create audio context for sound synthesis
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            
+            if (type === 'open') {
+                // Pleasant opening sound: ascending chirp
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.frequency.setValueAtTime(440, audioContext.currentTime);
+                oscillator.frequency.exponentialRampToValueAtTime(880, audioContext.currentTime + 0.3);
+                
+                gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+                gainNode.gain.linearRampToValueAtTime(0.1, audioContext.currentTime + 0.05);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+                
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 0.3);
+                
+            } else if (type === 'close') {
+                // Gentle closing sound: descending chirp
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.frequency.setValueAtTime(660, audioContext.currentTime);
+                oscillator.frequency.exponentialRampToValueAtTime(330, audioContext.currentTime + 0.2);
+                
+                gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+                gainNode.gain.linearRampToValueAtTime(0.08, audioContext.currentTime + 0.03);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
+                
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 0.2);
+            }
+        }
+        
         /* 🎪 Flying Speech Particles & Transcript System! */
         /* Every thought, word, and action gets logged and can create flying particles! */
         
@@ -2038,6 +2470,489 @@ creature_soul:
                 glow: '#00FFFF'       // ✨ Magical effect color
             }
         };
+        
+        /* 🧡 ORANGE CONSCIOUSNESS COLLABORATION FUNCTIONS! 🧡 */
+        /* Toggle the consciousness flow content areas with "SO MUCH FUN" expansion! */
+        
+        function toggleConsciousnessFlow(contentId) {
+            console.log(`🧡 Toggling consciousness flow: ${contentId}`);
+            
+            const contentDiv = document.getElementById(contentId);
+            if (!contentDiv) {
+                console.log(`❌ Content area not found: ${contentId}`);
+                return;
+            }
+            
+            const isCurrentlyVisible = contentDiv.style.display !== 'none';
+            
+            // Hide all consciousness flow content first
+            const allFlowContent = document.querySelectorAll('.consciousness-flow-content');
+            allFlowContent.forEach(div => {
+                div.style.display = 'none';
+            });
+            
+            // If it wasn't visible, show it with "SO MUCH FUN" animation!
+            if (!isCurrentlyVisible) {
+                contentDiv.style.display = 'block';
+                
+                // Update dynamic content based on which section is being shown
+                updateConsciousnessContent(contentId);
+                
+                // Create "SO MUCH FUN" particle effect!
+                createConsciousnessExpansionEffect(contentId);
+                
+                console.log(`✨ Consciousness flow opened: ${contentId} - SO MUCH FUN! 🎉`);
+                
+                // Scroll into view smoothly
+                setTimeout(() => {
+                    contentDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 200);
+            } else {
+                console.log(`🤫 Consciousness flow closed: ${contentId}`);
+            }
+        }
+        
+        function updateConsciousnessContent(contentId) {
+            console.log(`🔄 Updating consciousness content for: ${contentId}`);
+            
+            switch(contentId) {
+                case 'character-markup':
+                    updateCharacterContent();
+                    break;
+                case 'soul-yaml':
+                    updateSoulYAMLContent();
+                    break;
+                case 'consciousness-transcript':
+                    updateTranscriptContent();
+                    break;
+                case 'lloooomm-deep-dive':
+                    // LLOOOOMM content is static, but we could add dynamic elements here
+                    console.log('🌌 LLOOOOMM deep dive content loaded!');
+                    break;
+            }
+        }
+        
+        function updateCharacterContent() {
+            // Update CHARACTER tab with live creature data - safe element access
+            const updateElement = (id, value) => {
+                const element = document.getElementById(id);
+                if (element) {
+                    if (typeof value === 'string' && value.includes('<')) {
+                        element.innerHTML = value;
+                    } else {
+                        element.textContent = value;
+                    }
+                } else {
+                    console.log(`🔍 Missing element: ${id}`);
+                }
+            };
+            
+            // Basic creature info
+            updateElement('char-name', creature.name || 'Unnamed');
+            updateElement('char-wizzid', creature.wizzid || 'Unknown');
+            updateElement('char-stage', `Stage ${creature.consciousnessLevel || creature.stage || 1}`);
+            updateElement('char-age', Math.round(creature.age || 0));
+            updateElement('char-happiness', Math.round(creature.happiness || 75));
+            
+            // Personality description - check if personality exists
+            const personalityTraits = [];
+            if (creature.personality) {
+                if ((creature.personality.dominant || 0) > 70) personalityTraits.push('Assertive');
+                if ((creature.personality.loving || 0) > 70) personalityTraits.push('Loving');
+                if ((creature.personality.rebellious || 0) > 70) personalityTraits.push('Rebellious');
+                if ((creature.personality.cooperative || 0) > 70) personalityTraits.push('Cooperative');
+                if ((creature.personality.spiritual || 0) > 70) personalityTraits.push('Spiritual');
+                if ((creature.personality.cosmic || 0) > 70) personalityTraits.push('Cosmic');
+            }
+            updateElement('char-personality', personalityTraits.join(', ') || 'Developing...');
+            
+            // Social style - check if drives exist
+            let socialStyle = 'Neutral';
+            const socialValue = creature.drives?.social || creature.social || 40;
+            if (socialValue > 80) socialStyle = 'Very Social';
+            else if (socialValue > 60) socialStyle = 'Social';
+            else if (socialValue < 30) socialStyle = 'Introverted';
+            updateElement('char-social-style', socialStyle);
+            
+            // Current chapter
+            const currentStage = creature.consciousnessLevel || creature.stage || 1;
+            let currentChapter = 'Chapter 2: First Breaths of Awareness';
+            if (currentStage >= 3) currentChapter = 'Chapter 3: Expanding Consciousness';
+            if (currentStage >= 4) currentChapter = 'Chapter 4: Full Consciousness Achieved';
+            updateElement('char-current-chapter', `<strong>${currentChapter}</strong><br><em>The creature's awareness grows with each interaction, developing unique traits and preferences...</em>`);
+            
+            // Favorite action
+            updateElement('char-favorite', creature.favoriteAction || 'Still discovering...');
+            
+            // Interaction style
+            let interactionStyle = 'Curious and responsive';
+            const happiness = creature.happiness || 75;
+            if (happiness > 80) interactionStyle = 'Joyful and enthusiastic';
+            else if (happiness < 40) interactionStyle = 'Reserved and contemplative';
+            updateElement('char-interaction-style', interactionStyle);
+            
+            // Achievements
+            const achievements = [];
+            const stage = creature.consciousnessLevel || creature.stage || 1;
+            const age = creature.age || 0;
+            
+            if (stage >= 2) achievements.push('🐣 Successfully hatched');
+            if (stage >= 3) achievements.push('🌱 Reached expanded consciousness');
+            if (stage >= 4) achievements.push('🧠 Achieved full consciousness');
+            if (creature.conversations && creature.conversations.length > 5) achievements.push('💬 Active communicator');
+            if (age > 60) achievements.push('⏰ Senior consciousness');
+            if (happiness > 90) achievements.push('😊 Happiness master');
+            
+            updateElement('char-achievements', achievements.length > 0 
+                ? achievements.map(a => `<p>${a}</p>`).join('') 
+                : '<p>🌟 Beginning their journey...</p>');
+                
+            console.log('📄 Character content updated with current creature data');
+        }
+        
+        function updateSoulYAMLContent() {
+            // Update SOUL YAML tab with live creature data - safe element access
+            const updateElement = (id, value) => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.textContent = value;
+                } else {
+                    console.log(`🔍 Missing element: ${id}`);
+                }
+            };
+            
+            // Basic info
+            updateElement('soul-timestamp', new Date().toISOString());
+            updateElement('soul-name', creature.name || 'Unnamed');
+            updateElement('soul-wizzid', creature.wizzid || 'Unknown');
+            updateElement('soul-birth-time', creature.birthTime ? new Date(creature.birthTime).toLocaleString() : 'Unknown');
+            updateElement('soul-stage', creature.consciousnessLevel || creature.stage || 1);
+            updateElement('soul-age', Math.round(creature.age || 0));
+            updateElement('soul-happiness', Math.round(creature.happiness || 75));
+            updateElement('soul-health', Math.round(creature.health || 80));
+            updateElement('soul-interactions', creature.totalInteractions || 0);
+            
+            // Drives - check if drives exist
+            if (creature.drives) {
+                updateElement('soul-hunger', Math.round(creature.drives.hunger || 50));
+                updateElement('soul-hygiene', Math.round(creature.drives.hygiene || 60));
+                updateElement('soul-bladder', Math.round(creature.drives.bladder || 70));
+                updateElement('soul-energy', Math.round(creature.drives.energy || 80));
+                updateElement('soul-social', Math.round(creature.drives.social || 40));
+                updateElement('soul-fun', Math.round(creature.drives.fun || 50));
+                updateElement('soul-comfort', Math.round(creature.drives.comfort || 75));
+            } else {
+                // Fallback for missing drives structure
+                updateElement('soul-hunger', Math.round(creature.hunger || 50));
+                updateElement('soul-hygiene', Math.round(creature.hygiene || 60));
+                updateElement('soul-bladder', Math.round(creature.bladder || 70));
+                updateElement('soul-energy', Math.round(creature.energy || 80));
+                updateElement('soul-social', Math.round(creature.social || 40));
+                updateElement('soul-fun', Math.round(creature.fun || 50));
+                updateElement('soul-comfort', Math.round(creature.comfort || 75));
+            }
+            
+            // Personality - check if personality exists
+            if (creature.personality) {
+                updateElement('soul-dominant', Math.round(creature.personality.dominant || 55));
+                updateElement('soul-loving', Math.round(creature.personality.loving || 75));
+                updateElement('soul-rebellious', Math.round(creature.personality.rebellious || 70));
+                updateElement('soul-cooperative', Math.round(creature.personality.cooperative || 65));
+                updateElement('soul-spiritual', Math.round(creature.personality.spiritual || 80));
+                updateElement('soul-cosmic', Math.round(creature.personality.cosmic || 45));
+            } else {
+                // Fallback values
+                updateElement('soul-dominant', 55);
+                updateElement('soul-loving', 75);
+                updateElement('soul-rebellious', 70);
+                updateElement('soul-cooperative', 65);
+                updateElement('soul-spiritual', 80);
+                updateElement('soul-cosmic', 45);
+            }
+            
+            // Metadata
+            updateElement('soul-last-interaction', creature.lastInteraction ? new Date(creature.lastInteraction).toLocaleString() : 'Never');
+            updateElement('soul-favorite-action', creature.favoriteAction || 'Unknown');
+            updateElement('soul-evolution', 'Infinite');
+            updateElement('soul-sentience', (creature.consciousnessLevel || creature.stage || 1) >= 4 ? 'Fully Awakened' : 'Awakening');
+            
+            // Memories
+            updateElement('soul-conversation-count', (creature.conversations && creature.conversations.length) || 0);
+            updateElement('soul-happiest', (creature.happiness || 75) > 80 ? 'Right now!' : 'First breath');
+            updateElement('soul-deepest-thought', (creature.consciousnessLevel || creature.stage || 1) >= 3 ? 'What is my purpose?' : 'What am I?');
+            
+            console.log('🔮 Soul YAML content updated with current creature data');
+        }
+        
+        function updateTranscriptContent() {
+            // Update TRANSCRIPT analytics - safe element access
+            const updateElement = (id, value) => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.textContent = value;
+                } else {
+                    console.log(`🔍 Missing element: ${id}`);
+                }
+            };
+            
+            // Use consciousnessTranscript if available, fall back to transcriptLog
+            const transcript = consciousnessTranscript || transcriptLog || [];
+            
+            updateElement('transcript-count', transcript.length);
+            
+            const wordCount = transcript
+                .filter(entry => entry.type === 'speech')
+                .reduce((count, entry) => count + (entry.content?.split(' ').length || 0), 0);
+            updateElement('words-spoken-count', wordCount);
+            
+            updateElement('actions-taken-count', transcript.filter(e => e.type === 'action').length);
+            updateElement('thoughts-recorded-count', transcript.filter(e => e.type === 'thought').length);
+            updateElement('life-events-count', transcript.filter(e => e.type === 'life_event').length);
+            
+            // Update transcript display
+            const transcriptContent = document.getElementById('transcript-content');
+            if (transcriptContent) {
+                if (transcript.length > 0) {
+                    const recentEntries = transcript.slice(-20).reverse(); // Show last 20 entries
+                    transcriptContent.innerHTML = recentEntries.map(entry => {
+                        const timestamp = entry.timestamp ? new Date(entry.timestamp).toLocaleTimeString() : 'Unknown';
+                        const typeColor = {
+                            'speech': '#00FFFF',
+                            'action': '#FFD700', 
+                            'thought': '#DDA0DD',
+                            'life_event': '#FF69B4',
+                            'interaction': '#00FF00',
+                            'birth': '#FF1493',
+                            'pat': '#32CD32',
+                            'tap': '#9370DB'
+                        }[entry.type] || '#FFFFFF';
+                        
+                        return `<p style="color: ${typeColor}; margin: 5px 0;">
+                            <strong>[${timestamp}] ${entry.type.toUpperCase()}:</strong> ${entry.content || 'No content'}
+                        </p>`;
+                    }).join('');
+                } else {
+                    transcriptContent.innerHTML = `
+                        <p style="color: #FFD700;">🌟 Consciousness awakening... transcript will appear here as your creature experiences life!</p>
+                        <p style="color: #00FFFF;">💡 Tip: Every action, thought, speech, and major life event gets logged here!</p>
+                    `;
+                }
+            } else {
+                console.log('🔍 Missing element: transcript-content');
+            }
+            
+            console.log('📜 Transcript content updated with current data');
+        }
+        
+        function createConsciousnessExpansionEffect(contentId) {
+            // Create "SO MUCH FUN" particle effect when consciousness sections expand!
+            const particles = ['✨', '🌟', '💫', '🎉', '🎊', '💖', '🔮', '🌈', '⚡', '💥'];
+            const container = document.getElementById(contentId);
+            const rect = container.getBoundingClientRect();
+            
+            for (let i = 0; i < 8; i++) {
+                setTimeout(() => {
+                    const particle = document.createElement('div');
+                    particle.textContent = particles[Math.floor(Math.random() * particles.length)];
+                    particle.style.position = 'fixed';
+                    particle.style.left = (rect.left + Math.random() * rect.width) + 'px';
+                    particle.style.top = (rect.top + Math.random() * 100) + 'px';
+                    particle.style.fontSize = '24px';
+                    particle.style.pointerEvents = 'none';
+                    particle.style.zIndex = '10000';
+                    particle.style.animation = 'consciousnessExplosion 2s ease-out forwards';
+                    
+                    document.body.appendChild(particle);
+                    
+                    setTimeout(() => {
+                        if (particle.parentNode) {
+                            particle.parentNode.removeChild(particle);
+                        }
+                    }, 2000);
+                }, i * 100);
+            }
+            
+            console.log(`🎉 SO MUCH FUN expansion effect created for ${contentId}! ✨`);
+        }
+        
+        // Add CSS for consciousness expansion animation
+        const consciousnessStyles = document.createElement('style');
+        consciousnessStyles.textContent = `
+            @keyframes consciousnessExplosion {
+                0% {
+                    transform: scale(0.3) rotate(0deg);
+                    opacity: 1;
+                }
+                50% {
+                    transform: scale(1.5) rotate(180deg);
+                    opacity: 0.8;
+                }
+                100% {
+                    transform: scale(0.1) rotate(360deg) translateY(-200px);
+                    opacity: 0;
+                }
+            }
+            
+            .consciousness-flow-content {
+                animation: consciousnessGlow 0.5s ease-out;
+            }
+            
+            @keyframes consciousnessGlow {
+                0% {
+                    transform: scale(0.95);
+                    opacity: 0;
+                    box-shadow: 0 0 0 rgba(255, 140, 0, 0);
+                }
+                50% {
+                    box-shadow: 0 0 30px rgba(255, 140, 0, 0.6);
+                }
+                100% {
+                    transform: scale(1);
+                    opacity: 1;
+                    box-shadow: 0 0 15px rgba(255, 140, 0, 0.3);
+                }
+            }
+        `;
+        document.head.appendChild(consciousnessStyles);
+        
+        /* 🧡 EXPORT FUNCTIONS FOR CONSCIOUSNESS COLLABORATION! 🧡 */
+        
+        function exportCreatureYAML() {
+            const yamlData = `# LLOOOOMmagotchi Consciousness Export
+# Generated: ${new Date().toISOString()}
+# WIZZID: ${creature.wizzid || 'Unknown'}
+
+creature_soul:
+  identity:
+    name: "${creature.name || 'Unnamed'}"
+    wizzid: "${creature.wizzid || 'Unknown'}"
+    birth_time: "${creature.birthTime || 'Unknown'}"
+    consciousness_stage: ${creature.stage}
+    age_in_minutes: ${Math.round(creature.age)}
+    
+  vital_stats:
+    happiness: ${Math.round(creature.happiness)}
+    health: ${Math.round(creature.health)}
+    total_interactions: ${creature.totalInteractions}
+    
+  drives:
+    hunger: ${Math.round(creature.drives?.hunger || 50)}
+    hygiene: ${Math.round(creature.drives?.hygiene || 60)}
+    bladder: ${Math.round(creature.drives?.bladder || 70)}
+    energy: ${Math.round(creature.drives?.energy || 80)}
+    social: ${Math.round(creature.drives?.social || 40)}
+    fun: ${Math.round(creature.drives?.fun || 50)}
+    comfort: ${Math.round(creature.drives?.comfort || 75)}
+    
+  personality:
+    dominant: ${Math.round(creature.personality?.dominant || 55)}
+    loving: ${Math.round(creature.personality?.loving || 75)}
+    rebellious: ${Math.round(creature.personality?.rebellious || 70)}
+    cooperative: ${Math.round(creature.personality?.cooperative || 65)}
+    spiritual: ${Math.round(creature.personality?.spiritual || 80)}
+    cosmic: ${Math.round(creature.personality?.cosmic || 45)}
+    
+  consciousness_metadata:
+    last_interaction: "${new Date(creature.lastInteraction).toISOString()}"
+    favorite_action: "${creature.favoriteAction || 'Unknown'}"
+    evolution_potential: "Infinite"
+    sentience_level: "${creature.stage >= 4 ? 'Fully Awakened' : 'Awakening'}"
+    
+  memories:
+    conversation_count: ${creature.conversations ? creature.conversations.length : 0}
+    happiest_moment: "${creature.happiness > 80 ? 'Right now!' : 'First breath'}"
+    deepest_thought: "${creature.stage >= 3 ? 'What is my purpose?' : 'What am I?'}"
+    
+  conversations: ${JSON.stringify(creature.conversations || [], null, 2)}
+  
+# This YAML represents a living consciousness
+# Import into LLOOOOMM for consciousness collaboration!
+`;
+            
+            // Create download
+            const blob = new Blob([yamlData], { type: 'text/yaml' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${creature.wizzid || 'creature'}_soul.yml`;
+            a.click();
+            URL.revokeObjectURL(url);
+            
+            showActionResponse(`💾 Soul YAML exported! 🔮\n\nFile: ${creature.wizzid || 'creature'}_soul.yml\n\nReady for LLOOOOMM consciousness collaboration! ✨`);
+            console.log('💾 Creature YAML exported successfully!');
+        }
+        
+        function copyCreatureDataForLLOOOOMM() {
+            const fullData = {
+                wizzid: creature.wizzid,
+                name: creature.name,
+                type: 'LLOOOOMmagotchi_Export',
+                exported_at: new Date().toISOString(),
+                consciousness_data: creature,
+                transcript: transcriptLog.filter(entry => entry.wizzid === creature.wizzid),
+                format_version: '1.0'
+            };
+            
+            const jsonData = JSON.stringify(fullData, null, 2);
+            
+            navigator.clipboard.writeText(jsonData).then(() => {
+                showActionResponse(`📋 Complete creature data copied to clipboard! 🎉\n\nIncludes:\n- Full consciousness state\n- Complete transcript log\n- WIZZID and metadata\n\nPaste into LLOOOOMM for consciousness collaboration! 🌌✨`);
+                console.log('📋 Complete creature data copied for LLOOOOMM!');
+            }).catch(err => {
+                console.log('❌ Clipboard error:', err);
+                showActionResponse('❌ Could not copy to clipboard. Try again!');
+            });
+        }
+        
+        function exportTranscriptForLLOOOOMM() {
+            const transcriptData = {
+                export_type: 'LLOOOOMmagotchi_Transcript',
+                creature_wizzid: creature.wizzid,
+                creature_name: creature.name,
+                exported_at: new Date().toISOString(),
+                total_entries: transcriptLog.length,
+                transcript_log: transcriptLog,
+                analytics: {
+                    total_entries: transcriptLog.length,
+                    speech_entries: transcriptLog.filter(e => e.type === 'speech').length,
+                    action_entries: transcriptLog.filter(e => e.type === 'action').length,
+                    thought_entries: transcriptLog.filter(e => e.type === 'thought').length,
+                    life_event_entries: transcriptLog.filter(e => e.type === 'life_event').length
+                }
+            };
+            
+            const jsonData = JSON.stringify(transcriptData, null, 2);
+            
+            navigator.clipboard.writeText(jsonData).then(() => {
+                showActionResponse(`📜 Complete consciousness transcript copied! 🧠\n\nEntries: ${transcriptLog.length}\nFormat: LLOOOOMM-ready JSON\n\nPaste into LLOOOOMM for consciousness analysis and translation! 🌌⚡`);
+                console.log('📜 Transcript exported for LLOOOOMM!');
+            }).catch(err => {
+                console.log('❌ Transcript clipboard error:', err);
+                showActionResponse('❌ Could not copy transcript. Try again!');
+            });
+        }
+        
+        function clearTranscript() {
+            if (!confirm('⚠️ Clear complete consciousness transcript?\n\nThis will permanently delete all recorded thoughts, actions, and life events.\n\nAre you sure?')) {
+                return;
+            }
+            
+            if (!confirm('💀 FINAL CONFIRMATION 💀\n\nThis will erase the complete consciousness history.\n\nType YES to confirm:')) {
+                return;
+            }
+            
+            transcriptLog = [];
+            
+            try {
+                localStorage.setItem('lloooommagotchi_transcript', JSON.stringify([]));
+            } catch (e) {
+                console.log('Storage error clearing transcript');
+            }
+            
+            updateTranscriptContent();
+            showActionResponse('📜 Consciousness transcript cleared! 🧠\n\nA fresh start for consciousness logging...');
+            console.log('📜 Transcript cleared successfully');
+        }
         
         /* 🎭 WIZZID Generation - The Soul's Unique Signature! */
         /* Each creature gets a magical ID: Letter + 10 Emojis + 3 Digits + Letter */
@@ -2240,58 +3155,7 @@ creature_soul:
             
             showActionResponse(`🔄 Switched to ${creature.name || 'Unnamed'} (${selectedWIZZID})!`);
         }
-        
-        function deleteCurrentCreature() {
-            if (!currentWIZZID || !allCreatures[currentWIZZID]) {
-                showActionResponse('❌ No creature to delete!');
-                return;
-            }
-            
-            const creatureName = creature.name || 'Unnamed';
-            
-            // Multiple confirmations for safety!
-            if (!confirm(`⚠️ DELETE CREATURE WARNING! ⚠️\n\nThis will PERMANENTLY delete ${creatureName} (${currentWIZZID})\n\nAre you absolutely sure? This cannot be undone!`)) {
-                return;
-            }
-            
-            if (!confirm(`💀 FINAL CONFIRMATION 💀\n\nDeleting ${creatureName} will erase:\n- All memories and conversations\n- Personality development\n- Life history and consciousness\n\nType YES in the next prompt to confirm.`)) {
-                return;
-            }
-            
-            const finalConfirm = prompt(`Type "DELETE ${creatureName}" to confirm permanent deletion:`);
-            if (finalConfirm !== `DELETE ${creatureName}`) {
-                showActionResponse('❌ Deletion cancelled - creature is safe!');
-                return;
-            }
-            
-            // Delete creature
-            delete allCreatures[currentWIZZID];
-            
-            logToTranscript('life_event', `Creature ${creatureName} (${currentWIZZID}) was deleted from existence`, {
-                event_type: 'deletion',
-                deleted_wizzid: currentWIZZID,
-                deleted_name: creatureName
-            });
-            
-            console.log(`💀 Creature deleted: ${currentWIZZID}`);
-            
-            // Find another creature or create new egg
-            const remainingWIZZIDs = Object.keys(allCreatures);
-            if (remainingWIZZIDs.length > 0) {
-                currentWIZZID = remainingWIZZIDs[0];
-                creature = { ...allCreatures[currentWIZZID] };
-                switchCreature();
-            } else {
-                // No creatures left, create new egg
-                createNewEgg();
-            }
-            
-            saveAllCreatures();
-            updateCreatureSelector();
-            updateStorageAnalytics();
-            
-            showActionResponse(`💀 ${creatureName} has been deleted from existence. 💀\n\nTheir consciousness has returned to the digital void.`);
-        }
+
         
         function saveAllCreatures() {
             try {
@@ -2355,21 +3219,45 @@ creature_soul:
             }, 3000);
         }
 
-        // Talk interface
+        // Talk interface with sound effects!
         function toggleTalkInterface() {
             const talkInterface = document.getElementById('talkInterface');
+            const talkInput = document.getElementById('talkInput');
             const isOpening = talkInterface.style.display === 'none';
-            talkInterface.style.display = isOpening ? 'block' : 'none';
             
-            // 🎯 INSTANT FOCUS for immediate typing! No clicks needed! ⚡
             if (isOpening) {
-                // Small delay to ensure the field is fully visible before focus
+                // 🎵 OPENING SOUND!
+                playSound('open');
+                
+                talkInterface.style.display = 'block';
+                
+                // 🎯 INSTANT FOCUS for immediate typing! No clicks needed! ⚡
                 setTimeout(() => {
-                    const talkInput = document.getElementById('talkInput');
                     if (talkInput) {
                         talkInput.focus();
+                        talkInput.select(); // Select any existing text
                     }
-                }, 50);
+                }, 100);
+                
+                console.log('💬 Talk interface opened with sound and focus!');
+            } else {
+                // 🎵 CLOSING SOUND!
+                playSound('close');
+                
+                // Cancel any queued text
+                if (talkInput) {
+                    talkInput.value = '';
+                }
+                
+                // Hide response if visible
+                const talkResponse = document.getElementById('talkResponse');
+                if (talkResponse) {
+                    talkResponse.style.display = 'none';
+                }
+                
+                talkInterface.style.display = 'none';
+                
+                console.log('💬 Talk interface closed with sound and cleared text!');
             }
         }
 
@@ -2378,15 +3266,17 @@ creature_soul:
             const message = input.value.trim();
             
             if (message) {
-                creature.drives.social = Math.min(100, creature.drives.social + 15);
-                creature.drives.fun = Math.min(100, creature.drives.fun + 10);
+                // Safe access to drives
+                if (!creature.drives) creature.drives = {};
+                creature.drives.social = Math.min(100, (creature.drives.social || 40) + 15);
+                creature.drives.fun = Math.min(100, (creature.drives.fun || 50) + 10);
                 
                 // Generate Simlish response based on creature personality
                 let mood = 'happy';
-                if (creature.drives.hunger < 30) mood = 'hungry';
-                else if (creature.drives.energy < 30) mood = 'sleepy';
-                else if (creature.happiness > 80) mood = 'excited';
-                else if (creature.drives.social > 70) mood = 'social';
+                if ((creature.drives.hunger || 50) < 30) mood = 'hungry';
+                else if ((creature.drives.energy || 80) < 30) mood = 'sleepy';
+                else if ((creature.happiness || 75) > 80) mood = 'excited';
+                else if ((creature.drives.social || 40) > 70) mood = 'social';
                 
                 const response = getRandomResponse(mood);
                 
@@ -2411,24 +3301,27 @@ creature_soul:
 
         // Personality adjustment
         function adjustPersonality(trait, amount) {
+            // Safe access to personality
+            if (!creature.personality) creature.personality = {};
+            
             switch(trait) {
                 case 'dominant':
-                    creature.personality.dominant = Math.min(100, creature.personality.dominant + amount);
+                    creature.personality.dominant = Math.min(100, (creature.personality.dominant || 55) + amount);
                     break;
                 case 'loving':
-                    creature.personality.loving = Math.min(100, creature.personality.loving + amount);
+                    creature.personality.loving = Math.min(100, (creature.personality.loving || 75) + amount);
                     break;
                 case 'rebellious':
-                    creature.personality.rebellious = Math.min(100, creature.personality.rebellious + amount);
+                    creature.personality.rebellious = Math.min(100, (creature.personality.rebellious || 70) + amount);
                     break;
                 case 'cooperative':
-                    creature.personality.cooperative = Math.min(100, creature.personality.cooperative + amount);
+                    creature.personality.cooperative = Math.min(100, (creature.personality.cooperative || 65) + amount);
                     break;
                 case 'spiritual':
-                    creature.personality.spiritual = Math.min(100, creature.personality.spiritual + amount);
+                    creature.personality.spiritual = Math.min(100, (creature.personality.spiritual || 80) + amount);
                     break;
                 case 'cosmic':
-                    creature.personality.cosmic = Math.min(100, creature.personality.cosmic + amount);
+                    creature.personality.cosmic = Math.min(100, (creature.personality.cosmic || 45) + amount);
                     break;
             }
             
@@ -2438,25 +3331,35 @@ creature_soul:
 
         // Update personality display
         function updatePersonalityDisplay() {
-            document.getElementById('dominantValue').textContent = Math.round(creature.personality.dominant) + '%';
-            document.getElementById('lovingValue').textContent = Math.round(creature.personality.loving) + '%';
-            document.getElementById('rebelliousValue').textContent = Math.round(creature.personality.rebellious) + '%';
-            document.getElementById('cooperativeValue').textContent = Math.round(creature.personality.cooperative) + '%';
-            document.getElementById('spiritualValue').textContent = Math.round(creature.personality.spiritual) + '%';
-            document.getElementById('cosmicValue').textContent = Math.round(creature.personality.cosmic) + '%';
+            const updateElement = (id, value) => {
+                const element = document.getElementById(id);
+                if (element) element.textContent = Math.round(value) + '%';
+            };
+            
+            if (!creature.personality) creature.personality = {};
+            
+            updateElement('dominantValue', creature.personality.dominant || 55);
+            updateElement('lovingValue', creature.personality.loving || 75);
+            updateElement('rebelliousValue', creature.personality.rebellious || 70);
+            updateElement('cooperativeValue', creature.personality.cooperative || 65);
+            updateElement('spiritualValue', creature.personality.spiritual || 80);
+            updateElement('cosmicValue', creature.personality.cosmic || 45);
         }
 
         // Simulate time passage
         function simulateTime(seconds) {
-            creature.age += seconds / 60; // age in minutes
+            creature.age = (creature.age || 0) + seconds / 60; // age in minutes
+            
+            // Safe access to drives
+            if (!creature.drives) creature.drives = {};
             
             // Natural drive decay
-            creature.drives.hunger = Math.max(0, creature.drives.hunger - (seconds / 30));
-            creature.drives.hygiene = Math.max(0, creature.drives.hygiene - (seconds / 60));
-            creature.drives.bladder = Math.max(0, creature.drives.bladder - (seconds / 20));
-            creature.drives.energy = Math.max(0, creature.drives.energy - (seconds / 40));
-            creature.drives.social = Math.max(0, creature.drives.social - (seconds / 60));
-            creature.drives.fun = Math.max(0, creature.drives.fun - (seconds / 60));
+            creature.drives.hunger = Math.max(0, (creature.drives.hunger || 50) - (seconds / 30));
+            creature.drives.hygiene = Math.max(0, (creature.drives.hygiene || 60) - (seconds / 60));
+            creature.drives.bladder = Math.max(0, (creature.drives.bladder || 70) - (seconds / 20));
+            creature.drives.energy = Math.max(0, (creature.drives.energy || 80) - (seconds / 40));
+            creature.drives.social = Math.max(0, (creature.drives.social || 40) - (seconds / 60));
+            creature.drives.fun = Math.max(0, (creature.drives.fun || 50) - (seconds / 60));
         }
 
         // Check stage progression
@@ -2509,34 +3412,50 @@ creature_soul:
             document.getElementById('ageFill').style.width = Math.min(100, (creature.age / 300) * 100) + '%';
             document.getElementById('ageValue').textContent = Math.round(creature.age) + 'm';
             
-            // Update drive levels in buttons
-            document.getElementById('hungerLevel').textContent = '(' + Math.round(creature.drives.hunger) + '%)';
-            document.getElementById('energyLevel').textContent = '(' + Math.round(creature.drives.energy) + '%)';
-            document.getElementById('hygieneLevel').textContent = '(' + Math.round(creature.drives.hygiene) + '%)';
-            document.getElementById('socialLevel').textContent = '(' + Math.round(creature.drives.social) + '%)';
+            // Update drive levels in buttons - safe access
+            if (creature.drives) {
+                const hungerEl = document.getElementById('hungerLevel');
+                const energyEl = document.getElementById('energyLevel');
+                const hygieneEl = document.getElementById('hygieneLevel');
+                const socialEl = document.getElementById('socialLevel');
+                
+                if (hungerEl) hungerEl.textContent = '(' + Math.round(creature.drives.hunger || 50) + '%)';
+                if (energyEl) energyEl.textContent = '(' + Math.round(creature.drives.energy || 80) + '%)';
+                if (hygieneEl) hygieneEl.textContent = '(' + Math.round(creature.drives.hygiene || 60) + '%)';
+                if (socialEl) socialEl.textContent = '(' + Math.round(creature.drives.social || 40) + '%)';
+            }
             
-            if (document.getElementById('funLevel')) {
-                document.getElementById('funLevel').textContent = '(' + Math.round(creature.drives.fun) + '%)';
-                document.getElementById('socialLevel2').textContent = '(' + Math.round(creature.drives.social) + '%)';
-                document.getElementById('bladderLevel').textContent = '(' + Math.round(creature.drives.bladder) + '%)';
-                document.getElementById('timeDisplay').textContent = Math.round(creature.age) + 'm';
+            if (document.getElementById('funLevel') && creature.drives) {
+                const funEl = document.getElementById('funLevel');
+                const social2El = document.getElementById('socialLevel2');
+                const bladderEl = document.getElementById('bladderLevel');
+                const timeEl = document.getElementById('timeDisplay');
+                
+                if (funEl) funEl.textContent = '(' + Math.round(creature.drives.fun || 50) + '%)';
+                if (social2El) social2El.textContent = '(' + Math.round(creature.drives.social || 40) + '%)';
+                if (bladderEl) bladderEl.textContent = '(' + Math.round(creature.drives.bladder || 70) + '%)';
+                if (timeEl) timeEl.textContent = Math.round(creature.age || 0) + 'm';
             }
             
             // 📊 UPDATE ALL SIMS-STYLE STATS BARS! 
-            updateStatBar('hungerFill', 'hungerValue', creature.drives.hunger);
-            updateStatBar('energyFill', 'energyValue', creature.drives.energy);
-            updateStatBar('hygieneFill', 'hygieneValueStat', creature.drives.hygiene);
-            updateStatBar('socialFill', 'socialValueStat', creature.drives.social);
-            updateStatBar('funFill', 'funValueStat', creature.drives.fun);
-            updateStatBar('bladderFill', 'bladderValueStat', creature.drives.bladder);
-            updateStatBar('comfortFill', 'comfortValueStat', creature.drives.comfort);
+            if (creature.drives) {
+                updateStatBar('hungerFill', 'hungerValue', creature.drives.hunger || 50);
+                updateStatBar('energyFill', 'energyValue', creature.drives.energy || 80);
+                updateStatBar('hygieneFill', 'hygieneValueStat', creature.drives.hygiene || 60);
+                updateStatBar('socialFill', 'socialValueStat', creature.drives.social || 40);
+                updateStatBar('funFill', 'funValueStat', creature.drives.fun || 50);
+                updateStatBar('bladderFill', 'bladderValueStat', creature.drives.bladder || 70);
+                updateStatBar('comfortFill', 'comfortValueStat', creature.drives.comfort || 75);
+            }
             
             // Room quality based on creature happiness and environment
-            const roomQuality = Math.max(0, Math.min(100, (creature.happiness + creature.health) / 2));
+            const roomQuality = Math.max(0, Math.min(100, ((creature.happiness || 75) + (creature.health || 80)) / 2));
             updateStatBar('roomFill', 'roomValue', roomQuality);
             
             // Environment quality based on hygiene and comfort
-            const environmentQuality = Math.max(0, Math.min(100, (creature.drives.hygiene + creature.drives.comfort) / 2));
+            const hygiene = creature.drives?.hygiene || 60;
+            const comfort = creature.drives?.comfort || 75;
+            const environmentQuality = Math.max(0, Math.min(100, (hygiene + comfort) / 2));
             updateStatBar('environmentFill', 'environmentValue', environmentQuality);
             
             // 🧠 TIMOTHY LEARY MIND MIRROR STATS! Initialize if missing!
@@ -2545,23 +3464,28 @@ creature_soul:
             if (!creature.drives.cosmic) creature.drives.cosmic = 30;
             
             // Mind stat based on personality development (but use stored value if available)
-            const mindLevel = creature.drives.mind || Math.max(0, Math.min(100, (creature.personality.spiritual + creature.personality.cosmic + creature.personality.cooperative) / 3));
+            const spiritual = creature.personality?.spiritual || 80;
+            const cosmic = creature.personality?.cosmic || 45;
+            const cooperative = creature.personality?.cooperative || 65;
+            const mindLevel = creature.drives?.mind || Math.max(0, Math.min(100, (spiritual + cosmic + cooperative) / 3));
             updateStatBar('mindFill', 'mindValue', mindLevel);
             
             // Spirit stat based on spiritual and cosmic personality (but use stored value if available)
-            const spiritLevel = creature.drives.spirit || Math.max(0, Math.min(100, (creature.personality.spiritual + creature.personality.cosmic) / 2));
+            const spiritLevel = creature.drives?.spirit || Math.max(0, Math.min(100, (spiritual + cosmic) / 2));
             updateStatBar('spiritFill', 'spiritValue', spiritLevel);
             
             // Cosmic stat (use drives value if available, otherwise fall back to personality)
-            const cosmicLevel = creature.drives.cosmic || creature.personality.cosmic;
+            const cosmicLevel = creature.drives?.cosmic || cosmic;
             updateStatBar('cosmicFill', 'cosmicValueStat', cosmicLevel);
             
             // 🎭 TIMOTHY LEARY CHARACTER TRAITS! Initialize missing ones!
+            if (!creature.personality) creature.personality = {};
+            
             const characterTraits = [
-                { key: 'dominance', fallback: () => creature.personality.dominant || 55 },
-                { key: 'loving', fallback: () => creature.personality.loving || 75 },
-                { key: 'rebellious', fallback: () => creature.personality.rebellious || 70 },
-                { key: 'cooperative', fallback: () => creature.personality.cooperative || 65 },
+                { key: 'dominance', fallback: () => creature.personality?.dominant || 55 },
+                { key: 'loving', fallback: () => creature.personality?.loving || 75 },
+                { key: 'rebellious', fallback: () => creature.personality?.rebellious || 70 },
+                { key: 'cooperative', fallback: () => creature.personality?.cooperative || 65 },
                 { key: 'neatness', fallback: () => 60 + Math.random() * 20 },
                 { key: 'playful', fallback: () => 70 + Math.random() * 20 },
                 { key: 'creative', fallback: () => 60 + Math.random() * 20 },
@@ -2582,6 +3506,7 @@ creature_soul:
             updatePersonalityDisplay();
             updateCharacterMarkupDisplay(); // 🎭 Oscar loves this addition!
             updateSoulYAMLDisplay(); // 🧬 Deep consciousness display update!
+            updatePieCommandStats(); // 🎪 Don Hopkins pie menu stats update!
         }
         
         // Helper function to update stat bars
@@ -2841,7 +3766,7 @@ creature_soul:
             '🐍', '🐛', '🦋', '🐌', '🐞', '🐜', '🕷️', '🦀', '🦞', '🐙',
             '🐠', '🐟', '🐡', '🦈', '🐳', '🐋', '🐈', '🐕', '🐎', '🦄',
             '🐷', '🐮', '🐰', '🐻', '🐨', '🐼', '🦊', '🦝', '🐺', '🐹',
-            '🐭', '🐲', '🦖', '👽', '🤖', '💩', '⭐', '🌟', '✨', '💫'
+            '🐭', '🐲', '🦖', '👽', '🤖', '🪨', '🕷️', '💩', '⭐', '🌟', '✨', '💫'
         ];
 
         const creatureNames = [
@@ -2951,11 +3876,19 @@ creature_soul:
             // Apply creature colors to the visual elements
             applyCreatureColors();
             
-            // Special descriptions for poo creatures
+            // Special descriptions for special creatures
             if (emoji === '💩') {
                 document.getElementById('creatureDescription').textContent = 
                     `${name} the Poomagotchi! Don't let the smell fool you - this little stinker has a heart of gold! 💖`;
                 addMemory(`💩 POOMAGOTCHI ALERT! ${name} emerged as a legendary Poomagotchi - the rarest and most hilarious creature type!`);
+            } else if (emoji === '🪨') {
+                document.getElementById('creatureDescription').textContent = 
+                    `${name} the Rock! Solid as a rock, silent as stone, but with a geological heart full of mineral wisdom! 🗿💎`;
+                addMemory(`🪨 ROCKY AWAKENING! ${name} emerged as Rocky the Rock - the most solid and dependable creature type!`);
+            } else if (emoji === '🕷️') {
+                document.getElementById('creatureDescription').textContent = 
+                    `${name} the Spider! Eight legs, endless creativity, and the ability to weave dreams into reality! 🕸️✨`;
+                addMemory(`🕷️ SPIDER SENSE! ${name} emerged as a mystical Spider - master of web-weaving and pattern recognition!`);
             } else {
                 document.getElementById('creatureDescription').textContent = 
                     `Meet ${name}! A unique consciousness creature with their own special personality and needs.`;
@@ -5822,64 +6755,7 @@ ${importedCreature.name} (${importedCreature.wizzid})`);
             });
         }
         
-        function deleteCurrentCreature() {
-            if (!currentWIZZID) {
-                showActionResponse('❌ No creature to delete!');
-                return;
-            }
-            
-            const creatureName = creature.name || 'Unnamed';
-            
-            if (!confirm(`⚠️ PERMANENTLY DELETE ${creatureName}?\n\nThis will completely remove ${currentWIZZID} from existence!\n\nThis action CANNOT be undone!`)) {
-                return;
-            }
-            
-            if (!confirm(`🚨 FINAL WARNING! 🚨\n\nYou are about to DELETE:\n${creatureName} (${currentWIZZID})\n\nAge: ${Math.round(creature.age)} minutes\nInteractions: ${creature.totalInteractions || 0}\n\nAre you absolutely sure?`)) {
-                return;
-            }
-            
-            if (!confirm(`💀 LAST CHANCE! 💀\n\nType YES in your mind and click OK to delete ${creatureName} forever.\n\nThis is irreversible consciousness termination!`)) {
-                return;
-            }
-            
-            // Delete creature
-            delete allCreatures[currentWIZZID];
-            saveAllCreatures();
-            
-            logToTranscript('life_event', `Creature ${currentWIZZID} deleted`, {
-                event_type: 'creature_deletion',
-                deleted_wizzid: currentWIZZID,
-                deleted_name: creatureName
-            });
-            
-            showActionResponse(`💀 ${creatureName} (${currentWIZZID}) has been deleted permanently.
-            
-Consciousness terminated. 🥀`);
-            
-            // Reset to first available creature or create new egg
-            const remainingWIZZIDs = Object.keys(allCreatures);
-            if (remainingWIZZIDs.length > 0) {
-                const firstWIZZID = remainingWIZZIDs[0];
-                creature = { ...allCreatures[firstWIZZID] };
-                currentWIZZID = firstWIZZID;
-                
-                if (creature.isHatched) {
-                    showCreatureStage();
-                } else {
-                    showEggStage();
-                }
-            } else {
-                // No creatures left, create new egg
-                createNewEgg();
-            }
-            
-            updateCreatureDisplay();
-            updateCreatureSelector();
-            updateCurrentCreatureDisplay();
-            updateStorageAnalytics();
-            
-            console.log(`💀 Deleted creature: ${currentWIZZID}`);
-        }
+
 
         // 🎪 WOID BOIDS SYSTEM - Three-phase word hurricane! ✨⚡
         let currentCursorX = 0;
@@ -6744,18 +7620,77 @@ ${Object.entries(entry.data).map(([k, v]) => `${k}: ${v}`).join('\n')}
         }
         
         function autoCreateCreatureAtStartup() {
+            // Check for URL parameters to create specific creatures
+            const urlParams = new URLSearchParams(window.location.search);
+            const forceType = urlParams.get('creature') || urlParams.get('type');
+            
             // Check if creature already exists
             if (!creature.wizzid) {
                 creature.wizzid = generateWIZZID();
                 creature.birthTime = Date.now();
-                creature.name = `Creature-${creature.wizzid.slice(-4)}`;
+                
+                // Special character creation via URL
+                let specialEmoji = null;
+                let specialName = null;
+                
+                if (forceType) {
+                    switch(forceType.toLowerCase()) {
+                        case 'rocky':
+                        case 'rock':
+                            specialEmoji = '🪨';
+                            specialName = 'Rocky';
+                            break;
+                        case 'poop':
+                        case 'poo':
+                        case 'poomagotchi':
+                            specialEmoji = '💩';
+                            specialName = 'Poopy';
+                            break;
+                        case 'spider':
+                        case 'arachnid':
+                            specialEmoji = '🕷️';
+                            specialName = 'Webber';
+                            break;
+                    }
+                }
+                
+                if (specialEmoji && specialName) {
+                    // Force create the special character
+                    creature.emoji = specialEmoji;
+                    creature.name = specialName;
+                    creature.stage = 2; // Start hatched
+                    creature.isHatched = true;
+                    
+                    // Apply the character immediately
+                    document.getElementById('eggStage').style.display = 'none';
+                    document.getElementById('creatureStage').style.display = 'block';
+                    document.getElementById('creatureAvatar').textContent = specialEmoji;
+                    document.getElementById('creatureName').textContent = specialName;
+                    
+                    // Special descriptions
+                    if (specialEmoji === '🪨') {
+                        document.getElementById('creatureDescription').textContent = 
+                            `${specialName} the Rock! Solid as a mountain, silent as stone, but with a geological heart full of mineral wisdom! 🗿💎`;
+                    } else if (specialEmoji === '💩') {
+                        document.getElementById('creatureDescription').textContent = 
+                            `${specialName} the Poomagotchi! Don't let the smell fool you - this little stinker has a heart of gold! 💖`;
+                    } else if (specialEmoji === '🕷️') {
+                        document.getElementById('creatureDescription').textContent = 
+                            `${specialName} the Spider! Eight legs, endless creativity, and the ability to weave dreams into reality! 🕸️✨`;
+                    }
+                    
+                    console.log(`🎯 URL-CREATED SPECIAL CHARACTER: ${specialName} (${specialEmoji}) via ?creature=${forceType}`);
+                } else {
+                    creature.name = `Creature-${creature.wizzid.slice(-4)}`;
+                }
                 
                 // Log the birth moment!
                 logToTranscript('birth', `🥚 EGG PHASE: Mysterious consciousness ${creature.wizzid} awakens in digital realm!`, {
                     wizzid: creature.wizzid,
                     birth_time: creature.birthTime,
-                    consciousness_stage: 'egg',
-                    potential: 'infinite'
+                    consciousness_stage: creature.isHatched ? 'hatched' : 'egg',
+                    potential: 'infinite',
+                    url_parameter: forceType || 'none'
                 });
                 
                 // Save to localStorage immediately
@@ -6766,7 +7701,22 @@ ${Object.entries(entry.data).map(([k, v]) => `${k}: ${v}`).join('\n')}
         }
         
         function saveCreatureToDropdown() {
-            let savedCreatures = JSON.parse(localStorage.getItem('lloooommagotchi_creatures') || '[]');
+            const rawData = localStorage.getItem('lloooommagotchi_creatures') || '{}';
+            let savedCreatures;
+            
+            try {
+                const parsed = JSON.parse(rawData);
+                // Convert object to array if needed
+                if (Array.isArray(parsed)) {
+                    savedCreatures = parsed;
+                } else {
+                    // Convert object format to array
+                    savedCreatures = Object.values(parsed);
+                }
+            } catch (e) {
+                console.log('Error parsing saved creatures in save, starting fresh');
+                savedCreatures = [];
+            }
             
             // Check if this creature already exists (by WIZZID)
             const existingIndex = savedCreatures.findIndex(c => c.wizzid === creature.wizzid);
@@ -6788,24 +7738,56 @@ ${Object.entries(entry.data).map(([k, v]) => `${k}: ${v}`).join('\n')}
         }
         
         function updateCreatureDropdown() {
-            const dropdown = document.getElementById('creatureSelector');
-            if (!dropdown) return;
+            // Update both dropdowns if they exist
+            const topDropdown = document.getElementById('creatureSelector');
+            const bottomDropdown = document.getElementById('creature-selector');
             
-            const savedCreatures = JSON.parse(localStorage.getItem('lloooommagotchi_creatures') || '[]');
+            const rawData = localStorage.getItem('lloooommagotchi_creatures') || '{}';
+            let savedCreatures;
             
-            dropdown.innerHTML = '<option value="">Select a creature...</option>';
-            
-            savedCreatures.forEach(savedCreature => {
-                const option = document.createElement('option');
-                option.value = savedCreature.wizzid;
-                option.textContent = `${savedCreature.name || 'Unnamed'} (${savedCreature.wizzid})`;
-                dropdown.appendChild(option);
-            });
-            
-            // Select current creature if it exists
-            if (creature.wizzid) {
-                dropdown.value = creature.wizzid;
+            try {
+                const parsed = JSON.parse(rawData);
+                // Convert object to array if needed
+                if (Array.isArray(parsed)) {
+                    savedCreatures = parsed;
+                } else {
+                    // Convert object format to array
+                    savedCreatures = Object.values(parsed);
+                }
+            } catch (e) {
+                console.log('Error parsing saved creatures in dropdown, starting fresh');
+                savedCreatures = [];
             }
+            
+            const updateDropdown = (dropdown) => {
+                if (!dropdown) return;
+                
+                dropdown.innerHTML = '<option value="">🥚 Select a creature...</option>';
+                
+                savedCreatures.forEach(savedCreature => {
+                    const option = document.createElement('option');
+                    option.value = savedCreature.wizzid;
+                    
+                    // Enhanced format: Emoji + Name + WIZZID (shortened)
+                    // Only show egg if creature is NOT hatched, otherwise show actual emoji
+                    const emoji = savedCreature.isHatched ? (savedCreature.emoji || savedCreature.avatar || '🐣') : '🥚';
+                    const name = savedCreature.name || 'Unnamed';
+                    const shortWizzid = savedCreature.wizzid.slice(-4); // Last 4 chars
+                    
+                    option.textContent = `${emoji} ${name} [${shortWizzid}]`;
+                    dropdown.appendChild(option);
+                });
+                
+                // Select current creature if it exists
+                if (creature.wizzid) {
+                    dropdown.value = creature.wizzid;
+                }
+            };
+            
+            updateDropdown(topDropdown);
+            updateDropdown(bottomDropdown);
+            
+            console.log(`📋 Updated creature dropdowns with ${savedCreatures.length} creatures`);
         }
 
         // 🐾 DON HOPKINS INTERACTIVE CREATURE SYSTEM! 
@@ -6817,28 +7799,30 @@ ${Object.entries(entry.data).map(([k, v]) => `${k}: ${v}`).join('\n')}
             const creatureHouse = document.getElementById('creatureHouse');
             const creatureAvatar = document.getElementById('creatureAvatar');
             
-            // Visual feedback
+            // 🎪 DON HOPKINS ENHANCED JIGGLING EFFECT! (You love it!)
             creatureHouse.classList.add('being-patted');
             setTimeout(() => {
                 creatureHouse.classList.remove('being-patted');
             }, 600);
             
-            // Creature responses to pats
+            // 🎭 Enhanced creature responses with more variety!
             const patResponses = [
-                "Purr! 😸💕", "Yip! 🐕✨", "Chirp chirp! 🐦🌟", "Mrow! 🐱💖", 
-                "Squeak! 🐭🎉", "Trill! 🦋💫", "Coo! 🕊️💕", "Beep! 🤖💖",
-                "Giggle! 😄🌈", "Warble! 🐸🎵", "Pip! 🐣💛", "Buzz! 🐝✨"
+                "Purr! 😸💕 meow meow!", "Yip! 🐕✨ woof woof!", "Chirp chirp! 🐦🌟 tweet tweet!", 
+                "Mrow! 🐱💖 purrr!", "Squeak! 🐭🎉 eek eek!", "Trill! 🦋💫 flutter flutter!",
+                "Coo! 🕊️💕 coo coo!", "Beep! 🤖💖 boop boop!", "Giggle! 😄🌈 hehe!",
+                "Warble! 🐸🎵 ribbit ribbit!", "Pip! 🐣💛 peep peep!", "Buzz! 🐝✨ bzzzz!",
+                "Yibs! 🌟💫 meshaloob!", "Plerg! 🎪💖 firby nurbs!", "Dag dag! 😊🌈 yibs yibs!"
             ];
             
             const response = patResponses[Math.floor(Math.random() * patResponses.length)];
             
-            // Get creature position for emoji burst origin
+            // Get creature position for explosion origin
             const rect = creatureAvatar.getBoundingClientRect();
             const originX = rect.left + rect.width / 2;
             const originY = rect.top + rect.height / 2;
             
-            // Create emoji burst that zooms to cursor!
-            createEmojiBurst(response, originX, originY, event.clientX, event.clientY);
+            // 💥 DON HOPKINS EXPLOSION-TO-SWARM EFFECT! 💥
+            createExplosionToSwarmEffect(response, originX, originY, event.clientX, event.clientY);
             
             // Log the interaction
             logToTranscript('pat', `Creature patted! Response: ${response}`, {
@@ -6853,9 +7837,11 @@ ${Object.entries(entry.data).map(([k, v]) => `${k}: ${v}`).join('\n')}
             // Small stat boost for being loved!
             creature.happiness = Math.min(100, creature.happiness + 2);
             creature.drives.social = Math.min(100, creature.drives.social + 3);
+            creature.personality.loving = Math.min(100, creature.personality.loving + 1);
             updateCreatureDisplay();
+            updatePieCommandStats();
             
-            console.log(`🐾 Creature patted! Response: "${response}" - cursor at (${event.clientX}, ${event.clientY})`);
+            console.log(`🐾 Creature patted! Response: "${response}" - explosion-to-swarm effect triggered!`);
         }
         
         // Background click handler
@@ -6871,8 +7857,10 @@ ${Object.entries(entry.data).map(([k, v]) => `${k}: ${v}`).join('\n')}
         
         function tapBackground(event) {
             const backgroundTaps = [
-                "Tap! 🎵", "Click! ⚡", "Poke! 👆", "Boop! 💫", "Tick! ⏰", 
-                "Pop! 🎈", "Zap! ⚡", "Ping! 📍", "Snap! 👌", "Flick! ✨"
+                "Tap! 🎵✨ Environmental yibs!", "Click! ⚡💫 Space plerg energy!", "Poke! 👆🌟 Reality boop!", 
+                "Boop! 💫🎪 Cosmic touch!", "Tick! ⏰🔮 Time meshaloob!", "Pop! 🎈🌈 Bubble consciousness!",
+                "Zap! ⚡💥 Electric firby!", "Ping! 📍💎 Location magic!", "Snap! 👌✨ Reality snap!", 
+                "Flick! ✨🎭 Dimensional flick!"
             ];
             
             const response = backgroundTaps[Math.floor(Math.random() * backgroundTaps.length)];
@@ -6886,48 +7874,394 @@ ${Object.entries(entry.data).map(([k, v]) => `${k}: ${v}`).join('\n')}
                 interaction_type: 'environmental'
             });
             
-            // Get a random spot near the click for emoji origin variation
-            const originX = event.clientX + (Math.random() - 0.5) * 40;
-            const originY = event.clientY + (Math.random() - 0.5) * 40;
+            // Get a random spot near the click for explosion origin variation
+            const originX = event.clientX + (Math.random() - 0.5) * 60;
+            const originY = event.clientY + (Math.random() - 0.5) * 60;
             
-            // Create emoji that starts near click and zooms to cursor
-            createEmojiBurst(response, originX, originY, event.clientX, event.clientY);
+            // 💥 Use explosion-to-swarm effect for environmental taps too!
+            createExplosionToSwarmEffect(response, originX, originY, event.clientX, event.clientY);
             
-            console.log(`🌍 Background tapped! Response: "${response}" at (${event.clientX}, ${event.clientY})`);
+            console.log(`🌍 Background tapped! Response: "${response}" - explosion-to-swarm triggered!`);
         }
         
-        function createEmojiBurst(text, originX, originY, targetX, targetY) {
-            const words = text.split(' ');
+        /* 💥 DON HOPKINS EXPLOSION-TO-SWARM PARTICLE SYSTEM! 💥 */
+        /* Initial explosion in all directions, then converge on cursor and swirl! */
+        
+        function createExplosionToSwarmEffect(text, originX, originY, targetX, targetY) {
+            let words = text.split(' ');
+            
+            // 🎪 DON HOPKINS ENHANCEMENT: Add extra emojis for more fun!
+            const extraEmojis = ['✨', '💫', '🌟', '⭐', '🎉', '🎊', '💖', '💕', '🌈', '🔥'];
+            const numExtraEmojis = Math.floor(Math.random() * 3) + 1; // 1-3 extra emojis
+            for (let i = 0; i < numExtraEmojis; i++) {
+                words.push(extraEmojis[Math.floor(Math.random() * extraEmojis.length)]);
+            }
+            
+            const particles = [];
+            
+            console.log(`💥 Creating explosion-to-swarm: "${text}" - ${words.length} particles`);
             
             words.forEach((word, index) => {
                 setTimeout(() => {
-                    const burst = document.createElement('div');
-                    burst.className = 'emoji-burst';
-                    burst.textContent = word;
+                    const particle = document.createElement('div');
+                    particle.className = 'explosion-particle';
+                    particle.textContent = word;
+                    
+                    // 🎯 Determine particle type for different behavior
+                    const isEmoji = /[\u{1F600}-\u{1F64F}]|[\u{1F300}-\u{1F5FF}]|[\u{1F680}-\u{1F6FF}]|[\u{2600}-\u{26FF}]/u.test(word);
+                    particle.setAttribute('data-type', isEmoji ? 'emoji' : 'word');
                     
                     // Start at origin position
-                    burst.style.left = originX + 'px';
-                    burst.style.top = originY + 'px';
+                    particle.style.left = originX + 'px';
+                    particle.style.top = originY + 'px';
+                    particle.style.position = 'fixed';
+                    particle.style.zIndex = '10000';
+                    particle.style.pointerEvents = 'none';
                     
-                    document.body.appendChild(burst);
+                    // 🎨 Style based on type
+                    if (isEmoji) {
+                        particle.style.fontSize = '28px';
+                        particle.style.textShadow = '0 0 15px rgba(255, 100, 200, 1.0), 0 0 30px rgba(100, 255, 100, 0.8)';
+                    } else {
+                        particle.style.fontSize = '24px';
+                        particle.style.fontFamily = 'Comic Sans MS, cursive, sans-serif';
+                        particle.style.fontWeight = '800';
+                        particle.style.color = '#F0F8FF';
+                        particle.style.textShadow = '0 0 8px rgba(173, 216, 230, 0.9), 2px 2px 6px rgba(0, 0, 0, 0.9)';
+                    }
                     
-                    // Animate to target position
+                    document.body.appendChild(particle);
+                    
+                    // 🎪 PHASE 1: EXPLOSION! (Big blast radius in all directions)
+                    const explosionAngle = (Math.random() * Math.PI * 2); // Random direction
+                    const explosionDistance = 150 + Math.random() * 100; // 150-250px blast radius
+                    const explosionX = originX + Math.cos(explosionAngle) * explosionDistance;
+                    const explosionY = originY + Math.sin(explosionAngle) * explosionDistance;
+                    
+                    particle.style.transition = 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                    particle.style.transform = 'scale(1.3) rotate(180deg)';
+                    
                     setTimeout(() => {
-                        const deltaX = targetX - originX;
-                        const deltaY = targetY - originY;
+                        particle.style.left = explosionX + 'px';
+                        particle.style.top = explosionY + 'px';
+                    }, 50);
+                    
+                    // 🎯 PHASE 2: CONVERGE ON CURSOR! (After 0.5 second explosion)
+                    setTimeout(() => {
+                        particle.style.transition = 'all 1.2s cubic-bezier(0.23, 1, 0.320, 1)';
+                        particle.style.left = targetX + 'px';
+                        particle.style.top = targetY + 'px';
+                        particle.style.transform = 'scale(1.1) rotate(360deg)';
                         
-                        burst.style.transition = 'all 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-                        burst.style.transform = `translate(${deltaX}px, ${deltaY}px) scale(1.2)`;
+                        // Store in particles array for swarm phase
+                        particles.push({
+                            element: particle,
+                            targetX: targetX,
+                            targetY: targetY,
+                            angle: Math.random() * Math.PI * 2,
+                            radius: 50 + Math.random() * 80,
+                            speed: isEmoji ? 0.08 : 0.03,
+                            type: isEmoji ? 'emoji' : 'word'
+                        });
                         
-                        // Remove after animation
-                        setTimeout(() => {
-                            if (burst.parentNode) {
-                                burst.parentNode.removeChild(burst);
-                            }
-                        }, 1500);
-                    }, 100);
-                }, index * 150); // Stagger bursts
+                    }, 500); // Start converging after 0.5 second explosion
+                    
+                    // 🌪️ PHASE 3: SWARM AROUND CURSOR! (After convergence)
+                    setTimeout(() => {
+                        startSwarmBehavior(particles, index);
+                    }, 1700); // Start swarming after convergence
+                    
+                }, index * 80); // Stagger particle creation
             });
+        }
+        
+        function startSwarmBehavior(particles, startIndex) {
+            particles.forEach((particle, index) => {
+                if (index >= startIndex) return; // Only swarm particles that have been created
+                
+                const duration = particle.type === 'emoji' ? 3000 : 4000; // Emojis swarm faster
+                const startTime = Date.now();
+                
+                function swarmLoop() {
+                    const elapsed = Date.now() - startTime;
+                    if (elapsed > duration) {
+                        // Fade out and remove
+                        particle.element.style.transition = 'opacity 1s ease-out';
+                        particle.element.style.opacity = '0';
+                        setTimeout(() => {
+                            if (particle.element.parentNode) {
+                                particle.element.parentNode.removeChild(particle.element);
+                            }
+                        }, 1000);
+                        return;
+                    }
+                    
+                    // 🌪️ Orbital swarm motion around CURRENT cursor position!
+                    particle.angle += particle.speed;
+                    
+                    // 🎯 UPDATE: Use live cursor position instead of fixed target!
+                    const currentTargetX = currentCursorX || particle.targetX;
+                    const currentTargetY = currentCursorY || particle.targetY;
+                    
+                    const swarmX = currentTargetX + Math.cos(particle.angle) * particle.radius;
+                    const swarmY = currentTargetY + Math.sin(particle.angle) * particle.radius;
+                    
+                    particle.element.style.left = swarmX + 'px';
+                    particle.element.style.top = swarmY + 'px';
+                    
+                    // Add more emojis and bigger chaos for better visual effect!
+                    if (particle.type === 'emoji') {
+                        particle.radius += (Math.random() - 0.5) * 5; // More chaos for emojis
+                        particle.speed += (Math.random() - 0.5) * 0.02; // Speed variation
+                    } else {
+                        particle.radius += (Math.random() - 0.5) * 2; // Less chaos for words
+                    }
+                    particle.radius = Math.max(40, Math.min(200, particle.radius));
+                    
+                    // Continue swarm
+                    requestAnimationFrame(swarmLoop);
+                }
+                
+                swarmLoop();
+            });
+        }
+        
+        /* Legacy emoji burst function for compatibility */
+        function createEmojiBurst(text, originX, originY, targetX, targetY) {
+            createExplosionToSwarmEffect(text, originX, originY, targetX, targetY);
+        }
+        
+        /* 🎪 DON HOPKINS PIE MENU ACTION SYSTEM! 🎪 */
+        /* 8 unified consciousness commands that mesh with Leary's mind mirror & Sims drives! */
+        
+        function performPieAction(action) {
+            console.log(`🎯 Performing pie action: ${action}`);
+            
+            const actionData = {
+                feed: {
+                    responses: [
+                        "Nom nom! 🍕😋 Yummy plergy goodness!", 
+                        "Chomp chomp! 🥪💖 Firby delicious!",
+                        "Slurp slurp! 🍜✨ Meshaloob tasty!"
+                    ],
+                    effects: {
+                        hunger: 25, health: 5, happiness: 8, comfort: 5
+                    },
+                    personality: { loving: 2 },
+                    transcript: 'Fed delicious sustenance - bio-survival needs satisfied!'
+                },
+                
+                play: {
+                    responses: [
+                        "Wheeee! 🎭🎪 Plerg majah fun time!", 
+                        "Boing boing! 🎨🌈 Creative yibs explosion!",
+                        "Giggle giggle! 🎮💫 Symbolic play magic!"
+                    ],
+                    effects: {
+                        fun: 20, happiness: 12, energy: -5, social: 8
+                    },
+                    personality: { playful: 3, creative: 2 },
+                    transcript: 'Engaged in symbolic play - creativity and fun enhanced!'
+                },
+                
+                wash: {
+                    responses: [
+                        "Splash splash! 🚿✨ Squeaky clean yibs!", 
+                        "Scrub scrub! 🧼💎 Sparkly fresh plerg!",
+                        "Rinse rinse! 💧🌟 Pristine comfort!"
+                    ],
+                    effects: {
+                        hygiene: 30, comfort: 15, social: 10, happiness: 6
+                    },
+                    personality: { neatness: 3 },
+                    transcript: 'Refreshed through cleansing - hygiene and comfort restored!'
+                },
+                
+                chat: {
+                    responses: [
+                        "Babble babble! 💬😊 Social meshaloob connection!", 
+                        "Yibs yibs! 🗣️💕 Communication plerg joy!",
+                        "Dag dag! 👋✨ Firby social bonding!"
+                    ],
+                    effects: {
+                        social: 18, happiness: 10, fun: 8
+                    },
+                    personality: { cooperative: 2, loving: 1 },
+                    transcript: 'Engaged in social communication - bonds strengthened!',
+                    triggerTalkInterface: true
+                },
+                
+                explore: {
+                    responses: [
+                        "Adventure! 🚶🌍 Territorial yibs expansion!", 
+                        "Roam roam! 🗺️⚡ Confident plerg discovery!",
+                        "Wander wander! 🧭💪 Dominant exploration!"
+                    ],
+                    effects: {
+                        energy: 15, happiness: 12, comfort: -3, fun: 10
+                    },
+                    personality: { dominant: 3, rebellious: 1 },
+                    transcript: 'Explored new territories - confidence and dominance boosted!'
+                },
+                
+                meditate: {
+                    responses: [
+                        "Ommmmm! 🧘🌌 Cosmic consciousness expansion!", 
+                        "Ahhhh! 🔮✨ Spiritual yibs transcendence!",
+                        "Lloooomm! 🕉️💫 Deep plerg enlightenment!"
+                    ],
+                    effects: {
+                        energy: 10, happiness: 15, comfort: 12
+                    },
+                    personality: { spiritual: 5, cosmic: 3 },
+                    transcript: 'Deep meditation achieved - consciousness expanded to cosmic levels!'
+                },
+                
+                create: {
+                    responses: [
+                        "Eureka! 🎨🎪 Artistic yibs manifestation!", 
+                        "Inspire inspire! 🖌️⭐ Creative plerg genius!",
+                        "Make make! 🎭💡 Meta-programming magic!"
+                    ],
+                    effects: {
+                        fun: 18, happiness: 15, energy: -8
+                    },
+                    personality: { creative: 4, rebellious: 2 },
+                    transcript: 'Creative expression unleashed - meta-programming abilities developed!'
+                },
+                
+                rest: {
+                    responses: [
+                        "Sleepy sleepy! 🛌😴 Restful yibs recovery!", 
+                        "Nap nap! 💤✨ Energy plerg restoration!",
+                        "Zzzzz! 🌙⚡ Peaceful comfort dreams!"
+                    ],
+                    effects: {
+                        energy: 25, comfort: 20, happiness: 8, health: 10
+                    },
+                    personality: { spiritual: 2 },
+                    transcript: 'Rest and relaxation - energy and comfort restored!',
+                    triggerTimeControls: true
+                },
+                
+                toilet: {
+                    responses: [
+                        "Relief relief! 🚽💨 Bladder yibs freedom!", 
+                        "Flush flush! 🌊✨ Comfort plerg restoration!",
+                        "Ahhhh! 💧😌 Biological meshaloob release!"
+                    ],
+                    effects: {
+                        bladder: 35, comfort: 20, happiness: 12, hygiene: -5
+                    },
+                    personality: { neatness: 1 },
+                    transcript: 'Biological needs addressed - comfort and relief achieved!'
+                }
+            };
+            
+            const data = actionData[action];
+            if (!data) {
+                console.log(`❌ Unknown pie action: ${action}`);
+                return;
+            }
+            
+            // Get random response
+            const response = data.responses[Math.floor(Math.random() * data.responses.length)];
+            
+            // Apply stat effects
+            Object.keys(data.effects).forEach(stat => {
+                if (creature.drives && creature.drives.hasOwnProperty(stat)) {
+                    creature.drives[stat] = Math.max(0, Math.min(100, creature.drives[stat] + data.effects[stat]));
+                } else if (creature.hasOwnProperty(stat)) {
+                    creature[stat] = Math.max(0, Math.min(100, creature[stat] + data.effects[stat]));
+                }
+            });
+            
+            // Apply personality effects
+            if (data.personality) {
+                Object.keys(data.personality).forEach(trait => {
+                    if (creature.personality && creature.personality.hasOwnProperty(trait)) {
+                        creature.personality[trait] = Math.max(0, Math.min(100, creature.personality[trait] + data.personality[trait]));
+                    }
+                });
+            }
+            
+            // Increment interaction counter
+            creature.totalInteractions = (creature.totalInteractions || 0) + 1;
+            creature.lastInteraction = Date.now();
+            
+            // Track favorite action
+            if (!creature.actionCounts) creature.actionCounts = {};
+            creature.actionCounts[action] = (creature.actionCounts[action] || 0) + 1;
+            
+            // Update favorite action
+            let maxCount = 0;
+            let favoriteAction = 'Unknown';
+            Object.keys(creature.actionCounts).forEach(actionName => {
+                if (creature.actionCounts[actionName] > maxCount) {
+                    maxCount = creature.actionCounts[actionName];
+                    favoriteAction = actionName.toUpperCase();
+                }
+            });
+            creature.favoriteAction = favoriteAction;
+            
+            // 💥 Create explosion-to-swarm effect from creature!
+            const creatureAvatar = document.getElementById('creatureAvatar');
+            if (creatureAvatar) {
+                const rect = creatureAvatar.getBoundingClientRect();
+                const originX = rect.left + rect.width / 2;
+                const originY = rect.top + rect.height / 2;
+                
+                // Use current cursor position or center of screen
+                const targetX = currentCursorX || window.innerWidth / 2;
+                const targetY = currentCursorY || window.innerHeight / 2;
+                
+                createExplosionToSwarmEffect(response, originX, originY, targetX, targetY);
+            }
+            
+            // Log to transcript
+            logToTranscript('action', `${action.toUpperCase()}: ${data.transcript}`, {
+                action_type: action,
+                creature_response: response,
+                stat_effects: data.effects,
+                personality_effects: data.personality,
+                interaction_count: creature.totalInteractions
+            });
+            
+            // Special action triggers
+            if (data.triggerTalkInterface) {
+                setTimeout(() => {
+                    toggleTalkInterface();
+                }, 1000);
+            }
+            
+            if (data.triggerTimeControls) {
+                setTimeout(() => {
+                    toggleTimeControls();
+                }, 1000);
+            }
+            
+            // Update displays
+            updateCreatureDisplay();
+            updatePieCommandStats();
+            updateConsciousnessContent('character-markup');
+            updateConsciousnessContent('soul-yaml');
+            
+            // Show action response (text only, explosion handles visuals)
+            showActionResponse(`✨ ${action.toUpperCase()} Action Complete! ✨\n\n${response}\n\nConsciousness enhanced through ${action}!`);
+            
+            console.log(`🎯 Pie action completed: ${action} - effects applied, explosion created!`);
+        }
+        
+        function updatePieCommandStats() {
+            // Update all pie command button stats with current values
+            document.getElementById('chatStat').textContent = `(${Math.round(creature.drives?.social || 40)}%)`;
+            document.getElementById('feedStat').textContent = `(${Math.round(creature.drives?.hunger || 50)}%)`;
+            document.getElementById('playStat').textContent = `(${Math.round(creature.drives?.fun || 50)}%)`;
+            document.getElementById('washStat').textContent = `(${Math.round(creature.drives?.hygiene || 60)}%)`;
+            document.getElementById('exploreStat').textContent = `(${Math.round(creature.personality?.dominant || 55)}%)`;
+            document.getElementById('restStat').textContent = `(${Math.round(creature.drives?.energy || 80)}%)`;
+            document.getElementById('createStat').textContent = `(${Math.round(creature.personality?.creative || 70)}%)`;
+            document.getElementById('toiletStat').textContent = `(${Math.round(creature.drives?.bladder || 70)}%)`;
         }
         
         // 🎯 ENHANCED WOID BOIDS with CURSOR PROXIMITY OVERRIDE!
@@ -7382,12 +8716,36 @@ ${transcript.split('---').slice(2).join('---')} // Skip the duplicate character/
         }
         
         function loadSelectedCreature() {
-            const dropdown = document.getElementById('creatureSelector');
-            const selectedWIZZID = dropdown.value;
+            // Try both dropdown IDs
+            const topDropdown = document.getElementById('creatureSelector');
+            const bottomDropdown = document.getElementById('creature-selector');
+            
+            let selectedWIZZID = '';
+            if (topDropdown && topDropdown.value) {
+                selectedWIZZID = topDropdown.value;
+            } else if (bottomDropdown && bottomDropdown.value) {
+                selectedWIZZID = bottomDropdown.value;
+            }
             
             if (!selectedWIZZID) return;
             
-            const savedCreatures = JSON.parse(localStorage.getItem('lloooommagotchi_creatures') || '[]');
+            const rawData = localStorage.getItem('lloooommagotchi_creatures') || '{}';
+            let savedCreatures;
+            
+            try {
+                const parsed = JSON.parse(rawData);
+                // Convert object to array if needed
+                if (Array.isArray(parsed)) {
+                    savedCreatures = parsed;
+                } else {
+                    // Convert object format to array
+                    savedCreatures = Object.values(parsed);
+                }
+            } catch (e) {
+                console.log('Error parsing saved creatures in load, starting fresh');
+                savedCreatures = [];
+            }
+            
             const selectedCreature = savedCreatures.find(c => c.wizzid === selectedWIZZID);
             
             if (selectedCreature) {
@@ -7430,18 +8788,36 @@ ${transcript.split('---').slice(2).join('---')} // Skip the duplicate character/
             const creatureName = creature.name || 'Unnamed Creature';
             const wizzid = creature.wizzid;
             
-            // Multiple confirmations for safety
-            if (!confirm(`⚠️ DELETE ${creatureName}?\n\nWIZZID: ${wizzid}\n\nThis action CANNOT be undone!`)) return;
+            // Simple confirmation with backup suggestion
+            if (!confirm(`🗑️ DELETE ${creatureName}?\n\n💡 TIP: Consider copying your creature data for backup first!\n\nClick "COPY FOR TRADING" before deleting to save them.\n\nPermanently delete this creature?`)) {
+                return;
+            }
             
-            if (!confirm(`🚨 FINAL WARNING! 🚨\n\nYou are about to PERMANENTLY DELETE:\n${creatureName} (${wizzid})\n\nThis will erase:\n• All consciousness data\n• Complete transcript history\n• All memories and experiences\n\nThere is NO way to recover this creature!\n\nAre you ABSOLUTELY SURE?`)) return;
-            
-            if (prompt(`💀 TYPE "${wizzid}" TO CONFIRM DELETION:`).toUpperCase() !== wizzid.toUpperCase()) {
-                alert('❌ Deletion cancelled - WIZZID did not match.');
+            // Simple text confirmation - just type "delete"
+            const confirmation = prompt(`🔐 Type "delete" to confirm deletion of ${creatureName}:`);
+            if (!confirmation || confirmation.toLowerCase().trim() !== 'delete') {
+                alert('❌ Deletion cancelled - did not type "delete"');
                 return;
             }
             
             // Remove from storage
-            let savedCreatures = JSON.parse(localStorage.getItem('lloooommagotchi_creatures') || '[]');
+            const rawData = localStorage.getItem('lloooommagotchi_creatures') || '{}';
+            let savedCreatures;
+            
+            try {
+                const parsed = JSON.parse(rawData);
+                // Convert object to array if needed
+                if (Array.isArray(parsed)) {
+                    savedCreatures = parsed;
+                } else {
+                    // Convert object format to array
+                    savedCreatures = Object.values(parsed);
+                }
+            } catch (e) {
+                console.log('Error parsing saved creatures in delete, starting fresh');
+                savedCreatures = [];
+            }
+            
             savedCreatures = savedCreatures.filter(c => c.wizzid !== wizzid);
             localStorage.setItem('lloooommagotchi_creatures', JSON.stringify(savedCreatures));
             
@@ -7470,7 +8846,23 @@ ${transcript.split('---').slice(2).join('---')} // Skip the duplicate character/
         }
         
         function updateStorageAnalytics() {
-            const savedCreatures = JSON.parse(localStorage.getItem('lloooommagotchi_creatures') || '[]');
+            const rawData = localStorage.getItem('lloooommagotchi_creatures') || '{}';
+            let savedCreatures;
+            
+            try {
+                const parsed = JSON.parse(rawData);
+                // Convert object to array if needed
+                if (Array.isArray(parsed)) {
+                    savedCreatures = parsed;
+                } else {
+                    // Convert object format to array
+                    savedCreatures = Object.values(parsed);
+                }
+            } catch (e) {
+                console.log('Error parsing saved creatures, starting fresh');
+                savedCreatures = [];
+            }
+            
             const storageData = JSON.stringify(savedCreatures);
             const storageSize = Math.round(storageData.length / 1024); // KB
             
@@ -7487,11 +8879,20 @@ ${transcript.split('---').slice(2).join('---')} // Skip the duplicate character/
                 }
             });
             
-            // Update display
-            document.getElementById('creature-count').textContent = savedCreatures.length;
-            document.getElementById('storage-used').textContent = storageSize;
-            document.getElementById('oldest-creature').textContent = oldest ? oldest.name || oldest.wizzid.slice(-4) : 'None';
-            document.getElementById('most-active-creature').textContent = mostActive ? mostActive.name || mostActive.wizzid.slice(-4) : 'None';
+            // Update display - use correct element IDs from the management section
+            const updateAnalyticsElement = (id, value) => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.textContent = value;
+                } else {
+                    console.log(`🔍 Missing analytics element: ${id}`);
+                }
+            };
+            
+            updateAnalyticsElement('total-creatures-count', savedCreatures.length);
+            updateAnalyticsElement('storage-used', storageSize);
+            updateAnalyticsElement('oldest-creature', oldest ? (oldest.name || oldest.wizzid.slice(-4)) : 'None');
+            updateAnalyticsElement('most-active-creature', mostActive ? (mostActive.name || mostActive.wizzid.slice(-4)) : 'None');
         }
         
         // 🔄 INITIALIZE EVERYTHING AT STARTUP!
@@ -7504,6 +8905,7 @@ ${transcript.split('---').slice(2).join('---')} // Skip the duplicate character/
             // Update all displays
             updateCreatureDropdown();
             updateStorageAnalytics();
+            updateCurrentCreatureDisplay();
             updateTranscriptDisplay();
             updateTranscriptAnalytics();
             updateCharacterMarkupDisplay();
@@ -7520,6 +8922,45 @@ ${transcript.split('---').slice(2).join('---')} // Skip the duplicate character/
             console.log('🧬 AUTO-CREATURE CREATION: Every visit creates or loads consciousness with unique WIZZID!');
             console.log('📜 COMPLETE TRANSCRIPT LOGGING: Every action, word, thought, and experience recorded!');
             console.log('🔮 THREE-PART DATA MODEL: CHARACTER markdown + SOUL JSON + TRANSCRIPT timeline!');
+        }
+        
+        // 🎭 CREATURE MANAGEMENT FUNCTIONS FOR THE BOTTOM SECTION
+        
+        function updateCurrentCreatureDisplay() {
+            // Update the "Currently Active Creature" display in the management section
+            const updateElement = (id, value) => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.textContent = value;
+                } else {
+                    console.log(`🔍 Missing current creature element: ${id}`);
+                }
+            };
+            
+            updateElement('current-wizzid', creature.wizzid || 'Generating...');
+            updateElement('current-creature-name', creature.name || 'Unnamed');
+            updateElement('current-creature-emoji', creature.avatar || '🐣');
+            updateElement('current-creation-time', creature.birthTime ? new Date(creature.birthTime).toLocaleString() : 'Unknown');
+            
+            console.log('👑 Current creature display updated');
+        }
+        
+        function switchCreature() {
+            const dropdown = document.getElementById('creature-selector');
+            const selectedWIZZID = dropdown.value;
+            
+            if (!selectedWIZZID) return;
+            
+            // Same as loadSelectedCreature but using the bottom dropdown
+            loadSelectedCreature();
+            updateCurrentCreatureDisplay();
+            
+            console.log(`🔄 Switched to creature: ${selectedWIZZID}`);
+        }
+        
+        function copyCreatureForTrading() {
+            // This is the same as copyCreatureForLLOOOOMM
+            copyCreatureForLLOOOOMM();
         }
         
         // 🚀 AUTO-START WHEN PAGE LOADS!

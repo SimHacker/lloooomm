@@ -62,7 +62,7 @@
             background: #00FF00;
             color: #000000;
             border: 1px solid #00FF00;
-            padding: 5px 15px;
+            padding: 8px 16px;
             cursor: pointer;
             font-size: 12px;
             font-weight: bold;
@@ -1826,7 +1826,7 @@ Reality clearance: LEVEL 11 (WINK PROTOCOL)</pre>
                 nobr.appendChild(windowIcon);
                 
                 const noticeDiv = document.createElement('div');
-                noticeDiv.style.cssText = 'display: inline-block; color: #ff6600; font-size: 10px; line-height: 1.2; white-space: nowrap; vertical-align: middle; cursor: pointer; margin-top: 3px;';
+                noticeDiv.style.cssText = 'display: inline-block; color: #ff6600; font-size: 10px; line-height: 1.2; white-space: nowrap; vertical-align: middle; cursor: pointer; margin-top: 6px;';
                 noticeDiv.innerHTML = '👈 NOTICE ⚠️<br/>AI-Generated';
                 noticeDiv.onclick = () => toggleWindow('about-panel');
                 nobr.appendChild(noticeDiv);
@@ -2269,23 +2269,7 @@ Reality clearance: LEVEL 11 (WINK PROTOCOL)</pre>
                 container.style.cursor = 'grab';
             });
             
-            // Double-click to center on mouse position - BAM! Instant recovery!
-            container.addEventListener('dblclick', (e) => {
-                const rect = container.getBoundingClientRect();
-                const mouseX = e.clientX - rect.left;
-                const mouseY = e.clientY - rect.top;
-                
-                // Get mouse position in SVG coordinates
-                const svgX = (mouseX - panX) / scale;
-                const svgY = (mouseY - panY) / scale;
-                
-                // Center on this position
-                currentCenterX = svgX;
-                currentCenterY = svgY;
-                
-                console.log(`🎯 Double-click center on (${svgX.toFixed(0)}, ${svgY.toFixed(0)})`);
-                updateView();
-            });
+            // Double-click handler removed - was causing jerky behavior
             
             // Handle window resize to maintain center
             let resizeTimeout;

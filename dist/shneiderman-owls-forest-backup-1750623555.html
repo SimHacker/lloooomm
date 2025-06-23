@@ -168,10 +168,29 @@
 
         .help-label {
             font-size: 11px;
-            color: #888;
+            color: #ffffff;
             margin-top: 8px;
             line-height: 1.3;
-            opacity: 0.8;
+            opacity: 1.0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .ai-notice-btn {
+            background: rgba(255, 102, 0, 0.8);
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .ai-notice-btn:hover {
+            background: rgba(255, 102, 0, 1.0);
+            transform: scale(1.05);
         }
 
         /* Tabs */
@@ -459,8 +478,9 @@
         .control-label {
             min-width: 45px;
             font-size: 12px;
-            color: #aaa;
-            margin-right: 0;
+            color: #ffffff;
+            font-weight: bold;
+            margin-right: 10px;
         }
 
         button {
@@ -491,6 +511,11 @@
             min-width: 200px;
         }
         
+        /* Wider sliders for zoom controls */
+        #keyScrollSpeed, #keyZoomSpeed {
+            min-width: 250px;
+        }
+
         .value-display {
             min-width: 45px;
             text-align: right;
@@ -775,7 +800,6 @@
             color: #4a9eff;
             font-family: monospace;
             flex-shrink: 0;
-            white-space: nowrap;
         }
 
         /* Console styling */
@@ -1349,12 +1373,6 @@
                     <h3>🎛️ Heisenbergian Logging Controls</h3>
                     <div class="log-control">
                         <label>
-                            <input type="checkbox" id="heisenberg-logging-enabled" onchange="toggleHeisenbergLogging()">
-                            Enable Heisenberg Logging
-                        </label>
-                    </div>
-                    <div class="log-control">
-                        <label>
                             <span>🦉 Owl Events:</span>
                             <input type="range" id="log-owl-2" min="0" max="100" value="50" oninput="updateLogDisplay(this)">
                             <span class="value">50%</span>
@@ -1417,14 +1435,14 @@
                         <label>
                             <span>⌨️ Key Scroll Speed:</span>
                             <input type="range" id="keyScrollSpeed" min="50" max="500" step="10" value="300" oninput="updateKeyScrollDisplay()">
-                            <span class="value">300</span>
+                            <span class="value">300 px/s</span>
                         </label>
                     </div>
                     <div class="log-control">
                         <label>
                             <span>⌨️ Key Zoom Speed:</span>
                             <input type="range" id="keyZoomSpeed" min="0.1" max="2.0" step="0.1" value="0.5" oninput="updateKeyZoomDisplay()">
-                            <span class="value">0.5</span>
+                            <span class="value">0.5x/s</span>
                         </label>
                     </div>
                 </div>
@@ -1650,7 +1668,6 @@
         const minimapCtx = minimapCanvas.getContext('2d');
         const minimapViewport = document.querySelector('.minimap-viewport');
         const legend = document.getElementById('legend');
-        const consoleLog = document.getElementById('console-log');
 
 
         //------------------------------------------------------------------------------
@@ -1691,8 +1708,6 @@
         let mice = [];                   // Array of all Mouse objects
         let poops = [];                  // Array of all Poop objects
         let foods = [];                  // Array of all Food objects
-        let activeOwlCount = 24;         // Start with 24 active owls
-        let activeMouseCount = 48;       // Start with 48 active mice
         let selectedOwl = null;          // The currently selected Owl object
         let selectedMouse = null;        // The currently selected Mouse object
         let hoveredEntity = null;        // The entity currently under the mouse cursor
@@ -1701,6 +1716,8 @@
         let dragOffset = { x: 0, y: 0 }; // Offset for dragging entities
         let MAX_POOPS = 500;             // Limit to prevent memory issues (adjustable in settings)
         let MAX_FOODS = 200;             // Limit for food items
+        let activeOwlCount = 24;         // Start with 24 active owls
+        let activeMouseCount = 48;       // Start with 48 active mice
 
         // -- UI & Settings State --
         let currentTab = 'owls';         // The active tab in the side panel
@@ -1712,6 +1729,9 @@
         let magnetPosition = { x: 0, y: 0 };
         let magnetNeutralZone = 25;
         let magnetStrength = 3;
+
+        // -- Console Log Element --
+        const consoleLog = document.getElementById('console-log');
 
 
 
@@ -1739,9 +1759,7 @@
         
         // Zoom and pan state
         let viewOffset = { x: 0, y: 0 };
-
-        let heisenbergLoggingEnabled = false;
-
+        
         // Keyboard control state
         //==============================================================================
         //
@@ -2686,7 +2704,7 @@
                 } 
             }
         ];
-        
+
         class Poop {
             constructor(x, y, creatureId, creatureType, poopType = 'fear', nutrients = {}, owlAltitude = 0, owlVelocity = null) {
                 this.x = x;
@@ -2993,8 +3011,7 @@
             const letter = letters[Math.floor(Math.random() * letters.length)];
             
             // Select the correct emoji set.
-            const emojiSourceString = 
-                (characterType === 'owl') ? owlEmojis : mouseEmojis;
+            const emojiSourceString = characterType == 'owl' ? owlEmojis : mouseEmojis;
             
             // To correctly handle multi-byte emoji characters, we first convert the
             // string into an array of its individual characters.
@@ -3219,7 +3236,6 @@
         minimap.addEventListener('mousedown', handleMinimapMouseDown);
         minimap.addEventListener('mousemove', handleMinimapMouseMove);
         minimap.addEventListener('mouseup', handleMinimapMouseUp);
-        minimap.addEventListener('mouseleave', handleMinimapMouseUp);
 
         
         function handleMinimapMouseDown(e) {
@@ -3409,7 +3425,6 @@
 
         // Heisenbergian logging
         function wizzyLog(type, message, emoji = '✨') {
-            if (!heisenbergLoggingEnabled) return;
             if (actualSpeedMultiplier > logConfig.maxSpeed) return;
             
             const probability = logConfig[type] / 100;
@@ -4658,7 +4673,7 @@
         // Mouse event handlers - Use global for move/up to never lose tracking
         canvas.addEventListener('mousedown', handleMouseDown);
         canvas.addEventListener('click', handleClick);
-        // Note: wheel event listener is already added earlier in the code
+        canvas.addEventListener('wheel', handleWheel, { passive: false });
         
         // Global mouse handlers for robust tracking
         document.addEventListener('mousemove', handleMouseMove);
@@ -4681,18 +4696,18 @@
             keyboardScrollVelocity.x = 0;
             keyboardScrollVelocity.y = 0;
             
-            // WASD controls panning (normal directions)
+            // WASD controls panning (correct directions)
             if (keysPressed.has('a') || keysPressed.has('A')) {
-                keyboardScrollVelocity.x = -1;  // Reversed from 1
+                keyboardScrollVelocity.x = -1;  // A = left
             }
             if (keysPressed.has('d') || keysPressed.has('D')) {
-                keyboardScrollVelocity.x = 1;  // Reversed from -1
+                keyboardScrollVelocity.x = 1;   // D = right
             }
             if (keysPressed.has('w') || keysPressed.has('W')) {
-                keyboardScrollVelocity.y = -1;  // Reversed from 1
+                keyboardScrollVelocity.y = -1;  // W = up
             }
             if (keysPressed.has('s') || keysPressed.has('S')) {
-                keyboardScrollVelocity.y = 1;  // Reversed from -1
+                keyboardScrollVelocity.y = 1;   // S = down
             }
         }
         
@@ -5053,12 +5068,6 @@
             }
         }
 
-        function toggleHeisenbergLogging() {
-            heisenbergLoggingEnabled = document.getElementById('heisenberg-logging-enabled').checked;
-            // This log will only show if you are enabling it, which is intended.
-            wizzyLog('random', `Heisenberg logging ${heisenbergLoggingEnabled ? 'enabled' : 'disabled'} 🔬`, '⚙️');
-        }
-
         function handleOwlTableClick(e) {
             const row = e.target.closest('tr');
             console.log('Owl table clicked', e.target, row); // Debug
@@ -5119,7 +5128,8 @@
             // Check if clicking on an owl
             for (let i = owls.length - 1; i >= 0; i--) {
                 if (owls[i].active && owls[i].isPointInside(world.x, world.y)) {
-                    isDragging = true;
+                    if (owls[i] === selectedOwl) {
+                        isDragging = true;
                     dragTarget = owls[i];
                     const pos = owls[i].getScreenPosition();
                     dragOffset.x = world.x - pos.x;
@@ -6149,7 +6159,7 @@
             keyScrollSpeed = parseInt(slider.value);
             const label = slider.parentElement.querySelector('.value');
             if (label) {
-                label.textContent = keyScrollSpeed;
+                label.textContent = keyScrollSpeed + ' px/s';
             }
         }
         
@@ -6158,7 +6168,7 @@
             keyZoomSpeed = parseFloat(slider.value);
             const label = slider.parentElement.querySelector('.value');
             if (label) {
-                label.textContent = keyZoomSpeed.toFixed(1);
+                label.textContent = keyZoomSpeed.toFixed(1) + 'x/s';
             }
         }
         
@@ -6295,12 +6305,6 @@
             const value = slider.value;
             const label = slider.parentElement.querySelector('.value');
             
-            // Add null check to prevent errors
-            if (!label) {
-                console.warn('updateLogDisplay: Could not find .value element for slider', slider.id);
-                return;
-            }
-            
             if (slider.id === 'max-log-speed' || slider.id === 'max-log-speed-2') {
                 logConfig.maxSpeed = getSpeedMultiplier(value);
                 label.textContent = logConfig.maxSpeed.toFixed(1) + 'x';
@@ -6385,13 +6389,6 @@
         function updateSoundDisplay(slider) {
             const value = slider.value;
             const label = slider.parentElement.querySelector('.value');
-            
-            // Add null check to prevent errors
-            if (!label) {
-                console.warn('updateSoundDisplay: Could not find .value element for slider', slider.id);
-                return;
-            }
-            
             label.textContent = value + '%';
             
             const type = slider.id.replace('sound-', '');
@@ -6534,6 +6531,7 @@
         //  functions, making the program flow easy to understand.
         //
         //==============================================================================
+
         /**
          * The main animation loop, called by requestAnimationFrame.
          * Orchestrates all per-frame updates.

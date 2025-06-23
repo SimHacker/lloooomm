@@ -168,10 +168,29 @@
 
         .help-label {
             font-size: 11px;
-            color: #888;
+            color: #ffffff;
             margin-top: 8px;
             line-height: 1.3;
-            opacity: 0.8;
+            opacity: 1.0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .ai-notice-btn {
+            background: rgba(255, 102, 0, 0.8);
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .ai-notice-btn:hover {
+            background: rgba(255, 102, 0, 1.0);
+            transform: scale(1.05);
         }
 
         /* Tabs */
@@ -459,8 +478,10 @@
         .control-label {
             min-width: 45px;
             font-size: 12px;
-            color: #aaa;
-            margin-right: 0;
+            color: #ffffff;
+            font-weight: bold;
+            margin-left: 5px;
+            margin-right: 5px;
         }
 
         button {
@@ -495,8 +516,9 @@
             min-width: 45px;
             text-align: right;
             font-family: monospace;
-            color: #4a9eff;
+            color: white;
             font-size: 12px;
+            font-weight: bold;
         }
 
         /* Mouse magnet indicator */
@@ -704,7 +726,7 @@
         
         .creature-controls input[type="range"] {
             flex: 1;
-            max-width: 300px;
+            max-width: 280px; /* Standardized width */
         }
         
         .creature-controls .value-display {
@@ -766,6 +788,7 @@
         .log-control input[type="range"] {
             flex: 1;
             margin: 0 10px;
+            max-width: 280px; /* Standardized width */
         }
 
         .log-control .value {
@@ -775,7 +798,6 @@
             color: #4a9eff;
             font-family: monospace;
             flex-shrink: 0;
-            white-space: nowrap;
         }
 
         /* Console styling */
@@ -948,7 +970,19 @@
         .sound-toggle input[type="checkbox"] {
             margin-right: 10px;
             cursor: pointer;
+            width: 16px;
+            height: 16px;
         }
+        
+        /* Fix slider widths in log controls */
+        .log-control input[type="range"],
+        .minimap-controls input[type="range"],
+        .sound-controls input[type="range"],
+        .zoom-controls input[type="range"],
+        .logging-controls input[type="range"] {
+            max-width: 250px !important;
+        }
+        
         /* Minimap styling */
         #minimap {
             position: fixed;
@@ -1104,9 +1138,6 @@
     </div>
 
     <div id="stats-panel">
-        <button id="panel-toggle" onclick="togglePanel()" title="Hide/show stats panel">
-            <span id="toggle-arrow">◀</span>
-        </button>
         <div id="sidebar-tab" onclick="toggleSidebar()">InfoVis</div>
         <h1>Shneiderman's Owls: Global Forest Observatory 🦉</h1>
         <div class="subtitle" id="main-subtitle">1 Owl × 24 Time Zones × 1 Mouse</div>
@@ -1347,7 +1378,7 @@
             <div id="settings-tab" class="tab-pane">
                 <div class="logging-controls">
                     <h3>🎛️ Heisenbergian Logging Controls</h3>
-                    <div class="log-control">
+                    <div class="sound-toggle" style="margin-bottom: 15px;">
                         <label>
                             <input type="checkbox" id="heisenberg-logging-enabled" onchange="toggleHeisenbergLogging()">
                             Enable Heisenberg Logging
@@ -1417,14 +1448,14 @@
                         <label>
                             <span>⌨️ Key Scroll Speed:</span>
                             <input type="range" id="keyScrollSpeed" min="50" max="500" step="10" value="300" oninput="updateKeyScrollDisplay()">
-                            <span class="value">300</span>
+                            <span class="value">300 px/s</span>
                         </label>
                     </div>
                     <div class="log-control">
                         <label>
                             <span>⌨️ Key Zoom Speed:</span>
                             <input type="range" id="keyZoomSpeed" min="0.1" max="2.0" step="0.1" value="0.5" oninput="updateKeyZoomDisplay()">
-                            <span class="value">0.5</span>
+                            <span class="value">0.5x/s</span>
                         </label>
                     </div>
                 </div>
@@ -1650,7 +1681,6 @@
         const minimapCtx = minimapCanvas.getContext('2d');
         const minimapViewport = document.querySelector('.minimap-viewport');
         const legend = document.getElementById('legend');
-        const consoleLog = document.getElementById('console-log');
 
 
         //------------------------------------------------------------------------------
@@ -1691,8 +1721,6 @@
         let mice = [];                   // Array of all Mouse objects
         let poops = [];                  // Array of all Poop objects
         let foods = [];                  // Array of all Food objects
-        let activeOwlCount = 24;         // Start with 24 active owls
-        let activeMouseCount = 48;       // Start with 48 active mice
         let selectedOwl = null;          // The currently selected Owl object
         let selectedMouse = null;        // The currently selected Mouse object
         let hoveredEntity = null;        // The entity currently under the mouse cursor
@@ -1701,6 +1729,8 @@
         let dragOffset = { x: 0, y: 0 }; // Offset for dragging entities
         let MAX_POOPS = 500;             // Limit to prevent memory issues (adjustable in settings)
         let MAX_FOODS = 200;             // Limit for food items
+        let activeOwlCount = 24;         // Start with 24 active owls
+        let activeMouseCount = 48;       // Start with 48 active mice
 
         // -- UI & Settings State --
         let currentTab = 'owls';         // The active tab in the side panel
@@ -1712,6 +1742,9 @@
         let magnetPosition = { x: 0, y: 0 };
         let magnetNeutralZone = 25;
         let magnetStrength = 3;
+
+        // -- Console Log Element --
+        const consoleLog = document.getElementById('console-log');
 
 
 
@@ -1739,8 +1772,8 @@
         
         // Zoom and pan state
         let viewOffset = { x: 0, y: 0 };
-
-        let heisenbergLoggingEnabled = false;
+        
+        let heisenbergLoggingEnabled = false; // Is Heisenberg logging enabled?
 
         // Keyboard control state
         //==============================================================================
@@ -1838,40 +1871,55 @@
          * Manages starting panning and selecting entities.
          */
         function handleMouseDown(e) {
-            // Right-click and Middle-click start panning.
+            // Prevent default browser actions
+            e.preventDefault(); 
+            
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            // Pan with right click or middle click
             if (e.button === 2 || e.button === 1) {
-                e.preventDefault();
                 isPanning = true;
-                panStart = { x: e.clientX, y: e.clientY };
+                // Store initial world coordinates at cursor, not screen coordinates
+                const world = screenToWorld(x, y);
+                panStart.x = world.x;
+                panStart.y = world.y;
+                canvas.style.cursor = 'move';
                 return;
             }
-
-            // --- Left-click logic for entity selection/magnet would go here. ---
-            // This uses the new screenToWorld function to correctly find what was clicked.
-            // const worldPos = screenToWorld(e.clientX, e.clientY);
-            // Find entity near worldPos...
+            
+            // Left click activates mouse magnet. Creature picking is disabled.
+            if (e.button === 0) {
+                const world = screenToWorld(x, y);
+                isMagnetActive = true;
+                magnetPosition.x = world.x;
+                magnetPosition.y = world.y;
+            }
         }
 
         /**
          * Handles mouse movement on the main canvas for panning.
          */
         function handleMouseMove(e) {
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            // Handle right-click panning with no slippage
             if (isPanning) {
-                e.preventDefault();
-                const dx = e.clientX - panStart.x;
-                const dy = e.clientY - panStart.y;
-
-                // Convert screen-space delta to world-space pan delta.
-                // A positive dx (mouse right) should decrease panOffset.x (world left).
-                panOffset.x -= dx / viewScale;
-                panOffset.y -= dy / viewScale;
-
-                // The starting point for the next delta is the current position.
-                panStart = { x: e.clientX, y: e.clientY };
-
+                const world = screenToWorld(x, y);
+                const deltaX = world.x - panStart.x;
+                const deltaY = world.y - panStart.y;
+                
+                // We don't need to change panStart, just apply the delta
+                // panOffset is in screen space, so we need to scale the world delta
+                panOffset.x -= deltaX * viewScale;
+                panOffset.y -= deltaY * viewScale;
+                
                 constrainView();
+                return;
             }
-            // --- Logic for dragging entities would go here. ---
         }
 
         /**
@@ -1879,7 +1927,7 @@
          */
         function handleMouseUp(e) {
             isPanning = false;
-            // --- Logic for releasing dragged entities would go here. ---
+            canvas.style.cursor = 'default';
         }
 
         /**
@@ -1926,2821 +1974,85 @@
             constrainView();
         }
 
-
-
-
-
-        
-
-        function resizeCanvas() {
-            const viz = document.getElementById('visualization');
-            const minimap = document.getElementById('minimap');
-            const legend = document.getElementById('legend');
-            const minimapCanvas = document.getElementById('minimap-canvas');
-
-            // Set main canvas size
-            canvas.width = viz.offsetWidth;
-            canvas.height = viz.offsetHeight;
-            
-            // --- DYNAMIC MINIMAP RESIZING BASED ON IMMUTABLE TRUTHS ---
-            const MAX_MINIMAP_DIMENSION = 200; // Max width or height in pixels
-            const MINIMAP_MARGIN = 20; // The constant gap in the top-left corner
-
-            const aspectRatio = canvas.width / canvas.height;
-
-            let minimapWidth, minimapHeight;
-
-            // Calculate minimap size to fit aspect ratio within MAX_MINIMAP_DIMENSION
-            if (aspectRatio > 1) { // Landscape (wide) window
-                minimapWidth = MAX_MINIMAP_DIMENSION;
-                minimapHeight = minimapWidth / aspectRatio;
-            } else { // Portrait (tall) or square window
-                minimapHeight = MAX_MINIMAP_DIMENSION;
-                minimapWidth = minimapHeight * aspectRatio;
-            }
-
-            // Apply the dynamically calculated size to the minimap element and its canvas
-            minimap.style.width = minimapWidth + 'px';
-            minimap.style.height = minimapHeight + 'px';
-            minimapCanvas.width = minimapWidth;
-            minimapCanvas.height = minimapHeight;
-
-            // The minimap's top-left position is fixed by CSS (top: 20px, left: 20px)
-
-            // Adjust legend position to always be below the dynamically-sized minimap
-            if (legend) {
-                legend.style.top = (MINIMAP_MARGIN + minimapHeight + MINIMAP_MARGIN) + 'px';
-            }
-            
-            // Re-constrain the view after a resize to handle new boundaries
-            constrainView();
-        }
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
-        
-        // Smooth rotation helper for both owls and mice
-        function smoothRotateTowards(entity, targetRotation, smoothing = 0.15) {
-            // Calculate shortest angular distance
-            let angleDiff = targetRotation - entity.rotation;
-            
-            // Normalize angle difference to [-PI, PI]
-            while (angleDiff > Math.PI) angleDiff -= 2 * Math.PI;
-            while (angleDiff < -Math.PI) angleDiff += 2 * Math.PI;
-            
-            // Apply smoothing
-            entity.rotation += angleDiff * smoothing;
-            
-            // Keep rotation in [0, 2*PI] range
-            while (entity.rotation < 0) entity.rotation += 2 * Math.PI;
-            while (entity.rotation >= 2 * Math.PI) entity.rotation -= 2 * Math.PI;
-        }
-
-        // Feathering constants for soft fuzzy creatures
-        const owlFeather = 10; // radius where owl starts fading (smaller for better painting)
-        const mouseFeather = 4; // radius where mouse starts fading (smaller for better painting)
-        
-        // Status indicator radius (dashed circles)
-        const owlStatusRadius = 14; // radius for owl status circle
-        const mouseStatusRadius = 7; // radius for mouse status circle
-        
-        // Expanded owlish color palette (browns, grays, tawny colors, plus outliers)
-        const owlishColors = [
-            // Classic browns and taupes
-            '#8B6F47', '#A0522D', '#D2691E', '#CD853F', '#8B7355', 
-            '#6B5D54', '#736357', '#9B8579', '#8B7D6B', '#A8968A',
-            '#705D56', '#7F6E5D', '#654321', '#8B4513', '#A0826D',
-            
-            // Light variants
-            '#DEB887', '#F5DEB3', '#FFE4B5', '#FFDEAD', '#F5E6D3',
-            '#E8D5B7', '#F0E68C', '#EEE8AA', '#F4E4C1', '#FFF8DC',
-            
-            // Dark variants
-            '#3E2723', '#4E342E', '#5D4037', '#6D4C41', '#795548',
-            '#33241A', '#2F1F14', '#483C32', '#534B4F', '#5C5248',
-            
-            // Grays
-            '#696969', '#808080', '#A9A9A9', '#C0C0C0', '#D3D3D3',
-            '#2F4F4F', '#708090', '#778899', '#B0C4DE', '#DCDCDC',
-            
-            // Outliers
-            '#FFFFFF', // Pure white
-            '#000000', // Pure black
-            '#FF1493', // Hot pink
-            '#FFD700', // Gold
-            '#FF6347', // Tomato red
-            '#00CED1', // Dark turquoise
-            '#9370DB', // Medium purple
-            '#32CD32', // Lime green
-            '#FF4500', // Orange red
-            '#1E90FF'  // Dodger blue
-        ];
-        
-        // Expanded mousy color palette (grays, browns, plus outliers)
-        const mousyColors = [
-            // Classic grays
-            '#808080', '#A9A9A9', '#C0C0C0', '#696969', '#778899',
-            '#B8B8B8', '#8B8989', '#9C9C9C', '#7A7A7A', '#8E8279',
-            '#A0948C', '#D3D3D3', '#BEBEBE', '#999999', '#666666',
-            
-            // Browns and tans
-            '#8B7D6B', '#A0826D', '#BC9A6A', '#C8B88B', '#D4C5B9',
-            '#967969', '#8B7355', '#A08879', '#BCA68D', '#CDB79E',
-            
-            // Light variants
-            '#F5F5F5', '#E8E8E8', '#DCDCDC', '#F0F0F0', '#FAFAFA',
-            '#F5F5DC', '#FAF0E6', '#FFF5EE', '#F8F8FF', '#FFFAFA',
-            
-            // Dark variants
-            '#2F2F2F', '#1C1C1C', '#363636', '#404040', '#4B4B4B',
-            '#333333', '#292929', '#424242', '#525252', '#3A3A3A',
-            
-            // Outliers
-            '#FFFFFF', // Pure white
-            '#000000', // Pure black
-            '#FF69B4', // Hot pink
-            '#FFB6C1', // Light pink
-            '#98FB98', // Pale green
-            '#87CEEB', // Sky blue
-            '#DDA0DD', // Plum
-            '#F0E68C', // Khaki
-            '#FFA07A', // Light salmon
-            '#BA55D3'  // Medium orchid
-        ];
-
-        // Logging configuration
-        const logConfig = {
-            owl: 50,
-            mouse: 30,
-            escape: 1,  // VERY LOW - narrowly escapes is SUPER SPAMMY!
-            hunt: 80,
-            time: 20,
-            random: 10,
-            wizzyClick: 100,  // ALWAYS log wizzy clicks!
-            maxSpeed: 2.0
-        };
-        
-        // Track recent escapes to group them
-        const recentEscapes = new Map(); // mouseId -> { count, owls: Set, lastTime }
-
-        // Sound configuration
-        let soundEnabled = false;
-        const soundConfig = {
-            hunt: 70,
-            catch: 80,
-            escape: 60,
-            rest: 30,
-            time: 20,
-            ambient: 10
-        };
-
-        // Web Audio API setup
-        let audioContext = null;
-        
-        function initAudio() {
-            if (!audioContext) {
-                audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            }
-        }
-
-        // Sound generation functions
-        function playSound(type, volume = 1.0) {
-            if (!soundEnabled || !audioContext || soundConfig[type] === 0) return;
-            
-            const volumeScale = (soundConfig[type] / 100) * volume;
-            // Ensure actualSpeedMultiplier is positive and finite before using it
-            const safeSpeedMultiplier = Math.max(0.01, actualSpeedMultiplier || 1);
-            const pitchScale = Math.min(2, Math.max(0.5, 1 / Math.sqrt(safeSpeedMultiplier)));
-            
-            switch(type) {
-                case 'hunt':
-                    playSwoosh(volumeScale, pitchScale);
-                    break;
-                case 'catch':
-                    playChirp(volumeScale, pitchScale);
-                    break;
-                case 'escape':
-                    playSqueak(volumeScale, pitchScale);
-                    break;
-                case 'rest':
-                    playSoftTone(volumeScale, pitchScale);
-                    break;
-                case 'time':
-                    playTick(volumeScale, pitchScale);
-                    break;
-                case 'ambient':
-                    playAmbient(volumeScale, pitchScale);
-                    break;
-                case 'select':
-                    playSelect(volumeScale, pitchScale);
-                    break;
-                case 'pickup':
-                    playPickup(volumeScale, pitchScale);
-                    break;
-                case 'drop':
-                    playDrop(volumeScale, pitchScale);
-                    break;
-                case 'magnetOn':
-                    playMagnetOn(volumeScale, pitchScale);
-                    break;
-                case 'magnetOff':
-                    playMagnetOff(volumeScale, pitchScale);
-                    break;
-                case 'poop':
-                    playPoop(volumeScale, pitchScale);
-                    break;
-                case 'bounce':
-                    playBounce(volumeScale, pitchScale);
-                    break;
-            }
-        }
-
-        // Swoosh sound for hunt start
-        function playSwoosh(volume, pitch) {
-            const oscillator = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
-            
-            oscillator.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-            
-            oscillator.frequency.setValueAtTime(800 * pitch, audioContext.currentTime);
-            oscillator.frequency.exponentialRampToValueAtTime(100 * pitch, audioContext.currentTime + 0.1);
-            
-            gainNode.gain.setValueAtTime(0, audioContext.currentTime);
-            gainNode.gain.linearRampToValueAtTime(0.3 * volume, audioContext.currentTime + 0.01);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
-            
-            oscillator.start(audioContext.currentTime);
-            oscillator.stop(audioContext.currentTime + 0.1);
-        }
-
-        // Chirp sound for successful catch
-        function playChirp(volume, pitch) {
-            const oscillator = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
-            
-            oscillator.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-            
-            oscillator.frequency.setValueAtTime(1000 * pitch, audioContext.currentTime);
-            oscillator.frequency.setValueAtTime(1500 * pitch, audioContext.currentTime + 0.05);
-            oscillator.frequency.setValueAtTime(1200 * pitch, audioContext.currentTime + 0.1);
-            
-            gainNode.gain.setValueAtTime(0.4 * volume, audioContext.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.15);
-            
-            oscillator.start(audioContext.currentTime);
-            oscillator.stop(audioContext.currentTime + 0.15);
-        }
-
-        // Squeak sound for mouse escape
-        function playSqueak(volume, pitch) {
-            const oscillator = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
-            
-            oscillator.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-            
-            // Lower frequency for less jarring sound
-            oscillator.frequency.setValueAtTime(800 * pitch, audioContext.currentTime);
-            oscillator.frequency.exponentialRampToValueAtTime(1200 * pitch, audioContext.currentTime + 0.02);
-            
-            // Much lower volume
-            gainNode.gain.setValueAtTime(0.05 * volume, audioContext.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.02);
-            
-            oscillator.start(audioContext.currentTime);
-            oscillator.stop(audioContext.currentTime + 0.02); // Shorter duration
-        }
-
-        // Soft tone for owl resting
-        function playSoftTone(volume, pitch) {
-            const oscillator = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
-            
-            oscillator.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-            
-            oscillator.type = 'sine';
-            oscillator.frequency.setValueAtTime(300 * pitch, audioContext.currentTime);
-            
-            gainNode.gain.setValueAtTime(0, audioContext.currentTime);
-            gainNode.gain.linearRampToValueAtTime(0.1 * volume, audioContext.currentTime + 0.1);
-            gainNode.gain.linearRampToValueAtTime(0, audioContext.currentTime + 0.3);
-            
-            oscillator.start(audioContext.currentTime);
-            oscillator.stop(audioContext.currentTime + 0.3);
-        }
-
-        // Tick sound for time events
-        function playTick(volume, pitch) {
-            const oscillator = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
-            
-            oscillator.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-            
-            oscillator.frequency.setValueAtTime(1000 * pitch, audioContext.currentTime);
-            
-            gainNode.gain.setValueAtTime(0.1 * volume, audioContext.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.02);
-            
-            oscillator.start(audioContext.currentTime);
-            oscillator.stop(audioContext.currentTime + 0.02);
-        }
-
-        // Ambient sound
-        function playAmbient(volume, pitch) {
-            const oscillator = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
-            const filter = audioContext.createBiquadFilter();
-            
-            oscillator.connect(filter);
-            filter.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-            
-            filter.type = 'lowpass';
-            filter.frequency.setValueAtTime(500 * pitch, audioContext.currentTime);
-            
-            oscillator.type = 'sawtooth';
-            oscillator.frequency.setValueAtTime(50 * pitch + Math.random() * 20, audioContext.currentTime);
-            
-            gainNode.gain.setValueAtTime(0.05 * volume, audioContext.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
-            
-            oscillator.start(audioContext.currentTime);
-            oscillator.stop(audioContext.currentTime + 0.1);
-        }
-
-        // Select sound (soft click)
-        function playSelect(volume, pitch) {
-            const oscillator = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
-            
-            oscillator.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-            
-            oscillator.frequency.setValueAtTime(600 * pitch, audioContext.currentTime);
-            oscillator.frequency.setValueAtTime(400 * pitch, audioContext.currentTime + 0.01);
-            
-            gainNode.gain.setValueAtTime(0.08 * volume, audioContext.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.02);
-            
-            oscillator.start(audioContext.currentTime);
-            oscillator.stop(audioContext.currentTime + 0.02);
-        }
-        
-        // Pickup sound (rising tone)
-        function playPickup(volume, pitch) {
-            const oscillator = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
-            
-            oscillator.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-            
-            oscillator.frequency.setValueAtTime(200 * pitch, audioContext.currentTime);
-            oscillator.frequency.exponentialRampToValueAtTime(600 * pitch, audioContext.currentTime + 0.1);
-            
-            gainNode.gain.setValueAtTime(0.1 * volume, audioContext.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
-            
-            oscillator.start(audioContext.currentTime);
-            oscillator.stop(audioContext.currentTime + 0.1);
-        }
-        
-        // Drop sound (falling tone)
-        function playDrop(volume, pitch) {
-            const oscillator = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
-            
-            oscillator.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-            
-            oscillator.frequency.setValueAtTime(600 * pitch, audioContext.currentTime);
-            oscillator.frequency.exponentialRampToValueAtTime(200 * pitch, audioContext.currentTime + 0.1);
-            
-            gainNode.gain.setValueAtTime(0.1 * volume, audioContext.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
-            
-            oscillator.start(audioContext.currentTime);
-            oscillator.stop(audioContext.currentTime + 0.1);
-        }
-        
-        // Magnet on sound (magnetic hum)
-        function playMagnetOn(volume, pitch) {
-            // Ensure finite values
-            if (!isFinite(volume) || volume <= 0) volume = 1;
-            if (!isFinite(pitch) || pitch <= 0) pitch = 1;
-            
-            const oscillator = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
-            const filter = audioContext.createBiquadFilter();
-            
-            oscillator.connect(filter);
-            filter.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-            
-            filter.type = 'lowpass';
-            filter.frequency.setValueAtTime(300 * pitch, audioContext.currentTime);
-            filter.Q.setValueAtTime(10, audioContext.currentTime);
-            
-            oscillator.type = 'sawtooth';
-            oscillator.frequency.setValueAtTime(60 * pitch, audioContext.currentTime);
-            
-            gainNode.gain.setValueAtTime(0, audioContext.currentTime);
-            gainNode.gain.linearRampToValueAtTime(0.05 * volume, audioContext.currentTime + 0.05);
-            
-            oscillator.start(audioContext.currentTime);
-            oscillator.stop(audioContext.currentTime + 0.2);
-        }
-        
-        // Magnet off sound (hum fade)
-        function playMagnetOff(volume, pitch) {
-            // Ensure finite values
-            if (!isFinite(volume) || volume <= 0) volume = 1;
-            if (!isFinite(pitch) || pitch <= 0) pitch = 1;
-            
-            const oscillator = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
-            const filter = audioContext.createBiquadFilter();
-            
-            oscillator.connect(filter);
-            filter.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-            
-            filter.type = 'lowpass';
-            filter.frequency.setValueAtTime(300 * pitch, audioContext.currentTime);
-            filter.frequency.exponentialRampToValueAtTime(50 * pitch, audioContext.currentTime + 0.1);
-            
-            oscillator.type = 'sawtooth';
-            oscillator.frequency.setValueAtTime(60 * pitch, audioContext.currentTime);
-            
-            gainNode.gain.setValueAtTime(0.05 * volume, audioContext.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
-            
-            oscillator.start(audioContext.currentTime);
-            oscillator.stop(audioContext.currentTime + 0.1);
-        }
-
-        // Poop sound (comic plop!)
-        function playPoop(volume, pitch) {
-            const oscillator = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
-            const filter = audioContext.createBiquadFilter();
-            
-            oscillator.connect(filter);
-            filter.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-            
-            // Low pass filter for a wet sound
-            filter.type = 'lowpass';
-            filter.frequency.setValueAtTime(200 * pitch, audioContext.currentTime);
-            filter.Q.setValueAtTime(20, audioContext.currentTime);
-            
-            // Start high and drop low quickly (plop!)
-            oscillator.frequency.setValueAtTime(300 * pitch, audioContext.currentTime);
-            oscillator.frequency.linearRampToValueAtTime(50 * pitch, audioContext.currentTime + 0.05);
-            
-            // Quick attack and decay for comic effect
-            gainNode.gain.setValueAtTime(0, audioContext.currentTime);
-            gainNode.gain.linearRampToValueAtTime(0.3 * volume, audioContext.currentTime + 0.01);
-            gainNode.gain.linearRampToValueAtTime(0.001, audioContext.currentTime + 0.1);
-            
-            oscillator.start(audioContext.currentTime);
-            oscillator.stop(audioContext.currentTime + 0.1);
-        }
-        
-        // Bounce sound (elastic boing!)
-        function playBounce(volume, pitch) {
-            // Ensure finite values
-            if (!isFinite(volume) || volume <= 0) volume = 1;
-            if (!isFinite(pitch) || pitch <= 0) pitch = 1;
-            
-            const oscillator = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
-            
-            oscillator.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-            
-            // Quick high-to-low boing
-            oscillator.frequency.setValueAtTime(800 * pitch, audioContext.currentTime);
-            oscillator.frequency.exponentialRampToValueAtTime(200 * pitch, audioContext.currentTime + 0.05);
-            oscillator.frequency.setValueAtTime(400 * pitch, audioContext.currentTime + 0.05);
-            oscillator.frequency.exponentialRampToValueAtTime(300 * pitch, audioContext.currentTime + 0.1);
-            
-            // Quick punch
-            gainNode.gain.setValueAtTime(0.2 * volume, audioContext.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
-            
-            oscillator.start(audioContext.currentTime);
-            oscillator.stop(audioContext.currentTime + 0.1);
-        }
-
-        // Poop configuration
-        const poopConfig = {
-            fadeAge: 3000, // MUCH FASTER! Poop turns to food in 3 seconds instead of 10
-            owlPoopSize: 20, // Owl poops are bigger!
-            mousePoopSize: 12,
-            owlPoopGravity: 2, // Fall speed
-            splatSize: 1.5, // How much bigger when splat
-            autoPoopInterval: 3000, // Default 3 seconds
-            owlPoopWeight: 50, // grams per poop
-            mousePoopWeight: 5  // grams per poop
-        };
-        
-        // Archetypal flower collection
-        const allFlowerEmojis = ['🌸', '🌺', '🌻', '🌷', '🌹', '🌼', '💐', '🏵️', '🥀'];
-        
-        // Throwing physics constants (FIXES JAVASCRIPT ERRORS!)
-        const VELOCITY_HISTORY_SIZE = 5; // Number of recent positions to track  
-        const THROW_VELOCITY_SCALE = 1.0; // Multiplier for throw velocity - DOUBLED FOR ZING!
-        
-        // Mouse tracking variables for throwing physics (FIXES JAVASCRIPT ERRORS!)
-        let lastMousePos = { x: 0, y: 0 };
-        let lastMouseTime = Date.now();
-        let throwVelocityHistory = [];
-        
-        // Food types that can spawn from decomposed poop (using emoji nutrient keys!)
-        const foodTypes = [
-            // Flower seed archetype - contains array of all flower types
-            { emoji: '🌱', name: 'flower seed', nutrients: { 
-                '🌸': [...allFlowerEmojis, ...allFlowerEmojis, ...allFlowerEmojis], // Triple for population
-                '⚡': 5, 
-                '💧': 10,
-                '🌱': 15 
-            }},
-            // Individual flowers (can spawn from MIRV)
-            { 
-                emoji: '🌸', 
-                name: 'cherry blossom', 
-                nutrients: { 
-                    '🌸': '🌸', 
-                    '🌈': 5, 
-                    '🌿': 2, 
-                    '😊': 1, 
-                    '🌺': 3 
-                } 
-            },
-            { 
-                emoji: '🌼', 
-                name: 'daisy', 
-                nutrients: { 
-                    '🌸': '🌼', 
-                    '🌈': 3, 
-                    '🐝': 4, 
-                    '😊': 2, 
-                    '☀️': 1 
-                } 
-            },
-            { 
-                emoji: '🌺', 
-                name: 'hibiscus', 
-                nutrients: { 
-                    '🌸': '🌺', 
-                    '🌈': 8, 
-                    '🍯': 6, 
-                    '🏝️': 3, 
-                    '🌴': 2 
-                } 
-            },
-            { 
-                emoji: '🌻', 
-                name: 'sunflower', 
-                nutrients: { 
-                    '🌸': '🌻', 
-                    '🌰': 10, 
-                    '💧': 5, 
-                    '📏': 7, 
-                    '☀️': 8 
-                } 
-            },
-            { 
-                emoji: '🌷', 
-                name: 'tulip', 
-                nutrients: { 
-                    '🌸': '🌷', 
-                    '🌈': 6, 
-                    '🇳🇱': 4, 
-                    '💐': 2 
-                } 
-            },
-            { 
-                emoji: '🌹', 
-                name: 'rose', 
-                nutrients: { 
-                    '🌸': '🌹', 
-                    '❤️': 15, 
-                    '🥀': 3, 
-                    '💋': 5 
-                } 
-            },
-            { 
-                emoji: '💐', 
-                name: 'bouquet', 
-                nutrients: { 
-                    '🌸': '💐', 
-                    '💐': 25, 
-                    '🎉': 10, 
-                    '💝': 15 
-                } 
-            },
-            
-            // Other foods
-            { 
-                emoji: '🍄', 
-                name: 'mushroom', 
-                nutrients: { 
-                    '🍜': 7, 
-                    '🦠': 3, 
-                    '✨': 1, 
-                    '🌙': 2 
-                } 
-            },
-            { 
-                emoji: '🍃', 
-                name: 'leaf', 
-                nutrients: { 
-                    '🌿': 3, 
-                    '💚': 2, 
-                    '🍂': 1, 
-                    '🌳': 1 
-                } 
-            },
-            { 
-                emoji: '🌿', 
-                name: 'herb', 
-                nutrients: { 
-                    '👅': 4, 
-                    '💊': 3, 
-                    '👃': 2, 
-                    '🍵': 2 
-                } 
-            },
-            { 
-                emoji: '🌾', 
-                name: 'grain', 
-                nutrients: { 
-                    '🍞': 8, 
-                    '⚡': 6, 
-                    '🌾': 4, 
-                    '🚜': 2 
-                } 
-            },
-            { 
-                emoji: '🥜', 
-                name: 'nut', 
-                nutrients: { 
-                    '💪': 9, 
-                    '🧈': 7, 
-                    '🦷': 5, 
-                    '🐿️': 3 
-                } 
-            },
-            { 
-                emoji: '🌰', 
-                name: 'chestnut', 
-                nutrients: { 
-                    '🔥': 5, 
-                    '🍂': 4, 
-                    '♨️': 3, 
-                    '🎃': 2 
-                } 
-            },
-            { 
-                emoji: '🫘', 
-                name: 'beans', 
-                nutrients: { 
-                    '💪': 8, 
-                    '🌿': 6, 
-                    '💨': 'fart', 
-                    '🎺': 2 
-                } 
-            },
-            { 
-                emoji: '🥕', 
-                name: 'carrot', 
-                nutrients: { 
-                    '👁️': 10, 
-                    '🟠': 5, 
-                    '🐰': 'whatsupdoc', 
-                    '🥗': 3 
-                } 
-            },
-            { 
-                emoji: '🍀', 
-                name: 'clover', 
-                nutrients: { 
-                    '🍀': 7, 
-                    '🇮🇪': 4, 
-                    '💚': 3, 
-                    '🌈': 2 
-                } 
-            },
-            { 
-                emoji: '🪨', 
-                name: 'rock', 
-                nutrients: { 
-                    '⛏️': 5, 
-                    '💎': 10, 
-                    '🧘': 2, 
-                    '🗿': 3 
-                } 
-            },
-            { 
-                emoji: '🪵', 
-                name: 'wood', 
-                nutrients: { 
-                    '🌿': 4, 
-                    '🐜': 2, 
-                    '🔥': 3, 
-                    '🌳': 5 
-                } 
-            },
-            { 
-                emoji: '🥚', 
-                name: 'egg', 
-                nutrients: { 
-                    '💪': 12, 
-                    '🥚': 3, 
-                    '❓': 5, 
-                    '🎁': ['🐣', '🐥', '🦖'] 
-                } 
-            },
-            { 
-                emoji: '🪶', 
-                name: 'feather', 
-                nutrients: { 
-                    '🕊️': 4, 
-                    '😆': 3, 
-                    '🛏️': 2, 
-                    '✒️': 1 
-                } 
-            },
-            { 
-                emoji: '💎', 
-                name: 'gem', 
-                nutrients: { 
-                    '✨': 10, 
-                    '💰': 100, 
-                    '💎': 9, 
-                    '🌟': ['✨', '💫', '⭐'] 
-                } 
-            }
-        ];
-        
-        class Poop {
-            constructor(x, y, creatureId, creatureType, poopType = 'fear', nutrients = {}, owlAltitude = 0, owlVelocity = null) {
-                this.x = x;
-                this.y = y;
-                this.startY = y; // For falling calculation
-                this.creatureId = creatureId;
-                this.creatureType = creatureType; // 'owl' or 'mouse'
-                this.poopType = poopType; // 'fear', 'voluntary', 'auto'
-                this.nutrients = nutrients; // Recycled nutrients
-                this.age = 0;
-                this.fadeAge = poopConfig.fadeAge;
-                this.falling = creatureType === 'owl';
-                this.splat = false;
-                this.verticalVelocity = this.falling ? 0 : 0;
-                this.size = creatureType === 'owl' ? poopConfig.owlPoopSize : poopConfig.mousePoopSize;
-                this.originalSize = this.size; // Remember original size for scaling
-                this.weight = creatureType === 'owl' ? poopConfig.owlPoopWeight : poopConfig.mousePoopWeight;
-                // Calculate ground position based on owl's altitude
-                this.groundY = creatureType === 'owl' ? y + owlAltitude / 2 : y;
-                
-                // Initial horizontal velocity - opposite of owl's direction with some randomness
-                if (creatureType === 'owl' && owlVelocity) {
-                    const speed = Math.sqrt(owlVelocity.x ** 2 + owlVelocity.y ** 2);
-                    const angle = Math.atan2(owlVelocity.y, owlVelocity.x);
-                    // Poop flies out backwards with some spread
-                    const poopAngle = angle + Math.PI + (Math.random() - 0.5) * 0.5;
-                    const poopSpeed = speed * 0.5 + Math.random() * 2;
-                    this.horizontalVelocity = {
-                        x: Math.cos(poopAngle) * poopSpeed,
-                        y: Math.sin(poopAngle) * poopSpeed
-                    };
-                } else {
-                    this.horizontalVelocity = { x: 0, y: 0 };
-                }
-            }
-            
-            update() {
-                this.age += actualSpeedMultiplier;
-                
-                // Owl poops fall!
-                if (this.falling && !this.splat) {
-                    // Update vertical velocity and position
-                    this.verticalVelocity += poopConfig.owlPoopGravity * actualSpeedMultiplier;
-                    this.y += this.verticalVelocity * actualSpeedMultiplier;
-                    
-                    // Update horizontal position with air resistance
-                    this.x += this.horizontalVelocity.x * actualSpeedMultiplier;
-                    this.y += this.horizontalVelocity.y * actualSpeedMultiplier;
-                    
-                    // Apply air resistance to horizontal movement
-                    this.horizontalVelocity.x *= 0.98;
-                    this.horizontalVelocity.y *= 0.98;
-                    
-                    // Scale size based on altitude (perspective effect)
-                    const fallDistance = this.y - this.startY;
-                    const totalFallDistance = this.groundY - this.startY;
-                    if (totalFallDistance > 0) {
-                        const fallProgress = fallDistance / totalFallDistance;
-                        // Start big, get smaller as it falls (but not too small)
-                        this.size = this.originalSize * (1 - fallProgress * 0.3);
-                    }
-                    
-                    // Check for ground splat (at owl's shadow position)
-                    if (this.y >= this.groundY) {
-                        this.y = this.groundY;
-                        this.splat = true;
-                        this.falling = false;
-                        this.size = this.originalSize * 0.7; // Final size when splatted
-                        playSound('poop', 1.2); // Extra loud splat!
-                        wizzyLog('random', `💩 SPLAT! Owl poop hits the ground! 💥`, '💩');
-                    }
-                }
-                
-                // Check if poop should transform into food
-                if (this.age >= this.fadeAge && !this.transformed) {
-                    this.transformed = true;
-                    
-                    // MIRV! Poop can split into multiple foods based on nutrient count
-                    const nutrientCount = Object.keys(this.nutrients).length;
-                    const mirvCount = Math.min(nutrientCount, Math.floor(Math.random() * 3) + 1); // 1-3 foods
-                    
-                    const foodsCreated = [];
-                    const nutrientKeys = Object.keys(this.nutrients);
-                    const nutrientsPerFood = Math.ceil(nutrientCount / mirvCount);
-                    
-                    for (let i = 0; i < mirvCount && nutrientKeys.length > 0; i++) {
-                        // Check if we have flower nutrients to spawn specific flowers
-                        let foodType;
-                        if (this.nutrients['🌸']) {
-                            const flowerNutrient = this.nutrients['🌸'];
-                            if (Array.isArray(flowerNutrient) && flowerNutrient.length > 0) {
-                                // Pick a specific flower from the array
-                                const flowerEmoji = flowerNutrient[Math.floor(Math.random() * flowerNutrient.length)];
-                                // Find matching flower food type
-                                foodType = foodTypes.find(f => f.emoji === flowerEmoji) || 
-                                          foodTypes[Math.floor(Math.random() * foodTypes.length)];
-                            } else if (typeof flowerNutrient === 'string') {
-                                // Single flower type
-                                foodType = foodTypes.find(f => f.emoji === flowerNutrient) || 
-                                          foodTypes[Math.floor(Math.random() * foodTypes.length)];
-                            } else {
-                                foodType = foodTypes[Math.floor(Math.random() * foodTypes.length)];
-                            }
-                        } else {
-                            // Random food type
-                            foodType = foodTypes[Math.floor(Math.random() * foodTypes.length)];
-                        }
-                        
-                        // Distribute nutrients among foods
-                        const foodNutrients = {};
-                        for (let j = 0; j < nutrientsPerFood && nutrientKeys.length > 0; j++) {
-                            const key = nutrientKeys.splice(Math.floor(Math.random() * nutrientKeys.length), 1)[0];
-                            foodNutrients[key] = this.nutrients[key];
-                        }
-                        
-                        // Create food with recycled nutrients
-                        const combinedType = {
-                            emoji: foodType.emoji,
-                            name: foodType.name,
-                            nutrients: { ...foodType.nutrients, ...foodNutrients }
-                        };
-                        
-                        // Scatter foods around poop location
-                        const angle = (i / mirvCount) * Math.PI * 2;
-                        const distance = 10 + Math.random() * 20;
-                        const foodX = this.x + Math.cos(angle) * distance;
-                        const foodY = this.y + Math.sin(angle) * distance;
-                        
-                        const newFood = new Food(foodX, foodY, combinedType);
-                        foods.push(newFood);
-                        foodsCreated.push(foodType.emoji);
-                    }
-                    
-                    // Remove old foods if too many
-                    while (foods.length > MAX_FOODS) {
-                        foods.shift();
-                    }
-                    
-                    if (mirvCount > 1) {
-                        wizzyLog('random', `💩 MIRV! → ${foodsCreated.join(' ')} Poop split into ${mirvCount} foods!`, '💥');
-                    } else {
-                        wizzyLog('random', `💩 → ${foodsCreated[0]} Poop became ${foodsCreated[0]}!`, '🌱');
-                    }
-                    
-                    // Play extra sound for MIRV
-                    if (mirvCount > 1) {
-                        playSound('ambient', 1.0);
-                    }
-                }
-            }
-            
-            draw() {
-                if (this.age > this.fadeAge) return;
-                
-                const opacity = Math.max(0, 1 - (this.age / this.fadeAge));
-                ctx.save();
-                
-                // Size changes if splat
-                const currentSize = this.splat ? this.size * poopConfig.splatSize : this.size;
-                
-                // GREEN GLOW EFFECT! 💚
-                const glowRadius = currentSize * 1.5;
-                const glowGradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, glowRadius);
-                glowGradient.addColorStop(0, `rgba(0, 255, 0, ${opacity * 0.08})`); // Very subtle green center
-                glowGradient.addColorStop(0.3, `rgba(0, 255, 0, ${opacity * 0.05})`); // Faint green
-                glowGradient.addColorStop(0.6, `rgba(0, 255, 0, ${opacity * 0.03})`); // Barely visible green
-                glowGradient.addColorStop(1, 'rgba(0, 255, 0, 0)'); // Transparent edge
-                
-                ctx.fillStyle = glowGradient;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, glowRadius, 0, Math.PI * 2);
-                ctx.fill();
-                
-                // Main poop emoji
-                ctx.globalAlpha = opacity * 0.8;
-                ctx.font = `${currentSize}px Arial`;
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
-                
-                // Different emoji for different types with extra glow for fear poops!
-                const emoji = this.poopType === 'fear' ? '💩' : 
-                             this.poopType === 'voluntary' ? '💩' : 
-                             '💩';
-                
-                // Draw shadow if falling
-                if (this.falling) {
-                    const shadowOpacity = opacity * 0.3 * (1 - (this.y - this.startY) / (this.groundY - this.startY));
-                    ctx.globalAlpha = shadowOpacity;
-                    ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
-                    ctx.beginPath();
-                    ctx.ellipse(this.x, this.groundY, currentSize/2, currentSize/4, 0, 0, Math.PI * 2);
-                    ctx.fill();
-                    ctx.globalAlpha = opacity * 0.8;
-                }
-                
-                // Extra bright outline for fear poops (scared mice!)
-                if (this.poopType === 'fear') {
-                    ctx.strokeStyle = `rgba(0, 255, 0, ${opacity * 0.8})`;
-                    ctx.lineWidth = 2;
-                    ctx.strokeText(emoji, this.x, this.y);
-                }
-                
-                ctx.fillText(emoji, this.x, this.y);
-                
-                // Draw splat effect with green glow too!
-                if (this.splat) {
-                    ctx.globalAlpha = opacity * 0.4;
-                    ctx.strokeStyle = `rgba(0, 255, 0, ${opacity * 0.6})`;
-                    ctx.lineWidth = 1;
-                    ctx.strokeText('💥', this.x, this.y);
-                    ctx.fillText('💥', this.x, this.y);
-                }
-                
-                ctx.restore();
-            }
-        }
-        
-        // Food class for items that appear after poop decomposes
-        class Food {
-            constructor(x, y, foodType) {
-                this.x = x;
-                this.y = y;
-                this.type = foodType;
-                this.emoji = foodType.emoji;
-                this.name = foodType.name;
-                this.nutrients = JSON.parse(JSON.stringify(foodType.nutrients)); // Deep copy
-                this.age = 0;
-                this.lifespan = 30000; // Foods last 30 seconds
-                this.size = 16;
-                this.bobOffset = Math.random() * Math.PI * 2; // Random starting phase for bobbing
-            }
-            
-            update() {
-                this.age += actualSpeedMultiplier;
-                
-                // Gentle bobbing animation
-                this.bobAmount = Math.sin((this.age / 100) + this.bobOffset) * 2;
-            }
-            
-            draw() {
-                if (this.age > this.lifespan) return;
-                
-                const opacity = Math.max(0, 1 - (this.age / this.lifespan));
-                ctx.save();
-                ctx.globalAlpha = opacity * 0.9;
-                
-                // Draw shadow
-                ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
-                ctx.beginPath();
-                ctx.ellipse(this.x, this.y + 4, this.size/2, this.size/4, 0, 0, Math.PI * 2);
-                ctx.fill();
-                
-                // Draw food with bobbing
-                ctx.font = `${this.size}px Arial`;
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
-                ctx.fillText(this.emoji, this.x, this.y + this.bobAmount);
-                
-                // Draw sparkle effect for fresh food
-                if (this.age < 1000) {
-                    ctx.globalAlpha = opacity * 0.5 * (1 - this.age / 1000);
-                    ctx.fillText('✨', this.x + 8, this.y - 8);
-                }
-                
-                ctx.restore();
-            }
-            
-            isPointInside(x, y) {
-                const dist = Math.sqrt((x - this.x) ** 2 + (y - this.y) ** 2);
-                return dist < this.size;
-            }
-        }
-
-        // Time zones
-        const timeZones = [
-            'UTC-12', 'UTC-11', 'UTC-10', 'UTC-9', 'UTC-8', 'UTC-7',
-            'UTC-6', 'UTC-5', 'UTC-4', 'UTC-3', 'UTC-2', 'UTC-1',
-            'UTC+0', 'UTC+1', 'UTC+2', 'UTC+3', 'UTC+4', 'UTC+5',
-            'UTC+6', 'UTC+7', 'UTC+8', 'UTC+9', 'UTC+10', 'UTC+11'
-        ];
-
-        //==============================================================================
-        //
-        //  WIZZY ID GENERATION
-        //
-        //  This section handles the creation of the unique "wizzy" identifiers for
-        //  each creature. The logic is designed to be clean, simple, and exemplary.
-        //
-        //==============================================================================
-
-        // Define the character sets as simple, elegant strings.
-        const owlEmojis = '🦉🌳🌲🍃🌙⭐🌟🌌🦅🪶🍂🌺🌸🦜🕊️🦚🦢🪺🌾🌿';
-        const mouseEmojis = '🐭🧀🌾🌽🥜🍞🥖🍪🪨🌰🍄🥕🫘🌻🌼🍀🌱🪵🍃🫧';
-        const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-
         /**
-         * Generates a unique "wizzy" identifier for a creature.
-         * A wizzy is a combination of a letter and an emoji (e.g., "A🦉").
-         *
-         * @param {boolean} isOwl - True if generating for an owl, false for a mouse.
-         * @returns {string} The generated wizzy ID.
+         * Handles mousedown events on the minimap to start dragging.
          */
-        function generateWizzy(characterType) {
-            const letter = letters[Math.floor(Math.random() * letters.length)];
-            
-            // Select the correct emoji set.
-            const emojiSourceString = 
-                (characterType === 'owl') ? owlEmojis : mouseEmojis;
-            
-            // To correctly handle multi-byte emoji characters, we first convert the
-            // string into an array of its individual characters.
-            const emojiArray = Array.from(emojiSourceString);
-            
-            const emoji = emojiArray[Math.floor(Math.random() * emojiArray.length)];
-            
-            return letter + emoji;
-        }        
-
-        // Time formatting function
-        function formatTime(totalMinutes) {
-            const days = Math.floor(totalMinutes / (24 * 60));
-            const dayMinutes = totalMinutes % (24 * 60);
-            const hours = Math.floor(dayMinutes / 60);
-            const minutes = Math.floor(dayMinutes % 60);
-            const seconds = Math.floor((dayMinutes % 1) * 60);
-            
-            return {
-                days,
-                hours,
-                minutes,
-                seconds,
-                formatted: `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
-            };
-        }
-
-        // Speed curve function (super slow at low end, SUPER FAST at high end!)
-        function getSpeedMultiplier(sliderValue) {
-            const normalized = sliderValue / 100;
-            if (normalized < 0.1) {
-                // Super slow range: 0.01x to 0.1x
-                return 0.01 + (normalized * 0.9);
-            } else if (normalized < 0.5) {
-                // Slow to normal: 0.1x to 1x
-                return 0.1 + ((normalized - 0.1) * 2.25);
-            } else {
-                // Normal to INSANE: 1x to 50x WTF!!!
-                return 1 + ((normalized - 0.5) * 98);
-            }
-        }
-        
-        // Update autoscroll edge indicators - RELATIVE TO CANVAS NOT PAGE!
-        function updateEdgeIndicators() {
-            const rect = canvas.getBoundingClientRect();
-            
-            // Check if we're at view limits
-            const worldWidth = canvas.width * viewScale;
-            const worldHeight = canvas.height * viewScale;
-            const canScrollLeft = worldWidth > canvas.width && viewOffset.x < 0;
-            const canScrollRight = worldWidth > canvas.width && viewOffset.x > -(worldWidth - canvas.width);
-            const canScrollUp = worldHeight > canvas.height && viewOffset.y < 0;
-            const canScrollDown = worldHeight > canvas.height && viewOffset.y > -(worldHeight - canvas.height);
-            
-            // Position indicators relative to canvas
-            edgeIndicators.top.style.top = rect.top + 'px';
-            edgeIndicators.top.style.left = rect.left + 'px';
-            edgeIndicators.top.style.width = rect.width + 'px';
-            
-            edgeIndicators.bottom.style.top = (rect.bottom - 80) + 'px';
-            edgeIndicators.bottom.style.left = rect.left + 'px';
-            edgeIndicators.bottom.style.width = rect.width + 'px';
-            
-            edgeIndicators.left.style.top = rect.top + 'px';
-            edgeIndicators.left.style.left = rect.left + 'px';
-            edgeIndicators.left.style.height = rect.height + 'px';
-            
-            edgeIndicators.right.style.top = rect.top + 'px';
-            edgeIndicators.right.style.left = (rect.right - 80) + 'px';
-            edgeIndicators.right.style.height = rect.height + 'px';
-            
-            // Show/hide based on scroll state and ability
-            if (autoScrollVelocity.x > 0 && canScrollLeft) {
-                edgeIndicators.left.classList.add('active');
-            } else {
-                edgeIndicators.left.classList.remove('active');
-            }
-            
-            if (autoScrollVelocity.x < 0 && canScrollRight) {
-                edgeIndicators.right.classList.add('active');
-            } else {
-                edgeIndicators.right.classList.remove('active');
-            }
-            
-            if (autoScrollVelocity.y > 0 && canScrollUp) {
-                edgeIndicators.top.classList.add('active');
-            } else {
-                edgeIndicators.top.classList.remove('active');
-            }
-            
-            if (autoScrollVelocity.y < 0 && canScrollDown) {
-                edgeIndicators.bottom.classList.add('active');
-            } else {
-                edgeIndicators.bottom.classList.remove('active');
-            }
-        }
-        
-
-
-
-
-        /**
-         * Draws the complete minimap, including all entities and the viewport rectangle.
-         * This function is called every frame from the main animation loop.
-         */
-        function updateMinimap() {
-            //
-            //  Phase 1: Draw the world background
-            //
-            minimapCtx.fillStyle = 'rgba(0, 0, 0, 0.9)';
-            minimapCtx.fillRect(0, 0, minimapCanvas.width, minimapCanvas.height);
-
-            //
-            //  Phase 2: Calculate the scaling factor to fit the entire world
-            //  into the minimap with a small margin.
-            //
-            const worldWidth = canvas.width;
-            const worldHeight = canvas.height;
-            const minimapScale = Math.min(
-                minimapCanvas.width / worldWidth,
-                minimapCanvas.height / worldHeight
-            ) * 0.9; // Use 90% of space to leave a nice border
-
-            // Calculate the offset needed to center the scaled world inside the minimap
-            const mapOffsetX = (minimapCanvas.width - worldWidth * minimapScale) / 2;
-            const mapOffsetY = (minimapCanvas.height - worldHeight * minimapScale) / 2;
-
-            //
-            //  Phase 3: Draw all the entities (owls and mice) onto the minimap.
-            //
-            minimapCtx.textAlign = 'center';
-            minimapCtx.textBaseline = 'middle';
-            
-            // Draw mice
-            mice.forEach(mouse => {
-                if (!mouse.caught && mouse.active) {
-                    const x = mapOffsetX + mouse.position.x * minimapScale;
-                    const y = mapOffsetY + mouse.position.y * minimapScale;
-                    const isSelected = selectedMouse === mouse;
-                    
-                    const fontSize = Math.max(1, minimapConfig.mouseSize * (isSelected ? 3 : 1));
-                    minimapCtx.font = `${fontSize}px Arial`;
-                    minimapCtx.fillStyle = isSelected ? '#ffff00' : mouse.colors.middle;
-                    minimapCtx.fillText(mouse.wizzy, x, y);
-                }
-            });
-            
-            // Draw owls
-            owls.forEach(owl => {
-                if (owl.active) {
-                    const x = mapOffsetX + owl.position.x * minimapScale;
-                    const y = mapOffsetY + owl.position.y * minimapScale;
-                    const isSelected = selectedOwl === owl;
-
-                    const fontSize = Math.max(1, minimapConfig.owlSize * (isSelected ? 3 : 1));
-                    minimapCtx.font = `${fontSize}px Arial`;
-                    minimapCtx.fillStyle = isSelected ? '#ffff00' : owl.colors.middle;
-                    minimapCtx.fillText(owl.wizzy, x, y);
-                }
-            });
-
-            //
-            //  Phase 4: Calculate and draw the viewport rectangle. THIS IS THE KEY.
-            //
-            const viewportWidth = (canvas.width / viewScale) * minimapScale;
-            const viewportHeight = (canvas.height / viewScale) * minimapScale;
-
-            // The viewport's center is the minimap's center plus the scaled panOffset.
-            const viewportCenterX = minimapCanvas.width / 2 + panOffset.x * minimapScale;
-            const viewportCenterY = minimapCanvas.height / 2 + panOffset.y * minimapScale;
-
-            // The viewport's top-left corner is its center minus half its size.
-            const viewportX = viewportCenterX - viewportWidth / 2;
-            const viewportY = viewportCenterY - viewportHeight / 2;
-            
-            minimapViewport.style.width = viewportWidth + 'px';
-            minimapViewport.style.height = viewportHeight + 'px';
-            minimapViewport.style.left = viewportX + 'px';
-            minimapViewport.style.top = viewportY + 'px';
-        }
-
-
-
-
-
-        // Update minimap sizes
-        function updateMinimapSizes() {
-            const owlSize = document.getElementById('minimap-owl-size').value;
-            const mouseSize = document.getElementById('minimap-mouse-size').value;
-            
-            minimapConfig.owlSize = parseInt(owlSize);
-            minimapConfig.mouseSize = parseInt(mouseSize);
-            
-            // Update displays
-            document.querySelector('#minimap-owl-size').nextElementSibling.textContent = owlSize + 'px';
-            document.querySelector('#minimap-mouse-size').nextElementSibling.textContent = mouseSize + 'px';
-            
-            updateMinimap();
-        }
-        
-
-
-
-
-
-        // --- Event Listener Registration ---
-        //
-        // This is the single source of truth for all view-control-related events.
-        // It connects our new, clean handler functions to the DOM.
-        //
-
-        // Main canvas listeners for panning, zooming, and selection
-        canvas.addEventListener('mousedown', handleMouseDown);
-        canvas.addEventListener('mousemove', handleMouseMove);
-        canvas.addEventListener('mouseup', handleMouseUp);
-        canvas.addEventListener('mouseleave', handleMouseUp); // Stop panning if mouse leaves
-        canvas.addEventListener('wheel', handleWheel, { passive: false });
-        canvas.addEventListener('contextmenu', e => e.preventDefault()); // Prevent right-click menu
-
-        // Minimap listener for quick navigation
-        minimap.addEventListener('click', handleMinimapClick);
-        minimap.addEventListener('mousedown', handleMinimapMouseDown);
-        minimap.addEventListener('mousemove', handleMinimapMouseMove);
-        minimap.addEventListener('mouseup', handleMinimapMouseUp);
-        minimap.addEventListener('mouseleave', handleMinimapMouseUp);
-
-        
         function handleMinimapMouseDown(e) {
-            const rect = minimap.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            
-            isMinimapDragging = true;
-            minimap.classList.add('dragging');
-            
-            minimapDragStart = {
-                x: x,
-                y: y,
-                viewX: viewOffset.x,
-                viewY: viewOffset.y
-            };
-            
             e.preventDefault();
+            isMinimapDragging = true;
+            const rect = minimap.getBoundingClientRect();
+            minimapDragStart = {
+                x: e.clientX - rect.left,
+                y: e.clientY - rect.top,
+                viewX: panOffset.x,
+                viewY: panOffset.y
+            };
         }
-        
+
+        /**
+         * Handles mousemove events on the document to track minimap dragging.
+         */
         function handleMinimapMouseMove(e) {
             if (!isMinimapDragging) return;
             
             const rect = minimap.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
+            const deltaX = e.clientX - rect.left - minimapDragStart.x;
+            const deltaY = e.clientY - rect.top - minimapDragStart.y;
             
-            // FIXED: Use consistent minimap scale (not dependent on viewScale)
-            const worldWidth = canvas.width;
-            const worldHeight = canvas.height;
-            const minimapScale = Math.min(
-                minimapCanvas.width / worldWidth,
-                minimapCanvas.height / worldHeight
-            ) * 0.9;
+            // Convert minimap delta to world delta
+            const worldDeltaX = (deltaX / minimap.offsetWidth) * canvas.width;
+            const worldDeltaY = (deltaY / minimap.offsetHeight) * canvas.height;
             
-            // Calculate offset for centered minimap
-            const offsetX = (minimapCanvas.width - worldWidth * minimapScale) / 2;
-            const offsetY = (minimapCanvas.height - worldHeight * minimapScale) / 2;
+            // Apply the world delta to the view
+            panOffset.x = minimapDragStart.viewX - worldDeltaX;
+            panOffset.y = minimapDragStart.viewY - worldDeltaY;
             
-            // Calculate viewport center in world coordinates
-            const viewportCenterX = (x - offsetX) / minimapScale;
-            const viewportCenterY = (y - offsetY) / minimapScale;
-            
-            // Position view so viewport center is at mouse position
-            viewOffset.x = -(viewportCenterX * viewScale - canvas.width / 2);
-            viewOffset.y = -(viewportCenterY * viewScale - canvas.height / 2);
-            
-            // Apply constraints
             constrainView();
         }
-        
+
+        /**
+         * Handles mouseup events on the document to stop minimap dragging.
+         */
         function handleMinimapMouseUp(e) {
-            if (!isMinimapDragging && e.type === 'mouseup') {
-                // Click without drag - center on clicked position
-                const rect = minimap.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                
-                // Calculate world scale for minimap
-                const worldWidth = canvas.width * viewScale;
-                const worldHeight = canvas.height * viewScale;
-                const minimapScale = Math.min(
-                    minimapCanvas.width / worldWidth,
-                    minimapCanvas.height / worldHeight
-                ) * 0.9;
-                
-                const offsetX = (minimapCanvas.width - worldWidth * minimapScale) / 2;
-                const offsetY = (minimapCanvas.height - worldHeight * minimapScale) / 2;
-                
-                // Convert minimap coordinates to world coordinates
-                const worldX = (x - offsetX) / minimapScale;
-                const worldY = (y - offsetY) / minimapScale;
-                
-                // Center view on clicked position
-                viewOffset.x = -(worldX * viewScale - canvas.width / 2);
-                viewOffset.y = -(worldY * viewScale - canvas.height / 2);
-                
-                // Apply constraints
-                constrainView();
-            }
-            
             isMinimapDragging = false;
-            minimap.classList.remove('dragging');
         }
-        
+
+        /**
+         * Handles the mouse wheel for zooming on the minimap.
+         * Zooms relative to the center of the viewport, not the cursor's position.
+         */
         function handleMinimapWheel(e) {
             e.preventDefault();
-            
-            // Get zoom sensitivity from slider (default 0.5)
-            const sensitivity = parseFloat(document.getElementById('zoomSensitivity')?.value || 0.5);
-            
-            // Zoom with same behavior as main canvas
-            const zoomFactor = 1 + (e.deltaY > 0 ? -0.05 : 0.05) * sensitivity;
             const oldScale = viewScale;
-            viewScale = Math.max(0.5, Math.min(20, viewScale * zoomFactor));
+            const zoomFactor = e.deltaY < 0 ? 1.1 : 0.9; // Zoom in on scroll up
             
-            // Apply constraints after zoom
-            constrainView();
-            
-            wizzyLog('random', `Zoomed via minimap to ${(viewScale * 100).toFixed(0)}% 🔍`, '🗺️');
+            viewScale *= zoomFactor;
+            constrainView(); // Clamp scale immediately
         }
 
-        // Duck-typed nutrient accumulation system
-        function accumulateNutrients(creature, foodNutrients) {
-            for (const [key, value] of Object.entries(foodNutrients)) {
-                if (!(key in creature.nutrients)) {
-                    // New nutrient type - just add it
-                    creature.nutrients[key] = value;
-                } else {
-                    const existing = creature.nutrients[key];
-                    
-                    // Duck typing rules:
-                    if (typeof existing === 'number' && typeof value === 'number') {
-                        // Number + Number = sum
-                        creature.nutrients[key] = existing + value;
-                    } else if (Array.isArray(existing)) {
-                        // Array + anything = append
-                        if (Array.isArray(value)) {
-                            creature.nutrients[key] = existing.concat(value);
-                        } else {
-                            creature.nutrients[key].push(value);
-                        }
-                    } else if (typeof existing === 'string' && typeof value === 'string') {
-                        // String + String = Array of both
-                        creature.nutrients[key] = [existing, value];
-                    } else if (typeof existing === 'string' && Array.isArray(value)) {
-                        // String + Array = prepend string to array
-                        creature.nutrients[key] = [existing].concat(value);
-                    } else if (Array.isArray(value) && typeof existing === 'string') {
-                        // Array + String = append string to array
-                        creature.nutrients[key] = value.concat([existing]);
-                    } else {
-                        // Any other combination: make array
-                        creature.nutrients[key] = [existing, value];
-                    }
-                }
-            }
-        }
-        
-        // Split a nutrient bag into two parts based on percentage (0-1)
-        function splitNutrients(nutrients, percentage = 0.5) {
-            const part1 = {};
-            const part2 = {};
-            
-            for (const [key, value] of Object.entries(nutrients)) {
-                if (typeof value === 'number') {
-                    // Split numbers by percentage
-                    const amount1 = value * percentage;
-                    const amount2 = value * (1 - percentage);
-                    if (amount1 > 0) part1[key] = amount1;
-                    if (amount2 > 0) part2[key] = amount2;
-                } else if (Array.isArray(value) && value.length > 0) {
-                    // Split arrays - randomly distribute items
-                    const shuffled = [...value].sort(() => Math.random() - 0.5);
-                    const splitPoint = Math.floor(shuffled.length * percentage);
-                    const items1 = shuffled.slice(0, splitPoint);
-                    const items2 = shuffled.slice(splitPoint);
-                    if (items1.length > 0) part1[key] = items1;
-                    if (items2.length > 0) part2[key] = items2;
-                } else if (typeof value === 'string') {
-                    // Strings go to one part based on percentage chance
-                    if (Math.random() < percentage) {
-                        part1[key] = value;
-                    } else {
-                        part2[key] = value;
-                    }
-                }
-            }
-            
-            return { part1, part2 };
-        }
-        
-        // Digest nutrients over time
-        function digestNutrients(creature) {
-            for (const [key, value] of Object.entries(creature.nutrients)) {
-                if (typeof value === 'number') {
-                    // Numbers fade down slowly
-                    creature.nutrients[key] = Math.max(0, value - 0.01 * actualSpeedMultiplier);
-                } else if (Array.isArray(value) && value.length > 0) {
-                    // Arrays occasionally pop items (with some randomness)
-                    if (Math.random() < 0.001 * actualSpeedMultiplier) {
-                        creature.nutrients[key].shift(); // Remove oldest item
-                    }
-                }
-            }
-        }
 
-        // Heisenbergian logging
-        function wizzyLog(type, message, emoji = '✨') {
-            if (!heisenbergLoggingEnabled) return;
-            if (actualSpeedMultiplier > logConfig.maxSpeed) return;
-            
-            const probability = logConfig[type] / 100;
-            if (Math.random() > probability) return;
-            
-            console.log(`${emoji} ${message}`);
-            
-            if (consoleLog.classList.contains('active')) {
-                const entry = document.createElement('div');
-                entry.className = 'log-entry';
-                entry.innerHTML = `${emoji} ${message}`;
-                consoleLog.appendChild(entry);
-                
-                // Keep only last 20 entries
-                while (consoleLog.children.length > 20) {
-                    consoleLog.removeChild(consoleLog.firstChild);
-                }
-                
-                consoleLog.scrollTop = consoleLog.scrollHeight;
-            }
-        }
-
-        // Stats tracking
-        const globalStats = {
-            totalHunts: 0,
-            successfulHunts: 0,
-            closeCalls: 0,
-            peakHour: { hour: 0, count: 0 },
-            hourlyHunts: new Array(24).fill(0)
-        };
-
-        // 3D Boid for Owls
-        class Owl {
-            constructor(id, timezone) {
-                this.id = id;
-                this.wizzy = generateWizzy('owl');
-                this.timezone = timezone;
-                this.timezoneOffset = parseInt(timezone.replace('UTC', '')) || 0;
-                this.active = false; // Start inactive by default
-                
-                // 3D position
-                this.position = {
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
-                    z: 50 + Math.random() * 100 // altitude 50-150
-                };
-                
-                // 3D velocity
-                this.velocity = {
-                    x: (Math.random() - 0.5) * 2,
-                    y: (Math.random() - 0.5) * 2,
-                    z: 0
-                };
-                
-                this.acceleration = { x: 0, y: 0, z: 0 };
-                this.maxSpeed = 6;
-                this.maxForce = 0.2;
-                
-                // Owl specific attributes
-                this.energy = 100;
-                this.catches = 0;
-                this.attempts = 0;
-                this.status = 'flying';
-                this.target = null;
-                this.restingTime = 0;
-                this.huntCooldown = 0;
-                
-                // Biological stats
-                this.poopCount = 0;
-                this.weight = 0.8 + Math.random() * 0.4; // 0.8-1.2 kg
-                this.lastPoopTime = 0;
-                this.lastAutoPoopTime = globalTime;
-                this.totalPoopWeight = 0; // Track total kg pooped
-                
-                // Duck-typed nutrient system with emoji keys!
-                this.nutrients = {
-                    '⚡': 100, // energy
-                    '🧠': Math.floor(Math.random() * 10), // wisdom
-                    '🎈': 50, // altitude
-                    '🪶': 1000 + Math.floor(Math.random() * 500), // feathers
-                    '🦉': ['whoo', 'hoot'], // hoots
-                    '💭': [], // memories
-                    '🌙': Math.random() * 5, // moonlight
-                    '👁️': 10 // vision
-                };
-                
-                // Activity tracking
-                this.activityHistory = [];
-                this.lastHuntTime = 0;
-                
-                // Manual control flag
-                this.manualControl = false;
-                this.wasInDroneMode = false;
-                
-                // Visual
-                this.radius = 8;
-                this.rotation = Math.random() * Math.PI * 2; // Start with random rotation
-                // Three-color gradient system
-                this.colors = {
-                    inner: owlishColors[Math.floor(Math.random() * owlishColors.length)],
-                    middle: owlishColors[Math.floor(Math.random() * owlishColors.length)],
-                    outer: owlishColors[Math.floor(Math.random() * owlishColors.length)]
-                };
-                // Middle color position varies between 20% and 60% of radius
-                this.middleColorPos = 0.2 + Math.random() * 0.4;
-                
-                wizzyLog('owl', `Owl ${this.wizzy} spawned in ${timezone} 🦉`, '🌟');
-            }
-
-            getLocalTime() {
-                let localMinutes = (globalTime + this.timezoneOffset * 60) % (24 * 60);
-                if (localMinutes < 0) localMinutes += 24 * 60;
-                const hours = Math.floor(localMinutes / 60);
-                const minutes = Math.floor(localMinutes % 60);
-                const seconds = Math.floor((localMinutes % 1) * 60);
-                return { hours, minutes, seconds, totalMinutes: localMinutes };
-            }
-
-            getFormattedLocalTime() {
-                const { hours, minutes, seconds } = this.getLocalTime();
-                return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-            }
-
-            isActiveTime() {
-                const { hours } = this.getLocalTime();
-                // Owls are most active at dusk/dawn and night
-                return hours < 6 || hours >= 18 || (hours >= 5 && hours < 7) || (hours >= 17 && hours < 19);
-            }
-
-            getScreenPosition() {
-                const scale = 1 + this.position.z / 200;
-                return {
-                    x: this.position.x,
-                    y: this.position.y - this.position.z / 2,
-                    scale: scale
-                };
-            }
-
-            isPointInside(x, y) {
-                const pos = this.getScreenPosition();
-                const dist = Math.sqrt((x - pos.x) ** 2 + (y - pos.y) ** 2);
-                // Use owlFeather for hit detection since that's the visual size
-                return dist < owlFeather * pos.scale * 0.8; // 80% of visual size for better feel
-            }
-
-            update(owls, mice) {
-                if (!this.active) return; // Skip inactive owls
-                
-                if (isDragging && dragTarget === this) {
-                    // Allow position updates but skip physics
-                    return;
-                }
-
-                // Always handle physics updates first
-                this.velocity.x += this.acceleration.x;
-                this.velocity.y += this.acceleration.y;
-                this.velocity.z += this.acceleration.z;
-                
-                // Limit speed
-                const currentSpeed = Math.sqrt(
-                    this.velocity.x ** 2 + 
-                    this.velocity.y ** 2 + 
-                    this.velocity.z ** 2
-                );
-                const maxSpeedLimit = this.status === 'droning' ? this.maxSpeed * 2 : this.maxSpeed;
-                if (currentSpeed > maxSpeedLimit) {
-                    const factor = maxSpeedLimit / currentSpeed;
-                    this.velocity.x *= factor;
-                    this.velocity.y *= factor;
-                    this.velocity.z *= factor;
-                }
-
-                // Update rotation based on velocity if moving (only in non-droning autonomous modes)
-                if (!this.manualControl && this.status !== 'droning' && (this.velocity.x !== 0 || this.velocity.y !== 0)) {
-                    // Smooth rotation updates to prevent jerking
-                    const targetRotation = Math.atan2(this.velocity.y, this.velocity.x) + Math.PI / 2;
-                    const rotationDiff = targetRotation - this.rotation;
-                    // Normalize the difference to [-PI, PI]
-                    let normalizedDiff = rotationDiff;
-                    while (normalizedDiff > Math.PI) normalizedDiff -= 2 * Math.PI;
-                    while (normalizedDiff < -Math.PI) normalizedDiff += 2 * Math.PI;
-                    // Apply smooth rotation (10% per frame)
-                    this.rotation += normalizedDiff * 0.1;
-                }
-
-                // Update position
-                this.position.x += this.velocity.x * actualSpeedMultiplier;
-                this.position.y += this.velocity.y * actualSpeedMultiplier;
-                this.position.z += this.velocity.z * actualSpeedMultiplier;
-
-                // Boundaries - BOUNCE off walls for owls!
-                const bounceDampening = 0.85; // Lose 15% speed on bounce
-                const wallMargin = 25; // Positive margin keeps owls ON SCREEN while bouncing
-                
-                // X boundaries - BOUNCE!
-                if (this.position.x <= wallMargin) {
-                    this.position.x = wallMargin;
-                    this.velocity.x = Math.abs(this.velocity.x) * bounceDampening;
-                    wizzyLog('random', `${this.wizzy} bounces off left wall! 🏐`, '💥');
-                    playSound('bounce', 0.7);
-                } else if (this.position.x >= canvas.width - wallMargin) {
-                    this.position.x = canvas.width - wallMargin;
-                    this.velocity.x = -Math.abs(this.velocity.x) * bounceDampening;
-                    wizzyLog('random', `${this.wizzy} bounces off right wall! 🏐`, '💥');
-                    playSound('bounce', 0.7);
-                }
-                
-                // Y boundaries - BOUNCE!
-                if (this.position.y <= wallMargin) {
-                    this.position.y = wallMargin;
-                    this.velocity.y = Math.abs(this.velocity.y) * bounceDampening;
-                    wizzyLog('random', `${this.wizzy} bounces off top wall! 🏐`, '💥');
-                    playSound('bounce', 0.7);
-                } else if (this.position.y >= canvas.height - wallMargin) {
-                    this.position.y = canvas.height - wallMargin;
-                    this.velocity.y = -Math.abs(this.velocity.y) * bounceDampening;
-                    wizzyLog('random', `${this.wizzy} bounces off bottom wall! 🏐`, '💥');
-                    playSound('bounce', 0.7);
-                }
-                
-                // Z boundaries (altitude) - gentle clamp
-                this.position.z = Math.max(20, Math.min(200, this.position.z));
-
-                // Reset acceleration
-                this.acceleration = { x: 0, y: 0, z: 0 };
-
-                // Skip autonomous behavior when in droning mode
-                if (this.status === 'droning') {
-                    // Apply friction when no input
-                    if (!this.manualControl) {
-                        this.velocity.x *= 0.95;
-                        this.velocity.y *= 0.95;
-                        this.velocity.z *= 0.9;
-                    }
-                    return;
-                }
-
-                const activeTime = this.isActiveTime();
-                
-                // Auto-exit drone mode if not selected
-                if (this.status === 'droning' && selectedOwl !== this) {
-                    this.status = 'flying';
-                    this.wasInDroneMode = false; // Reset flag for next selection
-                    wizzyLog('owl', `${this.wizzy} exits drone mode, returns to flying 🦅`, '🔄');
-                }
-                
-                // Energy management
-                if (this.status === 'hunting') {
-                    this.energy -= 0.5 * actualSpeedMultiplier;
-                } else if (this.status === 'resting') {
-                    this.energy = Math.min(100, this.energy + 0.3 * actualSpeedMultiplier);
-                } else {
-                    this.energy -= 0.1 * actualSpeedMultiplier;
-                }
-
-                // State transitions (skip if in droning mode)
-                if (this.status !== 'droning') {
-                    const oldStatus = this.status;
-                    if (this.energy < 20 || !activeTime) {
-                        this.status = 'resting';
-                        this.target = null;
-                        if (oldStatus !== 'resting') {
-                            wizzyLog('owl', `${this.wizzy} is tired and resting 😴`, '🌙');
-                            playSound('rest');
-                        }
-                    } else if (this.energy > 60 && activeTime && this.huntCooldown <= 0) {
-                        // Look for prey
-                        if (!this.target || this.target.caught) {
-                            this.target = this.findNearestMouse(mice);
-                            if (this.target) {
-                                this.status = 'hunting';
-                                this.attempts++;
-                                globalStats.totalHunts++;
-                                const hour = this.getLocalTime().hours;
-                                globalStats.hourlyHunts[hour]++;
-                                wizzyLog('hunt', `${this.wizzy} spots prey ${this.target.wizzy} and begins hunting! 🎯`, '🔥');
-                                playSound('hunt');
-                            }
-                        }
-                    }
-                }
-
-                // Behavior based on status
-                if (this.status === 'hunting' && this.target) {
-                    this.hunt();
-                } else if (this.status === 'resting') {
-                    this.rest();
-                } else if (this.status === 'flying') {
-                    this.patrol(owls);
-                }
-                // Droning mode does nothing autonomous
-
-                // Update cooldowns
-                if (this.huntCooldown > 0) this.huntCooldown -= actualSpeedMultiplier;
-                
-                // Digest nutrients
-                digestNutrients(this);
-                
-                // Auto-poop logic
-                if (globalTime - this.lastAutoPoopTime > poopConfig.autoPoopInterval) {
-                    this.poop(false); // Auto poop
-                    this.lastAutoPoopTime = globalTime;
-                }
-                
-                // Random wizzy events
-                if (Math.random() < 0.001 * actualSpeedMultiplier) {
-                    wizzyLog('random', `${this.wizzy} does a barrel roll! 🌀`, '🎪');
-                    playSound('ambient', 0.2);
-                }
-            }
-
-            setTimezone(newTimezone) {
-                const oldTz = this.timezone;
-                this.timezone = newTimezone;
-                this.timezoneOffset = parseInt(newTimezone.replace('UTC', '')) || 0;
-                wizzyLog('time', `${this.wizzy} warped from ${oldTz} to ${newTimezone}! ⏰`, '🌍');
-            }
-
-            findNearestMouse(mice) {
-                let nearest = null;
-                let minDist = this.position.z * 3; // Vision range based on altitude
-
-                mice.forEach(mouse => {
-                    if (mouse.active && !mouse.caught) { // Only hunt active mice
-                        const dist = this.distance2D(this.position, mouse.position);
-                        if (dist < minDist) {
-                            minDist = dist;
-                            nearest = mouse;
-                        }
-                    }
-                });
-
-                return nearest;
-            }
-
-            hunt() {
-                if (!this.target || this.target.caught) {
-                    this.status = 'flying';
-                    this.target = null;
-                    return;
-                }
-
-                // Dive towards prey
-                const dx = this.target.position.x - this.position.x;
-                const dy = this.target.position.y - this.position.y;
-                const dz = 0 - this.position.z; // Dive to ground
-                
-                const dist = Math.sqrt(dx * dx + dy * dy + this.position.z * this.position.z);
-                
-                if (dist < 20 && this.position.z < 30) {
-                    // Scare attempt
-                    const successChance = 0.7 - (this.energy < 50 ? 0.2 : 0);
-                    if (Math.random() < successChance) {
-                        // SCARE NUTRIENTS OUT!
-                        if (globalTime - this.target.lastPoopTime > 50) { // Shorter cooldown for more fear poops!
-                            // Split mouse nutrients 50/50 between owl and poop
-                            const { part1: owlGains, part2: mouseKeeps } = splitNutrients(this.target.nutrients, 0.5);
-                            
-                            // Owl gains some nutrients from scare
-                            accumulateNutrients(this, owlGains);
-                            
-                            // Mouse keeps half their nutrients
-                            this.target.nutrients = mouseKeeps;
-                            
-                            // Mouse poops the nutrients the owl gained!
-                            this.target.poop(false); // This will now poop from reduced nutrients
-                            
-                            this.scares = (this.scares || 0) + 1;
-                            this.energy = Math.min(100, this.energy + 20); // Less energy than catching
-                            this.lastHuntTime = globalTime;
-                            globalStats.successfulHunts++;
-                            
-                            // Count nutrients gained
-                            const gainedCount = Object.keys(owlGains).length;
-                            wizzyLog('hunt', `${this.wizzy} scared ${gainedCount} nutrients out of ${this.target.wizzy}! Total scares: ${this.scares} 😱`, '💩');
-                            playSound('poop');
-                            
-                            // Mouse runs away at double speed (safety check for NaN)
-                            if (!isNaN(this.target.velocity.x) && !isNaN(this.target.velocity.y)) {
-                                this.target.velocity.x *= 2;
-                                this.target.velocity.y *= 2;
-                            }
-                        }
-                    } else {
-                        wizzyLog('hunt', `${this.wizzy} missed! ${this.target.wizzy} escapes! 🏃`, '💨');
-                        playSound('escape', 0.3); // Lower volume for misses too
-                    }
-                    this.status = 'flying';
-                    this.target = null;
-                    this.huntCooldown = 60; // Wait before next hunt
-                    
-                    // Climb back up
-                    this.velocity.z = 2;
-                } else {
-                    // Continue diving
-                    this.acceleration.x = dx * 0.02;
-                    this.acceleration.y = dy * 0.02;
-                    this.acceleration.z = dz * 0.03;
-                }
-            }
-
-            rest() {
-                // Find a high perch
-                if (this.position.z < 150) {
-                    this.acceleration.z = 0.5;
-                }
-                
-                // Slow down
-                this.velocity.x *= 0.95;
-                this.velocity.y *= 0.95;
-                this.velocity.z *= 0.95;
-                
-                this.restingTime += actualSpeedMultiplier;
-                
-                if (this.restingTime > 100 && this.energy > 80) {
-                    this.status = 'flying';
-                    this.restingTime = 0;
-                    wizzyLog('owl', `${this.wizzy} is refreshed and ready to fly! 💪`, '🌟');
-                    playSound('ambient', 0.4);
-                }
-            }
-
-            patrol(owls) {
-                // 3D flocking behavior
-                const perception = 100;
-                let alignment = { x: 0, y: 0, z: 0 };
-                let cohesion = { x: 0, y: 0, z: 0 };
-                let separation = { x: 0, y: 0, z: 0 };
-                let total = 0;
-
-                owls.forEach(other => {
-                    if (other !== this && other.active) { // Only flock with active owls
-                        const dist = this.distance3D(this.position, other.position);
-                        if (dist < perception) {
-                            // Alignment
-                            alignment.x += other.velocity.x;
-                            alignment.y += other.velocity.y;
-                            alignment.z += other.velocity.z;
-                            
-                            // Cohesion
-                            cohesion.x += other.position.x;
-                            cohesion.y += other.position.y;
-                            cohesion.z += other.position.z;
-                            
-                            // Separation
-                            if (dist < 50) {
-                                const diff = {
-                                    x: this.position.x - other.position.x,
-                                    y: this.position.y - other.position.y,
-                                    z: this.position.z - other.position.z
-                                };
-                                diff.x /= dist;
-                                diff.y /= dist;
-                                diff.z /= dist;
-                                separation.x += diff.x;
-                                separation.y += diff.y;
-                                separation.z += diff.z;
-                            }
-                            
-                            total++;
-                        }
-                    }
-                });
-
-                if (total > 0) {
-                    // Apply flocking forces
-                    alignment.x /= total;
-                    alignment.y /= total;
-                    alignment.z /= total;
-                    
-                    cohesion.x = cohesion.x / total - this.position.x;
-                    cohesion.y = cohesion.y / total - this.position.y;
-                    cohesion.z = cohesion.z / total - this.position.z;
-                    
-                    this.acceleration.x += alignment.x * 0.1 + cohesion.x * 0.05 + separation.x * 0.15;
-                    this.acceleration.y += alignment.y * 0.1 + cohesion.y * 0.05 + separation.y * 0.15;
-                    this.acceleration.z += alignment.z * 0.1 + cohesion.z * 0.05 + separation.z * 0.15;
-                }
-
-                // Random wander
-                this.acceleration.x += (Math.random() - 0.5) * 0.1;
-                this.acceleration.y += (Math.random() - 0.5) * 0.1;
-                this.acceleration.z += (Math.random() - 0.5) * 0.05;
-            }
-
-            distance2D(a, b) {
-                return Math.sqrt((a.x - b.x) ** 2 + (a.y - b.y) ** 2);
-            }
-
-            distance3D(a, b) {
-                return Math.sqrt(
-                    (a.x - b.x) ** 2 + 
-                    (a.y - b.y) ** 2 + 
-                    (a.z - b.z) ** 2
-                );
-            }
-            
-            poop(isManual = false) {
-                const poopType = isManual ? 'voluntary' : 'auto';
-                
-                // Select nutrients to expel (recycling system)
-                const nutrientKeys = Object.keys(this.nutrients).filter(k => {
-                    const v = this.nutrients[k];
-                    return (typeof v === 'number' && v > 0) || 
-                           (Array.isArray(v) && v.length > 0) || 
-                           (typeof v === 'string');
-                });
-                
-                // Different poop types based on mood/digestion
-                const poopMood = Math.random();
-                let expelledNutrients = {};
-                
-                if (poopMood < 0.25 && nutrientKeys.length > 0) {
-                    // Pure single nutrient poop (25% chance)
-                    const key = nutrientKeys[Math.floor(Math.random() * nutrientKeys.length)];
-                    const value = this.nutrients[key];
-                    
-                    if (typeof value === 'number' && value > 0) {
-                        const amount = Math.min(value, Math.random() * 20 + 15);
-                        expelledNutrients[key] = amount;
-                        this.nutrients[key] -= amount;
-                    } else if (Array.isArray(value) && value.length > 0) {
-                        expelledNutrients[key] = value.splice(0, Math.min(value.length, 8));
-                    } else if (typeof value === 'string') {
-                        expelledNutrients[key] = value;
-                        delete this.nutrients[key];
-                    }
-                    wizzyLog('random', `${this.wizzy} pure ${key} bomb! 💩`, '🎯');
-                } else if (poopMood < 0.5) {
-                    // Mixed balanced nutrients (25% chance)
-                    const numNutrients = Math.min(nutrientKeys.length, Math.floor(Math.random() * 3) + 2); // 2-4 nutrients
-                    for (let i = 0; i < numNutrients; i++) {
-                        const idx = Math.floor(Math.random() * nutrientKeys.length);
-                        const key = nutrientKeys.splice(idx, 1)[0];
-                        const value = this.nutrients[key];
-                        
-                        if (typeof value === 'number' && value > 0) {
-                            const amount = Math.min(value, Math.random() * 15 + 5);
-                            expelledNutrients[key] = amount;
-                            this.nutrients[key] -= amount;
-                        } else if (Array.isArray(value) && value.length > 0) {
-                            const count = Math.min(value.length, Math.floor(Math.random() * 4) + 1);
-                            expelledNutrients[key] = value.splice(0, count);
-                        } else if (typeof value === 'string') {
-                            expelledNutrients[key] = value;
-                            delete this.nutrients[key];
-                        }
-                    }
-                } else {
-                    // Random combo (50% chance)
-                    const numNutrients = Math.min(nutrientKeys.length, Math.floor(Math.random() * 6) + 1); // 1-6 nutrients
-                    for (let i = 0; i < numNutrients; i++) {
-                        const idx = Math.floor(Math.random() * nutrientKeys.length);
-                        const key = nutrientKeys.splice(idx, 1)[0];
-                        const value = this.nutrients[key];
-                        
-                        if (typeof value === 'number' && value > 0) {
-                            const amount = Math.min(value, Math.random() * 25 + 1);
-                            expelledNutrients[key] = amount;
-                            this.nutrients[key] -= amount;
-                        } else if (Array.isArray(value) && value.length > 0) {
-                            const count = Math.min(value.length, Math.floor(Math.random() * value.length) + 1);
-                            expelledNutrients[key] = value.splice(0, count);
-                        } else if (typeof value === 'string') {
-                            expelledNutrients[key] = value;
-                            delete this.nutrients[key];
-                        }
-                    }
-                }
-                
-                // Owl poops fall from their altitude!
-                const dropY = this.position.y - this.position.z / 2; // Adjust for screen position
-                const newPoop = new Poop(
-                    this.position.x,
-                    dropY,
-                    this.wizzy,
-                    'owl',
-                    poopType,
-                    expelledNutrients,
-                    this.position.z,  // Pass altitude for ground calculation
-                    this.velocity     // Pass owl velocity for poop physics
-                );
-                
-                poops.push(newPoop);
-                this.poopCount++;
-                this.totalPoopWeight += poopConfig.owlPoopWeight / 1000; // Convert to kg
-                this.lastPoopTime = globalTime;
-                
-                // Remove old poops if too many
-                if (poops.length > MAX_POOPS) {
-                    poops.shift();
-                }
-                
-                // Propulsion! Pooping makes owl go faster in forward direction
-                const propulsionForce = 3; // Jet propulsion strength
-                const angle = Math.atan2(this.velocity.y, this.velocity.x);
-                this.velocity.x += Math.cos(angle) * propulsionForce;
-                this.velocity.y += Math.sin(angle) * propulsionForce;
-                
-                // Also gain altitude from relief
-                this.velocity.z += 2;
-                
-                const nutrientList = Object.entries(expelledNutrients).map(([k,v]) => 
-                    `${k}:${Array.isArray(v) ? v.length : typeof v === 'number' ? v.toFixed(1) : v}`
-                ).join(', ');
-                wizzyLog('random', `${this.wizzy} drops nutrients from ${Math.round(this.position.z)}m! [${nutrientList}] 💩⬇️`, '🦉');
-                playSound('poop', 0.8);
-            }
-
-            draw() {
-                if (!this.active) return; // Skip inactive owls
-                
-                const pos = this.getScreenPosition();
-
-                ctx.save();
-                
-                // Move to owl position
-                ctx.translate(pos.x, pos.y);
-                
-                // Draw golden halo if selected (before rotation so it doesn't rotate)
-                const scaleFactor = selectedOwl === this ? 1.1 : 1; // Even smaller size increase when selected
-                if (selectedOwl === this) {
-                    const haloRadius = owlFeather * pos.scale * 1.3; // Even smaller halo
-                    const haloGradient = ctx.createRadialGradient(0, 0, 0, 0, 0, haloRadius);
-                    
-                    // Much more subtle golden halo
-                    haloGradient.addColorStop(0, 'rgba(255, 215, 0, 0)'); // Transparent center
-                    haloGradient.addColorStop(0.3, 'rgba(255, 215, 0, 0.1)'); // Very faint gold
-                    haloGradient.addColorStop(0.6, 'rgba(255, 215, 0, 0.15)'); // Slightly brighter
-                    haloGradient.addColorStop(0.8, 'rgba(255, 215, 0, 0.1)'); // Fading
-                    haloGradient.addColorStop(1, 'rgba(255, 215, 0, 0)'); // Fully transparent
-                    
-                    ctx.fillStyle = haloGradient;
-                    ctx.beginPath();
-                    ctx.arc(0, 0, haloRadius, 0, Math.PI * 2);
-                    ctx.fill();
-                }
-                
-                // Apply rotation (always use stored rotation)
-                ctx.rotate(this.rotation);
-                
-                // Create feathered gradient with three colors (no status tinting)
-                const gradient = ctx.createRadialGradient(0, 0, 0, 0, 0, owlFeather * pos.scale * scaleFactor);
-                
-                // Pure three-color gradient with natural feathering
-                gradient.addColorStop(0, this.colors.inner + 'FF'); // Inner color, full opacity
-                gradient.addColorStop(this.middleColorPos * 0.7, this.colors.inner + 'DD');
-                gradient.addColorStop(this.middleColorPos, this.colors.middle + 'CC'); // Middle color
-                gradient.addColorStop(this.middleColorPos * 1.3, this.colors.middle + '99');
-                gradient.addColorStop(0.7, this.colors.outer + '66'); // Outer color starts fading
-                gradient.addColorStop(0.85, this.colors.outer + '33');
-                gradient.addColorStop(1, this.colors.outer + '00'); // Fully transparent
-
-                // Draw fuzzy owl body
-                ctx.fillStyle = gradient;
-                ctx.beginPath();
-                ctx.arc(0, 0, owlFeather * pos.scale * scaleFactor, 0, Math.PI * 2);
-                ctx.fill();
-                
-                // Draw status indicator as dashed circle with 0.5 opacity
-                ctx.save();
-                ctx.globalAlpha = 0.5;
-                
-                // Status indicators - same size regardless of selection
-                const statusRadius = owlStatusRadius * pos.scale;
-                
-                if (this.status === 'droning') {
-                    // Droning mode - bright purple with tight dashes
-                    ctx.strokeStyle = '#ff00ff';
-                    ctx.lineWidth = 3 * pos.scale;
-                    ctx.setLineDash([4 * pos.scale, 4 * pos.scale]);
-                } else if (this.status === 'hunting') {
-                    // Hunting - red with wide gaps (vents open)
-                    ctx.strokeStyle = '#ff4444';
-                    ctx.lineWidth = 2.5 * pos.scale;
-                    ctx.setLineDash([8 * pos.scale, 12 * pos.scale]);
-                } else if (this.status === 'resting') {
-                    // Resting - blue with tight dashes (vents closed)
-                    ctx.strokeStyle = '#4444ff';
-                    ctx.lineWidth = 2 * pos.scale;
-                    ctx.setLineDash([3 * pos.scale, 3 * pos.scale]);
-                } else {
-                    // Flying - orange with medium dashes
-                    ctx.strokeStyle = '#ff8800';
-                    ctx.lineWidth = 2 * pos.scale;
-                    ctx.setLineDash([6 * pos.scale, 6 * pos.scale]);
-                }
-                
-                ctx.beginPath();
-                ctx.arc(0, 0, statusRadius, 0, Math.PI * 2);
-                ctx.stroke();
-                
-                // Reset line dash
-                ctx.setLineDash([]);
-                
-                // Draw temporary control indicator if applicable
-                if (this.manualControl && this.status !== 'droning') {
-                    ctx.strokeStyle = '#00ffff';
-                    ctx.lineWidth = 1 * pos.scale;
-                    ctx.beginPath();
-                    ctx.arc(0, 0, statusRadius * 1.1, 0, Math.PI * 2);
-                    ctx.stroke();
-                }
-                
-                ctx.restore();
-
-                // WIZZY ID label - split into letters and emojis
-                const letters = this.wizzy.match(/[A-Z]/g) || [];
-                const emojis = this.wizzy.match(/[^\w\s]/g) || [];
-                
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
-                
-                // Draw WIZZY ID as single string (emojis render better this way)
-                ctx.font = `bold ${8 * pos.scale}px Arial`;
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
-                ctx.shadowBlur = 2 * pos.scale;
-                ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
-                ctx.fillText(this.wizzy, 0, 0);
-
-                ctx.restore();
-            }
-        }
-
-        // 2D Boid for Mice
-        class Mouse {
-            constructor(index) {
-                this.active = false; // Start inactive by default
-                this.position = {
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height
-                };
-                this.velocity = {
-                    x: (Math.random() - 0.5) * 2,
-                    y: (Math.random() - 0.5) * 2
-                };
-                this.acceleration = { x: 0, y: 0 };
-                this.maxSpeed = 3;
-                this.maxForce = 0.05;
-                this.caught = false;
-                this.caughtBy = null;
-                this.radius = 3;
-                this.id = Math.random().toString(36).substr(2, 9);
-                this.wizzy = generateWizzy('mouse');
-                this.closeCallCount = 0;
-                this.rotation = Math.random() * Math.PI * 2; // Start with random rotation
-                // Three-color gradient system
-                this.colors = {
-                    inner: mousyColors[Math.floor(Math.random() * mousyColors.length)],
-                    middle: mousyColors[Math.floor(Math.random() * mousyColors.length)],
-                    outer: mousyColors[Math.floor(Math.random() * mousyColors.length)]
-                };
-                // Middle color position varies between 20% and 60% of radius
-                this.middleColorPos = 0.2 + Math.random() * 0.4;
-                
-                // Biological stats
-                this.poopCount = 0;
-                this.weight = 20 + Math.random() * 20; // 20-40 grams
-                this.lastPoopTime = 0;
-                this.lastAutoPoopTime = globalTime;
-                this.totalPoopWeight = 0; // Track total kg pooped
-                
-                // Duck-typed nutrient system with emoji keys!
-                this.nutrients = {
-                    '⚡': 50, // energy
-                    '💨': 3, // speed
-                    '🐭': 12 + Math.floor(Math.random() * 6), // whiskers
-                    '🔊': ['eek', 'squeak'], // squeaks
-                    '💭': [], // dreams
-                    '💪': Math.random() * 5, // courage
-                    '🧀': Math.random() * 10, // cheese desire
-                    '👃': 5 // smell
-                };
-                
-                // Manual control flag
-                this.manualControl = false;
-                this.wasInDroneMode = false;
-                this.status = 'foraging'; // Mice have status too: foraging, fleeing, droning
-                
-                wizzyLog('mouse', `Mouse ${this.wizzy} spawned! 🐭`, '✨');
-            }
-
-            isPointInside(x, y) {
-                const dist = Math.sqrt((x - this.position.x) ** 2 + (y - this.position.y) ** 2);
-                // Use mouseFeather for hit detection since that's the visual size
-                return dist < mouseFeather * 0.8; // 80% of visual size for better feel
-            }
-            
-            poop(isManual = false) {
-                const poopType = isManual ? 'voluntary' : 'auto';
-                
-                // Select nutrients to expel (recycling system)
-                const nutrientKeys = Object.keys(this.nutrients).filter(k => {
-                    const v = this.nutrients[k];
-                    return (typeof v === 'number' && v > 0) || 
-                           (Array.isArray(v) && v.length > 0) || 
-                           (typeof v === 'string');
-                });
-                
-                // Different poop types for mice (smaller, more frequent)
-                const poopMood = Math.random();
-                let expelledNutrients = {};
-                
-                if (poopMood < 0.4 && nutrientKeys.length > 0) {
-                    // Pure single nutrient pellet (40% chance for mice)
-                    const key = nutrientKeys[Math.floor(Math.random() * nutrientKeys.length)];
-                    const value = this.nutrients[key];
-                    
-                    if (typeof value === 'number' && value > 0) {
-                        const amount = Math.min(value, Math.random() * 8 + 2);
-                        expelledNutrients[key] = amount;
-                        this.nutrients[key] -= amount;
-                    } else if (Array.isArray(value) && value.length > 0) {
-                        expelledNutrients[key] = value.splice(0, Math.min(value.length, 3));
-                    } else if (typeof value === 'string') {
-                        expelledNutrients[key] = value;
-                        delete this.nutrients[key];
-                    }
-                    wizzyLog('random', `${this.wizzy} pure ${key} pellet! 💩`, '🎯');
-                } else {
-                    // Mixed pellet (60% chance)
-                    const numNutrients = Math.min(nutrientKeys.length, Math.floor(Math.random() * 3) + 1); // 1-3 nutrients
-                    for (let i = 0; i < numNutrients; i++) {
-                        const idx = Math.floor(Math.random() * nutrientKeys.length);
-                        const key = nutrientKeys.splice(idx, 1)[0];
-                        const value = this.nutrients[key];
-                        
-                        if (typeof value === 'number' && value > 0) {
-                            const amount = Math.min(value, Math.random() * 5 + 1);
-                            expelledNutrients[key] = amount;
-                            this.nutrients[key] -= amount;
-                        } else if (Array.isArray(value) && value.length > 0) {
-                            const count = Math.min(value.length, Math.floor(Math.random() * 2) + 1);
-                            expelledNutrients[key] = value.splice(0, count);
-                        } else if (typeof value === 'string') {
-                            expelledNutrients[key] = value;
-                            delete this.nutrients[key];
-                        }
-                    }
-                }
-                
-                // Mouse poops at current position
-                const newPoop = new Poop(
-                    this.position.x,
-                    this.position.y,
-                    this.wizzy,
-                    'mouse',
-                    poopType,
-                    expelledNutrients
-                );
-                
-                poops.push(newPoop);
-                this.poopCount++;
-                this.totalPoopWeight += poopConfig.mousePoopWeight / 1000; // Convert to kg
-                this.lastPoopTime = globalTime;
-                
-                // Remove old poops if too many
-                if (poops.length > MAX_POOPS) {
-                    poops.shift();
-                }
-                
-                // Move forward a bit after pooping
-                const pushForce = 0.5;
-                this.velocity.x += Math.sin(this.rotation) * pushForce;
-                this.velocity.y += -Math.cos(this.rotation) * pushForce;
-                
-                const nutrientList = Object.entries(expelledNutrients).map(([k,v]) => 
-                    `${k}:${Array.isArray(v) ? v.length : typeof v === 'number' ? v.toFixed(1) : v}`
-                ).join(', ');
-                wizzyLog('random', `${this.wizzy} drops pellet! [${nutrientList}] 💩`, '🐭');
-                playSound('poop', 0.6);
-            }
-
-            update(mice, owls) {
-                if (!this.active || this.caught) return; // Skip inactive or caught mice
-                if (isDragging && dragTarget === this) {
-                    // Allow drawing but skip physics
-                    return;
-                }
-
-                // Always handle physics updates first
-                this.velocity.x += this.acceleration.x;
-                this.velocity.y += this.acceleration.y;
-                
-                // Limit speed
-                const currentSpeed = Math.sqrt(this.velocity.x ** 2 + this.velocity.y ** 2);
-                const maxSpeedLimit = this.status === 'droning' ? this.maxSpeed * 2 : this.maxSpeed;
-                if (currentSpeed > maxSpeedLimit) {
-                    this.velocity.x = (this.velocity.x / currentSpeed) * maxSpeedLimit;
-                    this.velocity.y = (this.velocity.y / currentSpeed) * maxSpeedLimit;
-                }
-
-                // Update rotation based on velocity if moving (only in non-droning autonomous modes)
-                if (!this.manualControl && this.status !== 'droning' && (this.velocity.x !== 0 || this.velocity.y !== 0)) {
-                    // Smooth rotation updates to prevent jerking
-                    const targetRotation = Math.atan2(this.velocity.y, this.velocity.x) + Math.PI / 2;
-                    const rotationDiff = targetRotation - this.rotation;
-                    // Normalize the difference to [-PI, PI]
-                    let normalizedDiff = rotationDiff;
-                    while (normalizedDiff > Math.PI) normalizedDiff -= 2 * Math.PI;
-                    while (normalizedDiff < -Math.PI) normalizedDiff += 2 * Math.PI;
-                    // Apply smooth rotation (10% per frame)
-                    this.rotation += normalizedDiff * 0.1;
-                }
-
-                // Update position
-                this.position.x += this.velocity.x * actualSpeedMultiplier;
-                this.position.y += this.velocity.y * actualSpeedMultiplier;
-
-                // World wrapping for mice only! (helps them escape)
-                if (this.position.x < 0) this.position.x = canvas.width;
-                if (this.position.x >= canvas.width) this.position.x = 0;
-                if (this.position.y < 0) this.position.y = canvas.height;
-                if (this.position.y >= canvas.height) this.position.y = 0;
-                
-                // Reset acceleration
-                this.acceleration = { x: 0, y: 0 };
-
-                // Auto-exit drone mode if not selected
-                if (this.status === 'droning' && selectedMouse !== this) {
-                    this.status = 'foraging';
-                    this.wasInDroneMode = false; // Reset flag for next selection
-                    wizzyLog('mouse', `${this.wizzy} exits drone mode, returns to foraging 🌾`, '🔄');
-                }
-
-                // Skip autonomous behavior when in droning mode
-                if (this.status === 'droning') {
-                    // Apply friction when no input
-                    if (!this.manualControl) {
-                        this.velocity.x *= 0.95;
-                        this.velocity.y *= 0.95;
-                    }
-                    
-                    // IMPORTANT: Boundary wrapping for droning mice too!
-                    if (this.position.x < 0) this.position.x = canvas.width;
-                    if (this.position.x >= canvas.width) this.position.x = 0;
-                    if (this.position.y < 0) this.position.y = canvas.height;
-                    if (this.position.y >= canvas.height) this.position.y = 0;
-                    
-                    return;
-                }
-
-                // Basic flocking
-                const perception = 25;
-                let alignment = { x: 0, y: 0 };
-                let cohesion = { x: 0, y: 0 };
-                let separation = { x: 0, y: 0 };
-                let total = 0;
-
-                // Mouse magnet attraction
-                let magnetForce = { x: 0, y: 0 };
-                if (isMagnetActive) {
-                    const magnetRadius = parseFloat(document.getElementById('magnetRadius').value);
-                    const neutralRadius = magnetRadius * (magnetNeutralZone / 100);
-                    const dist = Math.sqrt(
-                        (this.position.x - magnetPosition.x) ** 2 +
-                        (this.position.y - magnetPosition.y) ** 2
-                    );
-                    
-                    // Only apply force if outside neutral zone
-                    if (dist < magnetRadius && dist > neutralRadius) {
-                        // Use magnetStrength variable (can be negative for repulsion)
-                        const effectiveDist = dist - neutralRadius;
-                        const effectiveRadius = magnetRadius - neutralRadius;
-                        const strength = magnetStrength * (1 - effectiveDist / effectiveRadius);
-                        magnetForce.x = (magnetPosition.x - this.position.x) / dist * strength;
-                        magnetForce.y = (magnetPosition.y - this.position.y) / dist * strength;
-                    }
-                }
-
-                // Flee from owls
-                let flee = { x: 0, y: 0 };
-                owls.forEach(owl => {
-                    if (owl.active && owl.status === 'hunting' && owl.position.z < 50) { // Only flee from active owls
-                        const dist = Math.sqrt(
-                            (this.position.x - owl.position.x) ** 2 +
-                            (this.position.y - owl.position.y) ** 2
-                        );
-                        if (dist < 100) {
-                            if (dist < 30) {
-                                this.closeCallCount++;
-                                globalStats.closeCalls++;
-                                
-                                // Track escapes for grouped logging
-                                const now = Date.now();
-                                if (!recentEscapes.has(this.id)) {
-                                    recentEscapes.set(this.id, { count: 0, owls: new Set(), lastTime: now });
-                                }
-                                const escapeData = recentEscapes.get(this.id);
-                                escapeData.count++;
-                                escapeData.owls.add(owl.wizzy);
-                                escapeData.lastTime = now;
-                                
-                                // Only log occasionally and with very low probability
-                                if (Math.random() < logConfig.escape / 100) {
-                                    if (escapeData.count > 1) {
-                                        wizzyLog('escape', `${this.wizzy} has escaped ${escapeData.count} times from ${Array.from(escapeData.owls).join(', ')}! 😱`, '💨💨💨');
-                                    } else {
-                                        wizzyLog('escape', `${this.wizzy} narrowly escapes from ${owl.wizzy}! 😱`, '💨');
-                                    }
-                                }
-                                playSound('escape', 0.2); // Even quieter for close calls
-                            }
-                            const diff = {
-                                x: this.position.x - owl.position.x,
-                                y: this.position.y - owl.position.y
-                            };
-                            // Fix division by zero that causes NaN!
-                            if (dist > 0) {
-                                diff.x /= dist;
-                                diff.y /= dist;
-                                flee.x += diff.x * 5;
-                                flee.y += diff.y * 5;
-                            }
-                        }
-                    }
-                });
-
-                mice.forEach(other => {
-                    if (other !== this && other.active && !other.caught) { // Only flock with active mice
-                        const dist = Math.sqrt(
-                            (this.position.x - other.position.x) ** 2 +
-                            (this.position.y - other.position.y) ** 2
-                        );
-                        
-                        if (dist < perception) {
-                            alignment.x += other.velocity.x;
-                            alignment.y += other.velocity.y;
-                            
-                            cohesion.x += other.position.x;
-                            cohesion.y += other.position.y;
-                            
-                            if (dist < 10) {
-                                const diff = {
-                                    x: this.position.x - other.position.x,
-                                    y: this.position.y - other.position.y
-                                };
-                                // Fix division by zero that causes NaN!
-                                if (dist > 0) {
-                                    separation.x += diff.x / dist;
-                                    separation.y += diff.y / dist;
-                                }
-                            }
-                            
-                            total++;
-                        }
-                    }
-                });
-
-                if (total > 0) {
-                    alignment.x /= total;
-                    alignment.y /= total;
-                    cohesion.x = cohesion.x / total - this.position.x;
-                    cohesion.y = cohesion.y / total - this.position.y;
-                }
-
-                // Apply forces (magnet force overrides others when active)
-                if (isMagnetActive && (magnetForce.x !== 0 || magnetForce.y !== 0)) {
-                    // When magnet is active, reduce other forces
-                    this.acceleration.x = magnetForce.x + 
-                        alignment.x * 0.02 + 
-                        cohesion.x * 0.01 + 
-                        separation.x * 0.05 + 
-                        flee.x * 0.1;
-                    this.acceleration.y = magnetForce.y + 
-                        alignment.y * 0.02 + 
-                        cohesion.y * 0.01 + 
-                        separation.y * 0.05 + 
-                        flee.y * 0.1;
-                } else {
-                    // Normal behavior
-                    this.acceleration.x = alignment.x * 0.1 + cohesion.x * 0.05 + separation.x * 0.15 + flee.x;
-                    this.acceleration.y = alignment.y * 0.1 + cohesion.y * 0.05 + separation.y * 0.15 + flee.y;
-                }
-
-                // Update velocity and position
-                this.velocity.x += this.acceleration.x;
-                this.velocity.y += this.acceleration.y;
-                
-                const speed = Math.sqrt(this.velocity.x ** 2 + this.velocity.y ** 2);
-                const maxSpeedAdjusted = isMagnetActive ? this.maxSpeed * 2 : this.maxSpeed;
-                if (speed > maxSpeedAdjusted) {
-                    this.velocity.x = (this.velocity.x / speed) * maxSpeedAdjusted;
-                    this.velocity.y = (this.velocity.y / speed) * maxSpeedAdjusted;
-                }
-
-                // Update rotation based on velocity if moving
-                if (this.velocity.x !== 0 || this.velocity.y !== 0) {
-                    this.rotation = Math.atan2(this.velocity.y, this.velocity.x) + Math.PI / 2; // +90° so "up" points forward
-                }
-                
-                // Check for nearby food
-                foods.forEach((food, index) => {
-                    if (food.age > food.lifespan) return; // Skip expired food
-                    
-                    const dist = Math.sqrt(
-                        (this.position.x - food.x) ** 2 + 
-                        (this.position.y - food.y) ** 2
-                    );
-                    
-                    if (dist < 15) { // Close enough to eat
-                        // Eat the food!
-                        accumulateNutrients(this, food.nutrients);
-                        foods.splice(index, 1); // Remove eaten food
-                        
-                        wizzyLog('random', `${this.wizzy} ate ${food.emoji} ${food.name}! Yum! 😋`, '🍽️');
-                        playSound('ambient', 0.8);
-                        
-                        // Gain some energy from eating
-                        if (this.nutrients['⚡']) {
-                            this.nutrients['⚡'] = Math.min(100, this.nutrients['⚡'] + 10);
-                        }
-                    } else if (dist < 50) {
-                        // Move towards nearby food
-                        // Fix division by zero that causes NaN!
-                        if (dist > 0) {
-                            const attraction = {
-                                x: (food.x - this.position.x) / dist * 0.5,
-                                y: (food.y - this.position.y) / dist * 0.5
-                            };
-                            this.acceleration.x += attraction.x;
-                            this.acceleration.y += attraction.y;
-                        }
-                    }
-                });
-                
-                // Digest nutrients
-                digestNutrients(this);
-                
-                // Auto-poop logic  
-                if (globalTime - this.lastAutoPoopTime > poopConfig.autoPoopInterval) {
-                    this.poop(false); // Auto poop
-                    this.lastAutoPoopTime = globalTime;
-                }
-                
-                // Random events
-                if (Math.random() < 0.0005 * actualSpeedMultiplier) {
-                    wizzyLog('random', `${this.wizzy} finds cheese! 🧀`, '🎉');
-                    playSound('ambient', 0.3);
-                }
-            }
-
-            draw() {
-                if (!this.active || this.caught) return; // Skip inactive or caught mice
-
-                ctx.save();
-                ctx.translate(this.position.x, this.position.y);
-                
-                // Draw golden halo if selected (before rotation)
-                const scaleFactor = selectedMouse === this ? 1.1 : 1; // Even smaller size increase when selected
-                if (selectedMouse === this) {
-                    const haloRadius = mouseFeather * 1.3; // Even smaller halo
-                    const haloGradient = ctx.createRadialGradient(0, 0, 0, 0, 0, haloRadius);
-                    
-                    // Much more subtle golden halo
-                    haloGradient.addColorStop(0, 'rgba(255, 215, 0, 0)'); // Transparent center
-                    haloGradient.addColorStop(0.3, 'rgba(255, 215, 0, 0.1)'); // Very faint gold
-                    haloGradient.addColorStop(0.6, 'rgba(255, 215, 0, 0.15)'); // Slightly brighter
-                    haloGradient.addColorStop(0.8, 'rgba(255, 215, 0, 0.1)'); // Fading
-                    haloGradient.addColorStop(1, 'rgba(255, 215, 0, 0)'); // Fully transparent
-                    
-                    ctx.fillStyle = haloGradient;
-                    ctx.beginPath();
-                    ctx.arc(0, 0, haloRadius, 0, Math.PI * 2);
-                    ctx.fill();
-                }
-                
-                // Apply rotation (always use stored rotation)
-                ctx.rotate(this.rotation);
-
-                // Create three-color feathered gradient for fuzzy mouse
-                const gradient = ctx.createRadialGradient(0, 0, 0, 0, 0, mouseFeather * scaleFactor);
-                
-                // Three-color gradient with smooth transitions
-                gradient.addColorStop(0, this.colors.inner + 'FF'); // Inner color, full opacity
-                gradient.addColorStop(this.middleColorPos * 0.6, this.colors.inner + 'EE');
-                gradient.addColorStop(this.middleColorPos, this.colors.middle + 'DD'); // Middle color
-                gradient.addColorStop(this.middleColorPos * 1.4, this.colors.middle + 'AA');
-                gradient.addColorStop(0.75, this.colors.outer + '77'); // Outer color
-                gradient.addColorStop(0.9, this.colors.outer + '33');
-                gradient.addColorStop(1, this.colors.outer + '00'); // Fully transparent
-
-                // Draw fuzzy mouse body
-                ctx.fillStyle = gradient;
-                ctx.beginPath();
-                ctx.arc(0, 0, mouseFeather * scaleFactor, 0, Math.PI * 2);
-                ctx.fill();
-                
-                // Draw status indicator if applicable
-                if (this.status === 'droning') {
-                    // Special indicator for droning mode - pulsing cyan circle
-                    ctx.strokeStyle = '#00ffff';
-                    ctx.lineWidth = 3 * scaleFactor;
-                    ctx.setLineDash([2 * scaleFactor, 2 * scaleFactor]);
-                    ctx.beginPath();
-                    ctx.arc(0, 0, mouseFeather * scaleFactor * 1.3, 0, Math.PI * 2);
-                    ctx.stroke();
-                    ctx.setLineDash([]);
-                } else if (this.manualControl) {
-                    // Temporary control indicator - thin cyan circle
-                    ctx.strokeStyle = '#00ffff';
-                    ctx.lineWidth = 1 * scaleFactor;
-                    ctx.beginPath();
-                    ctx.arc(0, 0, mouseFeather * scaleFactor * 1.2, 0, Math.PI * 2);
-                    ctx.stroke();
-                }
-                
-                // WIZZY ID label - split into letters and emojis
-                const letters = this.wizzy.match(/[A-Z]/g) || [];
-                const emojis = this.wizzy.match(/[^\w\s]/g) || [];
-                
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
-                
-                // Draw WIZZY ID as single string (emojis render better this way)
-                ctx.font = `bold ${5 * scaleFactor}px Arial`;
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
-                ctx.shadowBlur = 1 * scaleFactor;
-                ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
-                ctx.fillText(this.wizzy, 0, 0);
-                
-                ctx.restore();
-            }
-        }
-
-        // Create all owls but only activate the first one
-        for (let i = 0; i < 24; i++) {
-            const owl = new Owl(i + 1, timeZones[i]);
-            if (i < activeOwlCount) {
-                owl.active = true;
-                wizzyLog('owl', `${owl.wizzy} is active at startup! 🦉`, '✨');
-            }
-            owls.push(owl);
-        }
-
-        // Create all mice but only activate the first one
-        for (let i = 0; i < 200; i++) {
-            const mouse = new Mouse(i);
-            if (i < activeMouseCount) {
-                mouse.active = true;
-                wizzyLog('mouse', `${mouse.wizzy} is active at startup! 🐭`, '✨');
-            }
-            mice.push(mouse);
-        }
-
+        // --- Event Listener Registration ---
         // Mouse event handlers - Use global for move/up to never lose tracking
         canvas.addEventListener('mousedown', handleMouseDown);
-        canvas.addEventListener('click', handleClick);
-        // Note: wheel event listener is already added earlier in the code
-        
-        // Global mouse handlers for robust tracking
         document.addEventListener('mousemove', handleMouseMove);
         document.addEventListener('mouseup', handleMouseUp);
-        
-        // Canvas-specific handlers
-        canvas.addEventListener('mouseleave', handleMouseLeave);
-        canvas.addEventListener('mouseenter', handleMouseEnter);
-        
-        // Prevent default behaviors
-        canvas.addEventListener('dragstart', (e) => e.preventDefault());
-        canvas.addEventListener('selectstart', (e) => e.preventDefault());
-        canvas.addEventListener('contextmenu', (e) => e.preventDefault());
-        
-        // UI visibility state
-        let uiHidden = false;
-        
-        // Update keyboard velocity based on pressed keys
-        function updateKeyboardVelocity() {
-            keyboardScrollVelocity.x = 0;
-            keyboardScrollVelocity.y = 0;
-            
-            // WASD controls panning (normal directions)
-            if (keysPressed.has('a') || keysPressed.has('A')) {
-                keyboardScrollVelocity.x = -1;  // Reversed from 1
-            }
-            if (keysPressed.has('d') || keysPressed.has('D')) {
-                keyboardScrollVelocity.x = 1;  // Reversed from -1
-            }
-            if (keysPressed.has('w') || keysPressed.has('W')) {
-                keyboardScrollVelocity.y = -1;  // Reversed from 1
-            }
-            if (keysPressed.has('s') || keysPressed.has('S')) {
-                keyboardScrollVelocity.y = 1;  // Reversed from -1
-            }
-        }
-        
+        canvas.addEventListener('click', handleClick);
+        canvas.addEventListener('wheel', handleWheel, { passive: false });
+
+        // Minimap listeners for navigation and dragging - ATTACHED TO CANVAS
+        minimapCanvas.addEventListener('click', handleMinimapClick);
+        minimapCanvas.addEventListener('mousedown', handleMinimapMouseDown);
+        document.addEventListener('mousemove', handleMinimapMouseMove); // Use document for move
+        document.addEventListener('mouseup', handleMinimapMouseUp);     // Use document for up
+        minimapCanvas.addEventListener('wheel', handleMinimapWheel, { passive: false });
+
         // Keyboard shortcuts
         document.addEventListener('keydown', (e) => {
-            // Prevent key repeat for already pressed keys
-            if (keysPressed.has(e.key)) return;
+            // Remove key from pressed set
+            keysPressed.delete(e.key);
             
-            // Add key to pressed set
-            keysPressed.add(e.key);
-            
-            // Tab toggles UI (except minimap)
-            if (e.key === 'Tab') {
-                e.preventDefault();
-                uiHidden = !uiHidden;
-                
-                // Toggle all UI elements except minimap
-                const elementsToToggle = [
-                    document.getElementById('stats-panel'),
-                    document.getElementById('controls'),
-                    document.getElementById('legend'),
-                    document.getElementById('info-panel'),
-                    document.getElementById('console-log'),
-                    document.getElementById('console-toggle-btn')
-                ];
-                
-                elementsToToggle.forEach(el => {
-                    if (el) {
-                        el.style.display = uiHidden ? 'none' : '';
-                    }
-                });
-                
-                // Expand/contract visualization area
-                const viz = document.getElementById('visualization');
-                if (uiHidden) {
-                    viz.style.width = '100%';
-                    viz.style.right = '0';
-                } else {
-                    viz.style.width = '';
-                    viz.style.right = '';
-                }
-                
-                // Resize canvas to match new dimensions
-                setTimeout(resizeCanvas, 50); // Small delay to ensure CSS changes take effect
-                
-                wizzyLog('random', uiHidden ? 'UI hidden - zen mode 🧘' : 'UI restored 🎨', '👁️');
-                return; // Don't process other Tab key actions
-            }
+            // Update keyboard scroll velocity
+            updateKeyboardVelocity();
             
             // Spacebar toggles pause
             if (e.key === ' ') {
@@ -5044,19 +2356,18 @@
                 }
             }
         }
-        
+
+        function toggleHeisenbergLogging() {
+            heisenbergLoggingEnabled = document.getElementById('heisenberg-logging-enabled').checked;
+            wizzyLog('random', `Heisenberg logging ${heisenbergLoggingEnabled ? 'enabled' : 'disabled'} 🔬`, '⚙️');
+        }
+
         function handleAltitudeDragEnd(e) {
             if (isDraggingAltitude) {
                 isDraggingAltitude = false;
                 altitudeDragTarget = null;
                 document.body.style.cursor = '';
             }
-        }
-
-        function toggleHeisenbergLogging() {
-            heisenbergLoggingEnabled = document.getElementById('heisenberg-logging-enabled').checked;
-            // This log will only show if you are enabling it, which is intended.
-            wizzyLog('random', `Heisenberg logging ${heisenbergLoggingEnabled ? 'enabled' : 'disabled'} 🔬`, '⚙️');
         }
 
         function handleOwlTableClick(e) {
@@ -5119,7 +2430,9 @@
             // Check if clicking on an owl
             for (let i = owls.length - 1; i >= 0; i--) {
                 if (owls[i].active && owls[i].isPointInside(world.x, world.y)) {
-                    isDragging = true;
+                    if (owls[i] === selectedOwl) {
+                        isDragging = true;
+                    }
                     dragTarget = owls[i];
                     const pos = owls[i].getScreenPosition();
                     dragOffset.x = world.x - pos.x;
@@ -6149,7 +3462,7 @@
             keyScrollSpeed = parseInt(slider.value);
             const label = slider.parentElement.querySelector('.value');
             if (label) {
-                label.textContent = keyScrollSpeed;
+                label.textContent = keyScrollSpeed + ' px/s';
             }
         }
         
@@ -6158,7 +3471,7 @@
             keyZoomSpeed = parseFloat(slider.value);
             const label = slider.parentElement.querySelector('.value');
             if (label) {
-                label.textContent = keyZoomSpeed.toFixed(1);
+                label.textContent = keyZoomSpeed.toFixed(1) + 'x/s';
             }
         }
         
@@ -6295,12 +3608,6 @@
             const value = slider.value;
             const label = slider.parentElement.querySelector('.value');
             
-            // Add null check to prevent errors
-            if (!label) {
-                console.warn('updateLogDisplay: Could not find .value element for slider', slider.id);
-                return;
-            }
-            
             if (slider.id === 'max-log-speed' || slider.id === 'max-log-speed-2') {
                 logConfig.maxSpeed = getSpeedMultiplier(value);
                 label.textContent = logConfig.maxSpeed.toFixed(1) + 'x';
@@ -6385,13 +3692,6 @@
         function updateSoundDisplay(slider) {
             const value = slider.value;
             const label = slider.parentElement.querySelector('.value');
-            
-            // Add null check to prevent errors
-            if (!label) {
-                console.warn('updateSoundDisplay: Could not find .value element for slider', slider.id);
-                return;
-            }
-            
             label.textContent = value + '%';
             
             const type = slider.id.replace('sound-', '');
@@ -6534,6 +3834,7 @@
         //  functions, making the program flow easy to understand.
         //
         //==============================================================================
+
         /**
          * The main animation loop, called by requestAnimationFrame.
          * Orchestrates all per-frame updates.
@@ -6685,27 +3986,7 @@
                 wizzyLog('random', 'Sidebar expanded for InfoVis 📊', '↔️');
             }
         }
-        
-        function togglePanel() {
-            const panel = document.getElementById('stats-panel');
-            const toggleBtn = document.getElementById('panel-toggle');
-            const arrow = document.getElementById('toggle-arrow');
-            
-            panel.classList.toggle('panel-hidden');
-            toggleBtn.classList.toggle('panel-hidden');
-            
-            // Toggle arrow direction
-            arrow.textContent = panel.classList.contains('panel-hidden') ? '▶' : '◀';
-            
-            // Log the action
-            if (panel.classList.contains('panel-hidden')) {
-                wizzyLog('random', 'Stats panel hidden for full view 👁️', '↔️');
-            } else {
-                wizzyLog('random', 'Stats panel shown 📊', '↔️');
-            }
-        }
 
-        // Save state to localStorage
         function saveState() {
             const state = {
                 version: '1.0',

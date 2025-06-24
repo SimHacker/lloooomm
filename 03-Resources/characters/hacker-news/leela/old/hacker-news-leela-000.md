@@ -1,5 +1,5 @@
 ---
-title: "Show HN: LLOOOOMM - AI-Human Collaborative Intelligence Platform"
+title: "Show HN: LLOOOOMM - AI-Human Collaborative Intelligence Platform (lloooomm.com)"
 renderer_notes: |
   HN Display Rules:
   - Downvoted comments appear in light gray (#999999)

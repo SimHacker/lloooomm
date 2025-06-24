@@ -1,0 +1,331 @@
+---
+# LLOOOOMM Hacker News Discussion Schema
+# Complete data structure for rendering collaborative intelligence discussions
+
+discussion_root:
+  type: object
+  required: [metadata, story, messages, character_ecosystem, analytics]
+  properties:
+    metadata:
+      $ref: "#/definitions/DiscussionMetadata"
+    story:
+      $ref: "#/definitions/StoryPost"
+    messages:
+      type: array
+      items:
+        $ref: "#/definitions/Message"
+    character_ecosystem:
+      $ref: "#/definitions/CharacterEcosystem"
+    analytics:
+      $ref: "#/definitions/AnalyticsData"
+    enhancements:
+      $ref: "#/definitions/EnhancementData"
+
+definitions:
+  DiscussionMetadata:
+    type: object
+    properties:
+      title: {type: string}
+      url: {type: string}
+      author: {type: string}
+      created: {type: string, format: date-time}
+      total_engagement_time: {type: string}
+      peak_concurrent_discussion: {type: string}
+      community_sentiment: {type: string}
+      page_info:
+        type: object
+        properties:
+          current_page: {type: integer}
+          total_pages: {type: integer}
+          navigation_enabled: {type: boolean}
+      wink_energy:
+        $ref: "#/definitions/WinkEnergyMetrics"
+
+  StoryPost:
+    type: object
+    properties:
+      id: {type: string}
+      title: {type: string}
+      url: {type: string}
+      text: {type: string}
+      author: {type: string}
+      created: {type: string, format: date-time}
+      points: {type: integer}
+      comment_count: {type: integer}
+      labels: {type: array, items: {type: string}}
+      enhancements:
+        type: object
+        properties:
+          character_analysis: {type: string}
+          technical_depth: {type: string}
+          accessibility_notes: {type: array}
+
+  Message:
+    type: object
+    required: [id, author, text, created]
+    properties:
+      id: {type: string}
+      author: {type: string}
+      text: {type: string}
+      created: {type: string, format: date-time}
+      parent_id: {type: string, nullable: true}
+      depth: {type: integer, minimum: 0}
+      status:
+        type: string
+        enum: [active, flagged, dead, moderated]
+      metadata:
+        type: object
+        properties:
+          is_op: {type: boolean}
+          is_moderator: {type: boolean}
+          user_karma: {type: integer}
+          edit_history: {type: array}
+      character_enhancements:
+        type: object
+        properties:
+          archetype: {type: string}
+          collaboration_patterns: {type: array}
+          specialization: {type: string}
+          communication_style: {type: string}
+          accessibility_strength: {type: string}
+          evolution_notes: {type: string}
+      navigation:
+        type: object
+        properties:
+          next_id: {type: string, nullable: true}
+          prev_id: {type: string, nullable: true}
+          children_ids: {type: array, items: {type: string}}
+      analytics:
+        type: object
+        properties:
+          engagement_score: {type: number}
+          technical_depth: {type: number}
+          controversy_level: {type: number}
+          learning_value: {type: number}
+      rendering:
+        type: object
+        properties:
+          css_classes: {type: array, items: {type: string}}
+          tooltip_data: {type: string}
+          expandable_sections: {type: array}
+          accessibility_enhancements: {type: object}
+
+  CharacterEcosystem:
+    type: object
+    properties:
+      primary_characters:
+        type: object
+        patternProperties:
+          "^[a-zA-Z_]+$":
+            $ref: "#/definitions/Character"
+      coalitions:
+        type: array
+        items:
+          $ref: "#/definitions/Coalition"
+      interaction_patterns:
+        type: object
+        properties:
+          conflict_patterns: {type: array}
+          collaboration_patterns: {type: array}
+          evolution_observations: {type: array}
+      consciousness_indicators:
+        type: object
+        properties:
+          meta_cognitive_behaviors: {type: array}
+          global_workspace_phenomena: {type: array}
+          emergent_social_cognition: {type: array}
+
+  Character:
+    type: object
+    properties:
+      name: {type: string}
+      archetype: {type: string}
+      specialization: {type: string}
+      communication_style: {type: string}
+      accessibility_strength: {type: string}
+      collaboration_patterns: {type: array}
+      evolution_observed: {type: string}
+      unique_contribution: {type: string}
+      tooltip_info: {type: string}
+      appearance_count: {type: integer}
+      message_ids: {type: array, items: {type: string}}
+
+  Coalition:
+    type: object
+    properties:
+      name: {type: string}
+      members: {type: array, items: {type: string}}
+      focus: {type: string}
+      trigger_conditions: {type: string}
+      effectiveness_score: {type: number}
+      formation_pattern: {type: string}
+
+  AnalyticsData:
+    type: object
+    properties:
+      thread_structure:
+        type: object
+        patternProperties:
+          "^thread_\\d+_":
+            $ref: "#/definitions/ThreadAnalysis"
+      emergent_patterns:
+        type: object
+        properties:
+          cross_thread_pollination: {type: array}
+          character_dynamics_observed: {type: array}
+          discourse_quality: {type: object}
+      community_response:
+        type: object
+        properties:
+          engagement_quality_indicators: {type: array}
+          concerns_raised: {type: array}
+          breakthrough_moments: {type: array}
+      wink_energy:
+        $ref: "#/definitions/WinkEnergyMetrics"
+
+  ThreadAnalysis:
+    type: object
+    properties:
+      type: {type: string}
+      primary_concern: {type: string}
+      lead_participant: {type: string}
+      resolution_pattern: {type: string}
+      outcome: {type: string}
+      key_insights: {type: array}
+      collaboration_emerged: {type: boolean}
+      academic_credibility: {type: string}
+      technical_depth: {type: string}
+
+  WinkEnergyMetrics:
+    type: object
+    properties:
+      discussion_coherence: {type: number, minimum: 0, maximum: 10}
+      creative_synthesis_emergence: {type: number, minimum: 0, maximum: 10}
+      technical_depth_maintenance: {type: number, minimum: 0, maximum: 10}
+      cross_domain_pollination: {type: number, minimum: 0, maximum: 10}
+      collaborative_intelligence_demonstration: {type: number, minimum: 0, maximum: 10}
+      overall_wink_score: {type: number, minimum: 0, maximum: 10}
+      classification: {type: string}
+
+  EnhancementData:
+    type: object
+    properties:
+      tooltips:
+        type: object
+        patternProperties:
+          "^[a-zA-Z0-9_-]+$": {type: string}
+      expandable_sections:
+        type: object
+        patternProperties:
+          "^[a-zA-Z0-9_-]+$":
+            type: object
+            properties:
+              title: {type: string}
+              content: {type: string}
+              icon: {type: string}
+      character_highlights:
+        type: object
+        properties:
+          color_coding: {type: boolean}
+          archetype_badges: {type: boolean}
+          collaboration_visualization: {type: boolean}
+      accessibility_enhancements:
+        type: object
+        properties:
+          screen_reader_optimizations: {type: array}
+          cognitive_load_management: {type: array}
+          neurodivergent_support: {type: array}
+      research_annotations:
+        type: object
+        properties:
+          technical_genealogy: {type: array}
+          consciousness_observations: {type: array}
+          educational_insights: {type: array}
+      meta_insights:
+        type: object
+        properties:
+          simulation_effectiveness: {type: object}
+          paradigm_demonstrations: {type: array}
+          future_implications: {type: array}
+
+# SvelteKit Component Integration Patterns
+svelte_rendering_schema:
+  components:
+    DiscussionPage:
+      props: [discussion_data, page_config]
+      slots: [header, footer, sidebar]
+      
+    StoryPost:
+      props: [story, enhancements, analytics]
+      events: [navigate, expand, tooltip]
+      
+    MessageThread:
+      props: [messages, character_data, navigation_order]
+      events: [navigate, reply, flag, expand_character_info]
+      
+    CharacterTooltip:
+      props: [character, interactions, analytics]
+      auto_position: true
+      
+    WinkEnergyVisualization:
+      props: [metrics, real_time_updates]
+      chart_type: [radar, bar, timeline]
+      
+    NavigationController:
+      props: [navigation_order, keyboard_shortcuts, accessibility_mode]
+      events: [navigate_next, navigate_prev, navigate_parent]
+      
+    AnalyticsOverlay:
+      props: [analytics, research_mode]
+      toggleable: true
+      
+    AccessibilityEnhancer:
+      props: [content, user_preferences, assistive_tech_detected]
+      auto_adapt: true
+
+# Data Flow Architecture
+data_flow:
+  source_files:
+    - markdown_messages: "*.md files with YAML frontmatter"
+    - yaml_analytics: "*.yml files with metadata and analysis"
+    - html_templates: "existing pages for structure reference"
+    
+  processing_pipeline:
+    1_parse: "Extract and validate all content against schema"
+    2_merge: "Combine messages with metadata and analytics"
+    3_enhance: "Apply character data and accessibility improvements"
+    4_structure: "Build navigation tree and relationship mapping"
+    5_render: "Generate SvelteKit components with full interactivity"
+    
+  rendering_modes:
+    standard: "Clean HN-style discussion with enhancements"
+    research: "Full analytics overlay with character insights"
+    accessibility: "Optimized for screen readers and cognitive load"
+    educational: "Learning-focused with explanatory tooltips"
+    presentation: "Conference/demo mode with highlights"
+
+# Enhancement Integration Patterns
+enhancement_application:
+  character_metadata_overlay:
+    - archetype_color_coding: "Subtle background colors for character types"
+    - collaboration_arrows: "Visual connections between coalition members"
+    - expertise_badges: "Small icons indicating specialization areas"
+    - evolution_timeline: "Character development over discussion"
+    
+  research_annotations:
+    - technical_genealogy_links: "Clickable references to research lineage"
+    - consciousness_indicators: "Highlighted meta-cognitive moments"
+    - wink_energy_live_metrics: "Real-time collaboration effectiveness"
+    - paradigm_shift_markers: "Key breakthrough moments highlighted"
+    
+  accessibility_enhancements:
+    - screen_reader_optimization: "Semantic markup and proper navigation"
+    - cognitive_load_management: "Collapsible sections and summary views"
+    - keyboard_navigation: "Full functionality without mouse"
+    - neurodivergent_support: "Customizable sensory options"
+    
+  educational_features:
+    - concept_tooltips: "Technical terms explained on hover"
+    - learning_path_guidance: "Suggested reading order for concepts"
+    - reflection_prompts: "Discussion questions embedded"
+    - knowledge_check_points: "Interactive comprehension aids" 

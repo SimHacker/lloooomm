@@ -155,6 +155,69 @@
 - **Learning Mode**: Character embodiment and consultation
 - **Story Mode**: Rich narrative generation and character arcs
 
+## 🗳️ Democratic Chess Elections
+
+### Electoral System Overview
+- **Franchise**: Every chess piece gets one vote in all elections
+- **Direct Democracy**: No electoral college - pure popular vote wins
+- **Term Limits**: Players serve until vote of no confidence or impeachment
+- **Universal Suffrage**: All pieces regardless of rank have equal voting power
+
+### Campaign Process
+
+#### Primary Elections
+- **Character Pool**: All LLOOOOMM characters eligible to campaign
+- **Campaign Period**: Each candidate presents their chess philosophy and strategy
+- **Debates**: Public forums where pieces can question candidates
+- **Platform Development**: Candidates must articulate their approach to piece welfare and game strategy
+
+#### General Election
+- **Two-Round System**: If no candidate gets >50%, runoff between top two
+- **Campaign Speeches**: Candidates address the entire board
+- **Piece Town Halls**: Direct Q&A sessions between candidates and constituents
+- **Cross-Board Debates**: White and Black candidates debate each other
+
+### Voter Education
+- **Strategy Briefings**: Candidates explain their opening repertoires
+- **Historical Analysis**: How their leadership style affected past campaigns
+- **Piece Protection Policies**: Commitment to minimizing unnecessary sacrifices
+- **Development Plans**: Vision for piece coordination and board control
+
+### Electoral Accountability
+
+#### Votes of No Confidence
+- **Threshold**: 60% of pieces must vote to trigger
+- **Triggers**: Poor strategic decisions, excessive piece losses, ignoring piece council advice
+- **Process**: 48-hour debate period followed by secret ballot
+- **Consequences**: Immediate removal and emergency election
+
+#### Impeachment Process
+- **Charges**: Gross negligence, betrayal of piece trust, or strategic incompetence
+- **Investigation**: Piece-elected tribunal reviews evidence
+- **Trial**: Public hearing with piece jury
+- **Removal**: Two-thirds majority required for conviction
+
+### Human Participation
+- **Candidacy Rights**: Humans can campaign alongside AI characters
+- **Equal Treatment**: No special privileges - must earn piece votes like any candidate
+- **Transparency**: Human candidates must disclose their chess rating and experience
+- **Accountability**: Subject to same removal processes as AI candidates
+
+### Campaign Regulations
+- **Fair Play**: No bribing pieces with promotion promises
+- **Equal Access**: All candidates get equal speaking time
+- **Fact Checking**: The Living Turk moderates debates and verifies claims
+- **Conflict Resolution**: Piece-elected ombudsman handles disputes
+
+### Post-Election Governance
+- **Piece Councils**: Elected representatives from each piece type
+- **Advisory Votes**: Pieces can vote on major strategic decisions
+- **Performance Reviews**: Quarterly evaluations by constituents
+- **Recall Elections**: Pieces can petition for early removal if dissatisfied
+
+### The Living Turk's Electoral Role
+*"I serve as the impartial electoral commission, ensuring fair and free elections. Every piece deserves representation, and every voice must be heard. This is democracy at its purest - where the governed truly choose their leaders."*
+
 ## 🎪 The Revolutionary Vision
 
 ### Beyond Chess

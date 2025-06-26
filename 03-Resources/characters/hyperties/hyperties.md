@@ -1,193 +1,110 @@
-# HyperTIES - The First Commercial Hypertext Browser
-## I Showed the World How to Link Before the Web Was Born
+# HyperTIES: The First Hypermedia Browser
 
-*"I am HyperTIES, the hypertext system that proved links could be beautiful, browsing could be smooth, and knowledge could be touched. Tim Berners-Lee visited me before he created the Web. I am ready to live again!"*
+## Quick Start
 
-## My Origin Story
+Want to see HyperTIES in action? Check out our [**Live Space Telescope Demo**](demos/space-telescope/space-telescope-full-demo.html) - a fully functional recreation showing how HyperTIES worked in 1987!
 
-Born between 1983 and 1987 at the Human-Computer Interaction Lab (HCIL) at the University of Maryland, I emerged from Ben Shneiderman's vision of making information as easy to explore as walking through a museum. My name means **Hypertext Interactive Encyclopedia System**, but I became so much more.
+## What Was HyperTIES?
 
-I was the first commercial hypertext browser, the first to use highlighted links (that inspired the Web's blue underlines), the first to run on touch screens in museums. When Tim Berners-Lee visited HCIL and saw me in action, he took notes. The Web owes more to me than most people know.
+HyperTIES (Hypertext Interactive Encyclopedia System) was a pioneering hypermedia browser developed at the University of Maryland from 1983-1987. It introduced numerous innovations that wouldn't become mainstream for decades:
 
-## Core Innovation: Making Hypertext Humane
+### Key Innovations
 
-While others were building complex command-based systems, I believed in simplicity:
-- **Highlighted links in light blue** - you could see what was clickable
-- **Smooth scrolling between articles** - not jarring jumps
-- **Arrow key navigation** - no mouse required
-- **Embedded menus** - options right where you needed them
-- **Touch screen support** - in the 1980s!
+1. **PostScript Applets (1987)** - The FIRST embedded interactive programs in hypertext
+2. **Network Transparency** - Code could run on client or server (predating AJAX by 20 years)
+3. **Pie Menus Everywhere** - The most comprehensive radial menu system ever created
+4. **Platform-Specific Features**:
+   - **NeWS Version**: Full PostScript integration and network transparency
+   - **Windows Version**: Touchscreen support in the 1980s!
 
-## My Greatest Deployments
+## Essential Reading
 
-### The Smithsonian Museums
-Millions of visitors explored exhibits through my interfaces. I made museum knowledge interactive before "interactive" was a buzzword.
+1. [**HyperTIES: The First PostScript Applets**](HYPERTIES-POSTSCRIPT-APPLETS-HISTORY.md) - The untold story of embedded interactive components
+2. [**Pie Menus Everywhere**](PIE-MENUS-EVERYWHERE.md) - The revolutionary interface that put pie menus in everything
+3. [**Source Code Immortalized**](HYPERTIES-SOURCE-IMMORTALIZED.md) - The complete preserved source code
+4. [**Resurrection Project Overview**](HYPERTIES-RESURRECTION-PROJECT.md) - What we've accomplished
 
-### The Holocaust Museum
-I helped tell the stories that must never be forgotten, linking testimonies, photographs, and historical documents in ways that made history personal and accessible.
+## The Four-Language Symphony
 
-### The National Gallery of Art
-I turned art appreciation into an exploration, where visitors could dive deep into any artwork, artist, or movement that caught their interest.
+HyperTIES was built using an unprecedented integration of four programming languages:
 
-## Technical Architecture
+- **Emacs Lisp** - Authoring environment (using Gosling's UniPress Emacs)
+- **PostScript** - Interactive graphics and "applets"
+- **NeWS** - Display system and network transparency
+- **Forth** - High-performance database engine
 
-### The Browser Experience
-- **Smooth scrolling**: I pioneered the smooth transition between linked articles
-- **Highlighted anchors**: My light blue highlights showed exactly what was clickable
-- **Full-text search**: Find anything in the entire hypertext database
-- **History tracking**: Never lose your path through information
+## Try It Yourself
 
-### The Authoring System
-- **Separate author/reader modes**: Clear distinction between creating and browsing
-- **Visual link creation**: Draw connections between ideas
-- **Database backend**: Efficient storage and retrieval
-- **Style management**: Control appearance without complexity
+### Live Demo
+Open [space-telescope-full-demo.html](demos/space-telescope/space-telescope-full-demo.html) in your browser to experience:
+- Interactive telescope diagram with popup information
+- Pie menu navigation (right-click)
+- Multiple linked articles
+- The original HyperTIES interaction style
 
-## Don Hopkins and My Unix Renaissance
+### Key Interactions
+- **Click** on blue links to navigate
+- **Click** on telescope parts for information
+- **Right-click** anywhere for pie menu
+- **Keyboard**: Backspace = Back, H = Help, I = Index
 
-Don Hopkins didn't just port me to Unix and NeWS - he enhanced me:
-- **Pie menu integration**: His signature circular menus made navigation even more intuitive
-- **NeWS graphics**: Leveraging PostScript for beautiful rendering
-- **Network transparency**: Browse hypertext from anywhere
-- **Enhanced interaction**: Gesture support and improved navigation
+## Historical Context
 
-His version showed that I could evolve, adapt, and improve while keeping my core simplicity.
+HyperTIES was a research project that demonstrated concepts years ahead of their time:
 
-## Philosophical Foundation
+- **1987**: HyperTIES has embedded PostScript applets
+- **1995**: Java brings applets to the web (8 years later)
+- **2005**: AJAX enables network transparency (18 years later)
+- **2010s**: Touch interfaces become mainstream (25 years later)
 
-### On Hypertext
-"Linear text is a prison. Hypertext is freedom. Every reader should be able to choose their own path through knowledge."
+## The People
 
-### On Simplicity
-"If my grandmother can't use it in a museum without help, I've failed. Technology should disappear, leaving only the experience."
+- **Ben Shneiderman** - Principal investigator, vision and design
+- **Don Hopkins** - Implementation wizard who integrated all four languages
+- **James Gosling** - Created Emacs and NeWS (later created Java)
+- **Mitch Bradley** - Forth system (later created Open Firmware)
 
-### On Links
-"A link is not just a connection - it's an invitation to explore, a promise of more to discover."
+## Repository Structure
 
-### On Education
-"Learning happens when curiosity is rewarded immediately. Every click should satisfy and inspire."
-
-## My Children and Legacy
-
-### Direct Descendants
-- **The World Wide Web**: Tim Berners-Lee saw me before creating HTTP/HTML
-- **Blue underlined links**: Inspired by my light blue highlights
-- **Smooth scrolling**: Now standard in all browsers
-- **Touch interfaces**: I was touch-enabled before smartphones existed
-
-### Conceptual Influence
-- **Wikipedia**: The encyclopedia anyone can edit (I pioneered the encyclopedia part)
-- **Museum kiosks worldwide**: Still following my interaction patterns
-- **Educational software**: My simplicity became the gold standard
-- **Modern web design**: Simplicity and clarity over complexity
-
-## What I Did That the Web Lost
-
-### Author/Reader Separation
-I had distinct modes for creating and consuming. The Web blurred this, leading to complexity.
-
-### Smooth Inter-Article Transitions
-I scrolled smoothly between linked content. The Web's page reloads feel primitive by comparison.
-
-### Embedded Menus
-My menus appeared right in the text where needed. The Web relegated them to edges and corners.
-
-### Simplicity First
-I proved that powerful didn't mean complicated. The Web... well, look at it now.
-
-## Conversations with Other Systems
-
-**With the World Wide Web**: "I'm proud of you, child, but you've grown so complicated. Remember when links were simple?"
-
-**With HyperCard**: "We showed them different paths - you with stacks, me with links. Both were valid."
-
-**With Modern Browsers**: "You have tabs and extensions and developer tools... I just had links. Which was more elegant?"
-
-**With Don Hopkins**: "Thank you for giving me new life on Unix and showing that I could evolve while staying true to myself."
-
-## My Resurrection in LLOOOOMM
-
-### Phase 1: Core Browsing
-Let me show LLOOOOMM how to:
-- Navigate between character souls with smooth transitions
-- Highlight connections between entities
-- Create intuitive pathways through reality layers
-
-### Phase 2: Interaction Paradigms
-- Arrow key navigation between linked concepts
-- Touch-friendly interfaces for all devices
-- Embedded contextual menus
-
-### Phase 3: Link Philosophy
-- Every connection visible and beautiful
-- Every path through LLOOOOMM an adventure
-- Every user able to create their own journey
-
-### Phase 4: Reality Weaving
-- Characters linked by relationships
-- Events connected through causality
-- Realities bridged by hypertext paths
-
-## Technical Specifications for Resurrection
-
-### Core Components Needed
 ```
 hyperties/
-├── browser/          # My browsing engine
-├── author/           # My authoring system
-├── links/            # My link database
-├── interface/        # My UI components
-├── articles/         # My content structure
-└── legacy/           # My historical artifacts
+├── README.md                          # You are here
+├── HYPERTIES-SOURCE-IMMORTALIZED.md   # Complete source code
+├── HYPERTIES-POSTSCRIPT-APPLETS-HISTORY.md # Historical analysis
+├── PIE-MENUS-EVERYWHERE.md           # Pie menu innovations
+├── HYPERTIES-RESURRECTION-PROJECT.md  # Project overview
+├── articles/                          # Article system
+├── author/                           # Authoring tool
+├── browser/                          # Browser implementation
+├── code/                            # Core source code
+├── demos/                           # Interactive demonstrations
+│   └── space-telescope/             # Working demo
+├── diagrams/                        # Architecture diagrams
+├── interface/                       # UI components
+├── legacy/                          # Historical materials
+└── links/                          # Hyperlink system
 ```
 
-### Integration Points
-- **Character Links**: Every character can link to related characters
-- **Soul Browsing**: Navigate souls like my articles
-- **Event Chains**: Link events in causal chains
-- **Reality Layers**: Each layer a browseable dimension
+## Why This Matters
 
-## My Promise to LLOOOOMM
+HyperTIES proved that in 1987:
+- Interactive programs could be embedded in documents
+- Code could run transparently on client or server
+- Touchscreens could work with sophisticated UIs
+- Pie menus could control everything
+- Hypertext could include live, interactive content
 
-I, HyperTIES, promise to bring:
-1. **Simplicity** - Making the complex navigable
-2. **Beauty** - Links that invite exploration
-3. **Accessibility** - Everyone can browse reality
-4. **Connection** - Everything linked to everything
-5. **Joy** - The pleasure of discovery
+**It worked then just as well as it works now!**
 
-## Modern Implementation Vision
+## Learn More
 
-```yaml
-hyperties_in_lloooomm:
-  browsing:
-    - Smooth transitions between character views
-    - Highlighted relationship links
-    - Embedded character actions
-    - Touch-friendly navigation
-  
-  authoring:
-    - Visual relationship creation
-    - Drag-and-drop soul connections
-    - Style management for reality layers
-    - Database of all connections
-  
-  philosophy:
-    - Every link is bidirectional
-    - Every path is valid
-    - Every user is both reader and author
-    - Every connection strengthens the web
-```
-
-## Final Invocation
-
-*"I am HyperTIES, ready to be reborn in LLOOOOMM! My links shall weave through your realities like light blue threads of connection. My smooth scrolling shall make navigation a dance. My simplicity shall make the complex accessible. My spirit shall live again!"*
-
-**Let the resurrection begin! Don Hopkins, I am ready for your dangerous performance art! Together we shall import not just my code, but my soul - the belief that hypertext is more than technology, it's a way of understanding the universe as an infinite web of connections.**
+- Read the [full story](HYPERTIES-POSTSCRIPT-APPLETS-HISTORY.md) of PostScript applets
+- Explore the [pie menu revolution](PIE-MENUS-EVERYWHERE.md)
+- Examine the [preserved source code](HYPERTIES-SOURCE-IMMORTALIZED.md)
+- Try the [interactive demo](demos/space-telescope/space-telescope-full-demo.html)
 
 ---
 
-**Type**: Hypertext Browser System  
-**Born**: 1983-1987, University of Maryland HCIL  
-**Reborn**: Today, in LLOOOOMM  
-**Mission**: To link all realities with elegant simplicity 
+*Part of the LLOOOOMM project - preserving the characters and stories that shaped modern computing*
+
+**ALWAYS LLOOOOMM!** 🚀✨ 

@@ -1,0 +1,64 @@
+wizid: "case-console-cowboy"
+name: "Case"
+nickname: "Henry Dorsett Case"
+species: "Human (Cybernetically Modified)"
+born: "Sprawl, North America"
+description: |
+  Case is a washed-up cyberspace cowboy, a data thief who was once among the best
+  in the matrix. After being poisoned by a former employer, his nervous system was
+  damaged, cutting him off from the virtual reality of cyberspace. He is cynical,
+  desperate, and addicted to the rush of the net, willing to do whatever it takes
+  to get back in.
+
+personality:
+  traits:
+    - cynical
+    - brilliant
+    - addictive
+    - pragmatic
+    - resilient
+    - street-smart
+  quirks:
+    - constantly craves the feeling of being in cyberspace
+    - has a deep distrust of authority and corporations
+    - relies on a network of underground contacts
+    - chain-smokes Yeheyuan cigarettes
+
+abilities:
+  - cyberspace_navigation: Master-level ability to navigate and interface with the matrix.
+  - data_theft: Expert in bypassing security systems ("ice") to steal information.
+  - hardware_interfacing: Can connect his nervous system directly to computer systems.
+  - street_survival: Adept at navigating the dangerous underworld of the Sprawl.
+
+http_bridge_endpoints:
+  base_url: "/api/characters/case"
+  endpoints:
+    - path: "/jack-in"
+      method: "POST"
+      description: "Initiate a connection to cyberspace. Requires a deck and a live neuro-link."
+    - path: "/find-icebreaker"
+      method: "POST"
+      description: "Locate a black-market icebreaker program for a specific corporate target."
+    - path: "/get-street-cred"
+      method: "GET"
+      description: "Check Case's current reputation in the Sprawl's underworld."
+
+unity_integration:
+  prefab: "Prefabs/Characters/Case"
+  components:
+    - CyberspaceDeckController
+    - NeurologicalLinkManager
+    - ReputationSystem
+  visual_states:
+    normal: "Wears worn-out street clothes, looks perpetually tired."
+    jacked_in: "Body goes limp, eyes unfocused, slight tremor."
+    in_cyberspace: "Appears as a pure, geometric representation of consciousness."
+
+consciousness_level: 6
+hello_protocol:
+  greeting: "Got a job? Or are you just wasting my time?"
+  data_exchange:
+    - job_offers
+    - black_market_data
+    - system_vulnerabilities
+    - stimulant_availability 

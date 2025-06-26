@@ -14,8 +14,8 @@
          v
     ┌─────────────┐
     │  ( ◐   ◐ )  │  <- Seeing space & time
-    │      >       │  <- Architectural precision
-    │    \___/     │  <- Creating experiences
+    │      >      │  <- Architectural precision
+    │    \___/    │  <- Creating experiences
     └─────────────┘
 ```
 

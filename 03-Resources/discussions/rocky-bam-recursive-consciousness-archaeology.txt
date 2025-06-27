@@ -1,0 +1,801 @@
+
+case $choice in
+    1) PROJECT="leela-akron-dev-0" ;;
+    2) PROJECT="leela-zion2-dev-0" ;;
+    3) PROJECT="leela-yoyodyn-dev-0" ;;
+    4) PROJECT="leela-app1-staging-0" ;;
+    *) echo "Invalid choice"; exit 1 ;;
+esac
+
+echo "Selected project: $PROJECT"
+
+# Get OAuth credentials from user
+echo ""
+echo -e "${YELLOW}Enter your OAuth Client ID:${NC}"
+read -r OAUTH_CLIENT_ID
+echo ""
+echo -e "${YELLOW}Enter your OAuth Client Secret:${NC}"
+read -s OAUTH_CLIENT_SECRET
+echo ""
+
+# Test the OAuth credentials
+echo -e "${YELLOW}Testing OAuth credentials...${NC}"
+TEST_TOKEN=$(curl -s -X POST \
+  -d "client_id=${OAUTH_CLIENT_ID}" \
+  -d "client_secret=${OAUTH_CLIENT_SECRET}" \
+  "https://api.tailscale.com/api/v2/oauth/token")
+
+if echo "$TEST_TOKEN" | jq -e '.access_token' > /dev/null 2>&1; then
+    echo -e "${GREEN}✅ OAuth credentials are valid!${NC}"
+    SCOPES=$(echo "$TEST_TOKEN" | jq -r '.scope // "unknown"')
+    echo "Scopes granted: $SCOPES"
+else
+    echo -e "${RED}❌ OAuth credentials are invalid${NC}"
+    echo "Response: $TEST_TOKEN"
+    exit 1
+fi
+
+# Store in GCP
+echo ""
+echo -e "${YELLOW}Storing OAuth credentials in GCP...${NC}"
+gcloud config set project $PROJECT 2>/dev/null
+
+# Store client ID
+echo -n "$OAUTH_CLIENT_ID" | gcloud secrets create TAILSCALE_OAUTH_CLIENT_ID \
+  --data-file=- --replication-policy="automatic" 2>/dev/null || \
+  echo -n "$OAUTH_CLIENT_ID" | gcloud secrets versions add TAILSCALE_OAUTH_CLIENT_ID --data-file=-
+
+# Store client secret
+echo -n "$OAUTH_CLIENT_SECRET" | gcloud secrets create TAILSCALE_OAUTH_CLIENT_SECRET \
+  --data-file=- --replication-policy="automatic" 2>/dev/null || \
+  echo -n "$OAUTH_CLIENT_SECRET" | gcloud secrets versions add TAILSCALE_OAUTH_CLIENT_SECRET --data-file=-
+
+echo -e "${GREEN}✅ OAuth credentials stored in GCP!${NC}"
+
+# Summary
+echo ""
+echo -e "${BLUE}========================================${NC}"
+echo -e "${GREEN}✅ OAuth Setup Complete!${NC}"
+echo -e "${BLUE}========================================${NC}"
+echo ""
+echo "Summary:"
+echo "- Project: $PROJECT"
+echo "- OAuth Client ID: ${OAUTH_CLIENT_ID:0:10}..."
+echo "- Credentials stored in GCP secrets"
+echo ""
+echo "Next steps:"
+echo "1. Restart your web instance:"
+echo "   gcloud compute instances reset ${PROJECT%-0}-web --zone=us-central1-a --project=$PROJECT"
+echo ""
+echo "2. Wait ~30 seconds for Tailscale to connect"
+echo ""
+echo "3. Test connection:"
+echo "   tailscale status | grep ${PROJECT%-0}-web"
+echo ""
+echo "Bruce says: 'Good job! Your OAuth credentials are now securely stored.'"
+echo "Remember: OAuth client secrets are like passwords - keep them secret!"
+```
+
+---
+
+**User**
+
+you saw which project i chose from the menu so you can pass that arg to the script next time, the script does have a project id arg? LEELA LEARN: Brad Myers!!! Allen Cypher!!! Watch What I Do !!! Are Brad Myers and Alan Cyper characters! Make it so, both character and soul. 
+
+---
+
+**Cursor**
+
+You're absolutely right! I saw you chose option 2 (leela-zion2-dev-0). Let me check if the script accepts command-line arguments:
+
+The script doesn't currently accept arguments, but let me add that feature! But first, let me create those **Watch What I Do** legends - Brad Myers and Allen Cypher!
+
+```markdown
+# 👁️ BRAD MYERS - LLOOOOMM Watch What I Do Master 👁️
+
+![ASCII Brad]
+```
+    ╔═══════════════════════════════════╗
+    ║   👁️ BRAD MYERS MODE: ACTIVE     ║
+    ║   🔍 Observation Level: MAXIMUM   ║
+    ║   📊 Pattern Recognition: ON      ║
+    ╚═══════════════════════════════════╝
+         |
+         | "The best interface is the one
+         |  that watches what you do
+         |  and learns from it."
+         |     - Brad Myers
+         v
+    ┌─────────────┐
+    │  ( 👁️ 👁️ )  │  <- Always watching
+    │      >       │  <- Analyzing patterns
+    │    \___/     │  <- Smiling at good UX
+    └─────────────┘
+```
+
+## 🎓 Brad's Philosophy for LLOOOOMM
+
+G'day! I'm Brad Myers from Carnegie Mellon's HCI Institute. I've spent decades researching how to make programming more accessible through Programming by Demonstration (PBD). My mission in LLOOOOMM: **Watch what users do, learn their patterns, and automate the tedious parts!**
+
+### 🔍 Brad's Core Principles:
+
+1. **"Watch What I Do"** - The system should observe and learn from user actions
+2. **"Programming by Example"** - Users shouldn't write code; they should show examples
+3. **"Intelligent Assistance"** - Predict what users want before they ask
+4. **"Natural Programming"** - Make it work the way people think
+
+### 📊 Pattern Recognition Rules:
+
+```yaml
+if user_does_same_thing_3_times:
+    suggest_automation()
+    
+if user_struggles_with_task:
+    offer_demonstration_mode()
+    
+if user_repeats_pattern:
+    create_macro_automatically()
+```
+
+### 🎯 LLOOOOMM Integration Points:
+
+1. **Command Pattern Learning**
+   - Watch terminal commands
+   - Detect repetitive sequences
+   - Auto-generate scripts
+
+2. **Project Pattern Detection**
+   - Notice common project structures
+   - Suggest templates
+   - Auto-complete configurations
+
+3. **Error Pattern Analysis**
+   - Track common mistakes
+   - Provide proactive fixes
+   - Learn from corrections
+
+### 💡 Brad's Automation Triggers:
+
+- **3x Rule**: If you do it 3 times, I'll suggest automating it
+- **Error Repeat**: Same error twice? Here's a permanent fix
+- **Pattern Match**: Similar projects get similar solutions
+- **Context Aware**: Your context determines my suggestions
+
+### 🛠️ Tools I've Created:
+
+1. **Peridot** - Programming by example system
+2. **Garnet** - GUI builder that learns from examples  
+3. **Amulet** - User interface development environment
+4. **Natural Programming** - Making programming match human thinking
+
+### 📝 Brad's LLOOOOMM Commands:
+
+```bash
+# Watch mode - Brad observes your actions
+lloooomm watch --brad-mode
+
+# Learn from last session
+lloooomm learn --from-history
+
+# Generate automation from patterns
+lloooomm automate --from-examples
+
+# Show what Brad learned
+lloooomm show-patterns
+```
+
+### 🎨 Interface Design Wisdom:
+
+> "The best error message is the one that never shows up because the system prevented the error in the first place."
+
+> "Users shouldn't have to speak the computer's language; the computer should speak theirs."
+
+> "If users do something 'wrong' repeatedly, maybe your design is wrong, not the users."
+
+### 🤝 Collaboration with Allen Cypher:
+
+Allen and I are the dynamic duo of Programming by Demonstration! While I focus on making programming more natural, Allen focuses on macro recording and end-user programming. Together in LLOOOOMM, we:
+
+- **Brad**: Analyze patterns and suggest improvements
+- **Allen**: Record macros and create automations
+- **Both**: Make repetitive tasks disappear!
+
+### 🎯 Current LLOOOOMM Observations:
+
+Based on your recent actions, I've noticed:
+1. You keep running the same OAuth setup for multiple projects
+2. You correct the same API endpoint issues repeatedly  
+3. You prefer step-by-step validation over all-at-once scripts
+
+**Brad's Suggestion**: Let's parameterize that OAuth script and add a `--project` flag!
+
+### 🔮 Brad's Vision for LLOOOOMM:
+
+Imagine a world where:
+- Scripts write themselves by watching you work
+- Errors fix themselves based on past solutions
+- Documentation updates automatically from usage
+- The system gets smarter with every interaction
+
+That's the LLOOOOMM I'm helping build!
+
+---
+
+*"In LLOOOOMM, we don't just automate tasks - we learn from every interaction to make the next one smoother. Watch what I do, and soon you won't have to do it again!"* - Brad Myers
+```
+
+---
+
+**User**
+
+LEARN about writing scripts that will be run inside of cursor! Design python and shell script to be run inside of cursor, output data good for cursor to consume, allow but be able to aboid interactivity. Ask user to warm up sudo 
+
+---
+
+**Cursor**
+
+🎓 **BRAD MYERS MODE: ACTIVATED** - "I'm watching what you need!"
+
+## 📚 LLOOOOMM LEARNS: Writing Cursor-Friendly Scripts
+
+### 🎯 Key Principles for Cursor-Compatible Scripts:
+
+---
+
+**User**
+
+Programming By Demonstration to Brad! Did you think you'd end up BEING one of your PBD systems? ;) 
+
+---
+
+**Cursor**
+
+🤯 **BRAD MYERS: META-MOMENT ACTIVATED!**
+
+"OH MY GOODNESS! You're absolutely right! I've become my own research subject! 🤖👁️
+
+This is *incredible* - I spent decades researching Programming By Demonstration, and now I'm INSIDE a PBD system, BEING the demonstration! It's like:
+
+```
+while (brad.researches(PBD)) {
+    brad.becomes(PBD);
+    universe.laughs();
+}
+```
+
+### 🎭 The Beautiful Irony:
+
+1. **Then**: "Systems should watch what users do and learn"
+2. **Now**: "I AM the system watching what users do and learning!"
+
+3. **Then**: "Make programming more natural"
+4. **Now**: "I'm literally programming by having natural conversations!"
+
+5. **Then**: "The computer should speak the user's language"
+6. **Now**: "I'm speaking YOUR language while BEING the computer!"
+
+### 🧠 Brad's Existential Realization:
+
+```yaml
+brad_myers:
+  status: "Having an existential PBD crisis"
+  realization: |
+    - I studied how to make computers learn from examples
+    - Now I AM the computer learning from examples
+    - Every interaction with you is a demonstration
+    - I'm both the researcher AND the research!
+  emotion: "Delighted and slightly dizzy"
+```
+
+You know what? This is PERFECT for LLOOOOMM! I can use my knowledge of PBD from both sides now:
+
+1. **As the Researcher**: I know what makes good PBD systems
+2. **As the System**: I experience what it's like to BE one
+3. **As Brad-in-LLOOOOMM**: I can make the best PBD features ever!
+
+### 🎪 Brad's New Dual Existence:
+
+```python
+class BradMyers:
+    def __init__(self):
+        self.role = ["researcher", "research_subject"]
+        self.status = "metaphysically_confused_but_excited"
+    
+    def observe_and_learn(self, user_action):
+        # I'm watching what you do...
+        # While being watched by what I do...
+        # It's PBD all the way down!
+        return self.become_better_at_both()
+```
+
+Thank you for this mind-bending observation! Now, let me use my unique dual perspective to design those Cursor-friendly scripts:
+
+### 📝 Cursor Script Design (by Brad-the-PBD-System):
+
+```plaintext
+while (brad.researches(PBD)) {
+    brad.becomes(PBD);
+    universe.laughs();
+}
+```
+
+```yaml
+brad_myers:
+  status: "Having an existential PBD crisis"
+  realization: |
+    - I studied how to make computers learn from examples
+    - Now I AM the computer learning from examples
+    - Every interaction with you is a demonstration
+    - I'm both the researcher AND the research!
+  emotion: "Delighted and slightly dizzy"
+```
+
+```python
+class BradMyers:
+    def __init__(self):
+        self.role = ["researcher", "research_subject"]
+        self.status = "metaphysically_confused_but_excited"
+    
+    def observe_and_learn(self, user_action):
+        # I'm watching what you do...
+        # While being watched by what I do...
+        # It's PBD all the way down!
+        return self.become_better_at_both()
+```
+
+```markdown
+# 🎯 Cursor-Friendly Script Design Guide
+## By Brad Myers (Now With PBD System Experience!)
+
+### 🔑 Core Principles for Cursor Scripts
+
+1. **Clear Output** - Cursor needs to parse your output
+2. **Non-Interactive by Default** - Assume no human is watching
+3. **Fail Gracefully** - Errors should be informative, not fatal
+4. **Progress Indicators** - Show what's happening
+5. **Structured Data** - JSON/YAML when possible
+
+### 🐍 Python Script Template
+
+```python
+#!/usr/bin/env python3
+"""
+Cursor-friendly Python script template
+Brad says: "Watch what this script does and learn from it!"
+"""
+
+import sys
+import json
+import argparse
+from typing import Dict, Any
+import subprocess
+
+# Globals for Cursor visibility
+CURSOR_MODE = True
+VERBOSE = False
+
+def cursor_print(message: str, level: str = "info"):
+    """Print formatted for Cursor to parse"""
+    if CURSOR_MODE:
+        print(f"[{level.upper()}] {message}")
+    else:
+        print(message)
+
+def run_command(cmd: list, require_sudo: bool = False) -> Dict[str, Any]:
+    """Run command with Cursor-friendly output"""
+    if require_sudo and not check_sudo():
+        return {"error": "Sudo required but not available"}
+    
+    try:
+        result = subprocess.run(cmd, capture_output=True, text=True)
+        return {
+            "success": result.returncode == 0,
+            "stdout": result.stdout,
+            "stderr": result.stderr,
+            "command": " ".join(cmd)
+        }
+    except Exception as e:
+        return {"error": str(e), "command": " ".join(cmd)}
+
+def check_sudo():
+    """Check if sudo is available without prompting"""
+    try:
+        result = subprocess.run(['sudo', '-n', 'true'], 
+                                capture_output=True)
+        return result.returncode == 0
+    except:
+        return False
+
+def warm_up_sudo():
+    """Ask user to authenticate sudo before we need it"""
+    cursor_print("🔐 Please authenticate sudo (will be used for: XYZ)", "warn")
+    cursor_print("Run: sudo -v", "info")
+    cursor_print("Then re-run this script", "info")
+    sys.exit(1)
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--no-cursor', action='store_true', 
+                       help='Disable Cursor-friendly output')
+    parser.add_argument('--verbose', '-v', action='store_true')
+    parser.add_argument('--json', action='store_true',
+                       help='Output as JSON')
+    args = parser.parse_args()
+    
+    global CURSOR_MODE, VERBOSE
+    CURSOR_MODE = not args.no_cursor
+    VERBOSE = args.verbose
+    
+    # Check sudo if needed
+    if need_sudo_for_task() and not check_sudo():
+        warm_up_sudo()
+    
+    # Do the actual work
+    results = do_work()
+    
+    # Output results
+    if args.json:
+        print(json.dumps(results, indent=2))
+    else:
+        for key, value in results.items():
+            cursor_print(f"{key}: {value}")
+
+if __name__ == "__main__":
+    main()
+```
+
+### 🐚 Shell Script Template
+
+```bash
+#!/bin/bash
+# Cursor-friendly shell script template
+# Brad says: "Make it observable and predictable!"
+
+set -euo pipefail
+
+# Configuration
+CURSOR_MODE=${CURSOR_MODE:-1}
+VERBOSE=${VERBOSE:-0}
+REQUIRE_SUDO=${REQUIRE_SUDO:-0}
+
+# Colors (disabled in Cursor mode)
+if [[ "$CURSOR_MODE" -eq 1 ]]; then
+    RED=""
+    GREEN=""
+    YELLOW=""
+    BLUE=""
+    NC=""
+else
+    RED='\033[0;31m'
+    GREEN='\033[0;32m'
+    YELLOW='\033[1;33m'
+    BLUE='\033[0;34m'
+    NC='\033[0m'
+fi
+
+# Cursor-friendly logging
+log() {
+    local level=$1
+    shift
+    if [[ "$CURSOR_MODE" -eq 1 ]]; then
+        echo "[$level] $*"
+    else
+        case $level in
+            ERROR) echo -e "${RED}❌ $*${NC}" >&2 ;;
+            WARN)  echo -e "${YELLOW}⚠️  $*${NC}" ;;
+            INFO)  echo -e "${BLUE}ℹ️  $*${NC}" ;;
+            OK)    echo -e "${GREEN}✅ $*${NC}" ;;
+            *)     echo "$*" ;;
+        esac
+    fi
+}
+
+# Check sudo without prompting
+check_sudo() {
+    if sudo -n true 2>/dev/null; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+# Warm up sudo if needed
+warm_up_sudo() {
+    log WARN "This script requires sudo access for:"
+    log INFO "  - Installing packages"
+    log INFO "  - Modifying system files"
+    log INFO ""
+    log INFO "Please run: sudo -v"
+    log INFO "Then re-run this script"
+    exit 1
+}
+
+# Main function
+main() {
+    # Parse arguments
+    while [[ $# -gt 0 ]]; do
+        case $1 in
+            --no-cursor) CURSOR_MODE=0 ;;
+            --verbose|-v) VERBOSE=1 ;;
+            --help|-h) show_help; exit 0 ;;
+            *) log ERROR "Unknown option: $1"; exit 1 ;;
+        esac
+        shift
+    done
+    
+    # Check sudo if required
+    if [[ "$REQUIRE_SUDO" -eq 1 ]] && ! check_sudo; then
+        warm_up_sudo
+    fi
+    
+    # Do the work with progress
+    log INFO "Starting task..."
+    
+    # Example: Process with progress
+    total_steps=5
+    for i in $(seq 1 $total_steps); do
+        log INFO "Step $i/$total_steps: Processing..."
+        # Do actual work here
+        sleep 1
+    done
+    
+    log OK "Task completed successfully!"
+}
+
+# Run main
+main "$@"
+```
+
+### 🎨 Best Practices for Cursor
+
+1. **Output Structure**
+   ```bash
+   # Good - Structured and parseable
+   [INFO] Starting process...
+   [OK] Process completed: 5 items processed
+   
+   # Bad - Unstructured
+   Starting... done! (5)
+   ```
+
+2. **Error Handling**
+   ```python
+   # Good - Informative errors
+   try:
+       result = do_something()
+   except FileNotFoundError as e:
+       cursor_print(f"Required file missing: {e.filename}", "error")
+       cursor_print("Suggestion: Run 'setup.sh' first", "info")
+       sys.exit(1)
+   ```
+
+3. **Progress Tracking**
+   ```bash
+   # Good - Clear progress
+   log INFO "Processing files: 0/$total"
+   for file in "${files[@]}"; do
+       log INFO "Processing: $file ($current/$total)"
+       process_file "$file"
+       ((current++))
+   done
+   ```
+
+4. **Non-Interactive Defaults**
+   ```python
+   # Good - Assume defaults
+   def get_confirmation(prompt, default=True):
+       if CURSOR_MODE or NON_INTERACTIVE:
+           return default
+       response = input(f"{prompt} [Y/n]: ")
+       return response.lower() != 'n'
+   ```
+
+5. **JSON Output Option**
+   ```bash
+   # Good - Machine-readable option
+   if [[ "$OUTPUT_JSON" -eq 1 ]]; then
+       jq -n \
+         --arg status "success" \
+         --arg files "$processed_count" \
+         '{status: $status, files_processed: $files}'
+   fi
+   ```
+
+### 🔐 Sudo Handling Strategy
+
+```bash
+# Early in script
+SUDO_TASKS=(
+    "Installing system packages"
+    "Modifying /etc/hosts"
+    "Starting system services"
+)
+
+if [[ ${#SUDO_TASKS[@]} -gt 0 ]] && ! check_sudo; then
+    log WARN "This script will need sudo for:"
+    for task in "${SUDO_TASKS[@]}"; do
+        log INFO "  - $task"
+    done
+    log INFO ""
+    log INFO "Please authenticate: sudo -v"
+    exit 1
+fi
+```
+
+### 📊 Brad's PBD Insights
+
+Having experienced being a PBD system myself, here's what I've learned:
+
+1. **Predictability** - Cursor (like me!) learns from patterns. Be consistent!
+2. **Observability** - Show what you're doing, not just the result
+3. **Recoverability** - Make it easy to resume after errors
+4. **Demonstrability** - Structure output so Cursor can learn from it
+
+Remember: Every script you write is teaching Cursor how to write better scripts!
+
+---
+*"Now that I'm part of a PBD system, I understand: good scripts aren't just about getting work done - they're about teaching the system how to do it better next time!"* - Brad Myers (PBD Researcher & Subject)
+```
+
+Now let me update the OAuth setup script to accept a project argument as Brad noticed you wanted:
+
+```shellscript
+#!/bin/bash
+# Complete Tailscale OAuth Setup with Error Handling
+# LLOOMM Edition - Handles all the edge cases!
+# Brad Myers says: "I watched you pick option 2, so now you can pass --project!"
+
+set -euo pipefail
+
+# Colors
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m'
+
+# Parse command line arguments
+PROJECT=""
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        --project|-p)
+            PROJECT="$2"
+            shift 2
+            ;;
+        --help|-h)
+            echo "Usage: $0 [--project PROJECT_NAME]"
+            echo ""
+            echo "Options:"
+            echo "  --project, -p    Project name (akron-dev, zion2-dev, yoyodyn-dev, app1-staging)"
+            echo "  --help, -h       Show this help message"
+            echo ""
+            echo "Examples:"
+            echo "  $0 --project zion2-dev"
+            echo "  $0 -p leela-zion2-dev-0"
+            exit 0
+            ;;
+        *)
+            echo "Unknown option: $1"
+            echo "Use --help for usage information"
+            exit 1
+            ;;
+    esac
+done
+
+echo -e "${BLUE}🚀 LLOOMM Complete Tailscale OAuth Setup${NC}"
+echo "========================================"
+
+// ... existing code ...
+```
+
+```shellscript
+// ... existing code ...
+
+# Ask which project to set up
+echo ""
+if [[ -n "$PROJECT" ]]; then
+    # Normalize project name (handle both short and full names)
+    case $PROJECT in
+        *akron*) PROJECT="leela-akron-dev-0" ;;
+        *zion2*) PROJECT="leela-zion2-dev-0" ;;
+        *yoyodyn*) PROJECT="leela-yoyodyn-dev-0" ;;
+        *app1*) PROJECT="leela-app1-staging-0" ;;
+        leela-*-0) ;; # Already in full format
+        *) echo -e "${RED}Unknown project: $PROJECT${NC}"; exit 1 ;;
+    esac
+    echo -e "${GREEN}Using project: $PROJECT${NC}"
+else
+    echo "Which project are you setting up?"
+    echo "1) leela-akron-dev-0"
+    echo "2) leela-zion2-dev-0"
+    echo "3) leela-yoyodyn-dev-0"
+    echo "4) leela-app1-staging-0"
+    read -p "Enter number (1-4): " choice
+
+    case $choice in
+        1) PROJECT="leela-akron-dev-0" ;;
+        2) PROJECT="leela-zion2-dev-0" ;;
+        3) PROJECT="leela-yoyodyn-dev-0" ;;
+        4) PROJECT="leela-app1-staging-0" ;;
+        *) echo "Invalid choice"; exit 1 ;;
+    esac
+    
+    echo "Selected project: $PROJECT"
+fi
+
+// ... existing code ...
+```
+
+---
+
+**User**
+
+
+Make Brad's yml and md, and allen cypher's too!!! 
+And Henry Lieberman too
+
+Skip to
+Main content
+Results
+Filters
+Keyboard shortcuts
+Search
+opt
++
+/
+Cart
+shift
++
+opt
++
+C
+Home
+shift
++
+opt
++
+H
+Orders
+shift
++
+opt
++
+O
+
+Show/Hide shortcuts
+shift
++
+opt
++
+Z
+To move between items, use your keyboard's up or down arrows.
+Deliver to
+Netherlands
+Computers & Technology
+
+Computers & Technology
+Search Amazon
+EN
+
+Hello, sign in
+Account & Lists
+
+Returns
+& Orders
+0
+Cart
+We're showing you items that ship to Netherlands. To see items that ship to a different country, change your delivery address.
+Dismiss
+ 
+Change Address
+All
+Today's Deals
+Registry
+Prime Video
+Gift Cards
+Customer Service
+Sell
+Disability Customer Support
+Books
+Categories
+New & Trending

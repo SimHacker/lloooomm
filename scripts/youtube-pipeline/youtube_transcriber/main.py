@@ -129,8 +129,8 @@ def process_local_video_dir(video_dir, force, **kwargs):
         
     if local_video_path_str == 'PLACEHOLDER' or local_video_path_str != str(local_video_path):
          manifest['local_video_path'] = str(local_video_path)
-
-    with tempfile.TemporaryDirectory() as temp_dir:
+        
+        with tempfile.TemporaryDirectory() as temp_dir:
         # The downloader now handles its own temp/output logic
         audio_path, _, video_path = download_audio(str(local_video_path), str(video_dir), download_video=True)
         
@@ -166,27 +166,27 @@ def get_safe_filename(title, max_length=100):
 
 def process_transcription(result, output, output_format, clean_transcript, llm_model, cleaning_style, **kwargs):
     """Helper function to process and save the transcription results."""
-    output_path = Path(output)
-    
-    # Clean transcript if requested
-    final_result = result
-    if clean_transcript:
-        click.echo(f"🧹 Cleaning transcript with {llm_model}...")
-        raw_text = result['text']
-        cleaned_text = clean_long_transcript(raw_text, llm_model, cleaning_style)
-        
-        if cleaned_text:
-            final_result = result.copy()
-            final_result['text'] = cleaned_text
+        output_path = Path(output)
+
+        # Clean transcript if requested
+        final_result = result
+        if clean_transcript:
+            click.echo(f"🧹 Cleaning transcript with {llm_model}...")
+            raw_text = result['text']
+            cleaned_text = clean_long_transcript(raw_text, llm_model, cleaning_style)
+            
+            if cleaned_text:
+                final_result = result.copy()
+                final_result['text'] = cleaned_text
             if 'segments' in result: final_result['segments'] = result['segments']
-        else:
+            else:
             click.echo("⚠️  Cleaning failed, using original transcript.")
-    
-    # Format and save final output
-    formatted_output = format_output(final_result, output_format)
+        
+        # Format and save final output
+            formatted_output = format_output(final_result, output_format)
     with open(output_path, 'w', encoding='utf-8') as f:
-        f.write(formatted_output)
-    
+                f.write(formatted_output)
+
     click.echo(f"✅ Transcription saved to: {output_path}")
 
 @cli.command(name="upload")

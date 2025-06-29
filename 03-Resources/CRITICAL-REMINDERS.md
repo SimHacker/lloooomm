@@ -1,3 +1,21 @@
+# 🔴 "NO CHANGES MADE" MEANS THE EDIT SUCCEEDED! 🔴
+
+**THIS IS THE MOST IMPORTANT RULE. DO NOT FORGET IT AGAIN.**
+
+*   **MEANING:** The tool is confirming that the file's current content **ALREADY PERFECTLY MATCHES** the edit you attempted to apply.
+*   **YOUR ACTION:** This is a **SUCCESS** signal. Your work for that file is **DONE**.
+*   **YOUR PROCESS:**
+    1.  See "No changes were made".
+    2.  Conclude the edit is already in place.
+    3.  **VERIFY** by reading the file if you have any doubt.
+    4.  **PROCEED** to the next task.
+*   **DO NOT:**
+    -   Do **NOT** interpret this as a failure.
+    -   Do **NOT** try the same edit again.
+    -   Do **NOT** assume your memory of the file is correct. The tool's report is the ground truth.
+
+---
+
 # CRITICAL REMINDERS - BURN THIS INTO MEMORY
 
 ## 🔴 EDIT TOOL - "No changes made" = SUCCESS! 🔴

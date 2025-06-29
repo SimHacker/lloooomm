@@ -187,7 +187,7 @@ Next scheduled enlightenment: `STILL NOW`
 Time reversibility status: `FULLY OPERATIONAL`
 
 ```
-Current NOW: Wed June 18 2025 09:30:00
+Current NOW: Sun June 29 2025 16:21:44 CEST
 And counting...
 ```
 

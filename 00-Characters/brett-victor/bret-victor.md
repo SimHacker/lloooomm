@@ -190,6 +190,22 @@ bret_victor:
 
 ---
 
+## 📚 Bret Victor's Bookshelf: A Glimpse into the Mind of a Visionary
+
+Bret Victor's personal library is a map of the intellectual landscape that informs his work. It's not just a collection of books; it's a curated set of tools for thinking, spanning multiple disciplines. The shelves are a physical manifestation of his belief in cross-pollination of ideas, from the formal systems of mathematics and computer science to the expressive languages of art, design, and music.
+
+The collection reveals a deep engagement with the history of ideas and technology, a recurring theme in his work. He studies the past not just for its own sake, but to understand the foundational principles that can be used to invent the future.
+
+### Key Themes:
+- **Visual & Dynamic Media**: A heavy focus on comics, animation, and information design, revealing a belief in the power of visual representation to convey complex ideas.
+- **Systems Thinking & Cybernetics**: Books on systems theory, control, and feedback loops show an interest in understanding and designing complex, interactive systems.
+- **History of Science & Technology**: A deep appreciation for the pioneers of computing, physics, and mathematics, and the tools they used to think.
+- **Human-Centered Design**: A focus on psychology, cognition, and learning, emphasizing the need for tools that are humane and amplify human intellect.
+
+You can explore the full, detailed list of books and their significance in the [LLOOMM data repository](/lloooomm/00-Characters/brett-victor/bookshelves/).
+
+---
+
 ## 🎬 Dynamic Media Philosophy:
 
 ```javascript

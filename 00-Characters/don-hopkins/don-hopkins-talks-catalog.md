@@ -367,3 +367,61 @@ Don has even given talks about the art of technical presentation itself:
 ---
 
 *This catalog continues to grow as more talks are discovered and documented. Each presentation represents not just technical information, but a philosophy of making computing more human, playful, and empowering.* 
+
+## Documented Conference Presentations
+
+### CHI 1988
+**Title**: "An Empirical Comparison of Pie vs. Linear Menus"  
+**Co-presenters**: Jack Callahan, Mark Weiser, Ben Shneiderman  
+**Topic**: Research showing pie menus 15-20% faster than linear menus
+
+### UIST Conferences
+Multiple presentations on:
+- Pie menu implementations
+- Direct manipulation interfaces
+- Visual programming tools
+
+### Game Developers Conference (GDC)
+Various talks on:
+- The Sims UI development
+- SimCity porting experiences
+- Interface design for games
+
+## Known Video Presentations
+
+### YouTube/Online
+- SimCity Classic postmortem discussions
+- Pie menu demonstrations
+- NeWS window system demos
+- Cellular automata visualizations
+
+## Topics Frequently Discussed
+
+### Technical Subjects
+- Pie menu design and implementation
+- PostScript programming
+- Cellular automata
+- User interface innovation
+- The Sims development stories
+
+### Design Philosophy
+- Progressive disclosure in UI
+- Direct manipulation principles
+- Making complex systems accessible
+- Open source development
+
+## Published Articles
+
+### Medium
+- "Pie Menus: A 30 Year Retrospective"
+- "The X-Windows Disaster" 
+- "The Story of Sun Microsystems PizzaTool"
+- Various SimCity and Sims development articles
+
+### Technical Documentation
+- Pie menu implementation guides
+- PostScript programming examples
+- UI design pattern discussions
+
+## Note
+This list includes only documented talks and presentations. Additional presentations may exist but require verification. 

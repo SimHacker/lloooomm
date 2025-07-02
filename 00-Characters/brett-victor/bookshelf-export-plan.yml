@@ -1,0 +1,146 @@
+# Bookshelf Export Plan
+# Converting Brett Victor's bookshelf YAML files to individual book files in Internet Archive format
+
+export_plan:
+  source_files:
+    - bookshelf-r1-c1.yml  # Row 1, Col 1 - Visual Language, Sequential Art, and Interaction
+    - bookshelf-r1-c2.yml  # Row 1, Col 2 - Media, Mind, and the Digital Frontier  
+    - bookshelf-r1-c3.yml  # Row 1, Col 3 - History of Science and Great Thinkers
+    - bookshelf-r1-c4.yml  # Row 1, Col 4 - Programming Languages, Compilers, and the Art of Code
+    - bookshelf-r2-c1.yml  # Row 2, Col 1 - Artificial Intelligence, Problem Solving, and the Mind
+    - bookshelf-r2-c2.yml  # Row 2, Col 2 - Principles of Design: Interface, Industrial, and Visual
+    - bookshelf-r2-c3.yml  # Row 2, Col 3 - Programming Languages, Compilers, and the Essence of Computation
+    - bookshelf-r2-c4.yml  # Row 2, Col 4 - Lisp, Scheme, and the Essence of Programming
+    - bookshelf-r3-c1.yml  # Row 3, Col 1 - Information Design and Data Visualization
+    - bookshelf-r3-c2.yml  # Row 3, Col 2 - Cognition, Consciousness, and the Architecture of Mind
+    - bookshelf-r3-c3.yml  # Row 3, Col 3 - The Language of Space: Geometry
+    - bookshelf-r3-c4.yml  # Row 3, Col 4 - Histories of the Digital Revolution
+    - bookshelf-r4-c1.yml  # Row 4, Col 1 - Architecture, Urbanism, and the Craft of Language
+    - bookshelf-r4-c2.yml  # Row 4, Col 2 - Creativity, Discovery, and the Philosophy of Science
+    - bookshelf-r4-c3.yml  # Row 4, Col 3 - (not yet loaded)
+    - bookshelf-r4-c4.yml  # Row 4, Col 4 - (not yet loaded)
+    - bookshelf-r5-c1.yml  # Row 5, Col 1 - (not yet loaded)
+    - bookshelf-r5-c2.yml  # Row 5, Col 2 - (not yet loaded)
+    - bookshelf-r5-c3.yml  # Row 5, Col 3 - (not yet loaded)
+    - bookshelf-r5-c4.yml  # Row 5, Col 4 - (not yet loaded)
+    - bookshelf-r6-c1.yml  # Row 6, Col 1 - (not yet loaded)
+    - bookshelf-r6-c2.yml  # Row 6, Col 2 - (not yet loaded)
+    - bookshelf-r6-c3.yml  # Row 6, Col 3 - (not yet loaded)
+    - bookshelf-r6-c4.yml  # Row 6, Col 4 - (not yet loaded)
+
+  target_directory: "lloooomm/00-Characters/brett-victor/books/"
+  
+  file_naming_convention: "{book_id}.yml"
+  # Example: BretVictor_r1_c1_Comics_UnderstandingComicsTheInvisibleArt.yml
+
+  transformation_steps:
+    1_parse_source_file:
+      - Read each bookshelf YAML file
+      - Extract bookshelf metadata (row, col, theme, label)
+      - Parse the books array
+      
+    2_extract_book_data:
+      - For each book in the books array
+      - Capture original YAML structure
+      - Note position index on the shelf (left to right, starting at 1)
+      
+    3_transform_to_internet_archive_format:
+      required_fields:
+        id: "book.id"  # Same as original book ID
+        title: "book.title"  # Book title
+        description: "book.summary"  # Book summary/description (use text summary field from the original YAML file)
+        creator: "book.author"  # Author name(s)
+        subject: "book.tags"  # Array of subject tags
+        collection: "BretVictorBookShelf"  # Fixed collection name
+        mediaType: "book"  # Fixed media type
+        
+      additional_bookshelf_metadata:
+        bookshelf: "BrettVictorBookShelf"  # Fixed bookshelf name
+        bookshelf_row: "extracted_from_filename"  # r1 -> 1, r2 -> 2, etc.
+        bookshelf_col: "extracted_from_filename"  # c1 -> 1, c2 -> 2, etc.  
+        bookshelf_label: "book.label"  # The label field from the book
+        bookshelf_index: "position_on_shelf"  # Left to right index starting at 1
+        internet_archive_item_ids: []  # Empty array to be filled later
+        
+      # Obviously, you should not duplicate the fields you renamed under their old names, like summary => description, author => creator, tags => subject, etc. 
+      #No redundancy, just normalize and align with IA Item schema.
+
+      preserve_all_original_fields: # all fields from the original YAML file plus any others not listed here:
+        - publication_year
+        - publisher
+        - isbn
+        - pages
+        - amazon_link
+        - goodreads_link
+        - summary
+        - label
+        
+      preserve_all_jazz_metadata: # all fields from the jazz section of the original YAML file, even if not listed here:
+        - cosmic_significance
+        - relevance_to_victor
+        - paradigm_shift_potential
+        - jamming_language
+        - key_concepts
+        - tags
+        - related_works
+        - cultural_significance
+        - cultural_artifacts
+        # ALL jazz fields must be preserved exactly as they are
+        
+    4_write_individual_files:
+      - Create one YAML file per book
+      - Name using book ID + .yml extension
+      - Write to books/ subdirectory
+      
+  processing_order:
+    - Process one bookshelf file at a time
+    - Within each shelf, process books left to right (index 1, 2, 3...)
+    - Start with r1-c1 and proceed systematically
+    
+  example_transformation:
+    input:
+      title: "Understanding Comics: The Invisible Art"
+      id: "BretVictor_r1_c1_Comics_UnderstandingComicsTheInvisibleArt" 
+      author: "Scott McCloud"
+      summary: "A seminal work that uses the comic book medium itself..."
+      tags: ["visual-literacy", "media-theory", "sequential-art"]
+      label: "Comics"
+      jazz:
+        cosmic_significance: "The book that gave a medium its own language..."
+        # ... all other jazz fields
+        
+    output:
+      id: "BretVictor_r1_c1_Comics_UnderstandingComicsTheInvisibleArt"
+      title: "Understanding Comics: The Invisible Art"
+      description: "A seminal work that uses the comic book medium itself..."
+      creator: "Scott McCloud"
+      subject: ["visual-literacy", "media-theory", "sequential-art"]
+      collection: "BretVictorBookShelf"
+      mediaType: "book"
+      bookshelf: "BrettVictorBookShelf"
+      bookshelf_row: 1
+      bookshelf_col: 1
+      bookshelf_label: "Comics"
+      bookshelf_index: 1
+      internet_archive_item_ids: []
+      # ALL original fields preserved:
+      author: "Scott McCloud"
+      summary: "A seminal work that uses the comic book medium itself..."
+      label: "Comics"
+      # ALL jazz fields preserved:
+      jazz:
+        cosmic_significance: "The book that gave a medium its own language..."
+        # ... exactly as in original
+        
+  validation_requirements:
+    - Every book must have a unique ID
+    - All required Internet Archive fields must be present
+    - All original YAML structure must be preserved
+    - Jazz metadata must be completely intact
+    - Bookshelf positioning must be accurate
+    
+  execution_strategy:
+    - Process files sequentially, one at a time
+    - Verify each transformation before proceeding
+    - Maintain complete data fidelity
+    - Create consistent file structure 

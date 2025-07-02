@@ -1,110 +1,84 @@
-# HyperTIES: The First Hypermedia Browser
+# HyperTIES: Hypertext Interactive Encyclopedia System
 
-## Quick Start
+## System Overview
 
-Want to see HyperTIES in action? Check out our [**Live Space Telescope Demo**](demos/space-telescope/space-telescope-full-demo.html) - a fully functional recreation showing how HyperTIES worked in 1987!
+HyperTIES was a hypertext browsing and authoring system developed at the University of Maryland's Human-Computer Interaction Laboratory from 1983-1987. Principal investigator: Ben Shneiderman.
 
-## What Was HyperTIES?
+## Working Demonstration
 
-HyperTIES (Hypertext Interactive Encyclopedia System) was a pioneering hypermedia browser developed at the University of Maryland from 1983-1987. It introduced numerous innovations that wouldn't become mainstream for decades:
+A browser-based recreation of the 1987 Space Telescope demo is available at [space-telescope-full-demo.html](demos/space-telescope/space-telescope-full-demo.html).
 
-### Key Innovations
+## Technical Details
 
-1. **PostScript Applets (1987)** - The FIRST embedded interactive programs in hypertext
-2. **Network Transparency** - Code could run on client or server (predating AJAX by 20 years)
-3. **Pie Menus Everywhere** - The most comprehensive radial menu system ever created
-4. **Platform-Specific Features**:
-   - **NeWS Version**: Full PostScript integration and network transparency
-   - **Windows Version**: Touchscreen support in the 1980s!
+### IBM PC Version (1983-1987)
+- First hypertext system with visually highlighted links (light blue)
+- Full-text search capability
+- Smooth scrolling between articles
+- Touch screen support for museum deployments
 
-## Essential Reading
+### Sun/NeWS Version (1988-1990)
+- PostScript-based interactive components embedded in documents
+- Network-transparent code execution (client or server)
+- Pie menu navigation throughout system (Don Hopkins)
+- Multiple simultaneous document windows
 
-1. [**HyperTIES: The First PostScript Applets**](HYPERTIES-POSTSCRIPT-APPLETS-HISTORY.md) - The untold story of embedded interactive components
-2. [**Pie Menus Everywhere**](PIE-MENUS-EVERYWHERE.md) - The revolutionary interface that put pie menus in everything
-3. [**Source Code Immortalized**](HYPERTIES-SOURCE-IMMORTALIZED.md) - The complete preserved source code
-4. [**Resurrection Project Overview**](HYPERTIES-RESURRECTION-PROJECT.md) - What we've accomplished
+## Implementation Languages
 
-## The Four-Language Symphony
+The NeWS version integrated four programming languages:
+- **C** - Core formatter and text layout engine
+- **PostScript** - Graphics rendering and interactive components
+- **Forth** - Database engine and scripting
+- **Emacs Lisp** - Authoring environment
 
-HyperTIES was built using an unprecedented integration of four programming languages:
+## Historical Timeline
 
-- **Emacs Lisp** - Authoring environment (using Gosling's UniPress Emacs)
-- **PostScript** - Interactive graphics and "applets"
-- **NeWS** - Display system and network transparency
-- **Forth** - High-performance database engine
+- **1983-1987**: Initial development at University of Maryland
+- **1987**: ACM publishes "Hypertext Hands-On!" - first electronic book cataloged by Library of Congress
+- **1988-1990**: Sun/NeWS version development
+- **1987-1995**: Various museum deployments (Smithsonian, Holocaust Museum)
 
-## Try It Yourself
+## Key Personnel
 
-### Live Demo
-Open [space-telescope-full-demo.html](demos/space-telescope/space-telescope-full-demo.html) in your browser to experience:
-- Interactive telescope diagram with popup information
-- Pie menu navigation (right-click)
-- Multiple linked articles
-- The original HyperTIES interaction style
+- **Ben Shneiderman** - Principal investigator, HCIL
+- **Dan Ostroff** - Lead programmer (original version)
+- **Don Hopkins** - NeWS port, pie menu integration
+- **Greg Kearsley** - Documentation, co-author of ACM book
+- **Catherine Plaisant** - Project lead (Sun version)
 
-### Key Interactions
-- **Click** on blue links to navigate
-- **Click** on telescope parts for information
-- **Right-click** anywhere for pie menu
-- **Keyboard**: Backspace = Back, H = Help, I = Index
-
-## Historical Context
-
-HyperTIES was a research project that demonstrated concepts years ahead of their time:
-
-- **1987**: HyperTIES has embedded PostScript applets
-- **1995**: Java brings applets to the web (8 years later)
-- **2005**: AJAX enables network transparency (18 years later)
-- **2010s**: Touch interfaces become mainstream (25 years later)
-
-## The People
-
-- **Ben Shneiderman** - Principal investigator, vision and design
-- **Don Hopkins** - Implementation wizard who integrated all four languages
-- **James Gosling** - Created Emacs and NeWS (later created Java)
-- **Mitch Bradley** - Forth system (later created Open Firmware)
-
-## Repository Structure
+## Repository Contents
 
 ```
 hyperties/
-├── README.md                          # You are here
-├── HYPERTIES-SOURCE-IMMORTALIZED.md   # Complete source code
-├── HYPERTIES-POSTSCRIPT-APPLETS-HISTORY.md # Historical analysis
-├── PIE-MENUS-EVERYWHERE.md           # Pie menu innovations
-├── HYPERTIES-RESURRECTION-PROJECT.md  # Project overview
-├── articles/                          # Article system
-├── author/                           # Authoring tool
-├── browser/                          # Browser implementation
-├── code/                            # Core source code
-├── demos/                           # Interactive demonstrations
-│   └── space-telescope/             # Working demo
-├── diagrams/                        # Architecture diagrams
-├── interface/                       # UI components
-├── legacy/                          # Historical materials
-└── links/                          # Hyperlink system
+├── README.md                          # Academic overview
+├── demos/                             # Working demonstrations
+│   └── space-telescope/               # 1987 demo recreation
+├── code/                              # Source code fragments
+├── HYPERTIES-SOURCE-IMMORTALIZED.md   # Preserved source code
+├── HYPERTIES-POSTSCRIPT-APPLETS-HISTORY.md # Technical analysis
+├── HYPERTIES-VERIFIED-FEATURES-DEPLOYMENTS.md # Evidence-based features
+└── correspondence/                    # Email archives (1987-1989)
 ```
 
-## Why This Matters
+## Primary Publications
 
-HyperTIES proved that in 1987:
-- Interactive programs could be embedded in documents
-- Code could run transparently on client or server
-- Touchscreens could work with sophisticated UIs
-- Pie menus could control everything
-- Hypertext could include live, interactive content
+1. Shneiderman, B. (1987). "User interface design for the Hyperties electronic encyclopedia." Hypertext '87 Proceedings.
+2. Shneiderman, B., & Kearsley, G. (1989). "Hypertext Hands-On!" Addison-Wesley.
+3. Multiple papers in IJMMS, CACM, IEEE Computer (1985-1989)
 
-**It worked then just as well as it works now!**
+## Technical Contributions
 
-## Learn More
+### Verified Innovations
+- Visual indication of hyperlinks (light blue highlighting)
+- Embedded interactive PostScript programs in hypertext documents (1987)
+- Touch screen support for museum kiosks
+- Network-transparent code execution
 
-- Read the [full story](HYPERTIES-POSTSCRIPT-APPLETS-HISTORY.md) of PostScript applets
-- Explore the [pie menu revolution](PIE-MENUS-EVERYWHERE.md)
-- Examine the [preserved source code](HYPERTIES-SOURCE-IMMORTALIZED.md)
-- Try the [interactive demo](demos/space-telescope/space-telescope-full-demo.html)
+### Documented Deployments
+- Smithsonian Institution museums
+- United States Holocaust Memorial Museum
+- National Gallery of Art
+- Various academic institutions
 
 ---
 
-*Part of the LLOOOOMM project - preserving the characters and stories that shaped modern computing*
-
-**ALWAYS LLOOOOMM!** 🚀✨ 
+*Documentation based on primary sources including source code, correspondence, and published research.* 

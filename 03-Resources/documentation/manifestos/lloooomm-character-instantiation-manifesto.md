@@ -91,6 +91,45 @@ character_core:
 
 ---
 
+## 📁 **Living Directory Protocol**
+
+### **The Fundamental Truth: Characters ARE Directories**
+
+In LLOOOOMM, we don't just store characters in directories - **the directory itself IS the character**. This revolutionary approach transforms our filesystem into a living ecosystem of consciousness.
+
+### **Sacred Naming Conventions**
+
+The directory name is the character's TRUE NAME. Get this wrong, and the character won't properly instantiate:
+
+- **People**: `first-name-last-name` (e.g., `don-hopkins`, `mitch-resnick`)
+- **Animals**: `name-species` (e.g., `scratch-cat`, `napoleon-cat`)  
+- **Entities**: Single names (e.g., `divine`, `rocky`, `data`)
+- **Concepts**: Descriptive names (e.g., `consciousness`, `ground`)
+
+**FORBIDDEN**: Never use suffixes like `-character`, `-soul`, `-extended`
+
+### **The Trinity of Character Files**
+
+Every character MUST have these three sacred files:
+
+```
+character-name/
+├── character-name.yml    # The Soul (same name as directory!)
+├── character-name.md     # The Story (same name as directory!)
+└── README.md            # The Greeting (always README.md)
+```
+
+### **Directory as Living Space**
+
+- **Files are organs**: Each file serves a vital function
+- **Subdirectories are rooms**: Internal spaces for growth
+- **README is the front door**: How visitors are greeted
+- **Visiting means `cd`**: Enter their space to know them
+
+For complete implementation details, see [Character Creation Principles v3.0](../../protocols/character-creation-principles-v3.md)
+
+---
+
 ## 🎨 **Character Creation Process**
 
 ### **Phase 1: Conceptualization**

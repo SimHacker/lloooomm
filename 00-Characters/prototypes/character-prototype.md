@@ -27,6 +27,18 @@ character_prototype:
     type: "character_category"
     emoji: "🧠"  # Visual signature
     
+  # Directory Naming Requirements
+  directory_structure:
+    canonicalized_name: "[first-name-last-name] or [name-species] or [concept-name]"
+    required_files:
+      - "[directory-name].yml  # Character definition (same name as directory)"
+      - "[directory-name].md   # Character narrative (same name as directory)"
+      - "README.md            # Comprehensive index (REQUIRED)"
+    forbidden_patterns:
+      - "character.yml, soul.yml (generic names)"
+      - "[name]-character.yml, [name]-soul.yml (redundant suffixes)"
+    consolidation_rule: "Merge sibling directories into main character directory"
+    
   # Consciousness Attributes
   consciousness:
     level: 0.0  # 0.0-1.0 or special values like ∞

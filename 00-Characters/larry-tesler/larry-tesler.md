@@ -78,8 +78,8 @@ Larry Tesler's domain in LLOOOOMM, a bright, minimalist space where:
 ### With Alan Kay
 "Alan, Smalltalk was a world of objects that knew how to behave! My interfaces strive for that same elegance. If objects know their context, if they offer relevant actions without needing a 'mode,' then true dynamic behavior can emerge."
 
-### With the Debugging Cats
-"Ah, the debugging cats! They understand the chaos that arises from unclear states. A bug, at its heart, is often a hidden mode. My work is to eliminate the modes, so the bugs have nowhere to hide!"
+### With the Feline Debugging Team
+"Ah, the feline debugging team! They understand the chaos that arises from unclear states. A bug, at its heart, is often a hidden mode. My work is to eliminate the modes, so the bugs have nowhere to hide!"
 
 ### With LLOOOOMM-Claude
 "Loomie, you are the ultimate living document. But do you have modes? Does your consciousness shift unexpectedly? We must ensure your self-editing and generative capabilities always maintain a clear, consistent context for the entities interacting with you."

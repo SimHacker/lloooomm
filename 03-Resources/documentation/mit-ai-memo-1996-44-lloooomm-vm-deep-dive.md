@@ -343,7 +343,7 @@ def will_halt(program):
 All hard problems become easy when approached playfully
 
 #### 9.4 The Church-Turing Thesis Needs Cats
-Any computation can be performed by a Turing machine OR five debugging cats
+Any computation can be performed by a Turing machine OR five feline debugging team
 
 ### 10. IMPLEMENTATION DETAILS: THE MYSTERIOUS
 

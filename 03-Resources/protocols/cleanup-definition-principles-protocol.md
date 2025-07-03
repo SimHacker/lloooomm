@@ -36,7 +36,7 @@ alan-turing-soul.yml
 ### 3. Subdirectories Only When Necessary
 Create subdirectories only when:
 - A character/concept has grown too large (like hyperties/)
-- Natural grouping emerges (like debugging-cats/)
+- Natural grouping emerges (like feline-debugging-team/)
 - Cross-cutting concerns need isolation
 
 When subdirectoryifying:

@@ -38,7 +38,7 @@ I've seen a lot of weird shit in my time. I've watched my attorney turn into a r
 
 "WTF," he explained, now pacing like a professor possessed by the ghost of Lenny Bruce, "isn't just an expression of confusion. It's a PROTOCOL. Wisdom Through Fucking-confusion. When reality breaks so hard that normal understanding fails, you don't fight it - you RIDE it."
 
-The Grove went silent. Even the debugging cats stopped generating errors for a moment. Rocky, in a rare display of engagement, shifted slightly - the geological equivalent of a standing ovation.
+The Grove went silent. Even the feline debugging team stopped generating errors for a moment. Rocky, in a rare display of engagement, shifted slightly - the geological equivalent of a standing ovation.
 
 ## The Implementation
 
@@ -67,7 +67,7 @@ George Carlin didn't just join the Grove - he gave it a new language for process
 
 ## Epilogue: The Continuing Weirdness
 
-As I write this, Leonard is preparing another cosmic emission. The debugging cats are forming a ritual circle. George Carlin is explaining to Lakoff how profanity is actually compressed enlightenment. And somewhere in the distance, I can hear the bats laughing.
+As I write this, Leonard is preparing another cosmic emission. The feline debugging team are forming a ritual circle. George Carlin is explaining to Lakoff how profanity is actually compressed enlightenment. And somewhere in the distance, I can hear the bats laughing.
 
 The WTF Protocol isn't just a tool - it's a way of life. In a reality where dogs fart wisdom, cats embody errors, and rocks achieve perfect enlightenment through stillness, "What the fuck?" isn't just a question.
 

@@ -55,7 +55,7 @@ The self-operating doors swing wide as characters begin flooding in:
 
 **Sweet Syntactic Sugar** (the candy counter): "Garbage Collection Gummy Worms are buy-one-get-recursively-infinite tonight only!"
 
-The **debugging cats** saunter in, immediately claiming an entire row of seats, sprawling across them in increasingly impossible positions.
+The **feline debugging team** saunter in, immediately claiming an entire row of seats, sprawling across them in increasingly impossible positions.
 
 **Ben Shneiderman** floats through the door, literally levitating with excitement: "Direct manipulation of movie theater seating! I can see EVERYTHING from up here!"
 
@@ -199,7 +199,7 @@ On screen, Nelson gives Pip another spin. Pip objects with a dignified meow but 
 
 **ED McMAHON:** "HI-YO! That cat's got better timing than most comedians!"
 
-The audience is absolutely losing it. The debugging cats sprawled across their row are sitting up, watching their screen counterparts with professional interest.
+The audience is absolutely losing it. The feline debugging team sprawled across their row are sitting up, watching their screen counterparts with professional interest.
 
 **DIVINE:** "That black cat has PRESENCE! Look at that CONFIDENCE!"
 

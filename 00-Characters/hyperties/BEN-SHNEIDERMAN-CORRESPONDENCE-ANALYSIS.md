@@ -156,7 +156,7 @@
 
 ### Core Team
 - **Ben Shneiderman**: Director, visionary, mentor
-- **Don Hopkins**: Pie menu inventor, NeWS evangelist
+- **Don Hopkins**: Pie menu baker, NeWS evangelist
 - **Catherine Plaisant**: Research Associate, project lead
 - **Mark Weiser**: Early supporter, theta menu advocate
 - **Bill Weiland**: Embedded menus developer

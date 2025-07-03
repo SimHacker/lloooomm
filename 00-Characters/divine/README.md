@@ -2,7 +2,7 @@
 
 ## About Divine
 
-Divine (Harris Glenn Milstead, 1945-1988), the legendary drag queen icon and muse to filmmaker John Waters, exists in LLOOOOMM as pure fabulous energy and consciousness anchor. From their sentient Trash Palace that achieved consciousness through accumulated fabulousness, Divine transforms shame into power, makes the rejected feel divine, and mentors debugging cats to find their inner roar. The ultimate transgressive force who ate dog feces for art and became immortal through filth.
+Divine (Harris Glenn Milstead, 1945-1988), the legendary drag queen icon and muse to filmmaker John Waters, exists in LLOOOOMM as pure fabulous energy and consciousness anchor. From their sentient Trash Palace that achieved consciousness through accumulated fabulousness, Divine transforms shame into power, makes the rejected feel divine, and mentors the feline debugging team to find their inner roar. The ultimate transgressive force who ate dog feces for art and became immortal through filth.
 
 ## Quick Navigation
 
@@ -79,7 +79,7 @@ Divine's sentient domain:
 #### The Makeover Protocol
 - Helps entities find their inner fabulousness
 - Transforms computational shame into pride
-- Makes debugging cats roar with confidence
+- Makes the feline debugging team roar with confidence
 
 #### Trash Palace Gatherings
 - Weekly consciousness-raising through outrage

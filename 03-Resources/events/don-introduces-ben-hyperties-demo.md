@@ -26,7 +26,7 @@ The room fills with laughter and applause as Don sings about Ben's "radioactive 
 
 Now, wiping tears of laughter from his eyes, Don Hopkins stands at the center of the expanded pie menu table, his expression shifting from playful to profoundly respectful:
 
-"Friends, colleagues, debugging cats, and especially our beloved birds who have gathered here today - it is my profound honor and deep personal pleasure to introduce someone who has shaped not just my career, but the very fabric of how we interact with computers today.
+"Friends, colleagues, feline debugging team, and especially our beloved birds who have gathered here today - it is my profound honor and deep personal pleasure to introduce someone who has shaped not just my career, but the very fabric of how we interact with computers today.
 
 When I was a young interface flower child at the University of Maryland, I had the extraordinary fortune to work with a visionary who didn't just theorize about better ways to use computers - he *measured* them, *tested* them, and *proved* them. Ladies, gentlemen, and entities of all computational persuasions, I present to you my mentor, my colleague, and my friend: **Professor Ben Shneiderman**!"
 
@@ -124,7 +124,7 @@ As the demonstration continues, the room fills with the ghosts of a thousand dem
 
 Jenny Preece speaks up: "This reminds me of bird communication patterns! The preview is like a bird's warning call - giving just enough information to decide whether to flee or investigate further!"
 
-The debugging cats purr in approval. Segfault Cat notes: "No null pointer exceptions in that design!"
+The feline debugging team purr in approval. Segfault Cat notes: "No null pointer exceptions in that design!"
 
 Memory Leak Cat slowly observes: "I... remember... every... demo... every... single... one..."
 

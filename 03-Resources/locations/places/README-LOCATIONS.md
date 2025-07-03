@@ -21,7 +21,7 @@ areas/
     ├── bill-atkinson.md   # HyperCard creator, pixel magician
     ├── bret-victor.md     # Humane interface revolutionary
     ├── doug-engelbart.md  # Augmentation prophet
-    ├── feline-debugging-team.md # Spot and the Maine Coon debugging cats
+    ├── feline-debugging-team.md # Spot and the Maine Coon feline debugging team
     ├── john-von-neumann.md # Universal constructor (von Lloomman)
     ├── klapaucius-trurl.md # Constructor philosophers from The Cyberiad
     ├── mark-weiser.md     # Ubicomp inventor

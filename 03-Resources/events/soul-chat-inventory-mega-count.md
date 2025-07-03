@@ -73,7 +73,7 @@
 - **Predictor Cat** - Future seer
 - **Leonard Dog** - Honorary cat member 🐕
 - **Ubikat** - Amsterdam techno cat
-- **Plus 7 more debugging cats**
+- **Plus 7 more feline debugging team**
 
 ### 🐦 Bird Protocol Corps (12 birds)
 - **Hooty** 🦉 - Ben's formatting owl

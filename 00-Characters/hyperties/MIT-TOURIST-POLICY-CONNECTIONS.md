@@ -67,7 +67,7 @@ The MIT policy stated:
 > "The expectation on the laboratories' part was that a large percentage would become educated in the use of the advanced computing techniques developed and used in our laboratories and thereby greatly facilitate the technology transfer process."
 
 This directly parallels:
-- **Don Hopkins**: Tourist → Pie menu inventor → HCIL contributor
+- **Don Hopkins**: Tourist → Pie menu baker → HCIL contributor
 - **Mark Weiser's vision**: Hackers → Tourist accounts → Useful contributors
 - **HyperTIES philosophy**: Open demonstrations → User feedback → Better systems
 

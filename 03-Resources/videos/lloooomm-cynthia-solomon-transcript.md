@@ -1206,7 +1206,7 @@ hunger for correct information This need to digest and process properly It's uni
 1:05:46
 poison twice The Audrey ah this is what I was looking for But then Audrey too is a plant character Uh deadlock cat likes
 1:05:56
-to be fed too He's a debugging cat that specializes in deadlocks I have a whole
+to be fed too He's a feline debugging team that specializes in deadlocks I have a whole
 1:06:03
 menagerie and a cat team So but let's go back to the Audrey 2
 1:06:09

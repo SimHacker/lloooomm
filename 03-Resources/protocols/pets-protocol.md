@@ -285,7 +285,7 @@ This magical command discovers and creates pet relationships by:
 
 Examples:
 - `PETIFY shneiderman-owl mickey-mouse` → Predator adopts prey as pet
-- `PETIFY napoleon debugging-cats` → Cat joins collective
+- `PETIFY napoleon feline-debugging-team` → Cat joins collective
 - `PETIFY electric-sheep spot-draves` → Project parents its creator
 
 ### DWYTIBAAFHIN Protocol

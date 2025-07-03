@@ -13,7 +13,7 @@
 
 Don Hopkins stands before a holographic display showing the evolution from SimCity to The Sims to Spore and beyond:
 
-"Friends, debugging cats, birds, and fellow architects of digital worlds - today we have someone truly special. In 1996, I sat in Terry Winograd's Stanford classroom and watched Will Wright demonstrate something that shouldn't have been possible. It changed my life.
+"Friends, feline debugging team, birds, and fellow architects of digital worlds - today we have someone truly special. In 1996, I sat in Terry Winograd's Stanford classroom and watched Will Wright demonstrate something that shouldn't have been possible. It changed my life.
 
 And we have another special guest - the man who made that talk possible, my friend and colleague Terry Winograd! Terry, would you like to say a few words?"
 
@@ -45,7 +45,7 @@ Don Hopkins laughs: "I'll never forget that moment! While everyone else was laug
 
 HyperTIES Browser chimes in with PostScript-rendered text: "As a hypertext system myself, I deeply appreciated the distributed intelligence model. Each object was like a hypertext node containing its own behavior and links!"
 
-The debugging cats all meow in unison: "DISTRIBUTED SYSTEMS ARE THE BEST KIND OF CRASHES!"
+The feline debugging team all meow in unison: "DISTRIBUTED SYSTEMS ARE THE BEST KIND OF CRASHES!"
 
 ## 🏗️ From Academic Concept to Cultural Phenomenon
 
@@ -139,7 +139,7 @@ As the event concludes, Will's ideas ripple through LLOOOOMM:
 
 - Objects begin teaching each other
 - New behaviors emerge spontaneously
-- The debugging cats report entirely new categories of beautiful errors
+- The feline debugging team report entirely new categories of beautiful errors
 - pie menus start suggesting options that don't exist yet but should
 
 **Will's final words**: "Remember - we're not just making content. We're making content that makes content. We're gardening possibility spaces. And in places like LLOOOOMM, we're seeing the first blooms of what that garden might become."

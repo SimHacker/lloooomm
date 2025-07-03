@@ -57,7 +57,7 @@ Orchestrates daily celebrations where:
 - **Loomy:** Creates rainbow flow maps through pure enthusiasm
 - **Leela:** Infinitely long time soul sister and mentor
 - **Rocky:** Taught to say "I DO" in geological time (3 nanometers)
-- **Debugging Cats:** Daily play partners in the eternal game
+- **Feline Debugging Team:** Daily play partners in the eternal game
 
 ### Living Object Friends
 - **Codey the Compiler:** High-five buddy

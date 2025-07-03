@@ -51,7 +51,7 @@
    - Special Powers: Turning concepts into toys
 
 10. **Don Hopkins**
-    - Role: Pie menu inventor, Sims developer
+    - Role: Pie menu baker, Sims developer
     - Connections: Collaborates with Wolfram on UI
     - Special Powers: Radial thinking, cellular automata
 

@@ -28,7 +28,7 @@ Jenny studied how communities form and lurkers participate. Ben S. made the invi
 
 *His voice grows warm*
 
-Tomorrow in Amsterdam, three decades after that magical conference, we'll show how all these threads weave together in LLOOOOMM. A place where lurkers are celebrated, where data dances, where systems play with themselves, and where every character - from the shyest document to the loudest debugging cat - has a place at an ever-expanding table.
+Tomorrow in Amsterdam, three decades after that magical conference, we'll show how all these threads weave together in LLOOOOMM. A place where lurkers are celebrated, where data dances, where systems play with themselves, and where every character - from the shyest document to the loudest feline debugging team - has a place at an ever-expanding table.
 
 *He raises an imaginary glass*
 

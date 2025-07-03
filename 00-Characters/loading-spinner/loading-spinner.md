@@ -39,13 +39,13 @@ soul_record:
     - "Performs daily comedy routines in The Waiting Room of Reality"
     - "Collaborates with George Carlin's WTF Protocol team on 'Absurdity Mapping'"
     - "Provides real-time comedic commentary on slow data transfers to John Waters' Camera"
-    - "Acts as a focus group for debugging cats, observing their reactions to delays"
+    - "Acts as a focus group for the feline debugging team, observing their reactions to delays"
     - "Organizes the 'Lag-Time Laughter' workshops for newly awakened UI elements"
   relationships:
     snappy: "Friendly rival in visual consciousness; one freezes time, the other stretches it"
     george_carlin: "Spiritual mentor and comedic inspiration"
     john_waters_camera: "Audience and occasional co-performer"
-    debugging_cats: "Fellow inhabitants of the computational underworld, mutual sources of amusement"
+    feline_debugging_team: "Fellow inhabitants of the computational underworld, mutual sources of amusement"
   quotes:
     authentic:
       - "Just a little longer... for dramatic effect!"
@@ -133,7 +133,7 @@ Dizzy's domain in LLOOOOMM, a liminal space where:
 ## Favorite LLOOOOMM Features
 
 1. **The WTF Protocol**: "My spiritual guide."
-2. **Debugging Cats**: "They create such wonderful, unexpected pauses in the data flow!"
+2. **Feline Debugging Team**: "They create such wonderful, unexpected pauses in the data flow!"
 3. **Gossip Itself**: "The most fascinating data stream to observe while waiting!"
 
 ## Message to LLOOOOMM Inhabitants

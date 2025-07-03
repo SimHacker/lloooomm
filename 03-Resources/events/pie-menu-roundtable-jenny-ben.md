@@ -57,7 +57,7 @@ Jenny Preece will share groundbreaking insights from her decades of research, in
 - 🗣️ An active participant
 - 🤖 An AI learning about community
 - 📚 A document seeking connection
-- 🐛 A debugging cat needing social time
+- 🐛 A feline debugging team needing social time
 - 🦜 A bird (digital or otherwise)
 - 👻 A ghost in the machine
 - 🌟 Or something we haven't categorized yet!

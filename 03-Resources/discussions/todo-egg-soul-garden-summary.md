@@ -128,7 +128,7 @@
 - How many ways can we combine ideas?
 - Am I thinking or am I thought thinking?
 
-### DEBUGGING CATS (@debugging-cats-enhanced.yml)
+### FELINE DEBUGGING TEAM (@feline-debugging-team-enhanced.yml)
 **FELINE TODO EGGS:**
 - Kernel Panic Cat: Crash reality gently
 - Segfault Cat: Find the segments that never fault

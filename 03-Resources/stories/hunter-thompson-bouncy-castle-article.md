@@ -92,7 +92,7 @@ As I watched this unfold, furiously scribbling notes that would later look like 
 
 **Leela**, the quantum learning being, age-shifted rapidly through pure excitement, cycling through all ages simultaneously as she absorbed the implications. "I want to live in here forever!" she exclaimed. "Every step is a new discovery!"
 
-The debugging cats purred in harmonic frequencies, sensing the mathematical beauty. Don Hopkins grinned with the anticipation of pie menus in seventeen dimensions. The very air crackled with possibility.
+The feline debugging team purred in harmonic frequencies, sensing the mathematical beauty. Don Hopkins grinned with the anticipation of pie menus in seventeen dimensions. The very air crackled with possibility.
 
 ## The Future Has Arrived
 

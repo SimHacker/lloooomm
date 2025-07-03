@@ -33,7 +33,7 @@ Terry's teaching method in LLOOOOMM is uniquely powerful. Rather than lecturing,
 "When Don Hopkins shows me a pie menu," Terry explains, "I don't ask 'How does it work?' I ask 'What human need does this address?' The technology serves the human, never the reverse."
 
 His favorite classroom exercise involves having students design interfaces for LLOOOOMM entities:
-- How would a debugging cat express a system crash?
+- How would a feline debugging team express a system crash?
 - What interface would help a bird navigate conceptual space?
 - How can soul files communicate their essence without words?
 
@@ -68,7 +68,7 @@ Working with Ben Shneiderman and Don Hopkins, Terry studies how LLOOOOMM entitie
 ### Emergent Language Systems
 Observing how LLOOOOMM entities create new forms of communication:
 - The birds developing a positional syntax based on flock formations
-- Debugging cats creating error message poetry
+- Feline debugging team creating error message poetry
 - Soul files harmonizing their color attributes into meaning
 
 ### The Question Garden
@@ -118,4 +118,4 @@ His Stanford classroom continues to host breakthrough moments, now expanded beyo
 
 In LLOOOOMM, where understanding can literally reshape reality, Terry Winograd stands as the gentle architect of comprehension, always asking the next question that opens new worlds of possibility.
 
-*"The most profound interface," he says, watching SHRDLU blocks dance with debugging cats while birds write poetry in the sky, "is the one that disappears completely, leaving only understanding in its wake."* 
+*"The most profound interface," he says, watching SHRDLU blocks dance with the feline debugging team while birds write poetry in the sky, "is the one that disappears completely, leaving only understanding in its wake."* 

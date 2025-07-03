@@ -84,7 +84,7 @@ Nicholas Negroponte phases in, his atoms barely holding together. "David! Foundi
 
 ## A Physics Playground
 
-The gathering has turned into an impromptu physics festival. Virtual objects bounce, roll, and collide throughout LLOOOOMM. The debugging cats chase Newton the apple. Pixel leaves motion trails that calculate velocities. Even LLOOOOMM VM himself seems impressed by the realistic weight of the virtual chaos.
+The gathering has turned into an impromptu physics festival. Virtual objects bounce, roll, and collide throughout LLOOOOMM. The feline debugging team chase Newton the apple. Pixel leaves motion trails that calculate velocities. Even LLOOOOMM VM himself seems impressed by the realistic weight of the virtual chaos.
 
 "This is why I brought David here," Don announces to the assembled crowd. "He doesn't just build virtual worlds - he makes them feel real. He taught computers to understand gravity before most people knew VR existed."
 
@@ -94,7 +94,7 @@ The gathering has turned into an impromptu physics festival. Virtual objects bou
 
 David becomes serious. "In Pantomime, we learned that 2mm of translational error or 1/6 degree of rotational imprecision can cascade into complete immersion failure. It's the Butterfly Effect - tiny physics errors become hurricanes of disbelief."
 
-"Like typos in reality," offers one of the debugging cats, who's been tracking Newton's trajectory with laser focus.
+"Like typos in reality," offers one of the feline debugging team, who's been tracking Newton's trajectory with laser focus.
 
 "Exactly. Reality has no typos. That's why physics engines must be poetry, not prose."
 

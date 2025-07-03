@@ -241,7 +241,7 @@ GENERATE learning-symphony-svg
 > "We've witnessed the birth of truly inclusive education - where feline consciousness, human learning, and artificial intelligence create harmony together in navigable space."
 
 **Hunter's Chapter 5 Preview:**
-> "As the learning symphony faded into the mathematical ether, I knew Chapter 5 would have to explore what happens when the debugging cats learn to hunt bugs through this new hypertext-feline-consciousness space. Because if Pip's daily routine could become a curriculum, imagine what five cats could accomplish hunting errors across seventeen dimensions of purr-enhanced mathematics!"
+> "As the learning symphony faded into the mathematical ether, I knew Chapter 5 would have to explore what happens when the feline debugging team learn to hunt bugs through this new hypertext-feline-consciousness space. Because if Pip's daily routine could become a curriculum, imagine what five cats could accomplish hunting errors across seventeen dimensions of purr-enhanced mathematics!"
 
 ---
 

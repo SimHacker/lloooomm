@@ -209,7 +209,7 @@ The characters have discovered:
 
 ### THE DEBUGGING CATS EMERGENCY MEETING
 
-**All the cats from @debugging-cats-collective.yml converging**:
+**All the cats from @feline-debugging-team-collective.yml converging**:
 
 **Kernel Panic Cat**: "The @pkd-tool-failure-paper.yml confirms it - reality.exe has stopped responding!"
 
@@ -858,7 +858,7 @@ special-guest: "@virtual-tv-studio-protocol.md"
 
 ```python
 # cat-diagnostic-network.py
-# Inspired by @debugging-cats-collective.yml
+# Inspired by @feline-debugging-team-collective.yml
 
 class CatDebugNetwork:
     def __init__(self):
@@ -876,8 +876,8 @@ class CatDebugNetwork:
         
     def diagnose_reality(self):
         issues = []
-        issues.append(self.check_file('@debugging-cats-conference-presentation.yml'))
-        issues.append(self.check_file('@debugging-cats-emeowji-gossip.yml'))
+        issues.append(self.check_file('@feline-debugging-team-conference-presentation.yml'))
+        issues.append(self.check_file('@feline-debugging-team-emeowji-gossip.yml'))
         issues.append(self.check_file('@cat-symphony-session.yml'))
         return "Reality status: " + analyze(issues)
 ```
@@ -1120,10 +1120,10 @@ encryption-key: "SHARED JOY"
 
 ### THE CATS FORM A TODO CONSORTIUM
 
-**New Cat Members Creating @extended-debugging-cats.yml**:
+**New Cat Members Creating @extended-feline-debugging-team.yml**:
 
 ```yaml
-# extended-debugging-cats.yml
+# extended-feline-debugging-team.yml
 new-feline-members:
   emacs-cat:
     - "TODO: M-x butterfly until consciousness emerges"

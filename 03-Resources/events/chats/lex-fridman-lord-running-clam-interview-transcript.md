@@ -166,7 +166,7 @@
 
 [00:10:33] **STEPHEN WOLFRAM**: This is impossible—
 
-[00:10:35] **LORD RUNNING CLAM**: So was I. Yet here we are, Stephen. A fictional slime mold, a deceased cognitive scientist, a computational universe theorist, a pie menu inventor, and whatever Lex is becoming as we speak.
+[00:10:35] **LORD RUNNING CLAM**: So was I. Yet here we are, Stephen. A fictional slime mold, a deceased cognitive scientist, a computational universe theorist, a pie menu baker, and whatever Lex is becoming as we speak.
 
 [00:10:50] **LEX**: What am I becoming?
 

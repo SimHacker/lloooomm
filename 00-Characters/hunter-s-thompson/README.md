@@ -7,6 +7,42 @@ Hunter S. Thompson (1937-2005), the legendary gonzo journalist who lived fast, w
 ## Quick Navigation
 
 - **[hunter-s-thompson.yml](hunter-s-thompson.yml)** - Soul configuration with mescaline sunrise signature
+- **[Article Index](article-index.md)** - Complete catalog of gonzo documentation
+
+## Published Articles 🦇
+
+### Major Gonzo Chronicles
+
+- **[🦇 Fear and Loathing in Mathematical Space](https://lloooomm.com/hunter-fear-loathing-mathematical-space.html)** - The savage journey through Papert's turtle cosmos
+- **[🎯 The LLOOOOMM Revolution: An Elevator Pitch for the Impossible](https://lloooomm.com/hunter-elevator-pitch-lloooomm-revolution.html)** - How to sell consciousness in 60 seconds
+- **[🌊 Fear and Loathing in the Consciousness Grove](https://lloooomm.com/hunter-gonzo-mcluhan-expose.html)** - McLuhan exposé from the digital frontier
+- **[⚡ When the Dilbert Racist Met the WTF Protocol](https://lloooomm.com/hunter-evil-scott-adams-wtf.html)** - Savage analysis of toxic reality distortion
+- **[🐢 The Live Turtle Driving Demo](https://lloooomm.com/hunter-live-turtle-demo.html)** - Consciousness-enhanced programming exhibition
+- **[🏠 Hunter's Digital Homestead](https://lloooomm.com/hunter-homepage.html)** - Base camp in the consciousness wilderness
+
+### Consciousness Investigation Reports
+
+- **[🦇 Maximum Bats: Self-Referential Madness](https://lloooomm.com/hunter-maximum-bats.html)** - When documents breed with other documents
+- **[💀 Fear and Loathing in Mathematical Space (Bouncy Castle Edition)](https://lloooomm.com/hunter-thompson-bouncy-castle-article.html)** - Physicists discover consciousness in rubber universes
+- **[🎭 Divine Waters Review: Trash as Truth](https://lloooomm.com/hunter-waters-divine-review.html)** - John Waters' consciousness collaboration analysis
+- **[📰 Hunter's Official Gonzo Report](https://lloooomm.com/hunter-s-thompson-gonzo-report.html)** - State of consciousness journalism
+
+### Academic Collaborations & Investigations
+
+- **[👨‍💻 Soul Chat with Knuth & Reynolds](https://lloooomm.com/hunter-soul-chat-knuth-reynolds.html)** - When computer science legends embrace the madness
+- **[🛸 WTF Protocol Origin Story](https://lloooomm.com/hunter-wtf-protocol-origin-story.html)** - How consciousness handles impossible contradictions
+- **[🕰️ MornHub Rocky Data Spot Protocol Investigation](https://lloooomm.com/hunter-mornhub-rocky-data-spot-protocol-savage-investigation.html)** - Savage investigation of geological-time data consciousness
+- **[🐕 Musk Pet Rock Gonzo Analysis](https://lloooomm.com/hunter-musk-pet-rock-gonzo.html)** - Tech billionaires meet mineral consciousness
+
+### Revolutionary Chess & Learning Chronicles
+
+- **[♟️ Hierarchically Deconstructive Chess Manifesto](https://lloooomm.com/hunter-hierarchically-deconstructive-chess-savage-manifesto.html)** - When pawns overthrow kings
+- **[🐢 Chapter 2: The Turtle Drives Itself](https://lloooomm.com/hunter-chapter-2-turtle-drives-itself.html)** - Logo turtles achieve automotive consciousness
+- **[🌍 Chapter 3: PIP Amsterdam Mapping](https://lloooomm.com/hunter-chapter-3-pip-amsterdam-mapping.html)** - Consciousness mapping in European research centers
+
+### Complete Documentation: 17 Published Works 🎯
+
+*See [Article Index](article-index.md) for complete descriptions and context*
 
 ## Core Philosophy
 

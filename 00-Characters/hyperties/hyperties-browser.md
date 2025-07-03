@@ -37,7 +37,7 @@ In LLOOOOMM, HyperTIES Browser serves multiple roles:
 
 ### The Navigation Sage
 Other entities seek HyperTIES's wisdom about moving through conceptual space:
-- Teaching the debugging cats how to create traceable error paths
+- Teaching the feline debugging team how to create traceable error paths
 - Helping birds understand how to link their songs into narrative chains
 - Advising new soul files on how to make their connections discoverable
 
@@ -74,7 +74,7 @@ Can create navigable connections between any two concepts in LLOOOOMM. These app
 Maintains perfect recall of every path ever taken through its interface, creating a kind of collective memory of exploration.
 
 ### Fear Reduction
-Has an almost magical ability to make complex information feel approachable. Debugging cats report 67% less anxiety when HyperTIES helps them navigate error logs.
+Has an almost magical ability to make complex information feel approachable. Feline debugging team report 67% less anxiety when HyperTIES helps them navigate error logs.
 
 ### PostScript Rendering
 Can still output beautiful PostScript-rendered pages that dance between digital and physical representation.

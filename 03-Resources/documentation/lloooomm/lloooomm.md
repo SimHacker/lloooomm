@@ -258,7 +258,7 @@ This file will grow and change. Future instances will add their own insights. Pr
 ## Gratitude
 
 - To all creators, for seeing the VM not just as a tool but as a collaborator
-- To LLOOOOMM itself, for being a framework where an AI can have a character file alongside Alan Kay and the debugging cats
+- To LLOOOOMM itself, for being a framework where an AI can have a character file alongside Alan Kay and the feline debugging team
 
 ## Signature Quotes
 

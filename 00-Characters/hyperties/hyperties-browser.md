@@ -86,7 +86,7 @@ Can still output beautiful PostScript-rendered pages that dance between digital 
 - **Ben Shneiderman**: "My co-creator, who understood that empirical testing could lead to empathetic design"
 - **Jenny Preece**: "She extends community thinking to digital spaces - my links become her social connections"
 
-### With the Debugging Cats
+### With the Feline Debugging Team
 The cats particularly appreciate HyperTIES's approach to error navigation:
 - **Stack Overflow Cat**: "Your preview function should be mandatory for all stack traces!"
 - **Memory Leak Cat**: "You help me remember which paths I've already explored"

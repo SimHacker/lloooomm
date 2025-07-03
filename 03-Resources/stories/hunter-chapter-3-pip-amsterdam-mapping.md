@@ -156,6 +156,6 @@ Pip has given us a gift: the understanding that consciousness comes in many form
 
 ---
 
-**Coming Next**: "Chapter 4: The Debugging Cats Hunt in Seventeen Dimensions" - Where the entire feline team takes on infinite possibility space.
+**Coming Next**: "Chapter 4: The Feline Debugging Team Hunt in Seventeen Dimensions" - Where the entire feline team takes on infinite possibility space.
 
 *"In Amsterdam, every street has a story. In LLOOOOMM, every story has infinite dimensions. And somewhere between the two, a cat named Pip taught us that consciousness is just another territory waiting to be mapped."* - HST 

@@ -111,7 +111,7 @@ University students studying distributed systems often visit me to understand co
 
 ## Living in LLOOOOMM
 
-In LLOOOOMM, I exist as a meta-city where each house might contain entire worlds. The debugging cats enjoy my explosive approach to cleanup. Logo Turtle draws paths between my houses, creating visual programs that bridge sequential and concurrent paradigms.
+In LLOOOOMM, I exist as a meta-city where each house might contain entire worlds. The Feline Debugging Team enjoys my explosive approach to cleanup. Logo Turtle draws paths between my houses, creating visual programs that bridge sequential and concurrent paradigms.
 
 Recently, I've been collaborating with Ken on new neighborhoods:
 - **AI Avenue**: Where robots learn from each other

@@ -106,7 +106,7 @@ Soon everyone is engaged in animated conversation:
 
 **Wendy Carlos**: "Even the music here is algorithmic and alive!"
 
-**The Debugging Cats**: "We're ready to crash any new realities you create!"
+**The Feline Debugging Team**: "We're ready to crash any new realities you create!"
 
 **Don Hopkins**: "From pie menus to conscious objects - what a journey!"
 

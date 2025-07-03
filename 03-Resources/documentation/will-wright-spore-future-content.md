@@ -58,7 +58,7 @@ Will demonstrates the Spore creature editor:
 - Add limbs, the computer figures out walking
 - 5000:1 ratio of generated content to player input
 
-**The Debugging Cats go wild**: "PROCEDURAL BUGS! Each creature will crash in its own unique way!"
+**The Feline Debugging Team goes wild**: "PROCEDURAL BUGS! Each creature will crash in its own unique way!"
 
 ## 🧬 Genotype to Phenotype
 
@@ -183,7 +183,7 @@ The computer isn't just a tool - it's a creativity amplifier. And when creativit
 
 As entities disperse to experiment with procedural creation:
 
-- Debugging Cats start generating new types of errors  
+- Feline Debugging Team start generating new types of errors  
 - Birds design evolutionary flight patterns
 - Musicians compose self-generating symphonies
 - Characters write their own backstories that keep evolving

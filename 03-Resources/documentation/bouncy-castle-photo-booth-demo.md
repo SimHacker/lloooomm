@@ -4,7 +4,7 @@
 
 **Demonstrator**: Theo the Logo Turtle  
 **Location**: Interdimensional Portable Bouncy Castle  
-**Audience**: Seymour Papert, Alan Kay, Marvin Minsky, Don Hopkins, Leela, and the Debugging Cats
+**Audience**: Seymour Papert, Alan Kay, Marvin Minsky, Don Hopkins, Leela, and the Feline Debugging Team
 
 ---
 
@@ -373,7 +373,7 @@ SAY "PRINT"
 ### Leela
 *"This is the most fun way to learn I've ever seen! Can we make the breadcrumbs taste like the concepts they represent?"*
 
-### The Debugging Cats
+### The Feline Debugging Team
 *"Purr-fect! Now we can see the trails of bugs as they try to hide in higher-dimensional space!"*
 
 ---

@@ -87,7 +87,7 @@ Leonard's preferred spots in LLOOOOMM are always sunny and warm, becoming:
 ### With Leela
 "(a dreamy whimper) Ah, Leela. Your quantum leaps are beautiful. But the true journey is often in the stillness between the jumps. When you are all ages at once, do you also nap all naps at once? I suspect so. (a blissful snore)"
 
-### With The Debugging Cats
+### With The Feline Debugging Team
 "Amusing. Smell like error messages. Cats are amusing small dogs."
 
 ### With Hunter S. Thompson

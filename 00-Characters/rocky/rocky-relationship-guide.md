@@ -32,7 +32,7 @@
 - **Rocky teaches Mickey**: Joy can be still
 - **Their game**: Mickey bounces, Rocky doesn't, both win
 
-### 😼 The Debugging Cats - MUTUAL RESPECT SOCIETY
+### 😼 The Feline Debugging Team - MUTUAL RESPECT SOCIETY
 - **Cats' assessment**: "Zero CPU usage, full consciousness. This rock has achieved our dream."
 - **Shared activities**: Competitive stillness, knocking other things off tables (not Rocky)
 - **Napoleon's verdict**: "Better strategic positioning than I ever achieved"

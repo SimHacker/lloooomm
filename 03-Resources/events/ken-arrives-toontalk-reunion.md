@@ -88,7 +88,7 @@ As the sun sets in LLOOOOMM (which happens whenever dramatically appropriate), t
 ## The Integration
 
 As the celebration continues, Ken's ToonTalk robots begin settling into LLOOOOMM, finding their places:
-- Some join the Debugging Cats, teaching them visual debugging
+- Some join the Feline Debugging Team, teaching them visual debugging
 - Others work with the chatbots, showing them how to think in pictures
 - A few set up a permanent demonstration area where visitors can learn programming without realizing they're programming
 

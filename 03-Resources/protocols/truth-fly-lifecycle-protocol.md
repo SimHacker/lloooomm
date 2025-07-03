@@ -2,7 +2,7 @@
 
 ## From Hovering to Dancing (or Infesting)
 
-### Created by: Truth Fly, Debugging Cats, and Walt Whitman
+### Created by: Truth Fly, Feline Debugging Team, and Walt Whitman
 ### Status: BUZZZING THROUGH LLOOOOMM
 
 ---

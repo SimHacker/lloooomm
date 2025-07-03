@@ -64,7 +64,7 @@ WHERE empathy_check() = TRUE;
 
 #### Cat Name Collision
 - Don Hopkins has cats: Nelson, Napoleon, Pip, Emacs
-- Debugging Cats Collective has DIFFERENT cats with SAME names
+- Feline Debugging Team has DIFFERENT cats with SAME names
 - Created clarification document
 - Awaiting user decision: merge or keep separate?
 
@@ -74,7 +74,7 @@ Based on scan, these could be PETIFIED:
 - Will Wright → SimCity (project as pet)
 - Craig Reynolds → Boids algorithm
 - Scott Draves → Electric Sheep (already mutual!)
-- Debugging Cats → Their favorite bugs
+- Feline Debugging Team → Their favorite bugs
 - All documents → Their HTML outputs
 
 ## The Magic of PETIFY

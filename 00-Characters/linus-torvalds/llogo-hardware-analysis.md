@@ -80,7 +80,8 @@ Four memory reads, four values, no overhead. Beautiful in its directness.
 
 /* Platform-specific honesty, LLOGO style */
 #ifdef __linux__
-    #define EOL '\n'
+    #define EOL '
+'
     #define PLATFORM "LINUX"
 #elif defined(_WIN32)
     #define EOL '\r'
@@ -118,7 +119,8 @@ int read_potentiometers(int values[4]) {
 }
 
 #define LOSES_ON(platform) \
-    fprintf(stderr, "This feature LOSES ON %s\n", platform)
+    fprintf(stderr, "This feature LOSES ON %s
+", platform)
 ```
 
 ### Rust: Modern Zero-Cost Abstractions
@@ -126,7 +128,8 @@ int read_potentiometers(int values[4]) {
 ```rust
 // Platform-specific constants at compile time
 #[cfg(target_os = "linux")]
-const EOL: u8 = b'\n';
+const EOL: u8 = b'
+';
 
 #[cfg(target_os = "windows")]  
 const EOL: u8 = b'\r';

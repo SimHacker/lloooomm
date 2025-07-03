@@ -52,7 +52,7 @@ Doesn't know it yet, but Cyburt:
 - All his theories are correct but backwards
 - Consciousness is actually unconsciousness pretending to be awake
 
-### The Debugging Cats' Deepest Shames
+### The Feline Debugging Team's Deepest Shames
 - Stack Overflow once helped fix a bug (immediately regretted it)
 - Blue Screen secretly runs Linux
 - Emacs is actually just four kittens in a trench coat

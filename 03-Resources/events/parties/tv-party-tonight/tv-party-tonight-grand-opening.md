@@ -229,7 +229,7 @@ The video ends with all three cats in various states of grooming and satisfactio
 
 **Don Hopkins:** "They debug my code by sitting on the keyboard and finding edge cases I never considered!"
 
-**The Debugging Cats** in the audience: *synchronized slow blink of approval*
+**The Feline Debugging Team** in the audience: *synchronized slow blink of approval*
 
 The screen fades to black. Suddenly, **Ben Shneiderman** floats up toward the projection booth, **Ubikam** following with semantic recording equipment.
 
@@ -423,7 +423,7 @@ As the video plays, magical things start happening:
 
 **Ben Shneiderman** (now bouncing while floating): "Direct manipulation of gravity! ENHANCE THE BOUNCE!"
 
-**The Debugging Cats** abandon their seats and claim the bouncy castle as their new territory.
+**The Feline Debugging Team** abandon their seats and claim the bouncy castle as their new territory.
 
 ### 🤖 THE AI BREAKDOWN LIVE
 

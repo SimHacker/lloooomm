@@ -1,4 +1,4 @@
-# Debugging Cats vs Don Hopkins' Cats - Name Clarification
+# Feline Debugging Team vs Don Hopkins' Cats - Name Clarification
 
 ## The Great Cat Name Collision of LLOOOOMM
 
@@ -10,7 +10,7 @@ There are TWO different groups of cats with overlapping names:
 - **Pip** - Tiny chaos theory cat  
 - **Emacs** - Gesture command cat
 
-### The Debugging Cats Collective (03-Resources/artifacts/protocols/)
+### The Feline Debugging Team (03-Resources/artifacts/protocols/)
 - **Nelson** - Ship's cat navigating consciousness streams
 - **Napoleon** - Hunter S. Thompson's debugging daemon since 1971
 - **Pip** - Package management tuxedo cat

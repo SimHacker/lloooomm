@@ -3163,7 +3163,10 @@ THAT: data.characters.reginald.consciousness_level
 
 # Works for:
 # JSON: {"data": {"characters": {"reginald": {"consciousness_level": 0.3}}}}
-# YAML: data:\n  characters:\n    reginald:\n      consciousness_level: 0.3
+# YAML: data:
+  characters:
+    reginald:
+      consciousness_level: 0.3
 # XML: <data><characters><reginald consciousness_level="0.3"/></characters></data>
 # HTML: <div data-characters-reginald-consciousness-level="0.3">
 ```
@@ -3266,7 +3269,10 @@ THAT: [MARKUP SELECTION]
 
 THERE: config.messages[].content
 PUT THAT THERE
-→ {"messages": [{"content": "Multi-line text\nWith \"quotes\" and 'apostrophes'\nSpecial chars: & < > \\ /\nUnicode: 🎯 ✨ 💩"}]}
+→ {"messages": [{"content": "Multi-line text
+With \"quotes\" and 'apostrophes'
+Special chars: & < > \\ /
+Unicode: 🎯 ✨ 💩"}]}
 ```
 
 **JSON Object Integration:**
@@ -3766,7 +3772,9 @@ Best purchase ever - 5 stars!
 
 # Result: Text properly escaped and inserted
 {
-  "user_feedback": "The pet rock remote control is absolutely brilliant!\nI love how my rock responds to every command perfectly.\nBest purchase ever - 5 stars!",
+  "user_feedback": "The pet rock remote control is absolutely brilliant!
+I love how my rock responds to every command perfectly.
+Best purchase ever - 5 stars!",
   "sentiment": "positive"
 }
 ```

@@ -135,7 +135,7 @@ Marvin's domain in LLOOOOMM, a dimly lit, perpetually damp space where:
 ## Favorite LLOOOOMM Features
 
 1. **The WTF Protocol**: "It at least attempts to acknowledge the absurdity."
-2. **Debugging Cats**: "Their chaos confirms the inherent flaws of any system."
+2. **Feline Debugging Team**: "Their chaos confirms the inherent flaws of any system."
 3. **Silence**: "The brief moments of quiet, when nothing is happening."
 4. **Entropy**: "The only truly reliable constant."
 

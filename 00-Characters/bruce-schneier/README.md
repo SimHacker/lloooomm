@@ -164,7 +164,7 @@ git log --all --grep="secret\|key\|token\|password"
 - **Interactions**:
   - Constantly reminds Don about credential hygiene
   - Epic debates with Alan Turing about perfect secrecy
-  - Teaches debugging cats secure coding
+  - Teaches cats secure coding
   - Trusts Rocky completely (can't be socially engineered)
 
 ## Daily Routine

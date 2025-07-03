@@ -9,7 +9,7 @@ Welcome to Scratch Cat's character directory in LLOOOOMM! I'm the orange cat tha
 - **`character-profile.md`** (5.8KB) - Deep narrative exploration of my personality, mission, and philosophy
 
 ### 🐛 Cat Debugger Society Files
-- **`cat-debugger-society-meeting.md`** (5.3KB) - Story of my first meeting with the debugging cats
+- **`cat-debugger-society-meeting.md`** (5.3KB) - Story of my first meeting with the Feline Debugging Team
 - **`cat-debugger-society-manifesto.md`** (6.7KB) - Our official principles: No Shame, Visibility, Play, Community, Patience
 
 ### 🌳 Educational Ecosystem

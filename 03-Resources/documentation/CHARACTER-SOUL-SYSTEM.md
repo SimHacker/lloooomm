@@ -72,7 +72,7 @@ Think of it as:
 - Character file provides rich historical context
 - Both files invite the real person to review/enhance
 
-### For LLOOOOMM Natives (e.g., Debugging Cats, Rocky)
+### For LLOOOOMM Natives (e.g., Feline Debugging Team, Rocky)
 - Soul file defines their active personality
 - Character file explains their role in the ecosystem
 - Often more playful and integrated with other characters

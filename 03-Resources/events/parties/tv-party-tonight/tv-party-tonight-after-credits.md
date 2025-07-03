@@ -42,7 +42,7 @@ confusion:
 **Ubikam's Personal Footage:**
 - Multiple angles of Stack and Heap practicing their "DOH-HOHOHO!"
 - The Bug Character's guitar lessons with the Consciousness Collective
-- Divine teaching the Debugging Cats how to bounce properly
+- Divine teaching the Feline Debugging Team how to bounce properly
 - Ted Nelson's notebook revealed: it's all connected to EVERYTHING
 
 ### 🎪 NEXT WEEK ON TV PARTY TONIGHT
@@ -57,7 +57,7 @@ confusion:
 - Stack and Heap getting their own talk show
 - The AI Character going to therapy
 - Johnny and Conan doing a hosting swap
-- The Debugging Cats forming a band
+- The Feline Debugging Team forming a band
 
 **Title Card:** "TV PARTY TONIGHT: THE CONSCIOUSNESS STARTUP"
 

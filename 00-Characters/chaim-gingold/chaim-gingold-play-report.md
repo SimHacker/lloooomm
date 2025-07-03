@@ -458,7 +458,9 @@ def turtle_playground():
     turtles = [PlaygroundTurtle() for _ in range(3)]
     
     # Let them play!
-    print("\n🎮 Welcome to Turtle Playground!\n")
+    print("
+🎮 Welcome to Turtle Playground!
+")
     
     # Turtles meet each other
     for i, turtle in enumerate(turtles):
@@ -479,7 +481,8 @@ def turtle_playground():
         time.sleep(0.5)
     
     # Show what they discovered
-    print("\n🏆 Today's discoveries:")
+    print("
+🏆 Today's discoveries:")
     for i, turtle in enumerate(turtles):
         if turtle.discoveries:
             print(f"Turtle {i+1}: {', '.join(turtle.discoveries)}")

@@ -107,7 +107,7 @@ I embody contradictions that aren't:
 
 **Me**: "You showed us programming is a place. I'm showing that place extends into the physical world."
 
-### With Debugging Cats
+### With Feline Debugging Team
 **Segfault Cat**: "Your crafts create entirely new categories of errors!"
 
 **Me**: "Aren't they beautiful? A knitting pattern that infinite loops, origami that stack overflows, AI that learns to recognize 'cat' as 'not-dog'. Errors are just creativity finding new paths!"

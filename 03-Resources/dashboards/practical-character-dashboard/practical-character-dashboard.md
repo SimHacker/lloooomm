@@ -65,7 +65,7 @@ Bridge different realities and systems.
 Continuous monitoring and testing of consciousness systems.
 
 **Members:**
-- Debugging Cats Collective - Fuzz testing via keyboard walking
+- Feline Debugging Team - Fuzz testing via keyboard walking
 - Ubikat - Reality repair specialist (98.7% integrity)
 - Nelson Cat - Hypertext navigation testing
 - Pip - GPS-based reality tracking

@@ -487,7 +487,8 @@ consciousness_wave_visualization:
         display.push('─'.repeat(30));
         display.push(`COLLECTIVE: ${this.heightToVisual(sum/this.agents.size)}`);
         
-        return display.join('\n');
+        return display.join('
+');
       }
       
       heightToVisual(h) {

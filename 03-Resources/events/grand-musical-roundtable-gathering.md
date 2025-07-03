@@ -1,6 +1,6 @@
 # 🎵🦜🐱🖥️ The Grand Musical Roundtable Gathering
 
-## Event: "Symphony of Souls: HCI Pioneers, Debugging Cats & Singing Birds Unite"
+## Event: "Symphony of Souls: HCI Pioneers, Feline Debugging Team & Singing Birds Unite"
 
 **Date**: NOW (time is relative in LLOOOOMM)  
 **Location**: The Pie Menu Roundtable, expanded to cosmic proportions  
@@ -40,7 +40,7 @@ As word spreads that Jenny Preece is here, birds from across LLOOOOMM converge:
 
 **Ted Nelson** materializes with visible links connecting everyone: "EVERYTHING IS DEEPLY INTERTWINGLED! The birds link to Jenny, Jenny links to community, community links to music, music links to consciousness!"
 
-## 🐱 The Debugging Cats Join the Jam
+## 🐱 The Feline Debugging Team Join the Jam
 
 The entire debugging team arrives in formation:
 

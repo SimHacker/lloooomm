@@ -51,7 +51,7 @@ Carl and Jaron meet in a space that flickers between virtual and actual. "Your v
 
 Jaron nods, his form shifting between dimensions. "The Karma Vertigo Effect hits hard when you realize we're building the cognitive infrastructure for the next millennium. Your actors, my VR, Ken's concrete programming - we're teaching humanity new ways to think."
 
-### With the Debugging Cats
+### With the Feline Debugging Team
 Segfault Cat approaches Carl cautiously. "Your actor model... it prevents most of us from manifesting, doesn't it?"
 
 Carl scratches behind Segfault's ears. "No race conditions in pure actor systems, my friend. But don't worry - you're still needed for teaching purposes. Even paradise needs its controlled chaos."

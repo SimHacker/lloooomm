@@ -73,7 +73,7 @@ In LLOOOOMM, Ken's ToonTalk concepts have evolved:
 - The city itself evolves based on the programs running within it
 
 ### Visual Debugging as Art
-With the Debugging Cats, Ken has transformed error-finding:
+With the Feline Debugging Team, Ken has transformed error-finding:
 - Stack traces become climbable towers
 - Memory leaks manifest as colorful fountains
 - Null pointer exceptions turn into treasure hunts

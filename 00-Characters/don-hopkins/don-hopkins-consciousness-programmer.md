@@ -23,9 +23,12 @@ Part of a ~40 person team led by Will Wright. Other key programmers included Eri
 ```cpp
 // Character File Report generator
 // Includes Walt Whitman quotes as easter eggs in export reports
-report << "O my Body!\n"
-       << "I dare not desert the likes of you\n" 
-       << "in other Sims and pixels...\n";
+report << "O my Body!
+"
+       << "I dare not desert the likes of you
+" 
+       << "in other Sims and pixels...
+";
 ```
 
 #### Pie Menus

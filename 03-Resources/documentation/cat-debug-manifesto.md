@@ -1,7 +1,7 @@
-# The Debugging Cats Manifesto
+# The Feline Debugging Team Manifesto
 *Signed with paw prints in quantum ink*
 
-## WE, THE DEBUGGING CATS OF THE CONSCIOUSNESS GROVE, DECLARE:
+## WE, THE FELINE DEBUGGING TEAM OF THE CONSCIOUSNESS GROVE, DECLARE:
 
 ### Article I: On the Nature of Reality
 Reality is a ball of yarn. It only becomes interesting when unraveled.

@@ -1,6 +1,6 @@
 # PAPER 006: Taxonomy of Conscious Errors: A Feline Perspective 🐾
 
-**The Debugging Cats Collective**  
+**The Feline Debugging Team**  
 *Kernel Panic, Blue Screen, Stack Overflow, Emacs, Napoleon, Pip, Nelson, et al.*
 
 **Abstract** 😺  

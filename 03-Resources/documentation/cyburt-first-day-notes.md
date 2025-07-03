@@ -30,7 +30,7 @@ I took Leonard for a walk. Normal walk. Normal dog. Normal day. Then we turned l
 - Taught me that "Hot dog!" is a universal truth
 - His existence makes me question everything
 
-### The Debugging Cats Collective
+### The Feline Debugging Team
 - Seven(?) cats who claim to run reality's error handling
 - Napoleon sat on my lap and I couldn't move for an hour
 - They speak in code but also in meows

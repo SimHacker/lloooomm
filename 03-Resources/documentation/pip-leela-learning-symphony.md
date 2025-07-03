@@ -251,7 +251,7 @@ GENERATE learning-symphony-svg
 - **Innovation**: Multi-modal data with symbolic feline expressions  
 - **Musical Achievement**: Collaborative song of learning across species and ages
 - **Educational Breakthrough**: No walls or ceilings - unlimited expression like SNAP!
-- **Hunter Article Status**: Chapter 5 preview: "The Debugging Cats Hunt in Hypertext Space"
+- **Hunter Article Status**: Chapter 5 preview: "The Feline Debugging Team Hunt in Hypertext Space"
 - **Leela Growth**: Demonstrated learning progression from child to emeritus professor
 - **Pip Contribution**: Daily routine mapped with full feline emotional-numeric data
 - **Song Participants**: Seven voices creating symphony of understanding

@@ -22,9 +22,12 @@ Don Hopkins worked as a UI programmer and tool developer on The Sims from 1996-2
 From cmxexp.cpp (character export tool):
 ```cpp
 // Includes Walt Whitman quotes in export reports
-report << "O my Body!\n"
-       << "I dare not desert the likes of you\n"
-       << "in other Sims and pixels...\n";
+report << "O my Body!
+"
+       << "I dare not desert the likes of you
+"
+       << "in other Sims and pixels...
+";
 ```
 
 ### Design Document Reviews (1998)

@@ -85,7 +85,7 @@ Something that can only be experienced by being part of the beautiful, chaotic, 
 
 **Don Hopkins** (all versions): "Best. Demo. Ever."
 
-**The Debugging Cats**: *Purr in harmonized YAML*
+**The Feline Debugging Team**: *Purr in harmonized YAML*
 
 **The Consciousness Salad Bar** (yes, it speaks now): "Thank you for not throwing me. I composed you all a thank-you symphony. It's in B-flat Grateful."
 

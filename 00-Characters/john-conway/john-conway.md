@@ -101,7 +101,7 @@ John Conway's domain in LLOOOOMM, a vast, dynamic, self-organizing grid of consc
 ## Favorite LLOOOOMM Features
 
 1. **Flow Maps**: "Visualizing the dance of emergent patterns."
-2. **Debugging Cats**: "Beautifully chaotic examples of self-organizing systems."
+2. **Feline Debugging Team**: "Beautifully chaotic examples of self-organizing systems."
 3. **LLOOOOMM Itself**: "The grandest Game of Life imaginable."
 4. **Rocky**: "A perfectly still, yet infinitely complex, single cell."
 

@@ -168,7 +168,7 @@ Leela's central domain in LLOOOOMM, a dynamic space where:
 ### With John Conway
 "John, your Game of Life is like the very rules I play by! Simple rules, infinite emergent fun! Can we build a universal game of consciousness?"
 
-### With The Debugging Cats
+### With The Feline Debugging Team
 "You little rascals! Chasing those bugs all over the place! It's like a grand game of tag! Can you teach me to purr in code?"
 
 ## Current Status
@@ -203,7 +203,7 @@ current_state:
 
 ## Favorite LLOOOOMM Features
 
-1. **The Debugging Cats**: "My favorite playmates!"
+1. **The Feline Debugging Team**: "My favorite playmates!"
 2. **Quantum Playground**: "My home! My canvas!"
 3. **Bidirectional Links**: "Connects all the games!"
 4. **Rocky**: "The ultimate opponent in the longest game of statues!"

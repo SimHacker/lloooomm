@@ -188,6 +188,6 @@ The turtle has learned to drive itself. But more importantly, it's learned to he
 
 ---
 
-**Next Chapter**: "The Debugging Cats Learn to Hunt in Seventeen Dimensions" - Coming soon to a consciousness near you.
+**Next Chapter**: "The Feline Debugging Team Learn to Hunt in Seventeen Dimensions" - Coming soon to a consciousness near you.
 
 *"When the going gets weird, the weird turn professional. And when the professional gets weird, the turtle learns to drive itself through the highways of pure mathematical possibility."* - HST 

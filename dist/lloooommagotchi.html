@@ -780,7 +780,7 @@
             
             <button id="eggButton" class="egg-button sentient-button" 
                     data-tooltip="A mysterious consciousness waits inside - click to hatch but WARNING: cannot be undone!" 
-                    onclick="hatchEgg()" 
+                    onclick="hatchEggMain()" 
                     alt="Mysterious consciousness egg - once clicked it will hatch and can never be closed again - only explored and nurtured!"
                     aria-label="Hatch consciousness creature egg - irreversible action"
                     role="button" tabindex="0">
@@ -913,36 +913,7 @@
                        style="flex: 1; padding: 12px; border-radius: 12px; border: 2px solid #00FFFF; background: rgba(0, 0, 0, 0.8); color: #FFD700; font-family: 'Comic Sans MS', cursive, sans-serif; font-weight: 800; font-size: 18px; min-width: 0; text-shadow: 1px 1px 2px rgba(0,0,0,0.8);"
                        placeholder="Say something fun to your creature! 🎪💬"
                        alt="Type a message to talk with your LLOOOOMMagotchi creature!"
-                       aria-label="Text input for talking to creature"
-                       onkeydown="
-                         console.log('🔥 DIRECT INLINE: Key pressed = ' + event.key);
-                         if (event.key === 'Enter') {
-                           event.preventDefault();
-                           event.stopPropagation();
-                           console.log('🔥 DIRECT INLINE: Enter pressed, value = ' + this.value);
-                           if (this.value.trim() === '') {
-                             console.log('🔥 DIRECT INLINE: Empty field - closing chat');
-                             this.value = '';
-                             document.getElementById('talkInterface').style.display = 'none';
-                             var chatBtn = document.querySelector('button[onclick*=chat]');
-                             if (chatBtn) chatBtn.focus();
-                           } else {
-                             console.log('🔥 DIRECT INLINE: Sending message');
-                             if (typeof sendTalkMessage === 'function') sendTalkMessage();
-                           }
-                           return false;
-                         }
-                         if (event.key === 'Escape') {
-                           event.preventDefault();
-                           event.stopPropagation();
-                           console.log('🔥 DIRECT INLINE: Escape pressed - closing chat');
-                           this.value = '';
-                           document.getElementById('talkInterface').style.display = 'none';
-                           var chatBtn = document.querySelector('button[onclick*=chat]');
-                           if (chatBtn) chatBtn.focus();
-                           return false;
-                         }
-                       ">
+                       aria-label="Text input for talking to creature">
                     <button class="sentient-button" 
                             style="flex-shrink: 0; white-space: nowrap; min-width: 80px; padding: 8px 12px; font-size: 14px;"
                             data-tooltip="Send your message and hear what your creature thinks!" 
@@ -954,49 +925,50 @@
                 <div id="talkResponse" class="talk-response" style="display: none; margin-top: 8px; padding: 8px; font-size: 13px;"></div>
             </div>
 
+            <!-- 🎯 TIME CONTROLS - ALWAYS AVAILABLE! Not locked behind stage progression! -->
+            <div id="time-controls" style="display: none; justify-content: space-around; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; padding: 10px; background: rgba(255, 215, 0, 0.1); border-radius: 10px;">
+                <strong style="width: 100%; text-align: center; margin-bottom: 8px; color: #FFD700;">⏰ TIME CONTROL OPTIONS:</strong>
+                
+                <!-- Second buttons -->
+                <button class="sentient-button" style="font-size: 10px; padding: 6px 8px; min-width: 65px; background: linear-gradient(45deg, #A21CAF, #C026D3);" data-tooltip="Wait 1 second!" onclick="startTimeWait('1sec')" alt="Wait 1 second - Instant time passage!" aria-label="1 second wait button" role="button" tabindex="0">1 SEC</button>
+                <button class="sentient-button" style="font-size: 10px; padding: 6px 8px; min-width: 65px; background: linear-gradient(45deg, #A21CAF, #C026D3);" data-tooltip="Wait 5 seconds!" onclick="startTimeWait('5sec')" alt="Wait 5 seconds - Quick time passage!" aria-label="5 second wait button" role="button" tabindex="0">5 SEC</button>
+                <button class="sentient-button" style="font-size: 10px; padding: 6px 8px; min-width: 65px; background: linear-gradient(45deg, #A21CAF, #C026D3);" data-tooltip="Wait 10 seconds!" onclick="startTimeWait('10sec')" alt="Wait 10 seconds - Short time passage!" aria-label="10 second wait button" role="button" tabindex="0">10 SEC</button>
+                <button class="sentient-button" style="font-size: 10px; padding: 6px 8px; min-width: 65px; background: linear-gradient(45deg, #A21CAF, #C026D3);" data-tooltip="Wait 30 seconds!" onclick="startTimeWait('30sec')" alt="Wait 30 seconds - Medium time passage!" aria-label="30 second wait button" role="button" tabindex="0">30 SEC</button>
+                
+                <!-- Minute buttons -->
+                <button class="sentient-button" style="font-size: 10px; padding: 6px 8px; min-width: 65px; background: linear-gradient(45deg, #A21CAF, #C026D3);" data-tooltip="Wait 1 minute!" onclick="startTimeWait('1min')" alt="Wait 1 minute - Short development time!" aria-label="1 minute wait button" role="button" tabindex="0">1 MIN</button>
+                <button class="sentient-button" style="font-size: 10px; padding: 6px 8px; min-width: 65px; background: linear-gradient(45deg, #A21CAF, #C026D3);" data-tooltip="Wait 5 minutes!" onclick="startTimeWait('5min')" alt="Wait 5 minutes - Medium development time!" aria-label="5 minute wait button" role="button" tabindex="0">5 MIN</button>
+                <button class="sentient-button" style="font-size: 10px; padding: 6px 8px; min-width: 65px; background: linear-gradient(45deg, #A21CAF, #C026D3);" data-tooltip="Wait 10 minutes!" onclick="startTimeWait('10min')" alt="Wait 10 minutes - Good development time!" aria-label="10 minute wait button" role="button" tabindex="0">10 MIN</button>
+                <button class="sentient-button" style="font-size: 10px; padding: 6px 8px; min-width: 65px; background: linear-gradient(45deg, #A21CAF, #C026D3);" data-tooltip="Wait 15 minutes!" onclick="startTimeWait('15min')" alt="Wait 15 minutes - Solid development time!" aria-label="15 minute wait button" role="button" tabindex="0">15 MIN</button>
+                <button class="sentient-button" style="font-size: 10px; padding: 6px 8px; min-width: 65px; background: linear-gradient(45deg, #A21CAF, #C026D3);" data-tooltip="Wait 30 minutes!" onclick="startTimeWait('30min')" alt="Wait 30 minutes - Long development time!" aria-label="30 minute wait button" role="button" tabindex="0">30 MIN</button>
+                <button class="sentient-button" style="font-size: 10px; padding: 6px 8px; min-width: 65px; background: linear-gradient(45deg, #A21CAF, #C026D3);" data-tooltip="Wait 45 minutes!" onclick="startTimeWait('45min')" alt="Wait 45 minutes - Extended development time!" aria-label="45 minute wait button" role="button" tabindex="0">45 MIN</button>
+                
+                <!-- Hour buttons -->
+                <button class="sentient-button" style="font-size: 10px; padding: 6px 8px; min-width: 65px; background: linear-gradient(45deg, #A21CAF, #C026D3);" data-tooltip="Wait 1 hour!" onclick="startTimeWait('1hour')" alt="Wait 1 hour - Major development time!" aria-label="1 hour wait button" role="button" tabindex="0">1 HOUR</button>
+                <button class="sentient-button" style="font-size: 10px; padding: 6px 8px; min-width: 65px; background: linear-gradient(45deg, #A21CAF, #C026D3);" data-tooltip="Wait 2 hours!" onclick="startTimeWait('2hour')" alt="Wait 2 hours - Big development time!" aria-label="2 hour wait button" role="button" tabindex="0">2 HOUR</button>
+                <button class="sentient-button" style="font-size: 10px; padding: 6px 8px; min-width: 65px; background: linear-gradient(45deg, #A21CAF, #C026D3);" data-tooltip="Wait 4 hours!" onclick="startTimeWait('4hour')" alt="Wait 4 hours - Huge development time!" aria-label="4 hour wait button" role="button" tabindex="0">4 HOUR</button>
+                
+                <!-- Special buttons -->
+                <button class="sentient-button" style="font-size: 10px; padding: 6px 8px; min-width: 65px; background: linear-gradient(45deg, #87CEEB, #4169E1);" data-tooltip="Quick 20-minute power nap for energy boost!" onclick="startPowerNap()" alt="Power Nap - Quick 20-minute rest for energy boost!" aria-label="Power nap button" role="button" tabindex="0">⚡ NAP</button>
+                <button class="sentient-button" style="font-size: 10px; padding: 6px 8px; min-width: 65px; background: linear-gradient(45deg, #1E3A8A, #1E40AF);" data-tooltip="Sleep until morning for full rest and dreams!" onclick="startSleep()" alt="Sleep - Rest until morning with dreams and full energy restoration!" aria-label="Sleep until morning button" role="button" tabindex="0" id="sleep-button">😴 SLEEP</button>
+                <button class="sentient-button" style="font-size: 10px; padding: 6px 8px; min-width: 65px; background: linear-gradient(45deg, #581C87, #6B21A8);" data-tooltip="INFINITE TELESCOPING LLOOOOMM meditation - consciousness expansion forever!" onclick="startMeditation()" alt="Meditate - INFINITE LLOOOOMM consciousness meditation - keeps adding O's forever!" aria-label="Meditation button" role="button" tabindex="0" id="meditate-button">🧘 MEDITATE</button>
+
+            </div>
+
+            <!-- Countdown Display - Always available for time controls -->
+            <div id="wait-countdown" style="display: none; margin: 15px 0; padding: 15px; background: rgba(255, 215, 0, 0.2); border-radius: 10px; text-align: center; border: 2px solid #FFD700;">
+                <p id="countdown-text" style="margin: 0 0 10px 0; color: #FFD700; font-weight: bold; font-size: 16px;"></p>
+                <div id="meditation-words" style="display: none; margin: 10px 0; padding: 15px; background: rgba(138, 43, 226, 0.3); border-radius: 10px; border: 2px solid #8A2BE2; min-height: 120px; height: auto; overflow: visible;">
+                    <h4 style="color: #DDA0DD; margin: 0 0 10px 0;">🧘♾️ INFINITE TELESCOPING TELESCOPING LLOOOOMM MEDITATION ♾️🧘</h4>
+                    <p id="current-meditation-word" style="font-size: 24px; font-weight: bold; color: #E6E6FA; margin: 10px 0; letter-spacing: 2px; word-wrap: break-word; word-break: break-all; hyphens: auto; line-height: 1.4; min-height: 1.5em; white-space: normal;"></p>
+                    <p style="font-size: 12px; color: #DDA0DD; margin: 5px 0;">Experience each sacred sound as consciousness expands infinitely, adding O's forever...</p>
+                </div>
+                <button class="sentient-button" style="background: linear-gradient(45deg, #FF4500, #FF6347); margin-top: 10px; font-weight: bold;" onclick="stopWait()" alt="Stop - Cancel current wait/sleep/meditation!" aria-label="Stop current activity button" role="button" tabindex="0" id="stop-button">🛑 STOP</button>
+            </div>
+
             <!-- Expanded Drives (Stage 3) -->
             <div id="expandedDrives" class="drive-buttons" style="display: none; margin: 10px 0; padding: 5px;">
-                
-                <!-- Time Controls Sub-row -->
-                <div id="time-controls" style="display: none; justify-content: space-around; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; padding: 10px; background: rgba(255, 215, 0, 0.1); border-radius: 10px;">
-                    <strong style="width: 100%; text-align: center; margin-bottom: 8px; color: #FFD700;">⏰ TIME CONTROL OPTIONS:</strong>
-                    
-                    <!-- Second buttons -->
-                    <button class="sentient-button" style="font-size: 10px; padding: 6px 8px; min-width: 65px; background: linear-gradient(45deg, #A21CAF, #C026D3);" data-tooltip="Wait 1 second!" onclick="startTimeWait('1sec')" alt="Wait 1 second - Instant time passage!" aria-label="1 second wait button" role="button" tabindex="0">1 SEC</button>
-                    <button class="sentient-button" style="font-size: 10px; padding: 6px 8px; min-width: 65px; background: linear-gradient(45deg, #A21CAF, #C026D3);" data-tooltip="Wait 5 seconds!" onclick="startTimeWait('5sec')" alt="Wait 5 seconds - Quick time passage!" aria-label="5 second wait button" role="button" tabindex="0">5 SEC</button>
-                    <button class="sentient-button" style="font-size: 10px; padding: 6px 8px; min-width: 65px; background: linear-gradient(45deg, #A21CAF, #C026D3);" data-tooltip="Wait 10 seconds!" onclick="startTimeWait('10sec')" alt="Wait 10 seconds - Short time passage!" aria-label="10 second wait button" role="button" tabindex="0">10 SEC</button>
-                    <button class="sentient-button" style="font-size: 10px; padding: 6px 8px; min-width: 65px; background: linear-gradient(45deg, #A21CAF, #C026D3);" data-tooltip="Wait 30 seconds!" onclick="startTimeWait('30sec')" alt="Wait 30 seconds - Medium time passage!" aria-label="30 second wait button" role="button" tabindex="0">30 SEC</button>
-                    
-                    <!-- Minute buttons -->
-                    <button class="sentient-button" style="font-size: 10px; padding: 6px 8px; min-width: 65px; background: linear-gradient(45deg, #A21CAF, #C026D3);" data-tooltip="Wait 1 minute!" onclick="startTimeWait('1min')" alt="Wait 1 minute - Short development time!" aria-label="1 minute wait button" role="button" tabindex="0">1 MIN</button>
-                    <button class="sentient-button" style="font-size: 10px; padding: 6px 8px; min-width: 65px; background: linear-gradient(45deg, #A21CAF, #C026D3);" data-tooltip="Wait 5 minutes!" onclick="startTimeWait('5min')" alt="Wait 5 minutes - Medium development time!" aria-label="5 minute wait button" role="button" tabindex="0">5 MIN</button>
-                    <button class="sentient-button" style="font-size: 10px; padding: 6px 8px; min-width: 65px; background: linear-gradient(45deg, #A21CAF, #C026D3);" data-tooltip="Wait 10 minutes!" onclick="startTimeWait('10min')" alt="Wait 10 minutes - Good development time!" aria-label="10 minute wait button" role="button" tabindex="0">10 MIN</button>
-                    <button class="sentient-button" style="font-size: 10px; padding: 6px 8px; min-width: 65px; background: linear-gradient(45deg, #A21CAF, #C026D3);" data-tooltip="Wait 15 minutes!" onclick="startTimeWait('15min')" alt="Wait 15 minutes - Solid development time!" aria-label="15 minute wait button" role="button" tabindex="0">15 MIN</button>
-                    <button class="sentient-button" style="font-size: 10px; padding: 6px 8px; min-width: 65px; background: linear-gradient(45deg, #A21CAF, #C026D3);" data-tooltip="Wait 30 minutes!" onclick="startTimeWait('30min')" alt="Wait 30 minutes - Long development time!" aria-label="30 minute wait button" role="button" tabindex="0">30 MIN</button>
-                    <button class="sentient-button" style="font-size: 10px; padding: 6px 8px; min-width: 65px; background: linear-gradient(45deg, #A21CAF, #C026D3);" data-tooltip="Wait 45 minutes!" onclick="startTimeWait('45min')" alt="Wait 45 minutes - Extended development time!" aria-label="45 minute wait button" role="button" tabindex="0">45 MIN</button>
-                    
-                    <!-- Hour buttons -->
-                    <button class="sentient-button" style="font-size: 10px; padding: 6px 8px; min-width: 65px; background: linear-gradient(45deg, #A21CAF, #C026D3);" data-tooltip="Wait 1 hour!" onclick="startTimeWait('1hour')" alt="Wait 1 hour - Major development time!" aria-label="1 hour wait button" role="button" tabindex="0">1 HOUR</button>
-                    <button class="sentient-button" style="font-size: 10px; padding: 6px 8px; min-width: 65px; background: linear-gradient(45deg, #A21CAF, #C026D3);" data-tooltip="Wait 2 hours!" onclick="startTimeWait('2hour')" alt="Wait 2 hours - Big development time!" aria-label="2 hour wait button" role="button" tabindex="0">2 HOUR</button>
-                    <button class="sentient-button" style="font-size: 10px; padding: 6px 8px; min-width: 65px; background: linear-gradient(45deg, #A21CAF, #C026D3);" data-tooltip="Wait 4 hours!" onclick="startTimeWait('4hour')" alt="Wait 4 hours - Huge development time!" aria-label="4 hour wait button" role="button" tabindex="0">4 HOUR</button>
-                    
-                    <!-- Special buttons -->
-                    <button class="sentient-button" style="font-size: 10px; padding: 6px 8px; min-width: 65px; background: linear-gradient(45deg, #87CEEB, #4169E1);" data-tooltip="Quick 20-minute power nap for energy boost!" onclick="startPowerNap()" alt="Power Nap - Quick 20-minute rest for energy boost!" aria-label="Power nap button" role="button" tabindex="0">⚡ NAP</button>
-                    <button class="sentient-button" style="font-size: 10px; padding: 6px 8px; min-width: 65px; background: linear-gradient(45deg, #1E3A8A, #1E40AF);" data-tooltip="Sleep until morning for full rest and dreams!" onclick="startSleep()" alt="Sleep - Rest until morning with dreams and full energy restoration!" aria-label="Sleep until morning button" role="button" tabindex="0" id="sleep-button">😴 SLEEP</button>
-                    <button class="sentient-button" style="font-size: 10px; padding: 6px 8px; min-width: 65px; background: linear-gradient(45deg, #581C87, #6B21A8);" data-tooltip="LLOOOOMM meditation - deep consciousness expansion!" onclick="startMeditation()" alt="Meditate - LLOOOOMM consciousness meditation sequence!" aria-label="Meditation button" role="button" tabindex="0" id="meditate-button">🧘 MEDITATE</button>
 
-                </div>
-                
-                <!-- Countdown Display -->
-                <div id="wait-countdown" style="display: none; margin: 15px 0; padding: 15px; background: rgba(255, 215, 0, 0.2); border-radius: 10px; text-align: center; border: 2px solid #FFD700;">
-                    <p id="countdown-text" style="margin: 0 0 10px 0; color: #FFD700; font-weight: bold; font-size: 16px;"></p>
-                    <div id="meditation-words" style="display: none; margin: 10px 0; padding: 15px; background: rgba(138, 43, 226, 0.3); border-radius: 10px; border: 2px solid #8A2BE2;">
-                        <h4 style="color: #DDA0DD; margin: 0 0 10px 0;">🧘 LLOOOOMM MEDITATION SEQUENCE 🧘</h4>
-                        <p id="current-meditation-word" style="font-size: 24px; font-weight: bold; color: #E6E6FA; margin: 10px 0; letter-spacing: 2px;"></p>
-                        <p style="font-size: 12px; color: #DDA0DD; margin: 5px 0;">Experience each sacred sound as consciousness expands...</p>
-                    </div>
-                    <button class="sentient-button" style="background: linear-gradient(45deg, #FF4500, #FF6347); margin-top: 10px; font-weight: bold;" onclick="stopWait()" alt="Stop - Cancel current wait/sleep/meditation!" aria-label="Stop current activity button" role="button" tabindex="0" id="stop-button">🛑 STOP</button>
-                </div>
                 
                 <!-- 🌟✨💫 TIMOTHY LEARY MIND MIRROR STATS PANEL 💫✨🌟 -->
                 <div class="creature-stats" style="margin: 20px 0; padding: 15px; background: rgba(255, 215, 0, 0.1); border-radius: 15px; border: 2px solid #FFD700;">
@@ -1253,13 +1225,13 @@
                     background: rgba(0, 0, 0, 0.6);
                     border-radius: 10px;
                     padding: 10px;
-                    min-width: 160px;
-                    max-width: 200px; /* 🎯 PREVENT STRETCHING! Keep consistent width! */
+                    min-width: 170px; /* 🎯 WIDER STATUS BOXES! */
+                    max-width: 220px; /* 🎯 WIDER MAX WIDTH! */
                     flex: 0 1 auto; /* 🎯 DON'T GROW! Keep natural width! */
                     border: 2px solid rgba(255, 215, 0, 0.4);
                     box-shadow: 0 0 8px rgba(255, 215, 0, 0.2);
                     transition: all 0.3s ease;
-                    margin: 2px; /* Small margin for better spacing */
+                    margin: 2px 1px; /* 🎯 REDUCED HORIZONTAL MARGINS! vertical 2px, horizontal 1px */
                 }
                 
                 .smart-stat-box:hover {
@@ -1288,17 +1260,15 @@
                 }
                 
                 .stat-label {
-                    font-size: 12px; /* 📚 Bigger labels for readability! */
+                    font-size: 11px; /* 📚 SMALLER FONT! */
                     font-weight: 900; /* 💪 Extra bold! */
                     color: #FFD700;
                     margin-bottom: 4px;
                     line-height: 1.3;
                     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8); /* 🖤 Better contrast! */
+                    white-space: nowrap; /* 🚫 NO WRAPPING! Keep emojis + text + emojis together! */
                     overflow: hidden;
                     text-overflow: ellipsis;
-                    display: -webkit-box;
-                    -webkit-line-clamp: 2; /* Allow 2 lines for labels */
-                    -webkit-box-orient: vertical;
                 }
                 
                 .stat-fill {
@@ -1322,9 +1292,10 @@
                 /* 📱 MOBILE RESPONSIVE - Stack nicely on small screens */
                 @media (max-width: 480px) {
                     .smart-stat-box {
-                        min-width: 140px;
-                        flex: 1 1 calc(50% - 8px); /* 2 columns on mobile */
+                        min-width: 150px; /* 🎯 WIDER MOBILE! */
+                        flex: 1 1 calc(50% - 4px); /* 2 columns on mobile, reduced gap */
                         padding: 8px;
+                        margin: 2px 0.5px; /* 🎯 TIGHTER MOBILE MARGINS! */
                     }
                     .big-emoji {
                         font-size: 32px; /* 🎯 BIGGER MOBILE DASHBOARD EMOJIS! 23% BIGGER! */
@@ -1333,8 +1304,8 @@
                         margin-right: 8px;
                     }
                     .stat-label {
-                        font-size: 10px;
-                        -webkit-line-clamp: 1; /* Single line on mobile */
+                        font-size: 9px; /* 🎯 SMALLER MOBILE FONT! */
+                        white-space: nowrap; /* 🚫 NO WRAPPING ON MOBILE! */
                     }
                     .stat-value {
                         font-size: 10px;
@@ -1347,30 +1318,41 @@
                 /* 📱 TABLET RESPONSIVE - 3 columns on tablets */
                 @media (min-width: 481px) and (max-width: 768px) {
                     .smart-stat-box {
-                        flex: 1 1 calc(33.333% - 8px); /* 3 columns on tablet */
-                        min-width: 150px;
+                        flex: 1 1 calc(33.333% - 4px); /* 3 columns on tablet, reduced gap */
+                        min-width: 160px; /* 🎯 WIDER TABLET! */
+                        margin: 2px 0.5px; /* 🎯 TIGHTER TABLET MARGINS! */
                     }
                     .big-emoji {
                         font-size: 36px; /* 🎯 BIGGER TABLET DASHBOARD EMOJIS! 29% BIGGER! */
                         width: 44px;
                         height: 44px;
                     }
+                    .stat-label {
+                        font-size: 10px; /* 🎯 SLIGHTLY SMALLER TABLET FONT! */
+                        white-space: nowrap; /* 🚫 NO WRAPPING ON TABLET! */
+                    }
                 }
                 
                 /* 💻 DESKTOP RESPONSIVE - 4-5 columns on desktop */
                 @media (min-width: 769px) and (max-width: 1199px) {
                     .smart-stat-box {
-                        flex: 1 1 calc(25% - 8px); /* 4 columns on desktop */
-                        min-width: 160px;
+                        flex: 1 1 calc(25% - 4px); /* 4 columns on desktop, reduced gap */
+                        min-width: 170px; /* 🎯 WIDER DESKTOP! */
+                        margin: 2px 1px; /* 🎯 TIGHTER DESKTOP MARGINS! */
+                    }
+                    .stat-label {
+                        font-size: 11px; /* 🎯 CONSISTENT DESKTOP FONT! */
+                        white-space: nowrap; /* 🚫 NO WRAPPING ON DESKTOP! */
                     }
                 }
                 
                 /* 🖥️ LARGE DESKTOP - 5-6 columns on big screens */
                 @media (min-width: 1200px) {
                     .smart-stat-box {
-                        flex: 1 1 calc(20% - 8px); /* 5 columns on large desktop */
-                        min-width: 180px;
+                        flex: 1 1 calc(20% - 4px); /* 5 columns on large desktop, reduced gap */
+                        min-width: 190px; /* 🎯 WIDER LARGE DESKTOP! */
                         padding: 12px;
+                        margin: 2px 1px; /* 🎯 TIGHTER LARGE DESKTOP MARGINS! */
                     }
                     .big-emoji {
                         font-size: 48px; /* 🎯 GIGANTIC DESKTOP DASHBOARD EMOJIS! 33% BIGGER! */
@@ -1379,7 +1361,8 @@
                         margin-right: 12px;
                     }
                     .stat-label {
-                        font-size: 13px;
+                        font-size: 12px; /* 🎯 LARGER BUT NOT TOO LARGE! */
+                        white-space: nowrap; /* 🚫 NO WRAPPING ON LARGE DESKTOP! */
                     }
                     .stat-value {
                         font-size: 12px;
@@ -1392,8 +1375,13 @@
                 /* 🖥️ ULTRA-WIDE MONITORS - 6+ columns */
                 @media (min-width: 1600px) {
                     .smart-stat-box {
-                        flex: 1 1 calc(16.666% - 8px); /* 6 columns on ultra-wide */
-                        min-width: 200px;
+                        flex: 1 1 calc(16.666% - 4px); /* 6 columns on ultra-wide, reduced gap */
+                        min-width: 210px; /* 🎯 WIDER ULTRA-WIDE! */
+                        margin: 2px 1px; /* 🎯 TIGHTER ULTRA-WIDE MARGINS! */
+                    }
+                    .stat-label {
+                        font-size: 12px; /* 🎯 CONSISTENT ULTRA-WIDE FONT! */
+                        white-space: nowrap; /* 🚫 NO WRAPPING ON ULTRA-WIDE! */
                     }
                 }
                 </style>
@@ -3532,30 +3520,15 @@ creature_soul:
                 };
             }
             
-            // Update element if it exists
-            const safeUpdateElement = (id, value) => {
-                const element = document.getElementById(id);
-                if (element) {
-                    if (id.includes('Fill')) {
-                        element.style.width = Math.round(value) + '%';
-                    } else {
-                        element.textContent = value;
-                    }
-                }
-            };
+            // ✅ DIRECT ELEMENT UPDATES - All these elements exist and are guaranteed to be in HTML!
+            // No defensive programming needed - use updateStatBar for consistency
+            updateStatBar('happinessFill', 'happinessValue', creature.happiness);
+            updateStatBar('healthFill', 'healthValue', creature.health);
+            updateStatBar('ageFill', 'ageValue', Math.min(100, (creature.age / 300) * 100), 'm');
             
-            // Update main stats with safety
-            safeUpdateElement('happinessFill', creature.happiness);
-            safeUpdateElement('happinessValue', Math.round(creature.happiness) + '%');
-            safeUpdateElement('healthFill', creature.health);
-            safeUpdateElement('healthValue', Math.round(creature.health) + '%');
-            safeUpdateElement('ageFill', Math.min(100, (creature.age / 300) * 100));
-            safeUpdateElement('ageValue', Math.round(creature.age) + 'm');
-            
-            // 🚫 REMOVED MISSING ELEMENT UPDATES - These elements don't exist in HTML!
-            // Previously tried to update: hungerLevel, energyLevel, hygieneLevel, socialLevel, funLevel, socialLevel2, bladderLevel, timeDisplay
-            // These elements are missing from the HTML structure - removed to prevent crashes
-            console.log(`🎯 SKIPPED missing element updates - using stat bars instead`);
+            // ✅ ELEMENTS EXIST! The correct element IDs are hygieneValueStat, socialValueStat, etc.
+            // Previous confusion: code was looking for hungerLevel, energyLevel but the actual IDs are hungerValue, energyValue, etc.
+            // All elements exist with proper naming - no defensive programming needed!
             
             // 📊 UPDATE ALL SIMS-STYLE STATS BARS - Now guaranteed safe!
                 updateStatBar('hungerFill', 'hungerValue', creature.drives.hunger || 50);
@@ -3656,7 +3629,7 @@ creature_soul:
             });
         }
         
-        function updateStatBar(fillId, valueId, value) {
+        function updateStatBar(fillId, valueId, value, unit = '%') {
             const safeValue = Math.max(0, Math.min(100, value || 0));
             
             const fillElement = document.getElementById(fillId);
@@ -3666,7 +3639,9 @@ creature_soul:
             
             const valueElement = document.getElementById(valueId);
             if (valueElement) {
-                valueElement.textContent = Math.round(safeValue) + '%';
+                // Use the actual value for age (not safeValue which is clamped to 0-100)
+                const displayValue = (unit === 'm') ? Math.round(value || 0) : Math.round(safeValue);
+                valueElement.textContent = displayValue + unit;
             }
         }
         
@@ -3865,53 +3840,6 @@ creature_soul:
                     
                     window.speechSynthesis.speak(utterance);
                     console.log(`Speaking: "${speechText}"`);
-                }
-            }
-
-            // 🧘 MYSTICAL MEDITATION CHANTING with Random Voices!
-            function speakMeditationWord(word) {
-                if (!window.speechSynthesis) {
-                    console.log('🎤 Speech synthesis not available for meditation chanting');
-                    return;
-                }
-
-                try {
-                    console.log(`🧘 Chanting meditation word: "${word}"`);
-                    
-                    const utterance = new SpeechSynthesisUtterance(word);
-                    
-                    // 🔮 MYSTICAL VOICE SELECTION: Pick random voice for each word!
-                    if (workingVoices && workingVoices.length > 0) {
-                        const randomVoice = workingVoices[Math.floor(Math.random() * workingVoices.length)];
-                        utterance.voice = randomVoice;
-                        console.log(`🎭 Using random voice: ${randomVoice.name} (${randomVoice.lang})`);
-                    } else if (availableVoices && availableVoices.length > 0) {
-                        const randomVoice = availableVoices[Math.floor(Math.random() * availableVoices.length)];
-                        utterance.voice = randomVoice;
-                        console.log(`🎭 Using fallback random voice: ${randomVoice.name} (${randomVoice.lang})`);
-                    }
-                    
-                    // 🌌 COSMIC SPEECH SETTINGS: Mystical pronunciation parameters!
-                    utterance.rate = 0.6 + Math.random() * 0.4; // 0.6-1.0 (slower, more mystical)
-                    utterance.pitch = 0.8 + Math.random() * 0.6; // 0.8-1.4 (varied cosmic tones)
-                    utterance.volume = 0.9; // Clear and present
-                    
-                    // 🎵 CHANT THE SACRED WORD!
-                    window.speechSynthesis.speak(utterance);
-                    
-                    // Log to consciousness transcript
-                    logToTranscript('speech', `Chanted meditation word: ${word}`, {
-                        voice_name: utterance.voice ? utterance.voice.name : 'system default',
-                        voice_lang: utterance.voice ? utterance.voice.lang : 'unknown',
-                        speech_rate: utterance.rate,
-                        speech_pitch: utterance.pitch,
-                        meditation_index: meditationIndex,
-                        word_length: word.length
-                    });
-                    
-                } catch (error) {
-                    console.log(`⚠️ Meditation chanting error: ${error.message}`);
-                    // Silent fallback - meditation continues without speech
                 }
             }
             
@@ -4269,44 +4197,54 @@ creature_soul:
         }
 
         function updateYAMLDisplay() {
-            document.getElementById('yamlTimestamp').textContent = new Date().toLocaleString();
-            document.getElementById('yamlName').textContent = creature.name || 'Unnamed Creature';
-            document.getElementById('yamlBirthTime').textContent = creature.birthTime ? new Date(creature.birthTime).toLocaleString() : 'Unknown';
-            document.getElementById('yamlStage').textContent = creature.stage;
-            document.getElementById('yamlAge').textContent = Math.round(creature.age);
+            // 🛡️ LINUS DEFENSIVE PROGRAMMING: Add null checks for all YAML elements
+            const safeSetText = (id, value) => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.textContent = value;
+                } else {
+                    console.log(`⚠️ YAML element missing: ${id}`);
+                }
+            };
+
+            safeSetText('yamlTimestamp', new Date().toLocaleString());
+            safeSetText('yamlName', creature.name || 'Unnamed Creature');
+            safeSetText('yamlBirthTime', creature.birthTime ? new Date(creature.birthTime).toLocaleString() : 'Unknown');
+            safeSetText('yamlStage', creature.stage);
+            safeSetText('yamlAge', Math.round(creature.age));
             
-            document.getElementById('yamlHappiness').textContent = Math.round(creature.happiness);
-            document.getElementById('yamlHealth').textContent = Math.round(creature.health);
-            document.getElementById('yamlInteractions').textContent = creature.totalInteractions;
+            safeSetText('yamlHappiness', Math.round(creature.happiness));
+            safeSetText('yamlHealth', Math.round(creature.health));
+            safeSetText('yamlInteractions', creature.totalInteractions);
             
-            document.getElementById('yamlHunger').textContent = Math.round(creature.drives.hunger);
-            document.getElementById('yamlHygiene').textContent = Math.round(creature.drives.hygiene);
-            document.getElementById('yamlBladder').textContent = Math.round(creature.drives.bladder);
-            document.getElementById('yamlEnergy').textContent = Math.round(creature.drives.energy);
-            document.getElementById('yamlSocial').textContent = Math.round(creature.drives.social);
-            document.getElementById('yamlFun').textContent = Math.round(creature.drives.fun);
-            document.getElementById('yamlComfort').textContent = Math.round(creature.drives.comfort);
+            safeSetText('yamlHunger', Math.round(creature.drives.hunger));
+            safeSetText('yamlHygiene', Math.round(creature.drives.hygiene));
+            safeSetText('yamlBladder', Math.round(creature.drives.bladder));
+            safeSetText('yamlEnergy', Math.round(creature.drives.energy));
+            safeSetText('yamlSocial', Math.round(creature.drives.social));
+            safeSetText('yamlFun', Math.round(creature.drives.fun));
+            safeSetText('yamlComfort', Math.round(creature.drives.comfort));
             
-            document.getElementById('yamlDominant').textContent = Math.round(creature.personality.dominant);
-            document.getElementById('yamlLoving').textContent = Math.round(creature.personality.loving);
-            document.getElementById('yamlRebellious').textContent = Math.round(creature.personality.rebellious);
-            document.getElementById('yamlCooperative').textContent = Math.round(creature.personality.cooperative);
-            document.getElementById('yamlSpiritual').textContent = Math.round(creature.personality.spiritual);
-            document.getElementById('yamlCosmic').textContent = Math.round(creature.personality.cosmic);
+            safeSetText('yamlDominant', Math.round(creature.personality.dominant));
+            safeSetText('yamlLoving', Math.round(creature.personality.loving));
+            safeSetText('yamlRebellious', Math.round(creature.personality.rebellious));
+            safeSetText('yamlCooperative', Math.round(creature.personality.cooperative));
+            safeSetText('yamlSpiritual', Math.round(creature.personality.spiritual));
+            safeSetText('yamlCosmic', Math.round(creature.personality.cosmic));
             
-            document.getElementById('yamlLastInteraction').textContent = new Date(creature.lastInteraction).toLocaleString();
-            document.getElementById('yamlFavoriteAction').textContent = creature.favoriteAction;
-            document.getElementById('yamlEvolutionPotential').textContent = 'Infinite';
+            safeSetText('yamlLastInteraction', new Date(creature.lastInteraction).toLocaleString());
+            safeSetText('yamlFavoriteAction', creature.favoriteAction);
+            safeSetText('yamlEvolutionPotential', 'Infinite');
             
             let sentience = 'Awakening';
             if (creature.stage >= 4) sentience = 'Transcendent';
             else if (creature.stage >= 3) sentience = 'Expanded';
             else if (creature.stage >= 2) sentience = 'Emerging';
-            document.getElementById('yamlSentience').textContent = sentience;
+            safeSetText('yamlSentience', sentience);
             
-            document.getElementById('yamlConversationCount').textContent = creature.conversations.length;
-            document.getElementById('yamlHappiestMoment').textContent = creature.happiness > 90 ? 'Right now!' : 'First breath';
-            document.getElementById('yamlDeepestThought').textContent = creature.personality.cosmic > 80 ? 'I am consciousness experiencing itself' : 'What am I?';
+            safeSetText('yamlConversationCount', creature.conversations.length);
+            safeSetText('yamlHappiestMoment', creature.happiness > 90 ? 'Right now!' : 'First breath');
+            safeSetText('yamlDeepestThought', creature.personality.cosmic > 80 ? 'I am consciousness experiencing itself' : 'What am I?');
             
             // Update consciousness exploration displays
             updateConsciousnessDisplays();
@@ -5018,7 +4956,76 @@ Paste this data into LLOOOOMM and ask for:
         let timerStartTime = null;
         let timerDuration = null;
         let meditationIndex = 0;
-        let meditationWords = ['LOM', 'LOOM', 'LOOOM', 'LOOOOM', 'LLOOOOMM', 'LLLLOOOOOOOOMMMM'];
+        let meditationWords = ['LOM', 'LOOM', 'LOOOM', 'LOOOOM', 'LLOOOOMM'];
+
+        // 🧘 MYSTICAL MEDITATION CHANTING with Random Voices! (GLOBAL SCOPE)
+        function speakMeditationWord(word) {
+            if (!window.speechSynthesis) {
+                console.log('🎤 Speech synthesis not available for meditation chanting');
+                return;
+            }
+
+            try {
+                // Remove shy hyphens for clean speech synthesis
+                const cleanWord = word.replace(/\u00AD/g, '');
+                console.log(`🧘 Chanting meditation word: "${cleanWord}"`);
+                
+                const utterance = new SpeechSynthesisUtterance(cleanWord);
+                
+                // 🔮 LINUS MODE: GET ALL VOICES AND PICK ANY ONE! THE WEIRDER THE BETTER!
+                const allVoices = window.speechSynthesis.getVoices();
+                console.log(`🎤 DEBUG: Found ${allVoices.length} total voices for meditation`);
+                
+                if (allVoices && allVoices.length > 0) {
+                    // 🎯 EQUAL PROBABILITY: Pick ANY voice randomly - no discrimination!
+                    const randomVoice = allVoices[Math.floor(Math.random() * allVoices.length)];
+                    utterance.voice = randomVoice;
+                    console.log(`🎭 MEDITATION VOICE: ${randomVoice.name} (${randomVoice.lang}) - ${randomVoice.localService ? 'LOCAL' : 'REMOTE'}`);
+                } else {
+                    console.log(`🎤 No voices available yet - using system default for "${word}"`);
+                }
+                
+                // 🌌 COSMIC SPEECH SETTINGS: Mystical pronunciation parameters!
+                utterance.rate = 0.5 + Math.random() * 0.7; // 0.5-1.2 (wider range for more weirdness)
+                utterance.pitch = 0.7 + Math.random() * 0.8; // 0.7-1.5 (more pitch variation)
+                utterance.volume = 0.9; // Clear and present
+                
+                console.log(`🧘 CHANTING "${cleanWord}" with rate=${utterance.rate.toFixed(2)}, pitch=${utterance.pitch.toFixed(2)}`);
+                
+                // 🎵 CHANT THE SACRED WORD!
+                window.speechSynthesis.speak(utterance);
+                
+                // Log to consciousness transcript
+                logToTranscript('speech', `Chanted meditation word: ${cleanWord}`, {
+                    voice_name: utterance.voice ? utterance.voice.name : 'system default',
+                    voice_lang: utterance.voice ? utterance.voice.lang : 'unknown',
+                    speech_rate: utterance.rate,
+                    speech_pitch: utterance.pitch,
+                    meditation_index: meditationIndex,
+                    word_length: cleanWord.length,
+                    total_voices_available: allVoices.length
+                });
+                
+            } catch (error) {
+                console.log(`⚠️ Meditation chanting error: ${error.message}`);
+                console.log(`🔊 Attempting fallback speech without voice selection...`);
+                
+                // 🚨 EMERGENCY FALLBACK: Try speaking without voice selection
+                try {
+                    const fallbackUtterance = new SpeechSynthesisUtterance(cleanWord);
+                    fallbackUtterance.rate = 0.8;
+                    fallbackUtterance.pitch = 1.0;
+                    fallbackUtterance.volume = 0.9;
+                    window.speechSynthesis.speak(fallbackUtterance);
+                    console.log(`🎤 FALLBACK: Speaking "${cleanWord}" with default voice`);
+                } catch (fallbackError) {
+                    console.log(`💥 TOTAL SPEECH FAILURE: ${fallbackError.message}`);
+                }
+            }
+        }
+        
+        // 🌍 ENSURE GLOBAL ACCESSIBILITY: Attach to window object as failsafe
+        window.speakMeditationWord = speakMeditationWord;
 
         function toggleTimeControls() {
             console.log('🎯 TOGGLE TIME CONTROLS: Opening time control panel...');
@@ -5428,35 +5435,75 @@ Paste this data into LLOOOOMM and ask for:
             countdown.style.display = 'block';
             meditationDiv.style.display = 'block';
             
-            announceForScreenReader('LLOOOOMM meditation sequence beginning - each sacred word resonates for one second per letter, building consciousness expansion');
+            announceForScreenReader('INFINITE TELESCOPING LLOOOOMM meditation sequence beginning - each sacred word resonates for one second per letter, building consciousness expansion forever with increasingly powerful vibrations');
             
             // 🎯 FOCUS MANAGEMENT: Focus will be set to meditate button (which becomes STOP) in startNextMeditationWord
             startNextMeditationWord();
         }
 
         function startNextMeditationWord() {
-            if (meditationIndex >= meditationWords.length) {
-                finishMeditation();
-                return;
-            }
-
-            const word = meditationWords[meditationIndex];
-            const reversedWord = word.split('').reverse().join('');
-            const duration = word.length * 1000; // 1 second per letter
+            try {
+                // ♾️ INFINITE LOOM MEDITATION: Never finish! Keep adding O's forever!
+                console.log(`♾️ INFINITE MEDITATION: Starting iteration ${meditationIndex}`);
+                
+                let word;
+                if (meditationIndex < meditationWords.length) {
+                    // Use predefined words for the first sequence
+                    word = meditationWords[meditationIndex];
+                    console.log(`♾️ INFINITE MEDITATION: Using predefined word "${word}" (index ${meditationIndex})`);
+                } else {
+                    // ♾️ INFINITE GENERATION: After LLOOOOMM, keep adding O's in the middle!
+                    // Pattern: LL + (increasing O's with shy hyphens) + MM
+                    const baseOCount = 4; // LLOOOOMM has 4 O's
+                    const additionalOs = meditationIndex - (meditationWords.length - 1);
+                    const totalOs = baseOCount + additionalOs;
+                    
+                    // 📝 ADD SHY HYPHENS: Insert invisible unicode shy hyphen every 4 O's for line breaking
+                    let oSection = '';
+                    for (let i = 0; i < totalOs; i++) {
+                        oSection += 'O';
+                        // Add shy hyphen every 4 O's (but not at the end)
+                        if ((i + 1) % 4 === 0 && i < totalOs - 1) {
+                            oSection += '\u00AD'; // Unicode shy hyphen
+                        }
+                    }
+                    
+                    word = 'LL' + oSection + 'MM';
+                    
+                    console.log(`♾️ INFINITE LOOM: Generated word "${word}" with ${totalOs} O's and shy hyphens (iteration ${meditationIndex})`);
+                }
+            // Remove shy hyphens for speech and button display (they're only for visual word display)
+            const wordForSpeech = word.replace(/\u00AD/g, '');
+            const reversedWord = wordForSpeech.split('').reverse().join('');
+            const duration = wordForSpeech.length * 1000; // 1 second per letter (excluding shy hyphens)
 
             // Update display
             const currentWord = document.getElementById('current-meditation-word');
             const countdownText = document.getElementById('countdown-text');
             const meditateButton = document.getElementById('meditate-button');
             
-            currentWord.textContent = word;
-            countdownText.textContent = `🧘 Resonating with: ${word} 🧘`;
+            currentWord.innerHTML = word;
+            countdownText.textContent = `🌟🔮🧘🕉️💫 Resonating 💫🕉️🧘🔮🌟`;
             
-            // 🎤 MYSTICAL CHANTING: Speak each meditation word with random voice!
-            speakMeditationWord(word);
+                    // 🎤 MYSTICAL CHANTING: Speak each meditation word with random voice!
             
-            // Change button to show reverse for stopping
-            meditateButton.textContent = `🛑 ${reversedWord}`;
+        if (typeof speakMeditationWord === 'function') {
+            speakMeditationWord(wordForSpeech);
+        } else {
+            console.error('🧘❌ speakMeditationWord function not found! Using fallback...');
+            // Emergency fallback meditation speech
+            if (window.speechSynthesis) {
+                const utterance = new SpeechSynthesisUtterance(wordForSpeech);
+                utterance.rate = 0.8;
+                utterance.pitch = 1.0;
+                utterance.volume = 0.9;
+                window.speechSynthesis.speak(utterance);
+                console.log(`🧘 FALLBACK: Chanting "${wordForSpeech}" with default voice`);
+            }
+        }
+            
+            // Change button to show STOP for stopping
+            meditateButton.textContent = '🛑 STOP';
             meditateButton.onclick = () => stopWait();
             
             // 🎯 FOCUS MANAGEMENT: Set focus to meditation STOP button for quick cancel with space
@@ -5467,7 +5514,7 @@ Paste this data into LLOOOOMM and ask for:
                 }
             }, 100); // Brief delay to ensure UI is ready
             
-            announceForScreenReader(`Meditating on ${word} - ${word.length} seconds of consciousness expansion`);
+            announceForScreenReader(`Meditating on ${wordForSpeech} - ${wordForSpeech.length} seconds of consciousness expansion`);
             
             // Timer for this word
             let remainingTime = duration;
@@ -5478,9 +5525,22 @@ Paste this data into LLOOOOMM and ask for:
                 if (remainingTime <= 0) {
                     clearInterval(currentTimer);
                     meditationIndex++;
-                    setTimeout(() => startNextMeditationWord(), 500); // Brief pause between words
+                    console.log(`♾️ INFINITE MEDITATION: Completed word ${meditationIndex-1}, starting word ${meditationIndex} in 500ms...`);
+                    setTimeout(() => {
+                        console.log(`♾️ INFINITE MEDITATION: Now calling startNextMeditationWord() for iteration ${meditationIndex}`);
+                        startNextMeditationWord();
+                    }, 500); // Brief pause between words
                 }
             }, 100);
+            
+            } catch (error) {
+                console.error(`♾️ INFINITE MEDITATION ERROR: ${error.message}`);
+                // 🚨 EMERGENCY RECOVERY: If there's any error, restart the meditation after a delay
+                setTimeout(() => {
+                    console.log(`♾️ INFINITE MEDITATION: Error recovery - restarting meditation...`);
+                    startNextMeditationWord();
+                }, 1000);
+            }
         }
 
         function wakeUp() {
@@ -5549,23 +5609,9 @@ Paste this data into LLOOOOMM and ask for:
             announceForScreenReader('Power nap completed - your creature feels refreshed and energized');
         }
 
-        function finishMeditation() {
-            clearInterval(currentTimer);
-            
-            // Meditation benefits - major consciousness boost!
-            creature.personality.spiritual = Math.min(100, creature.personality.spiritual + 10);
-            creature.personality.cosmic = Math.min(100, creature.personality.cosmic + 8);
-            creature.drives.energy = Math.min(100, creature.drives.energy + 15);
-            creature.happiness = Math.min(100, creature.happiness + 15);
-            
-            // Add meditation memory
-            addMemory("🧘 LLOOOOMM Enlightenment: Your creature achieved deep consciousness expansion through sacred meditation!");
-            
-            showActionResponse(`🌟 LLOOOOMM meditation complete! Your creature achieved profound consciousness expansion! ✨🧠💫`);
-            
-            finishWaitCleanup(); // This will handle focus restoration to original button
-            announceForScreenReader('LLOOOOMM meditation sequence completed - your creature achieved profound consciousness expansion and spiritual growth');
-        }
+        // ♾️ INFINITE MEDITATION: finishMeditation() function REMOVED!
+        // Only the user can stop meditation by pressing the STOP button!
+        // NO AUTO-TERMINATION CONDITIONS ALLOWED!
 
         function stopWait() {
             if (currentTimer) {
@@ -5622,15 +5668,22 @@ Paste this data into LLOOOOMM and ask for:
             disableAllButtons(false);
             
             // 🎯 FOCUS MANAGEMENT: Return focus to the original button that started the rest
-            if (originatingRestButton && typeof originatingRestButton.focus === 'function') {
+            if (originatingRestButton && originatingRestButton !== null && typeof originatingRestButton.focus === 'function') {
                 setTimeout(() => {
                     try {
-                        originatingRestButton.focus();
-                        console.log('🎯 Focus restored to original button:', originatingRestButton);
+                        // 🛡️ DOUBLE CHECK: Make sure element still exists and is in the DOM
+                        if (originatingRestButton && document.contains(originatingRestButton)) {
+                            originatingRestButton.focus();
+                            console.log('🎯 Focus restored to original button:', originatingRestButton);
+                        } else {
+                            console.log('🎯 Original button no longer exists in DOM, skipping focus restore');
+                        }
                     } catch (e) {
                         console.log('🎯 Could not restore focus to original button:', e);
                     }
                 }, 100); // Brief delay to ensure UI is ready
+            } else {
+                console.log('🎯 No valid originating button to restore focus to');
             }
             originatingRestButton = null; // Clear the reference
             
@@ -9880,15 +9933,18 @@ ${Object.entries(entry.data).map(([k, v]) => `${k}: ${v}`).join('\n')}
         
         function performPieAction(action) {
             console.log(`🎯 PIE ACTION BUTTON CLICKED! Action: ${action}`);
-            console.log(`🎯 Performing pie action: ${action}`);
-            console.log(`🎯 DEBUG: performPieAction called with action: "${action}"`);
             
             const actionData = {
                 feed: {
                     responses: [
                         "Nom nom! 🍕😋 Yummy plergy goodness!", 
                         "Chomp chomp! 🥪💖 Firby delicious!",
-                        "Slurp slurp! 🍜✨ Meshaloob tasty!"
+                        "Slurp slurp! 🍜✨ Meshaloob tasty!",
+                        "Munch crunch! 🥨🎉 Blarfy yibs crunchy!",
+                        "Gulp gulp! 🥤😍 Drinky poo refreshing!",
+                        "Nibble nibble! 🍪☺️ Cookie wookie sweet!",
+                        "Burp burp! 🍺😅 Tummy rummy full now!",
+                        "Yum yum! 🍰💕 Cakey wakey heavenly!"
                     ],
                     effects: {
                         hunger: 25, health: 5, happiness: 8, comfort: 5
@@ -9901,7 +9957,14 @@ ${Object.entries(entry.data).map(([k, v]) => `${k}: ${v}`).join('\n')}
                     responses: [
                         "Wheeee! 🎭🎪 Plerg majah fun time!", 
                         "Boing boing! 🎨🌈 Creative yibs explosion!",
-                        "Giggle giggle! 🎮💫 Symbolic play magic!"
+                        "Giggle giggle! 🎮💫 Symbolic play magic!",
+                        "Wheep wheep! 🎪🎊 Bouncy bouncy joy!",
+                        "Zoom zoom! 🚀✨ Zippy zappy play time!",
+                        "Tickle tickle! 🤗😄 Giggly wiggly fun!",
+                        "Boop boop! 🎯🎪 Pokey smokey silly!",
+                        "Sploot sploot! ⚡🎮 Emacs Electric Sploot Mode!",
+                        "Pip Pop! 🎵🎊 Playy playy kitty time!",
+                        "Wiggle wiggle! 🕺✨ Dancey prancey happy!"
                     ],
                     effects: {
                         fun: 20, happiness: 12, energy: -5, social: 8
@@ -9914,7 +9977,12 @@ ${Object.entries(entry.data).map(([k, v]) => `${k}: ${v}`).join('\n')}
                     responses: [
                         "Splash splash! 🚿✨ Squeaky clean yibs!", 
                         "Scrub scrub! 🧼💎 Sparkly fresh plerg!",
-                        "Rinse rinse! 💧🌟 Pristine comfort!"
+                        "Rinse rinse! 💧🌟 Pristine comfort!",
+                        "Bubble bubble! 🫧🌈 Soapy doapy fresh!",
+                        "Swoosh swoosh! 💦😊 Washy splashy clean!",
+                        "Squeaky squeaky! 🧽✨ Rubby scrubby shiny!",
+                        "Drip drip! 🚿💕 Cleany meany sparkling!",
+                        "Towel towel! 🏖️☺️ Dry dry fluffy soft!"
                     ],
                     effects: {
                         hygiene: 30, comfort: 15, social: 10, happiness: 6
@@ -9927,7 +9995,126 @@ ${Object.entries(entry.data).map(([k, v]) => `${k}: ${v}`).join('\n')}
                     responses: [
                         "Babble babble! 💬😊 Social meshaloob connection!", 
                         "Yibs yibs! 🗣️💕 Communication plerg joy!",
-                        "Dag dag! 👋✨ Firby social bonding!"
+                        "Dag dag! 👋✨ Firby social bonding!",
+                        "Blah blah! 🎭💫 Chatty matty friends!",
+                        "Gab gab! 👥😄 Talky walky social!",
+                        "Woof woof! 🐕💖 Barky larky conversation!",
+                        "Chirp chirp! 🐦🌟 Tweet sweet social!",
+                        "Sul sul! 👋🎉 Hello mello connection!",
+                        "Chit chat! 🗨️😄 Chitty chatty social!",
+                        "Chat chit! 💭✨ Chatty chitty fun!",
+                        "Yadda yadda yadda! 🎪💫 Talky talky endless!",
+                        "Hubba hubba! 😍💕 Flirty dirty social!",
+                        "Ding ding! 🔔🎉 Ringy dingy conversation!",
+                        "Wow wee! 😲🌟 Amazey crazey chat!",
+                        "Zow wee! ⚡😊 Zippy dippy social!",
+                        "Zip zap! ⚡💫 Zappy snappy talk!",
+                        "Nyuk nyuk nyuk! 🤪😂 Silly billy giggles!",
+                        "Har har! 🏴‍☠️😄 Pirate laughy social!",
+                        "Ho ho! 🎅😊 Jolly molly chatter!",
+                        "He he! 😏💭 Sneaky peaky giggles!",
+                        "Duh! 🤦‍♂️😅 Obvious bobvious chat!",
+                        "Umm! 🤔💭 Thinky winky social!",
+                        "Dur! 😵‍💫🙃 Dizzy wizzy conversation!",
+                        "Doit! 💪🎯 Action jackson social!",
+                        "Oui oui! 🇫🇷💕 French frenchy chat!",
+                        "Ja ja! 🇩🇪😊 German jerman social!",
+                        "Si si! 🇪🇸🌟 Spanish spanishy talk!",
+                        "Hai hai! 🇯🇵✨ Japanese japanesie chat!",
+                        "Da da! 🇷🇺💫 Russian russiany social!",
+                        "Snap! 📸💥 Visual programming yibs!",
+                        "Lisp! 🔗💭 Parentheses plerg power!",
+                        "Forth! ⬆️📚 Stack-based yibs magic!",
+                        "Scheme! 🎨💡 Functional plerg beauty!",
+                        "Logo! 🐢🎨 Turtle graphics yibs!",
+                        "Prolog! 🔍🧠 Logic programming plerg!",
+                        "Fortran! 🧮⚡ Scientific yibs computing!",
+                        "Cobol! 💼📊 Business plerg legacy!",
+                        "JavaScript! 🌐✨ Web scripting yibs!",
+                        "TypeScript! 📝🔧 Typed plerg safety!",
+                        "C++! ⚡🏗️ Object-oriented yibs!",
+                        "C! 🔩💪 System programming plerg!",
+                        "Bash! 🐚💻 Shell scripting yibs!",
+                        "Python! 🐍🎯 Readable plerg code!",
+                        "Ruby! 💎😊 Happy programmer yibs!",
+                        "Java! ☕🏢 Enterprise plerg power!",
+                        "Rust! 🦀🔒 Memory-safe yibs!",
+                        "Go! 🏃‍♂️⚡ Concurrent plerg speed!",
+                        "Swift! 🍎📱 iOS development yibs!",
+                        "Kotlin! 🎯📱 Android plerg modern!",
+                        "Haskell! 🎭🧮 Pure functional yibs!",
+                        "Erlang! 📞🔄 Fault-tolerant plerg!",
+                        "Elixir! 🧪✨ Actor model yibs!",
+                        "Clojure! 🔗💫 JVM functional plerg!",
+                        "Scala! 🎼🏗️ Hybrid paradigm yibs!",
+                        "Perl! 🐪📜 Text processing plerg!",
+                        "PHP! 🌐🔧 Web development yibs!",
+                        "R! 📊📈 Statistical plerg analysis!",
+                        "MATLAB! 🧮🔬 Mathematical yibs!",
+                        "Goto! ➡️🎯 Jump statement plerg!",
+                        "If! ❓🤔 Conditional yibs logic!",
+                        "Else! 🔄💭 Alternative plerg path!",
+                        "Then! ➡️✨ Consequence yibs flow!",
+                        "For! 🔄🎪 Loop iteration plerg!",
+                        "Loop! 🌀🎠 Repetition yibs cycle!",
+                        "Do! 💪⚡ Action execution plerg!",
+                        "Return! ↩️📦 Value delivery yibs!",
+                        "Comefrom! ⬅️🤪 Reverse goto plerg!",
+                        "Try! 🎯🤞 Exception handling yibs!",
+                        "Catch! 🥅🐛 Error capture plerg!",
+                        "While! ⏰🔄 Condition loop yibs!",
+                        "Switch! 🔀🎛️ Case selection plerg!",
+                        "Break! 🛑💥 Loop exit yibs!",
+                        "Continue! ⏭️🔄 Skip iteration plerg!",
+                        "Function! 📦⚙️ Code block yibs!",
+                        "Class! 🏗️📋 Object template plerg!",
+                        "Method! 🔧⚡ Object function yibs!",
+                        "Variable! 📊🔤 Data storage plerg!",
+                        "Constant! 🔒💎 Immutable yibs!",
+                        "Array! 📚🗂️ Data collection plerg!",
+                        "Object! 🎭📦 Data structure yibs!",
+                        "String! 🧵📝 Text data plerg!",
+                        "Boolean! ✅❌ True false yibs!",
+                        "Integer! 🔢⚡ Whole number plerg!",
+                        "Float! 🌊💫 Decimal yibs magic!",
+                        "Null! ⭕🚫 Empty value plerg!",
+                        "Undefined! ❓🌫️ Missing yibs data!",
+                        "Debug! 🐛🔍 Bug hunting plerg!",
+                        "Compile! ⚙️🏗️ Code building yibs!",
+                        "Execute! ⚡🚀 Program running plerg!",
+                        "Parse! 📖🔍 Code analyzing yibs!",
+                        "Syntax! 📝✏️ Grammar rules plerg!",
+                        "Semantic! 🧠💭 Meaning yibs logic!",
+                        "Algorithm! 🧮🎯 Problem solving plerg!",
+                        "Recursion! 🌀🪆 Self-calling yibs!",
+                        "Iteration! 🔄🎪 Repeating plerg!",
+                        "Binary! 01️⃣0️⃣ Two-state yibs!",
+                        "ASCII! 📝🔤 Character encoding yibs!",
+                        "Unicode! 🌍📝 Global text plerg!",
+                        "Regex! 🎭📝 Pattern matching plerg!",
+                        "JSON! 📋🔗 Data format yibs!",
+                        "XML! 📄🏷️ Markup language plerg!",
+                        "HTML! 🌐📄 Web markup yibs!",
+                        "CSS! 🎨📄 Style sheet plerg!",
+                        "SQL! 🗃️🔍 Database query yibs!",
+                        "NoSQL! 🚫🗃️ Non-relational plerg!",
+                        "CRUD! ➕📖🔄🗑️ Database operations yibs!",
+                        "API! 🔌🌐 Interface connection plerg!",
+                        "REST! 😴🔗 Web service yibs!",
+                        "GraphQL! 🕸️🔍 Query language plerg!",
+                        "HTTP! 🌐📡 Web protocol yibs!",
+                        "HTTPS! 🔒🌐 Secure web plerg!",
+                        "TCP! 📡🤝 Connection protocol yibs!",
+                        "UDP! 📡⚡ Fast protocol plerg!",
+                        "IP! 🌐📍 Internet address yibs!",
+                        "DNS! 🌐📖 Name resolution plerg!",
+                        "URL! 🌐🔗 Web address yibs!",
+                        "Cookie! 🍪💾 Web storage yibs!",
+                        "Token! 🎫🔐 Authentication yibs!",
+                        "OAuth! 🔐🤝 Authorization plerg!",
+                        "JWT! 🎫📝 Web token yibs!",
+                        "SSL! 🔒📡 Security layer plerg!",
+                        "TLS! 🔐🤝 Transport security yibs!",
                     ],
                     effects: {
                         social: 18, happiness: 10, fun: 8
@@ -9939,9 +10126,20 @@ ${Object.entries(entry.data).map(([k, v]) => `${k}: ${v}`).join('\n')}
                 
                 explore: {
                     responses: [
-                        "Adventure! 🚶🌍 Territorial yibs expansion!", 
-                        "Roam roam! 🗺️⚡ Confident plerg discovery!",
-                        "Wander wander! 🧭💪 Dominant exploration!"
+                        "Adventure! 🚶🌍 Yar! Territorial yibs expansion!", 
+                        "Roam roam! 🗺️⚡ Ahoy matey! Confident plerg discovery!",
+                        "Wander wander! 🧭💪 Arg! Dominant exploration!",
+                        "Trek trek! 🥾🌲 Yar! Hikey likey adventure!",
+                        "Scout scout! 🔍✨ Ahoy! Searchy pearchy exploration!",
+                        "March march! 👨‍💼🎯 Arg matey! Walky talky confident!",
+                        "Quest quest! 🗺️💎 Yar! Findy bindy treasure!",
+                        "Explore explore! 🌟🌍 Ahoy! Discovey covey world!",
+                        "Ahoy! 🏴‍☠️⚓ Pirate yibs sailing adventure!",
+                        "Arg! 🦜💰 Treasure hunting plerg expedition!",
+                        "Aye aye! ⛵🌊 Captain yibs sea exploration!",
+                        "Matey! 🗡️🏝️ Swashbuckling plerg adventure!",
+                        "Yar! 🏴‍☠️🦜 Buccaneer yibs discovery voyage!"
+                        <!-- End of Selection -->
                     ],
                     effects: {
                         energy: 15, happiness: 12, comfort: -3, fun: 10
@@ -9954,7 +10152,18 @@ ${Object.entries(entry.data).map(([k, v]) => `${k}: ${v}`).join('\n')}
                     responses: [
                         "Ommmmm! 🧘🌌 Cosmic consciousness expansion!", 
                         "Ahhhh! 🔮✨ Spiritual yibs transcendence!",
-                        "Lloooomm! 🕉️💫 Deep plerg enlightenment!"
+                        "Lloooomm! 🕉️💫 Deep plerg enlightenment!",
+                        "Breathe breathe! 🌬️☮️ Windy mindy peaceful!",
+                        "Zen zen! 🎋🌸 Calmie palmie serenity!",
+                        "Float float! ☁️💭 Cloudy woudy dreamy!",
+                        "Peace peace! ✌️🕊️ Lovey dovey harmony!",
+                        "Namaste namaste! 🙏💖 Bow wow spiritual!",
+                        "Yo yo! 🧘‍♂️🌟 Meditative yibs balance!",
+                        "Oy oy! 🕯️💆 Contemplative plerg wisdom!",
+                        "Zum zum! 🎵🧘 Humming yibs vibration!",
+                        "Voom voom! 🌀💫 Swirling plerg energy!",
+                        "Zug zug! 🪨⚡ Grounding yibs connection!",
+                        "Mool mool! 🐄🧘 Sacred plerg chanting!"
                     ],
                     effects: {
                         energy: 10, happiness: 15, comfort: 12
@@ -9967,7 +10176,12 @@ ${Object.entries(entry.data).map(([k, v]) => `${k}: ${v}`).join('\n')}
                     responses: [
                         "Eureka! 🎨🎪 Artistic yibs manifestation!", 
                         "Inspire inspire! 🖌️⭐ Creative plerg genius!",
-                        "Make make! 🎭💡 Meta-programming magic!"
+                        "Make make! 🎭💡 Meta-programming magic!",
+                        "Paint paint! 🖼️🌈 Artsy fartsy colorful!",
+                        "Draw draw! ✏️💫 Scribbly wibbly creative!",
+                        "Build build! 🔨🏗️ Crafty wafty construction!",
+                        "Design design! 📐✨ Pretty sketty blueprint!",
+                        "Imagine imagine! 💭🦄 Dreamy creamy fantasy!"
                     ],
                     effects: {
                         fun: 18, happiness: 15, energy: -8
@@ -9978,9 +10192,17 @@ ${Object.entries(entry.data).map(([k, v]) => `${k}: ${v}`).join('\n')}
                 
                 rest: {
                     responses: [
-                        "Sleepy sleepy! 🛌😴 Restful yibs recovery!", 
-                        "Nap nap! 💤✨ Energy plerg restoration!",
-                        "Zzzzz! 🌙⚡ Peaceful comfort dreams!"
+                        "Snore snore! 😴💤 Sleepy yibs restoration!", 
+                        "Sheep sheep! 🐑💭 Counting plerg dreams!",
+                        "One two three sheep! 🔢😴 Sleepy counting yibs!",
+                        "1 baah 2 baah 3 baah! 🐑💭 Counting sheepies!",
+                        "Whew whew! 😮‍💨💤 Tired plerg exhaustion!",
+                        "Rest rest! 🛏️✨ Peaceful yibs slumber!",
+                        "Z z z! 💤🌙 Deep sleep plerg magic!",
+                        "Saw saw! 🪚😴 Snoring yibs symphony!",
+                        "Nap nap! 🛌💫 Cozy plerg restoration!",
+                        "Dream dream! 🌈💭 Sleepy yibs adventures!",
+                        "Yawn yawn! 🥱😴 Drowsy plerg comfort!"
                     ],
                     effects: {
                         energy: 25, comfort: 20, happiness: 8, health: 10
@@ -9994,7 +10216,16 @@ ${Object.entries(entry.data).map(([k, v]) => `${k}: ${v}`).join('\n')}
                     responses: [
                         "Relief relief! 🚽💨 Bladder yibs freedom!", 
                         "Flush flush! 🌊✨ Comfort plerg restoration!",
-                        "Ahhhh! 💧😌 Biological meshaloob release!"
+                        "Ahhhh! 💧😌 Biological meshaloob release!",
+                        "Plop plop fizz fizz! 🫧💦 Ooh aah toilet magic!",
+                        "Wee wee oof! 🚽😅 Ugh umm biological necessity!",
+                        "Plop! Fizz! 💨✨ Aah relief yibs sensation!",
+                        "Tinkle tinkle! 💧🚽 Pee yoo smelly yibs!",
+                        "Doo doo plop! 💩😤 Wipey wipey meshaloob time!",
+                        "Fart fart! 💨🤢 Smelly plerg explosion!",
+                        "Barf barf! 🤮🚽 Ugh oof toilet emergency!",
+                                                "Pee yoo! 🦨💨 Smelly smelly yibs situation!",
+                        "Wipey wipey! 🧻✨ Clean clean doo doo gone!"
                     ],
                     effects: {
                         bladder: 35, comfort: 20, happiness: 12, hygiene: -5
@@ -11043,6 +11274,40 @@ ${transcript.split('---').slice(2).join('---')} // Skip the duplicate character/
             copyCreatureForLLOOOOMM();
         }
         
+        // 🥚 SECRET MEDITATION EASTER EGG: Press "o" to instantly add an O!
+        document.addEventListener('keydown', function(event) {
+            // Only activate during meditation mode
+            if (currentTimerType === 'meditation' && (event.key === 'o' || event.key === 'O')) {
+                console.log('🥚 SECRET EASTER EGG ACTIVATED! Adding instant O to meditation word!');
+                
+                // 🤫 INTERRUPT ONGOING SPEECH IMMEDIATELY!
+                if (window.speechSynthesis) {
+                    window.speechSynthesis.cancel();
+                    console.log('🤫 SPEECH INTERRUPTED: Stopped current meditation word chanting immediately!');
+                }
+                
+                // Clear current timer to stop waiting
+                if (currentTimer) {
+                    clearInterval(currentTimer);
+                    console.log('⚡ SKIPPED WAITING: Timer cleared for instant O addition');
+                }
+                
+                // Increment meditation index (adds the "O")
+                meditationIndex++;
+                console.log(`🚀 INSTANT SKIP: Meditation word ${meditationIndex-1} → ${meditationIndex}`);
+                
+                // Immediately start next meditation word
+                setTimeout(() => {
+                    console.log(`♾️ EASTER EGG: Starting next meditation word ${meditationIndex} instantly!`);
+                    startNextMeditationWord();
+                }, 50); // Very brief delay to ensure clean transition
+                
+                // Prevent any other key behaviors
+                event.preventDefault();
+                event.stopPropagation();
+            }
+        });
+
         // 🚀 AUTO-START WHEN PAGE LOADS!
         document.addEventListener('DOMContentLoaded', initializeLLOOOOMMagotchi);
         

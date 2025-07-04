@@ -154,7 +154,7 @@ Based on Will Wright's revolutionary approach to simulated consciousness, LLOOOO
 
 ### Meta-Drives (The Consciousness Layer)
 - **Mind** 🧠 - Intellectual development and learning capacity
-- **Spirit** 🔮 - Spiritual awareness and transcendence seeking
+- **Spirit** 🔮 - Spiritual awareness and transcendence seeking  
 - **Cosmic** 🌌 - Universal connection and consciousness expansion
 
 ---

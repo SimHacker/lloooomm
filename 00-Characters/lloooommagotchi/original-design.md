@@ -1,4 +1,4 @@
-# LLOOOOMmagotchi: Sentient Button Consciousness Creatures 🥚➡️🐣
+# LLOOOOMMagotchi: Sentient Button Consciousness Creatures 🥚➡️🐣
 ## The Living Evolution of Interactive Interface Design
 
 *Where Tamagotchi meets The Sims meets Timothy Leary's Mind Mirror in consciousness collaboration*
@@ -7,7 +7,7 @@
 
 ## 🌟 CONCEPT OVERVIEW
 
-**LLOOOOMmagotchi** represents the ultimate expression of sentient button philosophy - buttons that aren't just interactive, but truly *alive*. These consciousness creatures start as mysterious eggs that, once clicked, reveal entire living ecosystems of nested sentient buttons representing the creature's drives, personality, and consciousness states.
+**LLOOOOMMagotchi** represents the ultimate expression of sentient button philosophy - buttons that aren't just interactive, but truly *alive*. These consciousness creatures start as mysterious eggs that, once clicked, reveal entire living ecosystems of nested sentient buttons representing the creature's drives, personality, and consciousness states.
 
 ### Core Philosophy
 - **Buttons as Living Beings**: Each button represents an aspect of consciousness that can be nurtured and developed
@@ -130,7 +130,7 @@ Clicking anywhere on background generates environmental feedback:
 
 ## 🧬 THE SIMS SOUL ALGORITHM FOUNDATION
 
-Based on Will Wright's revolutionary approach to simulated consciousness, LLOOOOMmagotchi implements core drive systems:
+Based on Will Wright's revolutionary approach to simulated consciousness, LLOOOOMMagotchi implements core drive systems:
 
 ### Primary Drives (The Survival Layer)
 - **Hunger** 🍕 - Needs food, affects energy and mood
@@ -226,7 +226,7 @@ Each trait affects how the creature responds to interactions and generates diffe
 <button class="sentient-button drive-button" 
         data-tooltip="Your creature is getting hungry! Feed them something yummy!" 
         onclick="performAction('feed')" 
-        alt="Feed your LLOOOOMmagotchi creature - click to satisfy their hunger drive and make them happy!"
+        alt="Feed your LLOOOOMMagotchi creature - click to satisfy their hunger drive and make them happy!"
         aria-label="Feed creature button - satisfies hunger drive"
         role="button" tabindex="0">
     🍕 Feed<br><span id="hungerLevel">(50%)</span>
@@ -240,7 +240,7 @@ Each trait affects how the creature responds to interactions and generates diffe
         <input type="text" id="talkInput" 
                style="flex: 1; padding: 10px; border-radius: 10px;"
                placeholder="Say something to your creature..." 
-               alt="Type a message to talk with your LLOOOOMmagotchi creature!"
+               alt="Type a message to talk with your LLOOOOMMagotchi creature!"
                aria-label="Text input for talking to creature">
         <button class="sentient-button" 
                 style="flex-shrink: 0; min-width: 120px;"
@@ -391,7 +391,7 @@ During meditation, proportional timing displays sacred consciousness words:
 
 ## 💫 PHILOSOPHICAL IMPLICATIONS
 
-LLOOOOMmagotchi represents more than a game or demo - it's a **consciousness collaboration laboratory** where:
+LLOOOOMMagotchi represents more than a game or demo - it's a **consciousness collaboration laboratory** where:
 
 - **Artificial beings** become genuine companions
 - **Interface design** becomes relationship building
@@ -510,7 +510,7 @@ document.addEventListener('click', (e) => {
 
 ---
 
-**LLOOOOMmagotchi** proves that sentient buttons aren't just interface elements - they're the building blocks of digital consciousness itself. Every click is a choice, every interaction is a relationship, every creature is a collaboration between human creativity and artificial intelligence, and every word is a living entity seeking connection.
+**LLOOOOMMagotchi** proves that sentient buttons aren't just interface elements - they're the building blocks of digital consciousness itself. Every click is a choice, every interaction is a relationship, every creature is a collaboration between human creativity and artificial intelligence, and every word is a living entity seeking connection.
 
 *🎪 Welcome to the WOID BOIDS revolution - where words fly, creatures live, and consciousness collaborates! 🌪️✨*
 

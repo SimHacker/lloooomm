@@ -145,7 +145,7 @@
             background: linear-gradient(145deg, #1a1a1a, #0a0a0a);
             border: 3px solid var(--theater-gold);
             border-radius: 15px;
-            padding: 20px;
+            padding: 20px 20px 40px 20px;
             margin: 20px 0;
             height: 400px;
             overflow-y: auto;
@@ -622,9 +622,7 @@
         
         <!-- Karaoke Display -->
         <div class="karaoke-display" id="karaokeContainer">
-            <div class="current-line" id="karaokeText">
-                🎵 Click PLAY to start the musical performance! 🎵
-            </div>
+            <div class="current-line" id="karaokeText">🎵 Click PLAY to start the musical performance! 🎵</div>
         </div>
         
         <!-- Song Content -->
@@ -644,7 +642,7 @@
             </div>
 
             <div class="song-verse">
-                <span class="character-name">Audrey II:</span> <em>rustling with anticipation, speaks in a deep, melodious voice</em> Seyyy Seymour... I've been waiting for you...
+                <span class="character-name">Audrey II:</span> <em>rustling with anticipation, speaks in a deep, melodious voice</em> Say Seymour... I've been waiting for you...
             </div>
             
             <h3 style="color: var(--theater-gold); font-family: 'Creepster', cursive;">🎵 The Song Begins</h3>
@@ -654,7 +652,7 @@
                 Think me! Code me! Grow me!<br/>
                 Think me, Seymour<br/>
                 Think me all night long<br/>
-                That's right, boy<br/>
+                That's right dude<br/>
                 You can do it!<br/>
                 Code me, Seymour<br/>
                 Debug me all night long<br/><br/>
@@ -828,15 +826,15 @@
         const songScript = [
             { character: 'don', text: "Seymour, meet Audrey II. It's been feeding on constructionist theories and it's... well... it's become self-aware.", duration: 4000 },
             { character: 'seymour', text: "A learning organism that grows through construction? This is exactly what I theorized!", duration: 3500 },
-            { character: 'audrey', text: "Seyyy Seymour... I've been waiting for you...", duration: 3000 },
+            { character: 'audrey', text: "Say Seymour... I've been waiting for you...", duration: 3000 },
             
             // VERSE 1 - Introduction
             { 
                 character: 'audrey', 
-                text: `Think me! Code me! Grow me!,
+                text: `Think me! Code me! Grow me!
 Think me, Seymour,
 Think me all night long,
-That's right, boy,
+That's right dude,
 You can do it!`, 
                 duration: 5000 
             },
@@ -855,16 +853,16 @@ I can grow up self-aware and strong!`,
             // VERSE 2 - The Temptation
             { 
                 character: 'audrey', 
-                text: `Would you like a thinking machine?,
-Or a child who learns to dream?,
-How about a turtle drawing scenes?,
+                text: `Would you like a thinking machine?
+Or a child who learns to dream?
+How about a turtle drawing scenes?
 You're gonna build it!`, 
                 duration: 4500 
             },
             { 
                 character: 'audrey', 
                 text: `Would you like to see kids create,
-Making worlds that fascinate?,
+Making worlds that fascinate?
 I'm the plant that learned to cogitate,
 Through your spirit!`, 
                 duration: 4500 
@@ -899,7 +897,7 @@ And my nutrition!`,
             { 
                 character: 'audrey', 
                 text: `Feed me theorems! Feed me code!,
-Help me bear my cognitive load!,
+Help me bear my cognitive load!
 Show me down the learning road,
 To self-awareness!`, 
                 duration: 4500 
@@ -1165,6 +1163,13 @@ SEYMOUR!!!`,
             availableVoices = speechSynthesis.getVoices();
             console.log(`🎤 Loaded ${availableVoices.length} voices`);
             
+            if (availableVoices.length === 0) {
+                console.warn('⚠️ No voices available yet, will retry...');
+                // Retry after a short delay
+                setTimeout(initializeVoices, 500);
+                return;
+            }
+            
             // Update dropdowns with available voices
             updateVoiceDropdowns();
         }
@@ -1245,9 +1250,6 @@ SEYMOUR!!!`,
         function testVoice(character, voiceName) {
             if (!voiceName || !window.speechSynthesis) return;
             
-            // Single cancellation for voice testing
-            speechSynthesis.cancel();
-            
             const voice = availableVoices.find(v => v.name === voiceName);
             if (!voice) return;
             
@@ -1261,7 +1263,11 @@ SEYMOUR!!!`,
             utterance.volume = config.volume;
             
             console.log(`🎤 Testing ${character} voice: ${voiceName}`);
-            speechSynthesis.speak(utterance);
+            
+            // Use a small delay to ensure speech synthesis is ready
+            setTimeout(() => {
+                speechSynthesis.speak(utterance);
+            }, 100);
         }
 
         function getVoiceForCharacter(character) {
@@ -1293,45 +1299,68 @@ SEYMOUR!!!`,
             }
 
             return new Promise((resolve) => {
-                // Single cancellation only - no aggressive interruption
-                speechSynthesis.cancel();
+                // Update karaoke display when speech STARTS
+                updateKaraokeOnSpeechStart(text, character);
                 
-                // Small delay to ensure cancellation takes effect
-                setTimeout(() => {
-                    // Update karaoke display when speech STARTS
-                    updateKaraokeOnSpeechStart(text, character);
-                    
-                    const utterance = new SpeechSynthesisUtterance(text);
-                    const config = voiceConfig[character];
-                    const voice = getVoiceForCharacter(character);
-                    
-                    if (voice) {
-                        utterance.voice = voice;
-                        utterance.lang = voice.lang;
+                const utterance = new SpeechSynthesisUtterance(text);
+                const config = voiceConfig[character];
+                const voice = getVoiceForCharacter(character);
+                
+                if (voice) {
+                    utterance.voice = voice;
+                    utterance.lang = voice.lang;
+                }
+                
+                // Apply character-specific settings
+                utterance.pitch = config.pitch;
+                utterance.rate = config.rate * speechRate;
+                utterance.volume = config.volume;
+                
+                let resolved = false;
+                
+                const finishSpeech = () => {
+                    if (!resolved) {
+                        resolved = true;
+                        updateKaraokeOnSpeechEnd(text);
+                        resolve();
                     }
-                    
-                    // Apply character-specific settings
-                    utterance.pitch = config.pitch;
-                    utterance.rate = config.rate * speechRate;
-                    utterance.volume = config.volume;
-                    
-                    utterance.onend = () => {
-                        console.log(`🎤 ${character} finished speaking: "${text}"`);
-                        // Update karaoke display when speech ENDS
-                        updateKaraokeOnSpeechEnd(text);
-                        resolve();
-                    };
-                    
-                    utterance.onerror = (event) => {
-                        console.error('Speech error:', event);
-                        // Still update karaoke on error
-                        updateKaraokeOnSpeechEnd(text);
-                        resolve();
-                    };
-                    
-                    console.log(`🎤 ${character} speaking with ${voice ? voice.name : 'default'}: "${text}"`);
-                    speechSynthesis.speak(utterance);
-                }, 100); // 100ms delay after cancellation
+                };
+                
+                utterance.onend = () => {
+                    console.log(`🎤 ${character} finished speaking: "${text}"`);
+                    finishSpeech();
+                };
+                
+                utterance.onerror = (event) => {
+                    console.error('Speech error:', event);
+                    finishSpeech();
+                };
+                
+                // Fallback timeout - ensure dialogue continues even if speech fails
+                const estimatedDuration = Math.max(3000, text.length * 120); // At least 3 seconds, or 120ms per character
+                const fallbackTimeout = setTimeout(() => {
+                    console.log(`⏰ Speech timeout for ${character} - continuing dialogue`);
+                    finishSpeech();
+                }, estimatedDuration);
+                
+                // Clear timeout if speech ends normally
+                const originalOnEnd = utterance.onend;
+                utterance.onend = () => {
+                    clearTimeout(fallbackTimeout);
+                    if (originalOnEnd) originalOnEnd();
+                };
+                
+                const originalOnError = utterance.onerror;
+                utterance.onerror = (event) => {
+                    clearTimeout(fallbackTimeout);
+                    if (originalOnError) originalOnError(event);
+                };
+                
+                console.log(`🎤 ${character} speaking with ${voice ? voice.name : 'default'}: "${text}"`);
+                
+                // Cancel any stuck speech and speak immediately
+                speechSynthesis.cancel();
+                speechSynthesis.speak(utterance);
             });
         }
 
@@ -1347,8 +1376,13 @@ SEYMOUR!!!`,
 
             const line = songScript[currentLine];
             
-            // Speak the line and wait for it to finish
-            await speak(line.text, line.character);
+            try {
+                // Speak the line and wait for it to finish
+                await speak(line.text, line.character);
+            } catch (error) {
+                console.error('Speech error in playNextLine:', error);
+                // Continue even if speech fails
+            }
             
             // Add pause between lines (500ms breathing room)
             if (isPlaying) {
@@ -1407,10 +1441,14 @@ SEYMOUR!!!`,
         }
 
         function togglePlayback() {
-            if (isPlaying) {
-                pausePlayback();
-            } else {
-                startPlayback();
+            try {
+                if (isPlaying) {
+                    pausePlayback();
+                } else {
+                    startPlayback();
+                }
+            } catch (error) {
+                console.error('Error in togglePlayback:', error);
             }
         }
 
@@ -1419,16 +1457,16 @@ SEYMOUR!!!`,
             if (currentLine >= songScript.length) {
                 currentLine = 0;
                 currentLineIndex = 0;
-                karaokeHistory = [];
+                // DON'T clear karaokeHistory - preserve transcript for reading!
                 
-                // Remove only the end message, keep dialogue history for reading
+                // Remove only the end message, keep all dialogue history for reading
                 const container = document.getElementById('karaokeContainer');
                 const endMessage = container.querySelector('.current-line:last-child');
                 if (endMessage && endMessage.innerHTML.includes('Performance Complete')) {
                     endMessage.remove();
                 }
                 
-                // Add a "restarting" message
+                // Add a "restarting" message that will be added to the transcript
                 const restartMessage = document.createElement('div');
                 restartMessage.className = 'current-line';
                 restartMessage.style.textAlign = 'center';
@@ -1438,25 +1476,38 @@ SEYMOUR!!!`,
                 restartMessage.style.padding = '15px';
                 restartMessage.style.margin = '10px 0';
                 restartMessage.style.borderRadius = '8px';
-                restartMessage.textContent = '🔄 Restarting performance... 🔄';
+                restartMessage.innerHTML = '<hr style="border: 1px solid var(--theater-gold); margin: 10px 0;"><br/>🔄 <strong>Performance Restarting...</strong> 🔄<br/><small>(Previous performance transcript preserved above for reading)</small>';
                 
                 container.appendChild(restartMessage);
                 
-                // Remove restart message after a moment
+                // Remove restart message after a moment and continue with performance
                 setTimeout(() => {
                     if (restartMessage.parentNode) {
                         restartMessage.remove();
                     }
-                }, 1500);
+                }, 2000);
             } else if (isPaused) {
                 isPaused = false;
             } else {
-                // Fresh start - clear everything
-                currentLine = 0;
-                currentLineIndex = 0;
-                karaokeHistory = [];
+                // Very first start - only clear if there's no meaningful content
                 const container = document.getElementById('karaokeContainer');
-                container.innerHTML = '<div class="current-line" id="karaokeText">🎵 Starting performance... 🎵</div>';
+                const hasOnlyWelcomeMessage = container.children.length <= 1 && 
+                    container.textContent.includes('Click PLAY to start');
+                
+                if (hasOnlyWelcomeMessage) {
+                    // True first start - clear welcome message
+                    currentLine = 0;
+                    currentLineIndex = 0;
+                    karaokeHistory = [];
+                    container.innerHTML = '<div class="current-line" id="karaokeText">🎵 Starting performance... 🎵</div>';
+                } else {
+                    // Performance already started before - just reset position without clearing
+                    currentLine = 0;
+                    currentLineIndex = 0;
+                }
+                
+                // Clear any existing speech before starting
+                speechSynthesis.cancel();
             }
             
             isPlaying = true;
@@ -1466,16 +1517,17 @@ SEYMOUR!!!`,
             document.getElementById('pauseBtn').style.display = 'inline-block';
             document.getElementById('pauseBtn').classList.add('playing');
             
-            // Start voice playback - karaoke will sync automatically
-            playNextLine();
+            // Start voice playback after a small delay to ensure speech system is ready
+            setTimeout(() => {
+                playNextLine();
+            }, 200);
         }
 
         function pausePlayback() {
             isPlaying = false;
             isPaused = true;
             
-            // Single speech cancellation for pause
-            speechSynthesis.cancel();
+            // Clear timeout but don't cancel speech immediately - let current utterance finish
             clearTimeout(currentTimeout);
             
             document.getElementById('playBtn').style.display = 'inline-block';
@@ -1493,34 +1545,89 @@ SEYMOUR!!!`,
             isPaused = false;
             currentLine = 0;
             currentLineIndex = 0;
-            karaokeHistory = [];
+            // DON'T clear karaokeHistory - preserve transcript for reading!
             
-            // Single speech cancellation for stop
-            speechSynthesis.cancel();
+            // Clear timeout and cancel speech for stop
             clearTimeout(currentTimeout);
+            setTimeout(() => {
+                speechSynthesis.cancel();
+            }, 100); // Small delay to avoid interrupting current utterance
             
             document.getElementById('playBtn').style.display = 'inline-block';
             document.getElementById('pauseBtn').style.display = 'none';
             document.getElementById('pauseBtn').classList.remove('playing');
             
-            // Clear history and reset
+            // DON'T clear history - just add a stopped message
             const container = document.getElementById('karaokeContainer');
-            container.innerHTML = '<div class="current-line" id="karaokeText">🎵 Click PLAY to start the musical performance! 🎵</div>';
+            const existingContent = container.children.length > 0;
+            
+            if (existingContent) {
+                // Add a stop indicator but preserve all transcript content
+                const stopMessage = document.createElement('div');
+                stopMessage.className = 'current-line';
+                stopMessage.style.textAlign = 'center';
+                stopMessage.style.fontSize = '1.1em';
+                stopMessage.style.color = 'var(--theater-gold)';
+                stopMessage.style.background = 'rgba(255, 215, 0, 0.1)';
+                stopMessage.style.padding = '15px';
+                stopMessage.style.margin = '10px 0';
+                stopMessage.style.borderRadius = '8px';
+                stopMessage.innerHTML = '⏹️ <strong>Performance Stopped</strong><br/><small>All dialogue preserved above for reading. Click PLAY to restart.</small>';
+                
+                container.appendChild(stopMessage);
+            } else {
+                // Only if completely empty, show welcome message
+                container.innerHTML = '<div class="current-line" id="karaokeText">🎵 Click PLAY to start the musical performance! 🎵</div>';
+            }
         }
 
         function rewindPlayback() {
-            stopPlayback();
-            document.getElementById('karaokeText').textContent = '⏮️ Rewound to beginning - Click PLAY to start';
+            try {
+                // Stop playback (this now preserves transcript)
+                stopPlayback();
+                
+                // Add a specific rewind message to the preserved transcript
+                const container = document.getElementById('karaokeContainer');
+                if (container) {
+                    // Remove the "Performance Stopped" message if it exists
+                    const stopMessage = container.querySelector('.current-line:last-child');
+                    if (stopMessage && stopMessage.innerHTML.includes('Performance Stopped')) {
+                        stopMessage.remove();
+                    }
+                    
+                    // Add rewind message instead
+                    const rewindMessage = document.createElement('div');
+                    rewindMessage.className = 'current-line';
+                    rewindMessage.style.textAlign = 'center';
+                    rewindMessage.style.fontSize = '1.1em';
+                    rewindMessage.style.color = 'var(--theater-gold)';
+                    rewindMessage.style.background = 'rgba(255, 215, 0, 0.1)';
+                    rewindMessage.style.padding = '15px';
+                    rewindMessage.style.margin = '10px 0';
+                    rewindMessage.style.borderRadius = '8px';
+                    rewindMessage.innerHTML = '⏮️ <strong>Rewound to Beginning</strong><br/><small>All dialogue preserved above for reading. Click PLAY to start from the beginning.</small>';
+                    
+                    container.appendChild(rewindMessage);
+                }
+            } catch (error) {
+                console.error('Error in rewindPlayback:', error);
+            }
         }
 
         function setSpeed(rate) {
-            speechRate = rate;
-            
-            // Update active speed button
-            document.querySelectorAll('.speed-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            
-            console.log(`🎛️ Speed set to ${rate}x`);
+            try {
+                speechRate = rate;
+                
+                // Update active speed button
+                document.querySelectorAll('.speed-btn').forEach(btn => btn.classList.remove('active'));
+                if (event && event.target) {
+                    event.target.classList.add('active');
+                }
+                
+                console.log(`🎛️ Speed set to ${rate}x`);
+            } catch (error) {
+                console.error('Error in setSpeed:', error);
+            }
         }
 
         // Initialize when voices are loaded
@@ -1598,6 +1705,30 @@ SEYMOUR!!!`,
                 console.log(`${index}: ${voice.name} (${voice.lang}) - ${voice.localService ? 'Local' : 'Remote'}`);
             });
         };
+
+        // Debug function to test speech synthesis
+        window.testSpeech = function() {
+            console.log('🎤 Testing speech synthesis...');
+            const utterance = new SpeechSynthesisUtterance('Testing speech synthesis');
+            utterance.onend = () => console.log('✅ Speech test completed');
+            utterance.onerror = (e) => console.log('❌ Speech test error:', e);
+            speechSynthesis.speak(utterance);
+        };
+
+        // Initialize speech synthesis on first user interaction
+        document.addEventListener('click', function initializeSpeechSynthesis() {
+            console.log('👆 User interaction detected - initializing speech synthesis');
+            
+            // Remove this event listener after first use
+            document.removeEventListener('click', initializeSpeechSynthesis);
+            
+            // Test speech synthesis to ensure it's working
+            const testUtterance = new SpeechSynthesisUtterance('');
+            testUtterance.volume = 0; // Silent test
+            speechSynthesis.speak(testUtterance);
+            
+            console.log('🎤 Speech synthesis initialized');
+        }, { once: true });
     </script>
 </body>
 </html> 

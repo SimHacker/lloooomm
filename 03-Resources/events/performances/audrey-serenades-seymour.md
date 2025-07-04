@@ -28,7 +28,7 @@ VERSE 1:
 Think me! Code me! Grow me!
 Think me, Seymour
 Think me all night long
-That's right, boy
+That's right dude
 You can do it
 Code me, Seymour
 Debug me all night long

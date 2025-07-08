@@ -1,0 +1,17 @@
+# Set UTF-8 encoding for YAML files
+AddType "text/yaml; charset=UTF-8" .yml
+AddType "text/yaml; charset=UTF-8" .yaml
+
+# Also ensure default charset is UTF-8
+AddDefaultCharset UTF-8
+
+# Force UTF-8 for specific file types
+<FilesMatch "\.(yml|yaml|txt|md|html|htm|css|js|json)$">
+    Header set Content-Type "charset=UTF-8"
+</FilesMatch>
+
+# Ensure proper MIME types
+AddType text/yaml .yml
+AddType text/yaml .yaml
+AddType text/plain .md
+AddType text/plain .txt 

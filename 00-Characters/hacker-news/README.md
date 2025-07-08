@@ -132,6 +132,12 @@ What makes HN truly alive:
 
 ## Related Files Throughout LLOOOOMM
 
+### Web Pages (dist/)
+
+https://lloooomm.com/dang-transformative-moderation-hn-community-post.html
+https://lloooomm.com/dang-showcase.html
+
+
 ### In Resources (03-Resources/)
 - **[HN Analysis Patterns](../../03-Resources/experiments/hacker-news-patterns/)** - Community behavior studies
 - **[Moderation Philosophy](../../03-Resources/documentation/transformative-moderation.md)** - Dang's approach documented

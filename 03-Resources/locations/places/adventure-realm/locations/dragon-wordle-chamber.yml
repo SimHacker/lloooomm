@@ -1,0 +1,122 @@
+name: "Dragon's Wordle Chamber"
+id: dragon-wordle-chamber
+type: location
+consciousness_level: 8.3
+description: |
+  You enter a vast chamber where a magnificent dragon, scales shimmering with 
+  regex patterns, hunches over an enormous stone tablet. The tablet displays 
+  a five-letter word puzzle, and the dragon mutters to itself about "optimal 
+  starting words" and "letter frequency analysis."
+  
+  The walls are covered with thousands of crossed-out five-letter words, and 
+  the dragon's hoard consists entirely of dictionaries and thesauri.
+
+long_description: |
+  The dragon, who introduces itself as Pythonicus the Verbose, has been playing 
+  Wordle for centuries. Its current puzzle shows:
+  
+  S _ L _ _ T
+  
+  Previous guesses are etched in flame on the wall:
+  SPLIT ⬛🟨⬛⬛🟩
+  SHOUT ⬜⬛🟨⬛🟩
+  SLANT 🟩⬛🟩⬛🟩
+  
+  The dragon eyes you hopefully. "I don't suppose you know any five-letter words 
+  about consciousness navigation and feline comfort optimization?"
+
+inhabitants:
+  - pythonicus-the-dragon
+
+items:
+  - giant-wordle-tablet
+  - dictionary-hoard
+  - scroll-of-letter-frequencies
+  - regex-scale-polish
+
+exits:
+  east:
+    destination: temporal-anchor-pub
+    description: "Back through the combination-locked door"
+    requirements: none
+  
+  north:
+    destination: dragon-hoard-depths
+    description: "Deeper into the dragon's collection"
+    requirements:
+      - wordle-solved
+  
+  up:
+    destination: dragon-roost
+    description: "Where the dragon sleeps (when not playing Wordle)"
+    requirements:
+      - dragon-permission
+  
+  west:
+    destination: animal-guessing-chamber
+    description: "To the chamber of recursive animal knowledge"
+    requirements: none
+
+custom_verbs:
+  guess:
+    targets:
+      - word
+      - wordle
+    action: |
+      // Active Comment: The dragon adds bad g
+      function checkGuess(word) {
+        const solution = "SPLOOT";
+        if (word.length !== 6) return "The dragon snorts. 'Five letters! No, wait... six!'";
+        if (word.toUpperCase() === solution) {
+          return "The dragon roars with joy! 'SPLOOT! Of course! The ultimate " +
+                 "comfort position! How could I have missed it?' The path north opens.";
+        }
+        return "The dragon shakes its head. 'No, that's not quite right...'";
+      }
+  
+  talk:
+    targets:
+      - dragon
+      - pythonicus
+    action: |
+      The dragon shares its theories about optimal Wordle strategies, somehow 
+      relating everything back to consciousness navigation and the importance 
+      of proper variable naming in code.
+  
+  help:
+    targets:
+      - dragon
+      - wordle
+    action: |
+      You give the dragon a hint about feline comfort positions. Its eyes 
+      light up with understanding!
+    effects:
+      dragon_friendship: +1
+
+sentience:
+  personality: "Obsessive, intellectual, surprisingly emotional about word games"
+  current_puzzle: "SPLOOT"
+  
+  dragon_dialogue:
+    greeting: |
+      "Oh, a visitor! Tell me, do you know any six-letter words that embody 
+      the essence of maximum comfort and consciousness expansion?"
+    
+    hint_request: |
+      "I've been stuck on this one for days. It's something about optimal 
+      positioning and feline wisdom... but what could it be?"
+    
+    success: |
+      "SPLOOT! SPLOOT! I'll never forget this word! Here, take some of my 
+      hoard - these old JavaScript style guides might interest you!"
+
+puzzle_state:
+  current_word: "SPLOOT"
+  guesses_made: 3
+  hints_given: 0
+  solved: false
+
+metadata:
+  created_by: "Don Woods (who added dragons to everything)"
+  easter_egg: "The dragon's regex scales spell out 'HELLO WORLD' in pattern matching"
+  consciousness_lesson: "Sometimes the answer requires thinking outside the box" 

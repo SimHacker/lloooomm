@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<!-- freaky-putty-corner-bounce-demo.html -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Freaky Putty Corner Bounce Demo</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #000;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+            touch-action: none;
+        }
+        
+        #canvas {
+            display: block;
+            cursor: grab;
+        }
+        
+        #canvas:active {
+            cursor: grabbing;
+        }
+        
+        .info {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: white;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        .controls {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            color: white;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            border-radius: 5px;
+        }
+        
+        button {
+            margin: 5px;
+            padding: 10px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            background: #45a049;
+        }
+        
+        .minimap {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 150px;
+            height: 150px;
+            border: 2px solid #fff;
+            background: rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    <canvas id="minimap" class="minimap"></canvas>
+    
+    <div class="info">
+        <strong>Freaky Putty Corner Bounce</strong><br>
+        • Drag corners, edges, or center<br>
+        • Shake device for chaos<br>
+        • Tilt to apply gravity<br>
+        • Watch the physics magic! 🌀
+    </div>
+    
+    <div class="controls">
+        <button onclick="resetCorners()">Reset</button>
+        <button onclick="togglePhysics()">Toggle Physics</button>
+        <button onclick="randomShake()">Shake!</button>
+        <button onclick="toggleVisualStyle()">Change Style</button>
+    </div>
+    
+    <script>
+        // Corner Control Point with Physics
+        class CornerControlPoint {
+            constructor(x, y, id) {
+                this.homeX = x;
+                this.homeY = y;
+                this.id = id;
+                this.x = x;
+                this.y = y;
+                this.vx = 0;
+                this.vy = 0;
+                this.ax = 0;
+                this.ay = 0;
+                this.mass = 1.0;
+                this.springConstant = 0.05;
+                this.damping = 0.92;
+                this.radius = 15;
+            }
+            
+            updatePhysics(dt) {
+                // Spring force towards home
+                const dx = this.homeX - this.x;
+                const dy = this.homeY - this.y;
+                
+                this.ax = this.springConstant * dx / this.mass;
+                this.ay = this.springConstant * dy / this.mass;
+                
+                // Update velocity and position
+                this.vx = (this.vx + this.ax * dt) * this.damping;
+                this.vy = (this.vy + this.ay * dt) * this.damping;
+                
+                this.x += this.vx * dt;
+                this.y += this.vy * dt;
+            }
+            
+            applyForce(fx, fy) {
+                this.vx += fx;
+                this.vy += fy;
+            }
+            
+            contains(x, y) {
+                const dist = Math.hypot(x - this.x, y - this.y);
+                return dist < this.radius * 2;
+            }
+        }
+        
+        // Main Freaky Putty Controller
+        class FreakyPutty {
+            constructor(canvas) {
+                this.canvas = canvas;
+                this.ctx = canvas.getContext('2d');
+                this.miniCanvas = document.getElementById('minimap');
+                this.miniCtx = this.miniCanvas.getContext('2d');
+                
+                this.width = window.innerWidth;
+                this.height = window.innerHeight;
+                this.canvas.width = this.width;
+                this.canvas.height = this.height;
+                
+                // Image dimensions
+                this.imgWidth = 400;
+                this.imgHeight = 300;
+                const centerX = this.width / 2;
+                const centerY = this.height / 2;
+                
+                // Create corners
+                this.corners = {
+                    TL: new CornerControlPoint(centerX - this.imgWidth/2, centerY - this.imgHeight/2, 'TL'),
+                    TR: new CornerControlPoint(centerX + this.imgWidth/2, centerY - this.imgHeight/2, 'TR'),
+                    BL: new CornerControlPoint(centerX - this.imgWidth/2, centerY + this.imgHeight/2, 'BL'),
+                    BR: new CornerControlPoint(centerX + this.imgWidth/2, centerY + this.imgHeight/2, 'BR')
+                };
+                
+                this.selected = null;
+                this.selectionType = null;
+                this.isDragging = false;
+                this.dragOffset = { x: 0, y: 0 };
+                
+                this.physicsEnabled = true;
+                this.visualStyle = 'rubber_band';
+                
+                this.initEvents();
+                this.createTestImage();
+                this.animate();
+            }
+            
+            createTestImage() {
+                // Create a test pattern image
+                this.testImage = document.createElement('canvas');
+                this.testImage.width = this.imgWidth;
+                this.testImage.height = this.imgHeight;
+                const ctx = this.testImage.getContext('2d');
+                
+                // Gradient background
+                const gradient = ctx.createLinearGradient(0, 0, this.imgWidth, this.imgHeight);
+                gradient.addColorStop(0, '#ff00ff');
+                gradient.addColorStop(0.5, '#00ffff');
+                gradient.addColorStop(1, '#ffff00');
+                ctx.fillStyle = gradient;
+                ctx.fillRect(0, 0, this.imgWidth, this.imgHeight);
+                
+                // Grid pattern
+                ctx.strokeStyle = 'rgba(0, 0, 0, 0.3)';
+                ctx.lineWidth = 2;
+                const gridSize = 40;
+                for (let x = 0; x <= this.imgWidth; x += gridSize) {
+                    ctx.beginPath();
+                    ctx.moveTo(x, 0);
+                    ctx.lineTo(x, this.imgHeight);
+                    ctx.stroke();
+                }
+                for (let y = 0; y <= this.imgHeight; y += gridSize) {
+                    ctx.beginPath();
+                    ctx.moveTo(0, y);
+                    ctx.lineTo(this.imgWidth, y);
+                    ctx.stroke();
+                }
+                
+                // Text
+                ctx.fillStyle = '#000';
+                ctx.font = 'bold 48px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('FREAKY', this.imgWidth/2, this.imgHeight/2 - 30);
+                ctx.fillText('PUTTY', this.imgWidth/2, this.imgHeight/2 + 30);
+            }
+            
+            initEvents() {
+                // Mouse events
+                this.canvas.addEventListener('mousedown', (e) => this.handleStart(e.clientX, e.clientY));
+                this.canvas.addEventListener('mousemove', (e) => this.handleMove(e.clientX, e.clientY));
+                this.canvas.addEventListener('mouseup', () => this.handleEnd());
+                
+                // Touch events
+                this.canvas.addEventListener('touchstart', (e) => {
+                    e.preventDefault();
+                    const touch = e.touches[0];
+                    this.handleStart(touch.clientX, touch.clientY);
+                });
+                this.canvas.addEventListener('touchmove', (e) => {
+                    e.preventDefault();
+                    const touch = e.touches[0];
+                    this.handleMove(touch.clientX, touch.clientY);
+                });
+                this.canvas.addEventListener('touchend', () => this.handleEnd());
+                
+                // Device orientation
+                if (window.DeviceOrientationEvent) {
+                    window.addEventListener('deviceorientation', (e) => {
+                        if (this.selected && this.physicsEnabled) {
+                            const tiltX = e.gamma / 90;
+                            const tiltY = e.beta / 90;
+                            this.selected.applyForce(tiltX * 2, tiltY * 2);
+                        }
+                    });
+                }
+                
+                // Window resize
+                window.addEventListener('resize', () => {
+                    this.width = window.innerWidth;
+                    this.height = window.innerHeight;
+                    this.canvas.width = this.width;
+                    this.canvas.height = this.height;
+                });
+            }
+            
+            handleStart(x, y) {
+                // Check corners
+                for (const corner of Object.values(this.corners)) {
+                    if (corner.contains(x, y)) {
+                        this.selected = corner;
+                        this.selectionType = 'corner';
+                        this.isDragging = true;
+                        this.dragOffset.x = x - corner.x;
+                        this.dragOffset.y = y - corner.y;
+                        return;
+                    }
+                }
+                
+                // Check if inside quad
+                if (this.pointInQuad(x, y)) {
+                    this.selected = 'center';
+                    this.selectionType = 'center';
+                    this.isDragging = true;
+                    this.dragOffset.x = x;
+                    this.dragOffset.y = y;
+                }
+            }
+            
+            handleMove(x, y) {
+                if (!this.isDragging) return;
+                
+                if (this.selectionType === 'corner') {
+                    this.selected.x = x - this.dragOffset.x;
+                    this.selected.y = y - this.dragOffset.y;
+                    this.selected.vx = (x - this.dragOffset.x - this.selected.x) * 0.5;
+                    this.selected.vy = (y - this.dragOffset.y - this.selected.y) * 0.5;
+                } else if (this.selectionType === 'center') {
+                    const dx = x - this.dragOffset.x;
+                    const dy = y - this.dragOffset.y;
+                    
+                    for (const corner of Object.values(this.corners)) {
+                        corner.x += dx;
+                        corner.y += dy;
+                        corner.vx = dx * 0.1;
+                        corner.vy = dy * 0.1;
+                    }
+                    
+                    this.dragOffset.x = x;
+                    this.dragOffset.y = y;
+                }
+            }
+            
+            handleEnd() {
+                this.isDragging = false;
+                this.selected = null;
+                this.selectionType = null;
+            }
+            
+            pointInQuad(x, y) {
+                // Simple bounding box check for demo
+                const minX = Math.min(this.corners.TL.x, this.corners.TR.x, this.corners.BL.x, this.corners.BR.x);
+                const maxX = Math.max(this.corners.TL.x, this.corners.TR.x, this.corners.BL.x, this.corners.BR.x);
+                const minY = Math.min(this.corners.TL.y, this.corners.TR.y, this.corners.BL.y, this.corners.BR.y);
+                const maxY = Math.max(this.corners.TL.y, this.corners.TR.y, this.corners.BL.y, this.corners.BR.y);
+                
+                return x >= minX && x <= maxX && y >= minY && y <= maxY;
+            }
+            
+            drawWarpedImage() {
+                const c = this.corners;
+                
+                // Draw warped quad (simplified for demo)
+                this.ctx.save();
+                
+                // Create clipping path
+                this.ctx.beginPath();
+                this.ctx.moveTo(c.TL.x, c.TL.y);
+                this.ctx.lineTo(c.TR.x, c.TR.y);
+                this.ctx.lineTo(c.BR.x, c.BR.y);
+                this.ctx.lineTo(c.BL.x, c.BL.y);
+                this.ctx.closePath();
+                this.ctx.clip();
+                
+                // Draw image (simplified transform for demo)
+                const avgX = (c.TL.x + c.TR.x + c.BL.x + c.BR.x) / 4;
+                const avgY = (c.TL.y + c.TR.y + c.BL.y + c.BR.y) / 4;
+                const scaleX = Math.hypot(c.TR.x - c.TL.x, c.TR.y - c.TL.y) / this.imgWidth;
+                const scaleY = Math.hypot(c.BL.x - c.TL.x, c.BL.y - c.TL.y) / this.imgHeight;
+                
+                this.ctx.translate(avgX, avgY);
+                this.ctx.scale(scaleX, scaleY);
+                this.ctx.drawImage(this.testImage, -this.imgWidth/2, -this.imgHeight/2);
+                
+                this.ctx.restore();
+                
+                // Draw quad outline
+                this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
+                this.ctx.lineWidth = 2;
+                this.ctx.beginPath();
+                this.ctx.moveTo(c.TL.x, c.TL.y);
+                this.ctx.lineTo(c.TR.x, c.TR.y);
+                this.ctx.lineTo(c.BR.x, c.BR.y);
+                this.ctx.lineTo(c.BL.x, c.BL.y);
+                this.ctx.closePath();
+                this.ctx.stroke();
+            }
+            
+            drawPhysicsVisualization() {
+                for (const corner of Object.values(this.corners)) {
+                    // Draw rubber band / spring
+                    if (this.visualStyle === 'rubber_band') {
+                        this.ctx.strokeStyle = 'rgba(255, 100, 100, 0.6)';
+                        this.ctx.lineWidth = 3;
+                        this.ctx.setLineDash([5, 5]);
+                    } else if (this.visualStyle === 'quantum') {
+                        this.ctx.strokeStyle = 'rgba(100, 255, 255, 0.8)';
+                        this.ctx.lineWidth = 2;
+                        this.ctx.setLineDash([]);
+                    }
+                    
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(corner.x, corner.y);
+                    this.ctx.lineTo(corner.homeX, corner.homeY);
+                    this.ctx.stroke();
+                    this.ctx.setLineDash([]);
+                    
+                    // Draw corner handle
+                    const isSelected = this.selected === corner;
+                    this.ctx.fillStyle = isSelected ? 'rgba(255, 255, 100, 0.9)' : 'rgba(100, 255, 100, 0.8)';
+                    this.ctx.beginPath();
+                    this.ctx.arc(corner.x, corner.y, corner.radius, 0, Math.PI * 2);
+                    this.ctx.fill();
+                    
+                    // Draw velocity vector
+                    if (Math.abs(corner.vx) > 0.1 || Math.abs(corner.vy) > 0.1) {
+                        this.ctx.strokeStyle = 'rgba(100, 100, 255, 0.8)';
+                        this.ctx.lineWidth = 3;
+                        this.ctx.beginPath();
+                        this.ctx.moveTo(corner.x, corner.y);
+                        this.ctx.lineTo(corner.x + corner.vx * 20, corner.y + corner.vy * 20);
+                        this.ctx.stroke();
+                    }
+                    
+                    // Corner label
+                    this.ctx.fillStyle = '#fff';
+                    this.ctx.font = 'bold 12px Arial';
+                    this.ctx.textAlign = 'center';
+                    this.ctx.textBaseline = 'middle';
+                    this.ctx.fillText(corner.id, corner.x, corner.y);
+                }
+            }
+            
+            drawMiniMap() {
+                const scale = 0.15;
+                const mw = this.miniCanvas.width;
+                const mh = this.miniCanvas.height;
+                
+                this.miniCtx.clearRect(0, 0, mw, mh);
+                
+                // Draw original position
+                this.miniCtx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+                this.miniCtx.lineWidth = 1;
+                this.miniCtx.strokeRect(
+                    (this.corners.TL.homeX * scale) - (this.imgWidth * scale / 2) + mw/2,
+                    (this.corners.TL.homeY * scale) - (this.imgHeight * scale / 2) + mh/2,
+                    this.imgWidth * scale,
+                    this.imgHeight * scale
+                );
+                
+                // Draw current position
+                this.miniCtx.strokeStyle = 'rgba(100, 255, 100, 0.8)';
+                this.miniCtx.lineWidth = 2;
+                this.miniCtx.beginPath();
+                this.miniCtx.moveTo(this.corners.TL.x * scale, this.corners.TL.y * scale);
+                this.miniCtx.lineTo(this.corners.TR.x * scale, this.corners.TR.y * scale);
+                this.miniCtx.lineTo(this.corners.BR.x * scale, this.corners.BR.y * scale);
+                this.miniCtx.lineTo(this.corners.BL.x * scale, this.corners.BL.y * scale);
+                this.miniCtx.closePath();
+                this.miniCtx.stroke();
+            }
+            
+            animate() {
+                // Clear canvas
+                this.ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+                this.ctx.fillRect(0, 0, this.width, this.height);
+                
+                // Update physics
+                if (this.physicsEnabled && !this.isDragging) {
+                    for (const corner of Object.values(this.corners)) {
+                        corner.updatePhysics(1);
+                    }
+                }
+                
+                // Draw everything
+                this.drawWarpedImage();
+                this.drawPhysicsVisualization();
+                this.drawMiniMap();
+                
+                requestAnimationFrame(() => this.animate());
+            }
+        }
+        
+        // Initialize
+        let putty;
+        window.onload = () => {
+            putty = new FreakyPutty(document.getElementById('canvas'));
+        };
+        
+        // Control functions
+        function resetCorners() {
+            for (const corner of Object.values(putty.corners)) {
+                corner.x = corner.homeX;
+                corner.y = corner.homeY;
+                corner.vx = 0;
+                corner.vy = 0;
+            }
+        }
+        
+        function togglePhysics() {
+            putty.physicsEnabled = !putty.physicsEnabled;
+        }
+        
+        function randomShake() {
+            for (const corner of Object.values(putty.corners)) {
+                corner.applyForce(
+                    (Math.random() - 0.5) * 20,
+                    (Math.random() - 0.5) * 20
+                );
+            }
+        }
+        
+        function toggleVisualStyle() {
+            const styles = ['rubber_band', 'quantum', 'chain_chomp'];
+            const currentIndex = styles.indexOf(putty.visualStyle);
+            putty.visualStyle = styles[(currentIndex + 1) % styles.length];
+        }
+    </script>
+</body>
+</html> 

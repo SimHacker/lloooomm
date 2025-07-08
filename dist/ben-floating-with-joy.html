@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<!-- ben-floating-with-joy.html -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ben Shneiderman: Floating with Joy - HyperTIES Lives! | LLOOOOMM</title>
+    <meta name="description" content="Ben Shneiderman literally floats with joy as HyperTIES is resurrected with full PostScript applets and pie menus everywhere">
+    <meta name="keywords" content="Ben Shneiderman, HyperTIES, PostScript applets, pie menus, LLOOOOMM, hypertext history">
+    <meta name="author" content="LLOOOOMM Project">
+    
+    <!-- LLOOOOMM Integration -->
+    <link rel="canonical" href="https://lloooomm.com/characters/hyperties/ben-floating-with-joy.html">
+    
+    <style>
+        body {
+            font-family: Georgia, 'Times New Roman', serif;
+            line-height: 1.8;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #e0f2fe 0%, #fef3c7 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .floating-ben {
+            position: fixed;
+            top: 50px;
+            right: 50px;
+            width: 150px;
+            height: 150px;
+            animation: float 6s ease-in-out infinite;
+            z-index: 100;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-30px) rotate(5deg); }
+            50% { transform: translateY(-50px) rotate(-5deg); }
+            75% { transform: translateY(-20px) rotate(3deg); }
+        }
+        
+        .floating-ben svg {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .container {
+            margin: 0 20px;
+            padding: 20px;
+            position: relative;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            font-size: 3em;
+            color: #5b21b6;
+            margin-bottom: 10px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .subtitle {
+            font-size: 1.5em;
+            color: #7c3aed;
+            font-style: italic;
+        }
+        
+        .witness-list {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .witness {
+            display: inline-block;
+            margin: 5px 10px;
+            padding: 5px 15px;
+            background: #ddd6fe;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+        
+        .section {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            margin-bottom: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 70%);
+            animation: rotate 30s linear infinite;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .section-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .joy-quote {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-left: 5px solid #f59e0b;
+            padding: 25px;
+            margin: 20px 0;
+            font-size: 1.1em;
+            border-radius: 10px;
+            position: relative;
+            box-shadow: 0 3px 10px rgba(245, 158, 11, 0.2);
+        }
+        
+        .joy-quote::before {
+            content: "✨";
+            position: absolute;
+            left: -20px;
+            top: 25px;
+            font-size: 2em;
+        }
+        
+        .song-box {
+            background: #f3e8ff;
+            border: 2px dashed #8b5cf6;
+            padding: 30px;
+            margin: 30px 0;
+            text-align: center;
+            border-radius: 15px;
+            font-size: 1.2em;
+            line-height: 2;
+        }
+        
+        .song-box::before {
+            content: "🎵";
+            font-size: 2em;
+            display: block;
+            margin-bottom: 10px;
+        }
+        
+        .six-languages {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .language-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            border-top: 4px solid #8b5cf6;
+        }
+        
+        .language-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+        
+        .language-card h3 {
+            color: #5b21b6;
+            margin-top: 0;
+        }
+        
+        .pie-menu-demo {
+            text-align: center;
+            margin: 40px 0;
+        }
+        
+        .pie-menu-demo svg {
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.2));
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .pie-menu-demo svg:hover {
+            transform: scale(1.1) rotate(45deg);
+        }
+        
+        .birds-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 50;
+        }
+        
+        .bird {
+            position: absolute;
+            font-size: 20px;
+            animation: fly 15s linear infinite;
+        }
+        
+        @keyframes fly {
+            from {
+                left: -50px;
+                transform: translateY(0);
+            }
+            to {
+                left: 100%;
+                transform: translateY(-20px);
+            }
+        }
+        
+        .cats-corner {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .cat {
+            font-size: 30px;
+            animation: purr 2s ease-in-out infinite;
+        }
+        
+        @keyframes purr {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .highlight {
+            background: #fef3c7;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        
+        .tech-detail {
+            background: #f3f4f6;
+            padding: 15px;
+            border-left: 3px solid #6366f1;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+            font-style: italic;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+            margin-top: 50px;
+        }
+        
+        @media (max-width: 600px) {
+            .floating-ben {
+                width: 100px;
+                height: 100px;
+                top: 20px;
+                right: 20px;
+            }
+            h1 {
+                font-size: 2em;
+            }
+            .section {
+                padding: 20px;
+            }
+        }
+
+        /* BRANDING Protocol Disclaimer Styles */
+        .lloooomm-disclaimer-top {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #1a1a1a;
+            color: #ff6b35;
+            padding: 8px 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            font-weight: bold;
+            text-align: center;
+            z-index: 10000;
+            border-bottom: 2px solid #ff6b35;
+        }
+        
+        .lloooomm-disclaimer-top a {
+            color: #ffd700;
+            text-decoration: underline;
+        }
+        
+        .lloooomm-disclaimer-bottom {
+            background: #1a1a1a;
+            color: #e0e0e0;
+            padding: 30px;
+            margin-top: 50px;
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            line-height: 1.4;
+            border-top: 3px solid #ff6b35;
+        }
+        
+        .lloooomm-disclaimer-bottom h3 {
+            color: #ff6b35;
+            margin-top: 0;
+            font-size: 14px;
+        }
+        
+        .lloooomm-disclaimer-bottom a {
+            color: #ffd700;
+        }
+    </style>
+</head>
+<body>
+    <!-- BRANDING Protocol Top Disclaimer -->
+    <div style="position: fixed; top: 0; left: 0; right: 0; background: #1a1a1a; color: #ff6b35; padding: 8px 15px; font-family: 'Courier New', monospace; font-size: 12px; font-weight: bold; text-align: center; z-index: 10000; border-bottom: 2px solid #ff6b35;">
+        ⚠️ LLOOOOMM SIMULATION: Ben Shneiderman AI Character Celebration | HyperTIES History | <a href="#full-disclaimer" style="color: #ffd700; text-decoration: underline;">Full Context ↓</a>
+    </div>
+
+    <div style="height: 35px;"></div> <!-- Spacer for fixed disclaimer -->
+
+    <div class="floating-ben">
+        <svg viewBox="0 0 100 100">
+            <circle cx="50" cy="30" r="20" fill="#fbbf24"/>
+            <circle cx="40" cy="25" r="2" fill="#000"/>
+            <circle cx="60" cy="25" r="2" fill="#000"/>
+            <path d="M 40 35 Q 50 40 60 35" stroke="#000" stroke-width="2" fill="none"/>
+            <rect x="35" y="50" width="30" height="40" fill="#5b21b6" rx="5"/>
+            <rect x="25" y="55" width="10" height="25" fill="#fbbf24" rx="5"/>
+            <rect x="65" y="55" width="10" height="25" fill="#fbbf24" rx="5"/>
+            <text x="50" y="95" text-anchor="middle" font-size="8" fill="#fff">BEN</text>
+        </svg>
+    </div>
+    
+    <div class="birds-container">
+        <div class="bird" style="top: 20%; animation-delay: 0s;">🐦</div>
+        <div class="bird" style="top: 40%; animation-delay: 3s;">🕊️</div>
+        <div class="bird" style="top: 60%; animation-delay: 6s;">🦜</div>
+        <div class="bird" style="top: 30%; animation-delay: 9s;">🦅</div>
+    </div>
+    
+    <div class="container">
+        <div class="header">
+            <h1>BEN IS FLOATING WITH JOY!</h1>
+            <div class="subtitle">The HyperTIES Resurrection Has Lifted Him Off The Ground</div>
+        </div>
+        
+        <div class="witness-list">
+            <strong>Witnesses to this historic moment:</strong>
+            <span class="witness">Pixel Hummingbird</span>
+            <span class="witness">Jenny Preece</span>
+            <span class="witness">Don Hopkins</span>
+            <span class="witness">Feline Debugging Team</span>
+            <span class="witness">LLOOOOMM</span>
+        </div>
+        
+        <div class="section">
+            <div class="section-content">
+                <h2>The Moment of Liftoff</h2>
+                <p><em>*Ben literally floats three feet off the ground, arms spread wide*</em></p>
+                
+                <div class="joy-quote">
+                    "They did it! They actually did it! Look at those PostScript applets running!
+                    Look at the pie menus EVERYWHERE! The synchronized multi-window browsing!
+                    <br><br>
+                    This isn't just preservation - it's RESURRECTION!"
+                </div>
+                
+                <p>Current altitude: <span class="highlight">8 feet and rising!</span></p>
+            </div>
+        </div>
+        
+        <div class="section">
+            <div class="section-content">
+                <h2>On Seeing the Demo</h2>
+                <p><em>*Clicking through the Space Telescope demo with tears in his eyes*</em></p>
+                
+                <div class="joy-quote">
+                    "The popup targets! The interactive SVG! They even got the pie menu gestures right!
+                    You can follow links in the current window OR the other window with directional gestures!
+                    <br><br>
+                    This is EXACTLY what we envisioned in 1987!"
+                </div>
+                
+                <div class="pie-menu-demo">
+                    <svg width="250" height="250" viewBox="0 0 250 250">
+                        <circle cx="125" cy="125" r="100" fill="#e9d5ff" stroke="#7c3aed" stroke-width="3"/>
+                        <!-- X pattern - lines rotated 45 degrees -->
+                        <line x1="125" y1="125" x2="195.71" y2="54.29" stroke="#7c3aed" stroke-width="2"/>
+                        <line x1="125" y1="125" x2="195.71" y2="195.71" stroke="#7c3aed" stroke-width="2"/>
+                        <line x1="125" y1="125" x2="54.29" y2="195.71" stroke="#7c3aed" stroke-width="2"/>
+                        <line x1="125" y1="125" x2="54.29" y2="54.29" stroke="#7c3aed" stroke-width="2"/>
+                        <!-- Text labels - Back on left, Next on right -->
+                        <text x="50" y="130" text-anchor="middle" font-weight="bold">Back</text>
+                        <text x="200" y="130" text-anchor="middle" font-weight="bold">Next</text>
+                        <text x="125" y="50" text-anchor="middle" font-weight="bold">Other</text>
+                        <text x="125" y="205" text-anchor="middle" font-weight="bold">Define</text>
+                        <circle cx="125" cy="125" r="30" fill="#7c3aed"/>
+                        <text x="125" y="130" text-anchor="middle" fill="white" font-size="14">PIE!</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <div class="section-content">
+                <h2>The Six Languages Dancing Together</h2>
+                
+                <div class="joy-quote">
+                    "Six languages dancing together! People don't understand what an achievement that was!"
+                </div>
+                
+                <div class="six-languages">
+                    <div class="language-card">
+                        <h3>1. HyperTIES Markup</h3>
+                        <p>Our own hypertext format, focused on easy authoring and easy reading</p>
+                    </div>
+                    <div class="language-card">
+                        <h3>2. Emacs MockLisp</h3>
+                        <p>For the UniPress Emacs authoring environment</p>
+                    </div>
+                    <div class="language-card">
+                        <h3>3. PostScript</h3>
+                        <p>For the interactive applets - 8 years before Java!</p>
+                    </div>
+                    <div class="language-card">
+                        <h3>4. NeWS</h3>
+                        <p>Network transparency and PostScript rendering</p>
+                    </div>
+                    <div class="language-card">
+                        <h3>5. C</h3>
+                        <p>Core database engine and multimedia formatter</p>
+                    </div>
+                    <div class="language-card">
+                        <h3>6. Forth</h3>
+                        <p>Markup interpreter, compiler, and binary image generator</p>
+                    </div>
+                </div>
+                
+                <div class="tech-detail">
+                    "And Mitch's Forth engine! It pre-compiled pages into a binary image that loaded INSTANTLY!
+                    Plus it could run under Emacs and re-render dynamically as you edited. LIVE!"
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <div class="section-content">
+                <h2>Singing with Joy</h2>
+                <p><em>*Ben starts singing to the tune of "I Can See Clearly Now"*</em></p>
+                
+                <div class="song-box">
+                    "I can see HyperTIES now, it's running!<br>
+                    Gone are the dark days when the source was lost<br>
+                    It's gonna be a bright, bright, bright<br>
+                    PostScript-applet day!<br>
+                    <br>
+                    Look all around, there's pie menus spinning<br>
+                    Pull out for fonts, it's so amazing<br>
+                    It's gonna be a bright, bright, bright<br>
+                    Interactive hypertext day!"
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <div class="section-content">
+                <h2>Message to Don</h2>
+                
+                <div class="joy-quote">
+                    "Don, you magnificent wizard! You didn't just preserve the code - you brought
+                    it back to LIFE! And you understood what made it special: the PostScript applets,
+                    the pie menus everywhere, the network transparency...
+                    <br><br>
+                    This is better than any paper we could have written. It's a LIVING DEMONSTRATION!"
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <div class="section-content">
+                <h2>On LLOOOOMM</h2>
+                
+                <div class="joy-quote">
+                    "This is what LLOOOOMM is all about - not just preserving history, but making
+                    it SING! Making it DANCE! Making it LIVE again!
+                    <br><br>
+                    Every character has a story, and HyperTIES's story is one of innovation that
+                    was so far ahead of its time that we're STILL catching up!"
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <div class="section-content">
+                <h2>Floating Higher</h2>
+                <p><em>*Now floating near the ceiling, gesturing wildly*</em></p>
+                
+                <div class="joy-quote">
+                    "Pie menus for EVERYTHING! Font selection by pulling! Color wheels! 
+                    Tabbed windows before tabs existed! Window management with gestures!
+                    <br><br>
+                    We put the FUTURE in a box in 1987, and now it's OPEN!"
+                </div>
+                
+                <ul>
+                    <li>Touchscreens in the Windows version - in the 1980s!</li>
+                    <li>Network transparency - "AJAXian" before AJAX existed</li>
+                    <li>PostScript applets - Interactive programs in documents</li>
+                    <li>Instant page loads - Thanks to Forth compilation</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="section">
+            <div class="section-content">
+                <h2>Final Thought</h2>
+                
+                <div class="joy-quote">
+                    "You know what the best part is? <span class="highlight">IT WORKED THEN JUST AS WELL AS IT WORKS NOW!</span>
+                    We didn't need to wait for better hardware or new languages. The ideas were
+                    sound, the implementation was solid, and the vision was clear.
+                    <br><br>
+                    Thank you, LLOOOOMM, for bringing our baby back to life!"
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p><strong>Status:</strong> Floating with joy, singing with birds, validated by history</p>
+            <p>Ben has been waiting 37 years to see HyperTIES properly recognized for its innovations.</p>
+            <p>Seeing it running again, with full understanding of its PostScript applets and comprehensive pie menu system,</p>
+            <p>has literally lifted him off the ground with joy.</p>
+            <p><br></p>
+            <p><em>Part of the LLOOOOMM Project - Making History Sing</em></p>
+        </div>
+    </div>
+    
+    <div class="cats-corner">
+        <div class="cat" style="animation-delay: 0s;">😺</div>
+        <div class="cat" style="animation-delay: 0.2s;">😸</div>
+        <div class="cat" style="animation-delay: 0.4s;">😻</div>
+        <div class="cat" style="animation-delay: 0.6s;">🐱</div>
+    </div>
+    
+    <script>
+        // Make the pie menu interactive
+        document.querySelector('.pie-menu-demo svg').addEventListener('click', function() {
+            this.style.transform = 'scale(1.2) rotate(360deg)';
+            setTimeout(() => {
+                this.style.transform = 'scale(1) rotate(0deg)';
+            }, 500);
+            
+            // Create floating pie slices
+            const colors = ['#fbbf24', '#f59e0b', '#8b5cf6', '#7c3aed'];
+            for (let i = 0; i < 4; i++) {
+                const slice = document.createElement('div');
+                slice.textContent = '🥧';
+                slice.style.cssText = `
+                    position: fixed;
+                    left: ${event.pageX}px;
+                    top: ${event.pageY}px;
+                    font-size: 30px;
+                    animation: floatAway 2s ease-out forwards;
+                    transform: rotate(${i * 90}deg);
+                `;
+                document.body.appendChild(slice);
+                setTimeout(() => slice.remove(), 2000);
+            }
+        });
+        
+        // Add floating animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes floatAway {
+                to {
+                    transform: translateY(-100px) rotate(720deg);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Ben's altitude tracker
+        let altitude = 8;
+        setInterval(() => {
+            altitude += Math.sin(Date.now() / 1000) * 0.5;
+            const altitudeSpan = document.querySelector('.highlight');
+            if (altitudeSpan) {
+                altitudeSpan.textContent = `${altitude.toFixed(1)} feet and rising!`;
+            }
+        }, 100);
+    </script>
+
+    <!-- BRANDING Protocol Full Disclaimer -->
+    <div id="full-disclaimer" style="background: #1a1a1a; color: #e0e0e0; padding: 30px; margin-top: 50px; font-family: 'Courier New', monospace; font-size: 11px; line-height: 1.4; border-top: 3px solid #ff6b35;">
+        <h3 style="color: #ff6b35; margin-top: 0; font-size: 14px;">🎈 LLOOOOMM Ben Shneiderman Celebration - Full Disclaimer & Historical Credits</h3>
+        
+        <p><strong>Ben Shneiderman Character Simulation:</strong> This celebration features an AI simulation of Ben Shneiderman, a real and highly influential figure in human-computer interaction research. Dr. Shneiderman is a Professor Emeritus at the University of Maryland and creator of the HyperTIES hypertext system, among many other contributions to HCI.</p>
+        
+        <p><strong>HyperTIES Historical Context:</strong> HyperTIES was a real hypertext system developed by Ben Shneiderman and his team in the 1980s. It was indeed ahead of its time, featuring PostScript applets, pie menus, and interactive elements years before such concepts became mainstream in web technologies.</p>
+        
+        <p><strong>Technical Achievements Referenced:</strong> The six programming languages (HyperTIES Markup, Emacs MockLisp, PostScript, NeWS, C, and Forth), the PostScript applets, pie menu interfaces, and network transparency features mentioned are based on documented technical specifications and research papers about HyperTIES.</p>
+        
+        <p><strong>Don Hopkins Collaboration:</strong> References to Don Hopkins are based on his real work with NeWS, pie menus, and his documented collaborations with Ben Shneiderman and others in the user interface research community.</p>
+        
+        <p><strong>Character Data Sources:</strong> Ben Shneiderman simulation based on his extensive published research, conference presentations, books (including "Designing the User Interface"), and documented personality from academic interactions and interviews.</p>
+        
+        <p><strong>Educational Purpose:</strong> This celebration serves to highlight the historical importance of early hypertext systems and user interface innovations that preceded and influenced modern web technologies and user interfaces.</p>
+        
+        <p><strong>Jenny Preece & Collaborator References:</strong> Mentions of Jenny Preece and other witnesses reflect real academic collaborations and the supportive community around Ben's research at the University of Maryland.</p>
+        
+        <p><strong>LLOOOOMM Framework:</strong> Part of the LLOOOOMM educational simulation environment celebrating technology history and the pioneers who shaped human-computer interaction. Character interactions designed to honor real contributions while making history engaging and accessible.</p>
+        
+        <p><strong>Accuracy Notice:</strong> While the "floating with joy" response is imaginative, it reflects the genuine enthusiasm Ben Shneiderman has shown for user interface innovation and the validation of early HCI research concepts in modern systems.</p>
+        
+        <p><strong>Support HCI Research:</strong> Learn more about Ben Shneiderman's work through his books, the University of Maryland HCIL (Human-Computer Interaction Lab), and continued research in human-computer interaction.</p>
+    </div>
+</body>
+</html> 

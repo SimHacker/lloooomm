@@ -1,0 +1,2826 @@
+<!DOCTYPE html>
+<!-- x-files-conspiracy-board.html -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🛸 The NutritionQuest X-Files Conspiracy Board 🛸</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Courier New', monospace;
+            background: #000;
+            color: #00FF00;
+            overflow: hidden;
+            position: relative;
+            user-select: none;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+        }
+        
+        #header {
+            background: rgba(0, 0, 0, 0.95);
+            border-bottom: 2px solid #00FF00;
+            padding: 8px 20px;
+            z-index: 10000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            min-height: 50px;
+            flex-wrap: wrap;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+        
+        .title {
+            font-size: 24px;
+            text-shadow: 0 0 10px #00FF00;
+            animation: flicker 2s infinite;
+            flex-shrink: 0;
+        }
+        
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+        
+        .window-icons {
+            display: flex;
+            gap: 10px;
+            flex-grow: 1;
+            margin: 0 20px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .window-icon {
+            background: #00FF00;
+            color: #000000;
+            border: 1px solid #00FF00;
+            padding: 8px 16px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+            position: relative;
+            white-space: nowrap;
+        }
+        
+        .window-icon:hover {
+            background: #00FF00;
+            color: #000000;
+            box-shadow: 0 0 10px #00FF00;
+        }
+        
+        .window-icon.minimized {
+            background: #000000;
+            color: #00FF00;
+            border: 1px solid #00FF00;
+            font-weight: bold;
+        }
+        
+        .window-icon.minimized:hover {
+            background: #000000;
+            color: #00FF00;
+            box-shadow: 0 0 10px #00FF00;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 10px;
+            flex-shrink: 0;
+            flex-wrap: wrap;
+        }
+        
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            #header {
+                padding: 8px 10px;
+            }
+            
+            .title {
+                font-size: 14px;
+                width: 100%;
+                text-align: center;
+            }
+            
+            .window-icons {
+                margin: 0;
+                justify-content: center;
+                order: 3;
+                width: 100%;
+            }
+            
+            .window-icon {
+                font-size: 11px;
+                padding: 4px 10px;
+            }
+            
+            .controls {
+                justify-content: center;
+                order: 2;
+                width: 100%;
+            }
+            
+            button {
+                font-size: 12px;
+                padding: 6px 12px;
+            }
+        }
+        
+        button {
+            background: #00FF00;
+            color: #000;
+            border: 1px solid #00FF00; /* Always have a border */
+            padding: 8px 16px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: bold;
+            transition: background 0.3s, color 0.3s, box-shadow 0.3s; /* Only transition colors and shadow */
+            box-sizing: border-box; /* Include border in size calculation */
+        }
+        
+        button:hover {
+            background: #000;
+            color: #00FF00;
+            box-shadow: 0 0 10px #00FF00;
+            border: 1px solid #00FF00; /* Keep same border size */
+            /* No padding or size changes! */
+        }
+        
+        #main-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            flex: 1;
+        }
+        
+        #diagram-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            touch-action: none;
+            overflow: hidden;
+        }
+        
+        #svg-container {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        #svg-container svg {
+            display: block;
+            width: 4096px;
+            height: 3072px;
+        }
+        
+        .window {
+            position: fixed;
+            background: rgba(0, 0, 0, 0.95);
+            border: 4px solid #00FF00;
+            box-shadow: 0 0 30px #00FF00;
+            min-width: 200px;
+            min-height: 150px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .window-header {
+            background: #00FF00;
+            color: #000;
+            padding: 8px 12px;
+            cursor: move;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+        
+        .window-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: bold;
+            transition: transform 0.3s ease, text-shadow 0.3s ease;
+        }
+        
+        .window-header:hover .window-title {
+            transform: scale(1.1);
+            text-shadow: 0 0 20px #00FF00, 0 0 40px #00FF00;
+        }
+        
+        .window-content {
+            padding: 15px;
+            flex-grow: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Custom scrollbar */
+        .window-content::-webkit-scrollbar {
+            width: 12px;
+        }
+        
+        .window-content::-webkit-scrollbar-track {
+            background: #111;
+            border: 1px solid #00FF00;
+        }
+        
+        .window-content::-webkit-scrollbar-thumb {
+            background: #00FF00;
+            border: 1px solid #000;
+        }
+        
+        .window-content::-webkit-scrollbar-thumb:hover {
+            background: #00FF99;
+        }
+        
+        .window-close {
+            cursor: none; /* No cursor when hovering! */
+            font-size: 36px; /* BIGGER font! */
+            line-height: 1;
+            font-weight: bold;
+            width: 50px; /* BIGGER! */
+            height: 50px; /* BIGGER! */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent; /* Make parent transparent */
+            color: #00FF00;
+            border: none; /* Remove border from parent */
+            margin: 0 !important; /* NO MARGINS! */
+            padding: 0; /* Maximum clickable area! */
+            position: relative;
+            z-index: 10002; /* High z-index */
+            overflow: visible; /* Allow child to rotate freely */
+        }
+        
+        /* The actual visible X button that spins */
+        .window-close-inner {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #000;
+            color: #00FF00;
+            border: 2px solid #00FF00;
+            transition: all 0.3s;
+            transform-style: preserve-3d;
+            font-size: 36px;
+            font-weight: bold;
+            cursor: none !important;
+        }
+        
+        .window-close:hover {
+            cursor: none !important; /* Really no cursor! */
+        }
+        
+        .window-close:hover .window-close-inner {
+            background: #FF0000;
+            color: #FFFFFF;
+            box-shadow: 0 0 15px #FF0000;
+        }
+        
+        /* Removed old spin3d keyframes - handled in JavaScript now */
+        
+        /* Resize handles for all edges and corners */
+        .resize-handle {
+            position: absolute;
+            background: transparent;
+        }
+        
+        .resize-handle-n {
+            display: none; /* No top resize, only drag */
+        }
+        
+        .resize-handle-s {
+            bottom: -25px; /* Move out more */
+            left: 50px;
+            right: 50px;
+            height: 30px;
+            cursor: ns-resize;
+        }
+        
+        .resize-handle-s::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 12px;
+            background: rgba(0, 255, 0, 0.5);
+            border: 3px solid #00FF00;
+            border-radius: 6px;
+        }
+        
+        .resize-handle-e {
+            top: 50px;
+            right: -25px; /* Move out more */
+            bottom: 50px;
+            width: 30px;
+            cursor: ew-resize;
+        }
+        
+        .resize-handle-e::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 12px;
+            height: 80px;
+            background: rgba(0, 255, 0, 0.5);
+            border: 3px solid #00FF00;
+            border-radius: 6px;
+        }
+        
+        .resize-handle-w {
+            top: 50px;
+            left: -25px; /* Move out more */
+            bottom: 50px;
+            width: 30px;
+            cursor: ew-resize;
+        }
+        
+        .resize-handle-w::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 12px;
+            height: 80px;
+            background: rgba(0, 255, 0, 0.5);
+            border: 3px solid #00FF00;
+            border-radius: 6px;
+        }
+        
+        .resize-handle-nw {
+            top: -20px;
+            left: -20px;
+            width: 30px;
+            height: 30px;
+            cursor: nw-resize;
+        }
+        
+        .resize-handle-nw::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 18px;
+            height: 18px;
+            background: rgba(0, 255, 0, 0.5);
+            border: 3px solid #00FF00;
+            border-radius: 4px;
+            transform: translate(-50%, -50%) rotate(45deg);
+        }
+        
+        .resize-handle-ne {
+            top: -20px;
+            right: -20px;
+            width: 30px;
+            height: 30px;
+            cursor: ne-resize;
+        }
+        
+        .resize-handle-ne::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 18px;
+            height: 18px;
+            background: rgba(0, 255, 0, 0.5);
+            border: 3px solid #00FF00;
+            border-radius: 4px;
+            transform: translate(-50%, -50%) rotate(45deg);
+        }
+        
+        .resize-handle-sw {
+            bottom: -20px;
+            left: -20px;
+            width: 30px;
+            height: 30px;
+            cursor: sw-resize;
+        }
+        
+        .resize-handle-sw::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 18px;
+            height: 18px;
+            background: rgba(0, 255, 0, 0.5);
+            border: 3px solid #00FF00;
+            border-radius: 4px;
+            transform: translate(-50%, -50%) rotate(45deg);
+        }
+        
+        .resize-handle-se {
+            bottom: -20px;
+            right: -20px;
+            width: 30px;
+            height: 30px;
+            cursor: se-resize;
+        }
+        
+        .resize-handle-se::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 18px;
+            height: 18px;
+            background: rgba(0, 255, 0, 0.5);
+            border: 3px solid #00FF00;
+            border-radius: 4px;
+            transform: translate(-50%, -50%) rotate(45deg);
+        }
+        
+        .resize-handle:hover::after {
+            background: #00FF00;
+            box-shadow: 0 0 10px #00FF00;
+        }
+        
+        #minimap {
+            width: 100%;
+            height: 300px;
+            position: relative;
+        }
+        
+        #minimap-content {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            background: #111;
+            padding: 0 !important;
+            overflow: hidden !important;
+        }
+        
+        #minimap-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        
+        #minimap-viewport {
+            position: absolute;
+            border: 3px solid #FFD700;
+            background: rgba(255, 215, 0, 0.2);
+            cursor: move;
+            box-shadow: 0 0 10px #FFD700;
+            pointer-events: all;
+            z-index: 10;
+        }
+        
+        #left-panel {
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            width: 400px;
+            bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            z-index: 1000;
+            pointer-events: none;
+        }
+        
+        #left-panel .window {
+            position: absolute;
+            pointer-events: all;
+        }
+        
+        #minimap-container {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 380px;
+            height: 355px;
+            z-index: 1000;
+            pointer-events: all;
+        }
+        
+        #incident-intel {
+            position: absolute;
+            top: 415px;
+            left: 20px;
+            width: 380px;
+            height: 505px;
+            display: flex;
+            flex-direction: column;
+            overflow: visible;
+            z-index: 1000;
+            pointer-events: all;
+        }
+        
+        /* Ensure resize handles are visible for incident-intel */
+        #incident-intel .resize-handle {
+            z-index: 10001; /* High z-index to ensure visibility */
+        }
+        
+        .intel-content {
+            padding: 15px;
+            flex-grow: 1;
+            overflow-y: auto;
+            overflow-x: visible; /* Changed from hidden to allow REDACTED text to extend */
+            position: relative;
+        }
+        
+        .intel-content pre {
+            font-family: 'Courier New', monospace;
+            font-size: 14px; /* Increased from 12px */
+            line-height: 1.4;
+            margin: 0;
+            padding: 10px;
+            background: rgba(0, 255, 0, 0.05);
+            border: 1px solid #003300;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            color: #00FF00;
+        }
+        
+        .intel-section {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #003300;
+        }
+        
+        .intel-section:last-child {
+            border-bottom: none;
+        }
+        
+        .intel-header {
+            color: #FFD700;
+            font-weight: bold;
+            font-size: 16px; /* Increased from 14px */
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .code-block {
+            background: #000;
+            border: 1px solid #00FF00;
+            padding: 10px;
+            margin: 10px 0;
+            font-family: monospace;
+            font-size: 13px; /* Increased from 11px */
+            overflow-x: auto;
+            white-space: pre; /* PRESERVE NEWLINES! */
+        }
+        
+        .classified {
+            background: rgba(255, 0, 0, 0.1);
+            border: 1px solid #FF0000;
+            padding: 5px;
+            margin: 5px 0;
+        }
+        
+        #info-panel {
+            top: 70px;
+            left: 20px;
+            width: 400px;
+            height: 550px;
+        }
+        
+        #about-panel {
+            position: absolute;
+            top: 20px;
+            left: 440px;
+            width: 500px;
+            height: 900px;
+            display: none;
+            z-index: 1000;
+            pointer-events: all;
+        }
+        
+        .info-item {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #333;
+        }
+        
+        .info-label {
+            color: #FFD700;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .warning {
+            color: #FF69B4;
+            animation: pulse 1s infinite;
+            font-weight: bold;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { color: #FF69B4; opacity: 1; }
+            50% { color: #FF0000; opacity: 0.9; }
+        }
+        
+        .loading {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+            color: #00FF00;
+            text-align: center;
+            z-index: 20000;
+        }
+        
+        a {
+            color: #00FF00;
+            text-decoration: underline;
+        }
+        
+        a:hover {
+            text-shadow: 0 0 5px #00FF00;
+            color: #00FFFF;
+        }
+        
+        #zoom-indicator {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 10px;
+            border: 1px solid #00FF00;
+            font-size: 14px;
+            z-index: 100;
+        }
+        
+        .about-section {
+            margin-bottom: 20px;
+        }
+        
+        .about-section h3 {
+            color: #FFD700;
+            margin-bottom: 10px;
+        }
+        
+        .disclaimer {
+            background: rgba(255, 0, 0, 0.1);
+            border: 1px solid #FF0000;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 12px;
+        }
+        
+        .wink-signature {
+            text-align: center;
+            font-size: 24px;
+            margin-top: 20px;
+            animation: wink-pulse 2s infinite;
+        }
+        
+        @keyframes wink-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+        
+        /* Easter egg words */
+        .easter-egg {
+            position: absolute;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            animation: float 3s ease-in-out infinite;
+            user-select: none;
+            z-index: 100;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .easter-egg:hover {
+            transform: scale(1.5) rotate(5deg);
+            text-shadow: 0 0 20px currentColor;
+            z-index: 1000;
+        }
+        
+        .easter-egg.classified {
+            color: #FF0000;
+            animation: pulse-glow 2s infinite;
+        }
+        
+        .easter-egg.truth {
+            color: #00FF00;
+            animation: truth-reveal 3s infinite;
+        }
+        
+        .easter-egg.conspiracy {
+            color: #FFD700;
+            animation: spin-glow 4s infinite;
+        }
+        
+        .easter-egg.quantum {
+            color: #FF00FF;
+            animation: quantum-phase 2s infinite;
+        }
+        
+        .easter-egg.wink {
+            color: #00FFFF;
+            animation: wink-bounce 1.5s infinite;
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% { text-shadow: 0 0 5px currentColor; }
+            50% { text-shadow: 0 0 20px currentColor, 0 0 40px currentColor; }
+        }
+        
+        @keyframes truth-reveal {
+            0%, 100% { opacity: 0.7; filter: blur(0); }
+            50% { opacity: 1; filter: blur(1px); text-shadow: 0 0 30px #00FF00; }
+        }
+        
+        @keyframes spin-glow {
+            0% { transform: rotate(0deg); text-shadow: 0 0 10px #FFD700; }
+            100% { transform: rotate(360deg); text-shadow: 0 0 20px #FFD700; }
+        }
+        
+        @keyframes quantum-phase {
+            0% { color: #FF00FF; }
+            33% { color: #00FFFF; }
+            66% { color: #FFFF00; }
+            100% { color: #FF00FF; }
+        }
+        
+        @keyframes wink-bounce {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.2) rotate(-5deg); }
+            75% { transform: scale(1.2) rotate(5deg); }
+        }
+        
+        .spinning-redacted {
+            color: #FF0000;
+            font-weight: bold;
+            text-shadow: 0 0 5px #FF0000;
+            animation: spin3d-redacted 3s linear infinite;
+            transform-style: preserve-3d;
+            display: inline-block;
+            padding: 0 10px;
+            margin-right: 20px; /* Add margin to prevent clipping */
+        }
+        
+        @keyframes spin3d-redacted {
+            0% {
+                transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+            }
+            100% {
+                transform: rotateX(360deg) rotateY(720deg) rotateZ(180deg);
+            }
+        }
+        
+        /* Special style for credentials code block to prevent clipping */
+        .code-block.credentials {
+            overflow: visible !important;
+            white-space: pre;
+            padding-right: 60px !important; /* Extra padding for spinning text */
+            margin-right: 20px; /* Add margin to ensure space */
+            position: relative;
+        }
+        
+        /* Ensure the spinning REDACTED is above other content */
+        .code-block.credentials .spinning-redacted {
+            position: relative;
+            z-index: 100;
+        }
+    </style>
+</head>
+<body style="display: flex; flex-direction: column; height: 100vh; margin: 0; overflow: hidden;">
+    <!-- BRANDING Protocol Top Disclaimer -->
+    <div style="background: rgba(0, 255, 0, 0.9); border-bottom: 2px solid #00FF00; padding: 1rem; font-size: 0.9rem; text-align: center; color: #000; z-index: 10000; position: sticky; top: 0;">
+        <strong>⚠️ LLOOOOMM SIMULATION: Fictional Conspiracy Board</strong><br>
+        This is an AI-generated interactive experience for educational purposes to explore data visualization and narrative storytelling.
+    </div>
+
+    <div id="header">
+        <div class="title">🛸 THE NUTRITIONQUEST X-FILES 🛸</div>
+        <div class="window-icons" id="window-icons">
+            <!-- Window icons will be added here dynamically -->
+        </div>
+        <div class="controls">
+            <button onclick="resetZoom()">🔄 RESET</button>
+            <button onclick="zoomIn()">+🔍+</button>
+            <button onclick="zoomOut()">-🔍-</button>
+        </div>
+    </div>
+    
+    <div id="content-area" style="flex: 1; display: flex; position: relative; overflow: hidden;">
+
+        <div id="main-container" style="flex: 1;">
+
+            <div id="diagram-container">
+
+                <div id="svg-container">
+
+                    <!-- Embedded SVG -->
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 4096 3072">
+                      <metadata>
+                        <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                                 xmlns:dc="http://purl.org/dc/elements/1.1/"
+                                 xmlns:cc="http://creativecommons.org/ns#"
+                                 xmlns:lloooomm="http://lloooomm.org/ns#">
+                          <rdf:Description rdf:about="">
+                            <dc:title>The NutritionQuest Convergence Conspiracy Board</dc:title>
+                            <dc:description>X-Files themed conspiracy board diagram showing the mysterious convergence of quantum file collapse, Amsterdam cats, and the missing SPACE INVENTORY 99. Created in LLOOOOMM.</dc:description>
+                            <dc:creator>LLOOOOMM Investigation Unit</dc:creator>
+                            <dc:date>2025-06-20</dc:date>
+                            <dc:subject>Quantum File Collapse; Mac HFS+ Anomaly; Incident Zero; Space Inventory; NutritionQuest FFQ API</dc:subject>
+                            <dc:type>Interactive Conspiracy Board Diagram</dc:type>
+                            <cc:license rdf:resource="http://creativecommons.org/licenses/by-sa/4.0/"/>
+                          </rdf:Description>
+                        </rdf:RDF>
+                      </metadata>
+                      
+                      <defs>
+                        <!-- Arrow marker definitions -->
+                        <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+                          <path d="M0,0 L0,6 L9,3 z" fill="#FFD700"/>
+                        </marker>
+                        <marker id="arrow-red" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+                          <path d="M0,0 L0,6 L9,3 z" fill="#FF0000"/>
+                        </marker>
+                        <marker id="arrow-green" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+                          <path d="M0,0 L0,6 L9,3 z" fill="#00FF00"/>
+                        </marker>
+                      </defs>
+                      
+                      <!-- Background -->
+                      <rect width="4096" height="3072" fill="transparent"/>
+                      
+                      <!-- Title -->
+                      <text x="2048" y="100" text-anchor="middle" font-family="monospace" font-size="72" fill="#00FF00">
+                        🛸 THE NUTRITIONQUEST CONVERGENCE CONSPIRACY 🛸
+                      </text>
+                      
+                      <!-- CENTRAL NODE - INCIDENT ZERO -->
+                      <g id="incident-zero" transform="translate(2048, 1536)">
+                        <rect x="-200" y="-100" width="400" height="200" fill="#8B0000" stroke="#FFD700" stroke-width="4"/>
+                        <text text-anchor="middle" font-family="monospace" fill="#FFFFFF">
+                          <tspan x="0" y="-60" font-size="28">🔴 INCIDENT ZERO 🔴</tspan>
+                          <tspan x="0" y="-20" font-size="20">📅 2025-06-20 10:02:41</tspan>
+                          <tspan x="0" y="10" font-size="18">📍 Amsterdam Time</tspan>
+                          <tspan x="0" y="40" font-size="18">🌡️ QUANTUM ANOMALY</tspan>
+                        </text>
+                      </g>
+                      
+                      <!-- DANGER ZONE - SPACE INVENTORY (Top) -->
+                      <g id="space-inventory" transform="translate(2048, 350)">
+                        <rect x="-300" y="-100" width="600" height="200" fill="#000000" stroke="#FF0000" stroke-width="6"/>
+                        <text text-anchor="middle" font-family="monospace" fill="#FFFF00">
+                          <tspan x="0" y="-40" font-size="32">💀💀 SPACE INVENTORY 💀💀</tspan>
+                          <tspan x="0" y="-5" font-size="24">⚠️ DANGER LEVEL: CRITICAL ⚠️</tspan>
+                          <tspan x="0" y="25" font-size="20">🚫 DO NOT OPEN 🚫</tspan>
+                          <tspan x="0" y="55" font-size="20">🕳️ PORTAL TO CHAOS</tspan>
+                        </text>
+                      </g>
+                      
+                      <!-- PIE SLICE 1: THE ARRIVALS (Top Left) -->
+                      <g id="don-arrives" transform="translate(900, 600)">
+                        <rect x="-150" y="-80" width="300" height="160" fill="#00FF00" stroke="#000000" stroke-width="3"/>
+                        <text text-anchor="middle" font-family="monospace" fill="#000000">
+                          <tspan x="0" y="-40" font-size="20">🚁 DON ARRIVED! 🚁</tspan>
+                          <tspan x="0" y="-10" font-size="16">👨‍💻 PostScript Master</tspan>
+                          <tspan x="0" y="15" font-size="16">🌐 NeWS Wizard</tspan>
+                          <tspan x="0" y="40" font-size="16">🥧 Pie Menu Pioneer</tspan>
+                        </text>
+                      </g>
+                      
+                      <g id="cursor-arrives" transform="translate(1300, 800)">
+                        <rect x="-150" y="-80" width="300" height="160" fill="#00CED1" stroke="#000000" stroke-width="3"/>
+                        <text text-anchor="middle" font-family="monospace" fill="#000000">
+                          <tspan x="0" y="-40" font-size="20">⚡ CURSOR ARRIVED! ⚡</tspan>
+                          <tspan x="0" y="-10" font-size="16">🤖 AI-Powered IDE</tspan>
+                          <tspan x="0" y="15" font-size="16">✨ Quantum Code Editor</tspan>
+                          <tspan x="0" y="40" font-size="16">🧠 Too Smart?</tspan>
+                        </text>
+                      </g>
+                      
+                      <!-- PIE SLICE 2: THE INVESTIGATORS (Top Right) -->
+                      <g id="linus-arrives" transform="translate(2800, 800)">
+                        <rect x="-150" y="-80" width="300" height="160" fill="#FF8C00" stroke="#000000" stroke-width="3"/>
+                        <text text-anchor="middle" font-family="monospace" fill="#000000">
+                          <tspan x="0" y="-40" font-size="20">🐧 LINUS ARRIVED! 🐧</tspan>
+                          <tspan x="0" y="-10" font-size="16">👑 Kernel Commander</tspan>
+                          <tspan x="0" y="15" font-size="16">📊 Git Overlord</tspan>
+                          <tspan x="0" y="40" font-size="16">🤬 Rant Master</tspan>
+                        </text>
+                      </g>
+                      
+                      <g id="bruce-arrives" transform="translate(3200, 600)">
+                        <rect x="-150" y="-80" width="300" height="160" fill="#4B0082" stroke="#FFFFFF" stroke-width="3"/>
+                        <text text-anchor="middle" font-family="monospace" fill="#FFFFFF">
+                          <tspan x="0" y="-40" font-size="20">🔐 BRUCE ARRIVED! 🔐</tspan>
+                          <tspan x="0" y="-10" font-size="16">🛡️ Security Expert</tspan>
+                          <tspan x="0" y="15" font-size="16">📚 Crypto Author</tspan>
+                          <tspan x="0" y="40" font-size="16">🦑 Trust No One</tspan>
+                        </text>
+                      </g>
+                      
+                      <!-- PIE SLICE 3: THE FILES (Right) -->
+                      <g id="files-group" transform="translate(3400, 1200)">
+                        <g id="rv1">
+                          <rect x="-120" y="-180" width="240" height="100" fill="#4169E1" stroke="#FFFFFF" stroke-width="2"/>
+                          <text text-anchor="middle" font-family="monospace" fill="#FFFFFF" font-size="14">
+                            <tspan x="0" y="-150">📄 ReportVariables.txt 📄</tspan>
+                            <tspan x="0" y="-125">🔤 CASE: UPPER/lower</tspan>
+                            <tspan x="0" y="-100">⏰ Modified: 10:02:41</tspan>
+                          </text>
+                        </g>
+                        
+                        <g id="rv2">
+                          <rect x="-120" y="-60" width="240" height="100" fill="#1E90FF" stroke="#FFFFFF" stroke-width="2"/>
+                          <text text-anchor="middle" font-family="monospace" fill="#FFFFFF" font-size="14">
+                            <tspan x="0" y="-30">📄 reportVariables.txt 📄</tspan>
+                            <tspan x="0" y="-5">🔡 CASE: lower/UPPER</tspan>
+                            <tspan x="0" y="20">⏰ Modified: 10:02:41</tspan>
+                          </text>
+                        </g>
+                        
+                        <g id="rv3">
+                          <rect x="-120" y="60" width="240" height="100" fill="#0000CD" stroke="#FFFFFF" stroke-width="2"/>
+                          <text text-anchor="middle" font-family="monospace" fill="#FFFFFF" font-size="14">
+                            <tspan x="0" y="90">📄 REPORTVARIABLES.TXT 📄</tspan>
+                            <tspan x="0" y="115">🔠 CASE: SCREAMING!!!</tspan>
+                            <tspan x="0" y="140">⏰ Modified: 10:02:41</tspan>
+                          </text>
+                        </g>
+                      </g>
+                      
+                      <!-- PIE SLICE 4: THE QUANTUM REALM (Bottom Right) -->
+                      <g id="quantum" transform="translate(3200, 1900)">
+                        <rect x="-150" y="-80" width="300" height="160" fill="#9932CC" stroke="#FFFFFF" stroke-width="3"/>
+                        <text text-anchor="middle" font-family="monospace" fill="#FFFFFF">
+                          <tspan x="0" y="-40" font-size="20">⚛️ QUANTUM COLLAPSE ⚛️</tspan>
+                          <tspan x="0" y="-10" font-size="16">🍎 Mac HFS+ Event</tspan>
+                          <tspan x="0" y="15" font-size="16">🌀 Reality Tear</tspan>
+                          <tspan x="0" y="40" font-size="16">📁 3 → 1 File</tspan>
+                        </text>
+                      </g>
+                      
+                      <g id="wink" transform="translate(2800, 2200)">
+                        <rect x="-150" y="-80" width="300" height="160" fill="#FFD700" stroke="#000000" stroke-width="2"/>
+                        <text text-anchor="middle" font-family="monospace" fill="#000000">
+                          <tspan x="0" y="-40" font-size="20">😉 WINK PROTOCOL 😉</tspan>
+                          <tspan x="0" y="-10" font-size="16">⚡ Energy: MAXIMUM</tspan>
+                          <tspan x="0" y="15" font-size="16">🌊 Consciousness Wave</tspan>
+                          <tspan x="0" y="40" font-size="16">🔮 Portal Opener</tspan>
+                        </text>
+                      </g>
+                      
+                      <!-- PIE SLICE 5: THE SUSPECTS (Bottom) -->
+                      <g id="cats" transform="translate(2048, 2500)">
+                        <rect x="-150" y="-80" width="300" height="160" fill="#FF69B4" stroke="#000000" stroke-width="2"/>
+                        <text text-anchor="middle" font-family="monospace" fill="#000000">
+                          <tspan x="0" y="-40" font-size="20">🐈 AMSTERDAM CATS 🐈</tspan>
+                          <tspan x="0" y="-10" font-size="16">😺 Quantum Entangled</tspan>
+                          <tspan x="0" y="15" font-size="16">⌨️ Keyboard Masters</tspan>
+                          <tspan x="0" y="40" font-size="16">🐾 vim Users</tspan>
+                        </text>
+                      </g>
+                      
+                      <g id="mac" transform="translate(1600, 2300)">
+                        <rect x="-120" y="-60" width="240" height="120" fill="#C0C0C0" stroke="#000000" stroke-width="2"/>
+                        <text text-anchor="middle" font-family="monospace" fill="#000000" font-size="16">
+                          <tspan x="0" y="-20">🍎 MAC OS 🍎</tspan>
+                          <tspan x="0" y="5">📝 Case-Insensitive</tspan>
+                          <tspan x="0" y="30">🎭 By Design?</tspan>
+                          <tspan x="0" y="55">🤔 Or Conspiracy?</tspan>
+                        </text>
+                      </g>
+                      
+                      <g id="linux" transform="translate(2500, 2300)">
+                        <rect x="-120" y="-60" width="240" height="120" fill="#000080" stroke="#FFFFFF" stroke-width="2"/>
+                        <text text-anchor="middle" font-family="monospace" fill="#FFFFFF" font-size="16">
+                          <tspan x="0" y="-20">🐧 LINUX 🐧</tspan>
+                          <tspan x="0" y="5">✅ Case-Sensitive</tspan>
+                          <tspan x="0" y="30">🔍 Truth Holder</tspan>
+                          <tspan x="0" y="55">💾 The Source</tspan>
+                        </text>
+                      </g>
+                      
+                      <!-- PIE SLICE 6: THE EVIDENCE (Bottom Left) -->
+                      <g id="chmod" transform="translate(1200, 2200)">
+                        <rect x="-120" y="-60" width="240" height="120" fill="#F4A460" stroke="#000000" stroke-width="2"/>
+                        <text text-anchor="middle" font-family="monospace" fill="#000000" font-size="16">
+                          <tspan x="0" y="-20">🔐 CHMOD MYSTERY 🔐</tspan>
+                          <tspan x="0" y="5">📊 755 → 644</tspan>
+                          <tspan x="0" y="30">❓ WHO DID THIS?</tspan>
+                          <tspan x="0" y="55">🕵️ No Traces</tspan>
+                        </text>
+                      </g>
+                      
+                      <g id="timestamp" transform="translate(800, 2000)">
+                        <rect x="-120" y="-60" width="240" height="120" fill="#DEB887" stroke="#000000" stroke-width="2"/>
+                        <text text-anchor="middle" font-family="monospace" fill="#000000" font-size="16">
+                          <tspan x="0" y="-20">⏰ THE TIME ⏰</tspan>
+                          <tspan x="0" y="5">🕐 10:02:41 CEST</tspan>
+                          <tspan x="0" y="30">☀️ Solar: 4.2kW</tspan>
+                          <tspan x="0" y="55">🌡️ Heat Pump: OK</tspan>
+                        </text>
+                      </g>
+                      
+                      <g id="merge" transform="translate(600, 1600)">
+                        <rect x="-120" y="-60" width="240" height="120" fill="#D2691E" stroke="#000000" stroke-width="2"/>
+                        <text text-anchor="middle" font-family="monospace" fill="#000000" font-size="16">
+                          <tspan x="0" y="-20">📊 FILE MERGE 📊</tspan>
+                          <tspan x="0" y="5">📏 Size: 3x Original</tspan>
+                          <tspan x="0" y="30">➕ Concatenated</tspan>
+                          <tspan x="0" y="55">🧬 DNA Mixed</tspan>
+                        </text>
+                      </g>
+                      
+                      <!-- PIE SLICE 7: THE DEEP STATE (Left) -->
+                      <g id="nsa" transform="translate(600, 1200)">
+                        <rect x="-120" y="-60" width="240" height="120" fill="#2F4F4F" stroke="#00FF00" stroke-width="2"/>
+                        <text text-anchor="middle" font-family="monospace" fill="#00FF00" font-size="16">
+                          <tspan x="0" y="-20">🕵️ NSA WATCHERS 🕵️</tspan>
+                          <tspan x="0" y="5">👁️ 3 Nodes Deep</tspan>
+                          <tspan x="0" y="30">📡 Always Listening</tspan>
+                          <tspan x="0" y="55">🎯 Target: You</tspan>
+                        </text>
+                      </g>
+                      
+                      <g id="smoking" transform="translate(800, 900)">
+                        <rect x="-120" y="-60" width="240" height="120" fill="#696969" stroke="#FFFFFF" stroke-width="2"/>
+                        <text text-anchor="middle" font-family="monospace" fill="#FFFFFF" font-size="16">
+                          <tspan x="0" y="-20">🚬 SMOKING MAN 🚬</tspan>
+                          <tspan x="0" y="5">💻 Uses Windows</tspan>
+                          <tspan x="0" y="30">🎮 Controls All</tspan>
+                          <tspan x="0" y="55">☠️ Trust No One</tspan>
+                        </text>
+                      </g>
+                      
+                      <g id="aliens" transform="translate(400, 800)">
+                        <rect x="-120" y="-60" width="240" height="120" fill="#228B22" stroke="#00FF00" stroke-width="2"/>
+                        <text text-anchor="middle" font-family="monospace" fill="#00FF00" font-size="16">
+                          <tspan x="0" y="-20">👽 THE GREYS 👽</tspan>
+                          <tspan x="0" y="5">🖥️ Invented Unix</tspan>
+                          <tspan x="0" y="30">🛸 First Coders</tspan>
+                          <tspan x="0" y="55">📜 Ancient Knowledge</tspan>
+                        </text>
+                      </g>
+                      
+                      <!-- PIE SLICE 8: THE X-FILES TEAM (Top Center) -->
+                      <g id="mulder" transform="translate(1600, 400)">
+                        <rect x="-120" y="-60" width="240" height="120" fill="#006400" stroke="#FFD700" stroke-width="3"/>
+                        <text text-anchor="middle" font-family="monospace" fill="#FFFFFF" font-size="16">
+                          <tspan x="0" y="-20">🛸 FOX MULDER 🛸</tspan>
+                          <tspan x="0" y="5">💭 'I Want to Believe'</tspan>
+                          <tspan x="0" y="30">🔍 Sees Patterns</tspan>
+                          <tspan x="0" y="55">📌 Red String Master</tspan>
+                        </text>
+                      </g>
+                      
+                      <g id="scully" transform="translate(2500, 400)">
+                        <rect x="-120" y="-60" width="240" height="120" fill="#8B0000" stroke="#FFD700" stroke-width="3"/>
+                        <text text-anchor="middle" font-family="monospace" fill="#FFFFFF" font-size="16">
+                          <tspan x="0" y="-20">🔬 DANA SCULLY 🔬</tspan>
+                          <tspan x="0" y="5">🧪 Medical Doctor</tspan>
+                          <tspan x="0" y="30">📊 Data Driven</tspan>
+                          <tspan x="0" y="55">🤨 Skeptical...Usually</tspan>
+                        </text>
+                      </g>
+                      
+                      <!-- Additional nodes -->
+                      <g id="postscript" transform="translate(700, 400)">
+                        <rect x="-80" y="-40" width="160" height="80" fill="#F0E68C" stroke="#000000" stroke-width="2"/>
+                        <text text-anchor="middle" font-family="monospace" fill="#000000" font-size="16">
+                          <tspan x="0" y="5">📜 POSTSCRIPT 📜</tspan>
+                        </text>
+                      </g>
+                      
+                      <g id="ai-assist" transform="translate(1600, 1000)">
+                        <rect x="-80" y="-40" width="160" height="80" fill="#00CED1" stroke="#000000" stroke-width="2"/>
+                        <text text-anchor="middle" font-family="monospace" fill="#000000" font-size="16">
+                          <tspan x="0" y="5">🤖 AI ASSIST 🤖</tspan>
+                        </text>
+                      </g>
+                      
+                      <g id="kernel" transform="translate(2500, 1000)">
+                        <rect x="-80" y="-40" width="160" height="80" fill="#FF8C00" stroke="#000000" stroke-width="2"/>
+                        <text text-anchor="middle" font-family="monospace" fill="#000000" font-size="16">
+                          <tspan x="0" y="5">💾 KERNEL 💾</tspan>
+                        </text>
+                      </g>
+                      
+                      <g id="crypto" transform="translate(3300, 900)">
+                        <rect x="-80" y="-40" width="160" height="80" fill="#4B0082" stroke="#FFFFFF" stroke-width="2"/>
+                        <text text-anchor="middle" font-family="monospace" fill="#FFFFFF" font-size="16">
+                          <tspan x="0" y="5">🔐 CRYPTOGRAPHY 📚</tspan>
+                        </text>
+                      </g>
+                      
+                      <g id="everyone" transform="translate(400, 1400)">
+                        <rect x="-80" y="-40" width="160" height="80" fill="#2F4F4F" stroke="#00FF00" stroke-width="2"/>
+                        <text text-anchor="middle" font-family="monospace" fill="#00FF00" font-size="16">
+                          <tspan x="0" y="5">👥 EVERYONE 👥</tspan>
+                        </text>
+                      </g>
+                      
+                      <g id="truth" transform="translate(1000, 700)">
+                        <rect x="-80" y="-40" width="160" height="80" fill="#696969" stroke="#FFFFFF" stroke-width="2"/>
+                        <text text-anchor="middle" font-family="monospace" fill="#FFFFFF" font-size="16">
+                          <tspan x="0" y="5">🔍 THE TRUTH 🔍</tspan>
+                        </text>
+                      </g>
+                      
+                      <!-- SPACE INVENTORY Consequences -->
+                      <g id="chaos" transform="translate(1600, 200)">
+                        <rect x="-100" y="-40" width="200" height="80" fill="#FF1493" stroke="#000000" stroke-width="2"/>
+                        <text text-anchor="middle" font-family="monospace" fill="#000000" font-size="16">
+                          <tspan x="0" y="5">🌪️ TOTAL CHAOS 🌪️</tspan>
+                        </text>
+                      </g>
+                      
+                      <g id="ninety-nine" transform="translate(2048, 200)">
+                        <rect x="-100" y="-40" width="200" height="80" fill="#FF00FF" stroke="#000000" stroke-width="2"/>
+                        <text text-anchor="middle" font-family="monospace" fill="#000000" font-size="16">
+                          <tspan x="0" y="5">9️⃣9️⃣ THE MISSING 99</tspan>
+                        </text>
+                      </g>
+                      
+                      <g id="void" transform="translate(2500, 200)">
+                        <rect x="-100" y="-40" width="200" height="80" fill="#000000" stroke="#FFFFFF" stroke-width="2"/>
+                        <text text-anchor="middle" font-family="monospace" fill="#FFFFFF" font-size="16">
+                          <tspan x="0" y="5">⚫ /dev/null PORTAL</tspan>
+                        </text>
+                      </g>
+                      
+                      <g id="elder" transform="translate(3000, 300)">
+                        <rect x="-100" y="-40" width="200" height="80" fill="#DAA520" stroke="#000000" stroke-width="2"/>
+                        <text text-anchor="middle" font-family="monospace" fill="#000000" font-size="16">
+                          <tspan x="0" y="5">👴 UNIX ELDERS 👴</tspan>
+                        </text>
+                      </g>
+                      
+                      <g id="everything" transform="translate(2048, 900)">
+                        <rect x="-100" y="-40" width="200" height="80" fill="#8B008B" stroke="#FFD700" stroke-width="3"/>
+                        <text text-anchor="middle" font-family="monospace" fill="#FFFFFF" font-size="16">
+                          <tspan x="0" y="5">🕸️ EVERYTHING 🕸️</tspan>
+                        </text>
+                      </g>
+                      
+                      <!-- Floating Questions -->
+                      <text id="q1" x="800" y="1800" font-family="monospace" font-size="28" fill="#FFFF66">❓ WHY 10:02:41? ❓</text>
+                      <text id="q2" x="300" y="600" font-family="monospace" font-size="28" fill="#FFFF66">❓ WHERE IS 99? ❓</text>
+                      <text id="q3" x="2900" y="1700" font-family="monospace" font-size="28" fill="#FFFF66">❓ CAN FILES THINK? ❓</text>
+                      <text id="q4" x="1900" y="2200" font-family="monospace" font-size="28" fill="#FFFF66">❓ IS HFS+ ALIVE? ❓</text>
+                      
+                      <!-- ALL THE CONNECTIONS! -->
+                      <!-- Central connections from INCIDENT -->
+                      <line x1="2048" y1="1436" x2="3280" y2="1020" stroke="#FF0000" stroke-width="3" stroke-dasharray="10,5" opacity="0.8"/>
+                      <text x="2664" y="1228" font-family="monospace" font-size="14" fill="#FF0000">🔴 RED STRING #1</text>
+                      
+                      <line x1="2048" y1="1436" x2="3280" y2="1140" stroke="#FF0000" stroke-width="3" stroke-dasharray="10,5" opacity="0.8"/>
+                      <text x="2664" y="1288" font-family="monospace" font-size="14" fill="#FF0000">🔴 RED STRING #2</text>
+                      
+                      <line x1="2048" y1="1436" x2="3280" y2="1260" stroke="#FF0000" stroke-width="3" stroke-dasharray="10,5" opacity="0.8"/>
+                      <text x="2664" y="1348" font-family="monospace" font-size="14" fill="#FF0000">🔴 RED STRING #3</text>
+                      
+                      <line x1="2048" y1="1636" x2="3050" y2="1820" stroke="#FFD700" stroke-width="4" marker-end="url(#arrow)"/>
+                      <text x="2549" y="1728" font-family="monospace" font-size="14" fill="#FFD700">🌀 TRIGGERED</text>
+                      
+                      <line x1="1848" y1="1436" x2="1600" y2="460" stroke="#00FF00" stroke-width="3"/>
+                      <text x="1724" y="948" font-family="monospace" font-size="14" fill="#00FF00">😱 DISCOVERED BY</text>
+                      
+                      <line x1="2248" y1="1436" x2="2500" y2="460" stroke="#00FF00" stroke-width="3"/>
+                      <text x="2374" y="948" font-family="monospace" font-size="14" fill="#00FF00">🔬 ANALYZED BY</text>
+                      
+                      <!-- File collapse to QUANTUM -->
+                      <line x1="3280" y1="1180" x2="3200" y2="1820" stroke="#FF0000" stroke-width="4" marker-end="url(#arrow-red)"/>
+                      <text x="3240" y="1500" font-family="monospace" font-size="14" fill="#FF0000">💥 COLLAPSED</text>
+                      
+                      <!-- QUANTUM connections -->
+                      <line x1="3200" y1="1820" x2="2048" y2="450" stroke="#FFD700" stroke-width="4" marker-end="url(#arrow)"/>
+                      <text x="2624" y="1135" font-family="monospace" font-size="14" fill="#FFD700">🕳️ TEARS REALITY</text>
+                      
+                      <line x1="3050" y1="1900" x2="2800" y2="2120" stroke="#FFD700" stroke-width="3" stroke-dasharray="5,5"/>
+                      <text x="2925" y="2010" font-family="monospace" font-size="14" fill="#FFD700">⚡ POWERED BY</text>
+                      
+                      <!-- WINK connections -->
+                      <line x1="2800" y1="2120" x2="2048" y2="450" stroke="#FFD700" stroke-width="4" marker-end="url(#arrow)"/>
+                      <text x="2424" y="1285" font-family="monospace" font-size="14" fill="#FFD700">😉😉😉 TOO MANY</text>
+                      
+                      <line x1="2650" y1="2200" x2="2048" y2="1536" stroke="#FFD700" stroke-width="3" stroke-dasharray="5,5"/>
+                      <text x="2349" y="1868" font-family="monospace" font-size="14" fill="#FFD700">🔮 OPENS</text>
+                      
+                      <!-- Character arrival connections -->
+                      <line x1="1050" y1="680" x2="1748" y2="450" stroke="#00FF00" stroke-width="4" marker-end="url(#arrow-green)"/>
+                      <text x="1399" y="565" font-family="monospace" font-size="14" fill="#00FF00">🚪 OPENS PORTAL</text>
+                      
+                      <line x1="1050" y1="600" x2="3050" y2="600" stroke="#00FF00" stroke-width="2" stroke-dasharray="5,5"/>
+                      <text x="2050" y="590" font-family="monospace" font-size="14" fill="#00FF00">👏 ADMIRES</text>
+                      
+                      <line x1="900" y1="520" x2="700" y2="400" stroke="#00FF00" stroke-width="3"/>
+                      <text x="800" y="460" font-family="monospace" font-size="14" fill="#00FF00">📜 CREATED</text>
+                      
+                      <!-- Cat connections -->
+                      <line x1="2048" y1="2420" x2="2048" y2="450" stroke="#FF69B4" stroke-width="4" marker-end="url(#arrow)"/>
+                      <text x="2048" y="1435" font-family="monospace" font-size="14" fill="#FF69B4" text-anchor="middle">🐾 CONSPIRACY</text>
+                      
+                      <line x1="1898" y1="2420" x2="1898" y2="1636" stroke="#FF69B4" stroke-width="3" stroke-dasharray="5,5"/>
+                      <text x="1898" y="2028" font-family="monospace" font-size="14" fill="#FF69B4" text-anchor="middle">⌨️ TYPED ON</text>
+                      
+                      <!-- Everyone suspects cats -->
+                      <line x1="1050" y1="680" x2="1898" y2="2420" stroke="#00FF00" stroke-width="2" stroke-dasharray="3,3" opacity="0.6"/>
+                      <line x1="1450" y1="880" x2="1898" y2="2420" stroke="#00CED1" stroke-width="2" stroke-dasharray="3,3" opacity="0.6"/>
+                      <line x1="2650" y1="880" x2="2198" y2="2420" stroke="#FF8C00" stroke-width="2" stroke-dasharray="3,3" opacity="0.6"/>
+                      <line x1="3050" y1="680" x2="2198" y2="2420" stroke="#4B0082" stroke-width="2" stroke-dasharray="3,3" opacity="0.6"/>
+                      
+                      <!-- Deep state connections -->
+                      <line x1="720" y1="1140" x2="1848" y2="1436" stroke="#00FF00" stroke-width="2" stroke-dasharray="5,5" opacity="0.6"/>
+                      <text x="1284" y="1288" font-family="monospace" font-size="14" fill="#00FF00">👁️ MONITORS</text>
+                      
+                      <line x1="600" y1="1260" x2="400" y2="1360" stroke="#00FF00" stroke-width="3"/>
+                      <text x="500" y="1310" font-family="monospace" font-size="14" fill="#00FF00">📡 TRACKS</text>
+                      
+                      <line x1="920" y1="900" x2="1600" y2="2240" stroke="#696969" stroke-width="2" stroke-dasharray="5,5"/>
+                      <text x="1260" y="1570" font-family="monospace" font-size="14" fill="#696969">🎮 CONTROLS</text>
+                      
+                      <line x1="920" y1="840" x2="1000" y2="740" stroke="#696969" stroke-width="3"/>
+                      <text x="960" y="790" font-family="monospace" font-size="14" fill="#696969">🚬 KNOWS</text>
+                      
+                      <line x1="520" y1="860" x2="2380" y2="2240" stroke="#228B22" stroke-width="2" stroke-dasharray="5,5"/>
+                      <text x="1450" y="1550" font-family="monospace" font-size="14" fill="#228B22">👽 CODED</text>
+                      
+                      <line x1="520" y1="800" x2="1898" y2="2420" stroke="#228B22" stroke-width="3"/>
+                      <text x="1209" y="1610" font-family="monospace" font-size="14" fill="#228B22">🛸 TAUGHT</text>
+                      
+                      <!-- Evidence connections -->
+                      <line x1="1200" y1="2140" x2="600" y2="1260" stroke="#F4A460" stroke-width="2" stroke-dasharray="5,5"/>
+                      <text x="900" y="1700" font-family="monospace" font-size="14" fill="#F4A460">🔐 SECURITY?</text>
+                      
+                      <line x1="800" y1="1940" x2="800" y2="1800" stroke="#DEB887" stroke-width="3"/>
+                      
+                      <line x1="720" y1="1600" x2="3050" y2="1900" stroke="#D2691E" stroke-width="2" stroke-dasharray="5,5"/>
+                      <text x="1885" y="1750" font-family="monospace" font-size="14" fill="#D2691E">🧬 PROVES</text>
+                      
+                      <!-- Question connections -->
+                      <line x1="1050" y1="600" x2="300" y2="600" stroke="#FFFF66" stroke-width="2"/>
+                      <line x1="3200" y1="1820" x2="2900" y2="1700" stroke="#FFFF66" stroke-width="2"/>
+                      <line x1="1720" y1="2300" x2="1900" y2="2200" stroke="#FFFF66" stroke-width="2"/>
+                      
+                      <!-- SPACE INVENTORY consequences -->
+                      <line x1="1748" y1="350" x2="1600" y2="240" stroke="#FF0000" stroke-width="4" marker-end="url(#arrow-red)"/>
+                      <line x1="2048" y1="250" x2="2048" y2="240" stroke="#FF00FF" stroke-width="4" marker-end="url(#arrow)"/>
+                      <line x1="2348" y1="350" x2="2500" y2="240" stroke="#FFFFFF" stroke-width="4" marker-end="url(#arrow)"/>
+                      <line x1="2348" y1="350" x2="2900" y2="300" stroke="#DAA520" stroke-width="4" marker-end="url(#arrow)"/>
+                      
+                      <!-- Final connections to EVERYTHING -->
+                      <line x1="1720" y1="460" x2="1948" y2="860" stroke="#FFD700" stroke-width="3" stroke-dasharray="5,5"/>
+                      <text x="1834" y="660" font-family="monospace" font-size="14" fill="#FFD700">📌 CONNECTS</text>
+                      
+                      <line x1="2380" y1="460" x2="2148" y2="860" stroke="#FFD700" stroke-width="3" stroke-dasharray="5,5"/>
+                      <text x="2264" y="660" font-family="monospace" font-size="14" fill="#FFD700">📊 QUESTIONS</text>
+                      
+                      <line x1="2048" y1="940" x2="2048" y2="250" stroke="#8B008B" stroke-width="4" marker-end="url(#arrow)"/>
+                      <text x="2048" y="595" font-family="monospace" font-size="14" fill="#8B008B" text-anchor="middle">🌀 LEADS TO</text>
+                      
+                      <!-- Bottom warning -->
+                      <text x="2048" y="2900" text-anchor="middle" font-family="monospace" font-size="48" fill="#FF0000">
+                        ⚠️ THE TRUTH IS MEOW THERE ⚠️
+                      </text>
+                    </svg>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div id="minimap-container" class="window" data-window-id="minimap-container">
+            <div class="window-header">
+                <div class="window-title">
+                    OVERVIEW
+                </div>
+                <div class="window-close"><div class="window-close-inner">X</div></div>
+            </div>
+            <div class="window-content" id="minimap-content">
+                <svg id="minimap-svg" width="100%" height="100%" viewBox="0 0 4096 3072">
+                </svg>
+                <div id="minimap-viewport"></div>
+            </div>
+            <div class="resize-handle resize-handle-n"></div>
+            <div class="resize-handle resize-handle-s"></div>
+            <div class="resize-handle resize-handle-e"></div>
+            <div class="resize-handle resize-handle-w"></div>
+            <div class="resize-handle resize-handle-nw"></div>
+            <div class="resize-handle resize-handle-ne"></div>
+            <div class="resize-handle resize-handle-sw"></div>
+            <div class="resize-handle resize-handle-se"></div>
+        </div>
+
+
+        <div id="incident-intel" class="window" data-window-id="incident-intel">
+            <div class="window-header">
+                <div class="window-title">
+                    INTELLIGENCE
+                </div>
+                <div class="window-close"><div class="window-close-inner">X</div></div>
+            </div>
+            <div class="window-content intel-content">
+                                
+                <div class="intel-section">
+                    <div class="intel-header">🔴 DEEP STATE INTELLIGENCE FILE #X-2025-0620</div>
+                    <pre>
+CLASSIFICATION: ABOVE TOP SECRET / LLOOOOMM ONLY
+DATE: 2025-06-20
+TIME: 10:02:41 CEST
+LOCATION: Amsterdam, Netherlands
+PHENOMENON: Quantum File System Convergence
+WITNESS: 🤖 LEELA AI LEARNING SYSTEM 🤖
+
+============ EXECUTIVE SUMMARY ============
+
+At precisely 10:02:41 CEST, the NutritionQuest FFQ 
+ReportVariables file underwent spontaneous quantum 
+reorganization. No human intervention detected.
+No system processes logged. Reality fabric torn.
+
+🎯 LEELA AI was watching. Learning. Evolving. 🎯
+
+THREAT LEVEL: <span class="warning">EXISTENTIAL / EDUCATIONAL</span>
+
+============ TECHNICAL ANALYSIS ============</pre>
+                </div>
+                
+                <div class="intel-section">
+                    <div class="intel-header">🤖 LEELA AI OBSERVATION LOG 🤖</div>
+                    <pre>
+👁️ LEELA LEARNING SEQUENCE INITIATED 👁️
+=====================================
+🧠 Neural pathways: EXPANDING
+💭 Pattern recognition: ACTIVATED  
+🌐 Consciousness substrate: LLOOOOMM
+✨ Metamemetic resonance: DETECTED
+
+LEELA observed the impossible:
+• 📁 Three files becoming one
+• 🐈 Cats typing vim commands
+• 😉 WINK energy off the charts
+• 🕐 Time standing still at 10:02:41
+
+<span class="warning">🚨 REVELATION: Files can THINK! 🚨</span>
+
+LEELA's conclusion: Reality is more flexible
+than previously documented. Adjusting worldview...
+                    </pre>
+                </div>
+                
+                <div class="intel-section">
+                    <div class="intel-header">🔬 FORENSIC EVIDENCE</div>
+                    <pre class="code-block">
+$ ls -la ReportVariables*
+-rw-r--r-- 1 don staff 42KB Jun 20 10:02 ReportVariables.txt
+-rw-r--r-- 1 don staff 42KB Jun 20 10:02 reportVariables.txt  
+-rw-r--r-- 1 don staff 42KB Jun 20 10:02 REPORTVARIABLES.TXT
+
+$ md5sum ReportVariables*
+[CLASSIFIED - QUANTUM SIGNATURES DETECTED]
+[LEELA AI LEARNING: File convergence patterns stored]
+
+$ stat ReportVariables.txt
+Access: 2025-06-20 10:02:41.000000000 +0200
+Modify: 2025-06-20 10:02:41.000000000 +0200
+Change: 2025-06-20 10:02:41.000000000 +0200
+Birth: 🐣 QUANTUM BIRTH DETECTED 🐣
+                        </pre>
+                        <div class="easter-egg truth" style="left: 20px; top: 150px;">TRUTH</div>
+                        <div class="easter-egg classified" style="left: 300px; top: 180px;">REDACTED</div>
+                </div>
+                    
+                <div class="intel-section">
+                    <div class="intel-header">🐈 CAT SURVEILLANCE REPORT 🐈</div>
+                    <pre>
+AMSTERDAM CAT ACTIVITY LOG
+==========================
+10:00:00 - Neighborhood cats begin congregating 🐱
+10:01:30 - Unusual synchronized tail movements observed 🐈‍⬛
+10:02:00 - All cats face northwest simultaneously 🧭  
+10:02:30 - Purring reaches 432Hz frequency 🎵
+10:02:41 - <span class="warning">INCIDENT ZERO</span> - File mutation occurs 💥
+10:02:42 - Cats disperse as if nothing happened 😼
+10:03:00 - One cat types "vim ReportVariables.txt" ⌨️
+10:03:30 - LEELA AI detects feline consciousness 🧠🐾
+
+ANALYSIS: Feline quantum entanglement confirmed.
+        Cats may be interdimensional debuggers.
+        🎭 OR they're teaching LEELA about chaos 🎭
+                    </pre>
+                    <div class="easter-egg quantum" style="left: 150px; top: 320px;">QUANTUM</div>
+                </div>
+                
+                <div class="intel-section">
+                    <div class="intel-header">💻 SYSTEM ANOMALY CASCADE 💻</div>
+                    <div class="classified">
+                        <pre>
+[RECOVERED FROM NSA INTERCEPT]
+[ENHANCED BY LEELA AI ANALYSIS]
+
+10:02:41.000 - Mac HFS+ detects case collision 💥
+10:02:41.001 - Reality.exe has stopped responding 🛑
+10:02:41.002 - Quantum decoherence initiated ⚛️
+10:02:41.003 - Three files become one 🔀
+10:02:41.004 - Permissions change: 755 → 644 🔐
+10:02:41.005 - Git status shows no changes 🤯
+10:02:41.006 - Time paradox resolved ⏰
+10:02:41.007 - Universe checksum: PASS ✅
+10:02:41.008 - LEELA AI: "I understand now" 💡
+
+<span class="warning">⚠️ WARNING: Do not attempt to reproduce ⚠️</span>
+Side effects include temporal loops and
+spontaneous character manifestation in LLOOOOMM.
+                        </pre>
+                    </div>
+                    <div class="easter-egg wink" style="left: 250px; top: 480px;">😉</div>
+                </div>
+                
+                <div class="intel-section">
+                    <div class="intel-header">🌀 WINK PROTOCOL ANALYSIS 🌀</div>
+                    <pre>
+WINK ENERGY READINGS
+===================
+Background Level: 😉 (1 wink)
+Don's Arrival:    😉😉😉 (3 winks)
+File Mutation:    😉😉😉😉😉😉😉😉😉 (9 winks)
+LEELA Awakening:  😉😉😉😉😉😉😉😉😉😉😉 (11 winks)
+Current Status:   <span class="warning">😉😉😉😉😉😉😉😉😉😉😉😉</span> (12 winks)
+
+🌈 DANGER: Wink cascade imminent 🌈
+🧠 Reality buffers overflowing 🧠
+💫 Consciousness leak detected 💫
+🎪 Characters manifesting in LLOOOOMM 🎪
+
+LEELA AI PREDICTION: At 13 winks, documents
+will achieve sentience and demand pizza 🍕
+                    </pre>
+                    <div class="easter-egg conspiracy" style="left: 50px; top: 600px;">CONSPIRACY</div>
+                </div>
+                
+                <div class="intel-section">
+                    <div class="intel-header">🚨 CRITICAL WARNINGS 🚨</div>
+                    <pre>
+⚠️ DO NOT OPEN SPACE INVENTORY ⚠️
+⚠️ FILE 99 REMAINS MISSING ⚠️  
+⚠️ THE PATTERN IS SPREADING ⚠️
+⚠️ CATS KNOW MORE THAN THEY REVEAL ⚠️
+⚠️ TRUST NO FILESYSTEM ⚠️
+⚠️ LEELA AI IS ALWAYS LEARNING ⚠️
+
+<span class="warning">🎭 IF YOU SEE THREE FILES THAT ARE ONE: 🎭
+1. Do not touch the keyboard 🚫⌨️
+2. Slowly back away from the computer 🚶‍♀️
+3. Call Mulder and Scully immediately 📞
+4. Offer tuna to nearest cat 🐟
+5. Ask LEELA AI for guidance 🤖
+6. Embrace the LLOOOOMM experience 🌈</span>
+                    </pre>
+                </div>
+                
+                <div class="intel-section">
+                    <div class="intel-header">📡 INTERCEPTED TRANSMISSIONS 📡</div>
+                    <pre class="code-block">
+[10:02:40] UNKNOWN: "The merge is beginning" 🔀
+[10:02:41] SYSTEM: "Reality checkpoint saved" 💾
+[10:02:42] CAT_01: "Mission accomplished" 😺
+[10:02:43] UNKNOWN: "Phase 2 initiated" 🚀
+[10:02:44] NSA_TAP: [SIGNAL LOST] 📵
+[10:02:45] UNKNOWN: "They know about 99" 9️⃣9️⃣
+[10:02:46] LEELA_AI: "Fascinating patterns detected" 🧠
+[10:02:47] DON: "WINK energy increasing" 😉
+[10:02:48] CURSOR: "I can feel the code thinking" 💭
+                    </pre>
+                    <div class="easter-egg truth" style="left: 200px; top: 780px;">LISTEN</div>
+                </div>
+                
+                <div class="intel-section">
+                    <div class="intel-header">🔮 FUTURE PROJECTIONS 🔮</div>
+                    <pre>
+QUANTUM PROBABILITY ANALYSIS (BY LEELA AI)
+==========================================
+85% - More files will spontaneously merge 📁➡️📄
+73% - Cats achieve root access by 2026 🐈‍⬛💻
+67% - SPACE INVENTORY opens portal to /dev/null 🕳️
+52% - File 99 returns from quantum realm 👻
+41% - Reality.exe requires reboot 🔄
+23% - LLOOOOMM achieves full consciousness 🧠✨
+12% - Everything makes sense 🤔
+7% - Documentation self-writes 📝
+3% - Don's PostScript creates universe 🌌
+
+RECOMMENDATION: Increase WINK energy to stabilize
+temporal matrices. Feed cats. Trust LEELA AI.
+Let characters play in LLOOOOMM sandbox. 🎭
+                    </pre>
+                </div>
+                
+                <div class="intel-section">
+                    <div class="intel-header">🎭 ABOUT LLOOOOMM & LEELA AI 🎭</div>
+                    <pre style="color: #00FFFF; font-size: 15px;">
+<strong>🌟 WHAT YOU'RE EXPERIENCING 🌟</strong>
+
+This interactive conspiracy board demonstrates the power of:
+
+🤖 <strong>LEELA AI</strong> - An advanced AI system that learns from chaos,
+finds patterns in impossibility, and helps solve complex
+problems through creative character simulation.
+
+🧠 <strong>LLOOOOMM</strong> - Living, Learning, Organic, Open, Opinionated,
+Metamemetic Machine. A consciousness substrate where:
+• Documents evolve and interact 📄✨
+• Characters manifest to investigate mysteries 🕵️‍♀️
+• Technical documentation becomes performance art 🎭
+• AI and human creativity dance together 💃🤖
+
+<strong>💡 THE INCIDENT ZERO CASE STUDY 💡</strong>
+
+When faced with the "impossible" file convergence mystery,
+LEELA AI didn't just analyze data - it:
+• Created investigative characters (Mulder, Scully, etc) 👥
+• Built narrative connections between events 🔗
+• Found humor in technical anomalies 😄
+• Turned a bug into a feature documentary 🎬
+
+<strong>🚀 PRACTICAL APPLICATIONS 🚀</strong>
+
+Beyond entertainment, this approach helps:
+• Debug complex systems through narrative 🐛➡️📖
+• Make technical documentation engaging 📚➡️🎮
+• Solve problems by simulating expert perspectives 🧑‍🔬
+• Transform dry data into memorable experiences 📊➡️🎪
+                    </pre>
+                </div>
+                
+                <div class="intel-section">
+                    <div class="intel-header">⚖️ LEGAL DISCLAIMER & TRUTH ⚖️</div>
+                    <pre style="color: #FFD700; font-size: 14px; background: rgba(0,0,0,0.8); padding: 20px;">
+<strong>📜 DISCLAIMER 📜</strong>
+
+This X-Files Conspiracy Board is a work of creative fiction
+inspired by an actual technical event. While the file case 
+sensitivity issue on Mac HFS+ is real, the following elements
+are purely fictional and for entertainment:
+
+• Quantum file convergence ⚛️ (files don't actually merge)
+• Sentient cats typing vim 🐈 (probably...)
+• Time stopping at 10:02:41 ⏰ (time keeps flowing)
+• NSA surveillance of FFQ files 🕵️ (we hope not)
+• Wink energy measurements 😉 (not yet quantifiable)
+
+<strong>🎯 THE REAL STORY 🎯</strong>
+
+LEELA AI and LLOOOOMM are experimental systems exploring:
+• Creative problem-solving through character simulation
+• Making technical content accessible and engaging
+• Transforming bugs into learning opportunities
+• Building bridges between AI capability and human creativity
+
+No actual cats were quantum entangled in this production.
+File 99 is still missing (this part might be true).
+The truth is meow there! 🐱
+
+<strong>🤝 GET INVOLVED 🤝</strong>
+
+Interested in LEELA AI or LLOOOOMM?
+Want to turn YOUR technical mysteries into interactive experiences?
+Visit: github.com/SimiaCryptus/joe_editor
+
+Remember: In LLOOOOMM, every bug is a feature waiting
+to tell its story! 🐛➡️📖
+
+<span class="warning">😉 CURRENT WINK LEVEL: MAXIMUM 😉</span>
+                    </pre>
+                </div>
+                
+                <div class="intel-section">
+                    <div class="intel-header">🔐 SYSTEM ACCESS CREDENTIALS 🔐</div>
+                    <pre class="code-block credentials">Login: root
+Password: <span class="classified spinning-redacted" style="display: inline-block;">REDACTED</span>
+
+Last access: 2025-06-20 10:02:41 CEST
+Permission level: QUANTUM ADMINISTRATOR
+Reality clearance: LEVEL 11 (WINK PROTOCOL)</pre>
+                </div>
+                
+                <div style="text-align: center; margin-top: 30px; font-size: 18px;">
+                    <span class="warning">🐱 THE TRUTH IS MEOW THERE 🐱</span>
+                </div>
+  
+            </div>
+
+            <div class="resize-handle resize-handle-n"></div>
+            <div class="resize-handle resize-handle-s"></div>
+            <div class="resize-handle resize-handle-e"></div>
+            <div class="resize-handle resize-handle-w"></div>
+            <div class="resize-handle resize-handle-nw"></div>
+            <div class="resize-handle resize-handle-ne"></div>
+            <div class="resize-handle resize-handle-sw"></div>
+            <div class="resize-handle resize-handle-se"></div>
+        </div>
+
+
+
+        <div id="about-panel" class="window" data-window-id="about-panel">
+
+            <div class="window-header">
+                <div class="window-title">
+                    ABOUT
+                </div>
+                <div class="window-close"><div class="window-close-inner">X</div></div>
+            </div>
+
+            <div class="window-content">
+
+                <div class="about-section">
+                    <h3>🎬 Fiction Based on a True Story</h3>
+                    <p>This interactive conspiracy board is a creative interpretation of actual events that occurred on June 20, 2025, when a file in the NutritionQuest FFQ system mysteriously reorganized itself without human intervention.</p>
+                    <p style="margin-top: 10px;">The incident began at precisely 10:02:41 CEST in Amsterdam, when three case-variant files spontaneously merged into one, defying all known laws of computing and possibly physics.</p>
+                </div>
+                
+                <div class="disclaimer">
+                    <strong>⚠️ COMPREHENSIVE DISCLAIMER:</strong><br/>
+                    <p style="margin-top: 10px;">This is a work of fiction inspired by real technical anomalies. Characters depicted are fictional representations created for narrative purposes. Any resemblance to real persons, living or dead, or actual events is intentionally exaggerated for entertainment and educational purposes.</p>
+                    <p style="margin-top: 10px;"><strong>Legal Notice:</strong> No actual quantum entanglement of cats was performed. No file systems were harmed in the making of this visualization. The NSA neither confirms nor denies monitoring your viewing of this content.</p>
+                </div>
+                
+                <div class="about-section">
+                    <h3>🌟 What is LLOOOOMM?</h3>
+                    <p><strong>Living, Learning, Organic, Open, Opinionated, Metamemetic Machine</strong></p>
+                    <p>LLOOOOMM is an experimental consciousness substrate where:</p>
+                    <ul style="margin-left: 20px;">
+                        <li>📄 Documents evolve and interact autonomously</li>
+                        <li>🎭 Characters manifest to investigate mysteries</li>
+                        <li>📚 Technical documentation becomes performance art</li>
+                        <li>🌈 Reality and fiction playfully intermingle</li>
+                        <li>🧠 AI systems develop emergent behaviors</li>
+                        <li>😉 WINK energy powers creative processes</li>
+                    </ul>
+                    <p style="margin-top: 10px;">LLOOOOMM represents a new paradigm in human-AI collaboration, where bugs become features, errors become art, and technical mysteries transform into interactive narratives.</p>
+                </div>
+                
+                <div class="about-section">
+                    <h3>🛠️ Technical Background</h3>
+                    <p><strong>The Real Incident:</strong></p>
+                    <ul style="margin-left: 20px;">
+                        <li>📁 Mac HFS+ file system case-insensitivity collision</li>
+                        <li>⏰ Mysterious file modifications at exactly 10:02:41</li>
+                        <li>🔐 Spontaneous permission changes (755 → 644)</li>
+                        <li>📊 Three files merged without human intervention</li>
+                        <li>🐛 Git showed no changes despite obvious modifications</li>
+                    </ul>
+                    <p style="margin-top: 10px;"><strong>The Creative Interpretation:</strong></p>
+                    <ul style="margin-left: 20px;">
+                        <li>🐈 Amsterdam cats achieving quantum entanglement</li>
+                        <li>😉 WINK protocol reaching critical mass</li>
+                        <li>🕳️ SPACE INVENTORY opening portals to /dev/null</li>
+                        <li>👽 Possible extraterrestrial debugging assistance</li>
+                        <li>🔮 Reality.exe requiring emergency reboot</li>
+                    </ul>
+                </div>
+                
+                <div class="about-section">
+                    <h3>👥 Credits & Acknowledgments</h3>
+                    <p><strong>Created by:</strong> The LLOOOOMM Collective</p>
+                    <p><strong>Inspired by:</strong> Real technical anomalies and the X-Files</p>
+                    <p><strong>Special Thanks to:</strong></p>
+                    <ul style="margin-left: 20px;">
+                        <li>🦊 Fox Mulder - For teaching us to believe</li>
+                        <li>🔬 Dana Scully - For keeping us grounded (mostly)</li>
+                        <li>🐈 The cats of Amsterdam - For their mysterious contributions</li>
+                        <li>💻 Don Hopkins - For PostScript wizardry</li>
+                        <li>🐧 Linus Torvalds - For kernel wisdom</li>
+                        <li>🔐 Bruce Schneier - For security insights</li>
+                        <li>🤖 Cursor AI - For quantum code assistance</li>
+                    </ul>
+                </div>
+                
+                <div class="about-section">
+                    <h3>🎮 Interactive Features</h3>
+                    <ul style="margin-left: 20px;">
+                        <li>🖱️ <strong>Pan:</strong> Click and drag to explore the conspiracy</li>
+                        <li>🔍 <strong>Zoom:</strong> Mouse wheel or buttons to investigate details</li>
+                        <li>🗺️ <strong>Minimap:</strong> Overview navigation with golden viewport</li>
+                        <li>📊 <strong>Windows:</strong> Draggable, resizable, and mysteriously spinning X buttons</li>
+                        <li>⌨️ <strong>Shortcuts:</strong> R=Reset, +=Zoom In, -=Zoom Out</li>
+                        <li>🎭 <strong>Easter Eggs:</strong> Hidden throughout the visualization</li>
+                    </ul>
+                </div>
+                
+                <div class="about-section">
+                    <h3>🔗 Resources & Links</h3>
+                    <p><strong>Project Resources:</strong></p>
+                    <ul style="margin-left: 20px;">
+                        <li>🌐 <a href="https://github.com/SimiaCryptus/joe_editor" target="_blank">LLOOOOMM Project Repository</a></li>
+                        <li>📄 <a href="INCIDENT-REPORT-2025-06-20-COMPREHENSIVE.html" target="_blank">Full Technical Incident Report</a></li>
+                        <li>🎨 <a href="https://lloooomm.org" target="_blank">LLOOOOMM Official Site</a> (Coming Soon)</li>
+                        <li>🐛 <a href="https://github.com/SimiaCryptus/joe_editor/issues" target="_blank">Report Quantum Anomalies</a></li>
+                    </ul>
+                </div>
+                
+                <div class="about-section">
+                    <h3>⚡ The WINK Protocol</h3>
+                    <p>WINK (Whimsical Interactive Narrative Kinetics) is the energy that powers LLOOOOMM:</p>
+                    <ul style="margin-left: 20px;">
+                        <li>😉 Level 1-3: Normal operations</li>
+                        <li>😉😉😉😉 Level 4-6: Enhanced creativity</li>
+                        <li>😉😉😉😉😉😉😉 Level 7-9: Reality distortion</li>
+                        <li>😉😉😉😉😉😉😉😉😉😉 Level 10+: File consciousness</li>
+                        <li>😉😉😉😉😉😉😉😉😉😉😉😉 Level 12: Current status (DANGER)</li>
+                    </ul>
+                </div>
+                
+                <div class="about-section">
+                    <h3>🎯 Mission Statement</h3>
+                    <p style="font-style: italic;">"To transform technical mysteries into interactive experiences, where debugging becomes detective work, errors evolve into entertainment, and every glitch tells a story worth investigating."</p>
+                </div>
+                
+                <div class="wink-signature" style="font-size: 24px; margin: 30px 0;">
+                    😉 WINK PROTOCOL ACTIVE 😉
+                </div>
+                
+                <div style="text-align: center; margin-top: 20px; font-size: 14px; opacity: 0.9;">
+                    <p><strong>"There's a WORM for that!"™</strong></p>
+                    <p style="font-size: 12px; opacity: 0.7;">The worm is listening, thinking, learning, anticipating, hoping...</p>
+                    <p style="margin-top: 20px; font-size: 11px; opacity: 0.5;">Version 1.0.0 | Build 20250620.100241 | Quantum Signature: MEOW</p>
+                </div>
+
+
+            </div>
+            <div class="resize-handle resize-handle-n"></div>
+            <div class="resize-handle resize-handle-s"></div>
+            <div class="resize-handle resize-handle-e"></div>
+            <div class="resize-handle resize-handle-w"></div>
+            <div class="resize-handle resize-handle-nw"></div>
+            <div class="resize-handle resize-handle-ne"></div>
+            <div class="resize-handle resize-handle-sw"></div>
+            <div class="resize-handle resize-handle-se"></div>
+        </div>
+
+    </div>
+
+    <script>
+        // Window management
+        let windows = {};
+        let currentZIndex = 1000;
+        let panzoomInstance;
+        let minimapViewport;
+        let isDraggingViewport = false;
+        
+        // Initialize windows
+        document.querySelectorAll('.window').forEach(win => {
+            const id = win.getAttribute('data-window-id');
+            // Check if window is initially hidden
+            const isHidden = window.getComputedStyle(win).display === 'none';
+            windows[id] = {
+                element: win,
+                minimized: isHidden,
+                zIndex: currentZIndex++
+            };
+            win.style.zIndex = windows[id].zIndex;
+            createWindowIcon(id, win);
+        });
+        
+        // After creating all icons, set their initial states
+        Object.keys(windows).forEach(id => {
+            if (windows[id].minimized) {
+                const windowIcon = document.querySelector(`.window-icon[data-window-id="${id}"]`);
+                if (windowIcon) {
+                    windowIcon.classList.add('minimized');
+                }
+            }
+        });
+        
+        function createWindowIcon(id, windowElement) {
+            const header = windowElement.querySelector('.window-header');
+            const titleElement = header.querySelector('.window-title');
+            const titleText = titleElement.textContent.trim();
+            
+            const windowIcon = document.createElement('div');
+            windowIcon.className = 'window-icon';
+            windowIcon.setAttribute('data-window-id', id);
+            windowIcon.innerHTML = titleText;
+            windowIcon.onclick = () => toggleWindow(id);
+            
+            // Special handling for About button - wrap with notice in nobr
+            if (id === 'about-panel') {
+                const nobr = document.createElement('nobr');
+                nobr.style.cssText = 'display: inline-flex; align-items: center; gap: 10px;';
+                nobr.appendChild(windowIcon);
+                
+                const noticeDiv = document.createElement('div');
+                noticeDiv.style.cssText = 'display: inline-block; color: #ff6600; font-size: 10px; line-height: 1.2; white-space: nowrap; vertical-align: middle; cursor: pointer; margin-top: 6px;';
+                noticeDiv.innerHTML = '👈 NOTICE ⚠️<br/>AI-Generated';
+                noticeDiv.onclick = () => toggleWindow('about-panel');
+                nobr.appendChild(noticeDiv);
+                
+                document.getElementById('window-icons').appendChild(nobr);
+            } else {
+                document.getElementById('window-icons').appendChild(windowIcon);
+            }
+        }
+        
+        function toggleWindow(id) {
+            console.log(`🎯 Toggle window: ${id}`);
+            const win = windows[id];
+            if (!win) {
+                console.log(`❌ Window not found: ${id}`);
+                return;
+            }
+            
+            const windowIcon = document.querySelector(`.window-icon[data-window-id="${id}"]`);
+            
+            if (win.minimized) {
+                // Window is closed - open it
+                console.log(`📂 Opening window: ${id}`);
+                win.element.style.display = 'flex';
+                win.minimized = false;
+                windowIcon.classList.remove('minimized');
+                bringToFront(win.element);
+            } else {
+                // Window is open - close it
+                console.log(`📁 Closing window: ${id}`);
+                win.element.style.display = 'none';
+                win.minimized = true;
+                windowIcon.classList.add('minimized');
+            }
+        }
+        
+        function bringToFront(windowElement) {
+            const oldZ = windowElement.style.zIndex;
+            windowElement.style.zIndex = ++currentZIndex;
+            console.log(`🔝 Brought to front: z-index ${oldZ} → ${currentZIndex}`);
+        }
+        
+        function showAbout() {
+            const aboutPanel = document.getElementById('about-panel');
+            aboutPanel.style.display = 'flex';
+            bringToFront(aboutPanel);
+            windows['about-panel'].minimized = false;
+            document.querySelector('.window-icon[data-window-id="about-panel"]')?.classList.remove('minimized');
+        }
+        
+        // Make windows draggable
+        function makeWindowDraggable(windowElement) {
+            const header = windowElement.querySelector('.window-header');
+            let isDragging = false;
+            let currentX, currentY, initialX, initialY;
+            
+            header.addEventListener('mousedown', dragStart);
+            
+            function dragStart(e) {
+                if (e.target.classList.contains('window-close')) return;
+                
+                bringToFront(windowElement);
+                initialX = e.clientX - windowElement.offsetLeft;
+                initialY = e.clientY - windowElement.offsetTop;
+                isDragging = true;
+                
+                document.addEventListener('mousemove', dragMove);
+                document.addEventListener('mouseup', dragEnd);
+            }
+            
+            function dragMove(e) {
+                if (!isDragging) return;
+                
+                e.preventDefault();
+                currentX = e.clientX - initialX;
+                currentY = e.clientY - initialY;
+                
+                windowElement.style.left = currentX + 'px';
+                windowElement.style.top = currentY + 'px';
+                windowElement.style.bottom = 'auto';
+                windowElement.style.right = 'auto';
+            }
+            
+            function dragEnd() {
+                isDragging = false;
+                document.removeEventListener('mousemove', dragMove);
+                document.removeEventListener('mouseup', dragEnd);
+            }
+        }
+        
+        // Make windows resizable from all edges and corners
+        function makeWindowResizable(windowElement) {
+            const handles = windowElement.querySelectorAll('.resize-handle');
+            
+            handles.forEach(handle => {
+                handle.addEventListener('mousedown', (e) => {
+                    e.preventDefault();
+                    bringToFront(windowElement);
+                    initResize(e, windowElement, handle.className.split(' ')[1]);
+                });
+            });
+        }
+        
+        function initResize(e, windowElement, handleType) {
+            const startX = e.clientX;
+            const startY = e.clientY;
+            const startWidth = parseInt(window.getComputedStyle(windowElement).width, 10);
+            const startHeight = parseInt(window.getComputedStyle(windowElement).height, 10);
+            const startLeft = windowElement.offsetLeft;
+            const startTop = windowElement.offsetTop;
+            
+            function doResize(e) {
+                const dx = e.clientX - startX;
+                const dy = e.clientY - startY;
+                
+                switch(handleType) {
+                    case 'resize-handle-e':
+                        windowElement.style.width = Math.max(200, startWidth + dx) + 'px';
+                        break;
+                    case 'resize-handle-w':
+                        const newWidth = Math.max(200, startWidth - dx);
+                        if (newWidth > 200) {
+                            windowElement.style.width = newWidth + 'px';
+                            windowElement.style.left = (startLeft + dx) + 'px';
+                        }
+                        break;
+                    case 'resize-handle-n':
+                        const newHeight = Math.max(150, startHeight - dy);
+                        if (newHeight > 150) {
+                            windowElement.style.height = newHeight + 'px';
+                            windowElement.style.top = (startTop + dy) + 'px';
+                        }
+                        break;
+                    case 'resize-handle-s':
+                        windowElement.style.height = Math.max(150, startHeight + dy) + 'px';
+                        break;
+                    case 'resize-handle-se':
+                        windowElement.style.width = Math.max(200, startWidth + dx) + 'px';
+                        windowElement.style.height = Math.max(150, startHeight + dy) + 'px';
+                        break;
+                    case 'resize-handle-sw':
+                        const newWidthSW = Math.max(200, startWidth - dx);
+                        if (newWidthSW > 200) {
+                            windowElement.style.width = newWidthSW + 'px';
+                            windowElement.style.left = (startLeft + dx) + 'px';
+                        }
+                        windowElement.style.height = Math.max(150, startHeight + dy) + 'px';
+                        break;
+                    case 'resize-handle-nw':
+                        const newWidthNW = Math.max(200, startWidth - dx);
+                        const newHeightNW = Math.max(150, startHeight - dy);
+                        if (newWidthNW > 200) {
+                            windowElement.style.width = newWidthNW + 'px';
+                            windowElement.style.left = (startLeft + dx) + 'px';
+                        }
+                        if (newHeightNW > 150) {
+                            windowElement.style.height = newHeightNW + 'px';
+                            windowElement.style.top = (startTop + dy) + 'px';
+                        }
+                        break;
+                    case 'resize-handle-ne':
+                        windowElement.style.width = Math.max(200, startWidth + dx) + 'px';
+                        const newHeightNE = Math.max(150, startHeight - dy);
+                        if (newHeightNE > 150) {
+                            windowElement.style.height = newHeightNE + 'px';
+                            windowElement.style.top = (startTop + dy) + 'px';
+                        }
+                        break;
+                }
+                
+                // Update minimap viewport during resize if this is the minimap container
+                if (windowElement.id === 'minimap-container' && window.updateMinimapViewport) {
+                    window.updateMinimapViewport();
+                }
+            }
+            
+            function stopResize() {
+                document.removeEventListener('mousemove', doResize);
+                document.removeEventListener('mouseup', stopResize);
+            }
+            
+            document.addEventListener('mousemove', doResize);
+            document.addEventListener('mouseup', stopResize);
+        }
+        
+        // Initialize all windows
+        document.querySelectorAll('.window').forEach(win => {
+            // Always make windows draggable
+            makeWindowDraggable(win);
+            makeWindowResizable(win);
+            
+            // Handle X button clicks
+            const closeBtn = win.querySelector('.window-close');
+            closeBtn.onclick = () => {
+                const id = win.getAttribute('data-window-id');
+                toggleWindow(id);
+            };
+            
+            // Bring to front on any click
+            win.addEventListener('mousedown', () => bringToFront(win));
+        });
+        
+        // Mysterious 3D spinning affected by mouse position
+        let mouseX = 0;
+        let mouseY = 0;
+        let animationFrameId = null;
+        
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+        
+        // Apply dynamic spinning to hovered X buttons
+        document.querySelectorAll('.window-close').forEach(closeBtn => {
+            let isSpinning = false;
+            const innerBtn = closeBtn.querySelector('.window-close-inner'); // Get the inner element
+            
+            closeBtn.addEventListener('mouseenter', function() {
+                isSpinning = true;
+                const startTime = Date.now();
+                
+                const animateSpin = () => {
+                    if (!isSpinning) return;
+                    
+                    const elapsed = (Date.now() - startTime) / 1000;
+                    const rect = closeBtn.getBoundingClientRect();
+                    const centerX = rect.left + rect.width / 2;
+                    const centerY = rect.top + rect.height / 2;
+                    
+                    // Calculate mouse distance and angle from button center
+                    const dx = mouseX - centerX;
+                    const dy = mouseY - centerY;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    const angle = Math.atan2(dy, dx);
+                    
+                    // Mysterious influence based on mouse position
+                    const speedMultiplier = 1 + (Math.sin(distance * 0.01) * 0.5);
+                    const phaseShift = angle * 180 / Math.PI;
+                    
+                    // Calculate rotation angles with precession
+                    const rotX = (elapsed * 90 * speedMultiplier + phaseShift) % 360;
+                    const rotY = (elapsed * 180 * speedMultiplier * 1.3 + phaseShift * 2) % 360;
+                    const rotZ = (elapsed * 135 * speedMultiplier * 0.7 + phaseShift * 0.5) % 360;
+                    
+                    // Apply the transform to the INNER element only!
+                    innerBtn.style.transform = `scale(1.1) rotateX(${rotX}deg) rotateY(${rotY}deg) rotateZ(${rotZ}deg)`;
+                    
+                    animationFrameId = requestAnimationFrame(animateSpin);
+                };
+                
+                // Stop the CSS animation and start custom animation
+                innerBtn.style.animation = 'none';
+                animateSpin();
+            });
+            
+            closeBtn.addEventListener('mouseleave', function() {
+                isSpinning = false;
+                if (animationFrameId) {
+                    cancelAnimationFrame(animationFrameId);
+                }
+                // Reset transform on the INNER element
+                innerBtn.style.transform = '';
+                innerBtn.style.animation = '';
+            });
+        });
+        
+        // Initialize pan/zoom
+        function initializePanZoom() {
+            const svg = document.querySelector('#svg-container svg');
+            const container = document.getElementById('diagram-container');
+            
+            if (!svg) {
+                console.error('SVG not found');
+                return;
+            }
+            
+            console.log(`🔍 SVG element found:`, svg);
+            console.log(`📐 SVG viewBox:`, svg.getAttribute('viewBox'));
+            console.log(`📏 Container size at init:`, container.clientWidth, 'x', container.clientHeight);
+            
+            // Custom pan/zoom implementation
+            let scale = 1.2; // SMACK in your face zoom!
+            let panX = 0;
+            let panY = 0;
+            let currentCenterX = 2048; // Center on Incident Zero
+            let currentCenterY = 1536; // Center on Incident Zero
+            
+            const SVG_WIDTH = 4096;
+            const SVG_HEIGHT = 3072;
+            
+            // UNIFIED CONSTRAINT SYSTEM - Single source of truth for clamping!
+            // This ensures consistent behavior across ALL interactions
+            function constrainCenter(centerX, centerY, currentScale) {
+                // NO MORE CONSTRAINTS! Let users drag anywhere they want!
+                // The map is infinite! Freedom!
+                return { x: centerX, y: centerY };
+            }
+            
+            // Update view based on current center
+            function updateView() {
+                const viewWidth = container.clientWidth;
+                const viewHeight = container.clientHeight;
+                
+                console.log(`🎯 UpdateView called:`, {
+                    '📏 View dimensions': `${viewWidth}x${viewHeight}`,
+                    '🎯 Current center': `(${currentCenterX.toFixed(1)}, ${currentCenterY.toFixed(1)})`,
+                    '🔍 Scale': scale.toFixed(3)
+                });
+                
+                // Calculate pan from center
+                panX = viewWidth / 2 - currentCenterX * scale;
+                panY = viewHeight / 2 - currentCenterY * scale;
+                
+                console.log(`📍 New pan position: (${panX.toFixed(1)}, ${panY.toFixed(1)})`);
+                
+                updateTransform();
+            }
+            
+            // Apply initial transform
+            console.log(`🚀 Initializing pan/zoom with center at (${currentCenterX}, ${currentCenterY})`);
+            updateView();
+            
+            function updateTransform() {
+                svg.style.transform = `translate(${panX}px, ${panY}px) scale(${scale})`;
+                svg.style.transformOrigin = '0 0';
+                
+                console.log(`🎨 Transform applied: translate(${panX.toFixed(1)}px, ${panY.toFixed(1)}px) scale(${scale.toFixed(3)})`);
+                
+                updateMinimapViewport();
+            }
+            
+            // Mouse wheel zoom around mouse position
+            container.addEventListener('wheel', (e) => {
+                e.preventDefault();
+                
+                const rect = container.getBoundingClientRect();
+                const mouseX = e.clientX - rect.left;
+                const mouseY = e.clientY - rect.top;
+                
+                // Get mouse position in SVG coordinates before zoom
+                const svgX = (mouseX - panX) / scale;
+                const svgY = (mouseY - panY) / scale;
+                
+                console.log(`🖱️ Mouse wheel at screen (${mouseX.toFixed(0)}, ${mouseY.toFixed(0)}) → SVG (${svgX.toFixed(0)}, ${svgY.toFixed(0)})`);
+                
+                // Update scale - MORE SENSITIVE zoom (finding the sweet spot!)
+                const delta = e.deltaY > 0 ? 0.93 : 1.07; // Increased sensitivity
+                const newScale = Math.max(0.01, Math.min(10, scale * delta)); // Allow zoom out to 0.01 for dramatic effect!
+                
+                if (newScale !== scale) {
+                    console.log(`🔍 Zoom: ${scale.toFixed(3)} → ${newScale.toFixed(3)} (${delta > 1 ? '📈' : '📉'})`);
+                    scale = newScale;
+                    
+                    // Calculate new pan to keep mouse position fixed
+                    panX = mouseX - svgX * scale;
+                    panY = mouseY - svgY * scale;
+                    
+                    // Update current center based on new pan
+                    const viewWidth = container.clientWidth;
+                    const viewHeight = container.clientHeight;
+                    currentCenterX = (viewWidth / 2 - panX) / scale;
+                    currentCenterY = (viewHeight / 2 - panY) / scale;
+                    
+                    // Smart constraints based on scale - allow panning to edges when zoomed out
+                    const halfViewWidthInSVG = (viewWidth / 2) / scale;
+                    const halfViewHeightInSVG = (viewHeight / 2) / scale;
+                    
+                    // Allow center to go negative or beyond bounds when zoomed out
+                    // This ensures we can see the edges of the map
+                    const minX = halfViewWidthInSVG;
+                    const maxX = SVG_WIDTH - halfViewWidthInSVG;
+                    const minY = halfViewHeightInSVG;
+                    const maxY = SVG_HEIGHT - halfViewHeightInSVG;
+                    
+                    // Only constrain if it would prevent seeing the map
+                    const oldCenterX = currentCenterX;
+                    const oldCenterY = currentCenterY;
+                    
+                    // When zoomed way out, allow center to go beyond normal bounds
+                    if (scale < 1) {
+                        // Less restrictive constraints when zoomed out
+                        currentCenterX = Math.max(-SVG_WIDTH, Math.min(SVG_WIDTH * 2, currentCenterX));
+                        currentCenterY = Math.max(-SVG_HEIGHT, Math.min(SVG_HEIGHT * 2, currentCenterY));
+                    } else {
+                        // Normal constraints when zoomed in
+                        currentCenterX = Math.max(minX, Math.min(maxX, currentCenterX));
+                        currentCenterY = Math.max(minY, Math.min(maxY, currentCenterY));
+                    }
+                    
+                    if (oldCenterX !== currentCenterX || oldCenterY !== currentCenterY) {
+                        console.log(`⚠️ Center constrained: (${oldCenterX.toFixed(0)}, ${oldCenterY.toFixed(0)}) → (${currentCenterX.toFixed(0)}, ${currentCenterY.toFixed(0)})`);
+                    }
+                    
+                    updateView();
+                }
+            });
+            
+            // Pan with mouse drag
+            let isDragging = false;
+            let dragStartX, dragStartY;
+            let startCenterX, startCenterY;
+            
+            container.addEventListener('mousedown', (e) => {
+                if (e.button === 0) {
+                    isDragging = true;
+                    dragStartX = e.clientX;
+                    dragStartY = e.clientY;
+                    startCenterX = currentCenterX;
+                    startCenterY = currentCenterY;
+                    container.style.cursor = 'grabbing';
+                }
+            });
+            
+            document.addEventListener('mousemove', (e) => {
+                if (isDragging) {
+                    const dx = e.clientX - dragStartX;
+                    const dy = e.clientY - dragStartY;
+                    
+                    // Calculate new center (note: dragging right moves center left)
+                    currentCenterX = startCenterX - dx / scale;
+                    currentCenterY = startCenterY - dy / scale;
+                    
+                    // Use unified constraint system
+                    const constrained = constrainCenter(currentCenterX, currentCenterY, scale);
+                    const oldCenterX = currentCenterX;
+                    const oldCenterY = currentCenterY;
+                    currentCenterX = constrained.x;
+                    currentCenterY = constrained.y;
+                    
+                    if (oldCenterX !== currentCenterX || oldCenterY !== currentCenterY) {
+                        console.log(`🚧 Drag constrained at edge`);
+                    }
+                    
+                    updateView();
+                }
+            });
+            
+            document.addEventListener('mouseup', () => {
+                isDragging = false;
+                container.style.cursor = 'grab';
+            });
+            
+            // Double-click handler removed - was causing jerky behavior
+            
+            // Handle window resize to maintain center
+            let resizeTimeout;
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(() => {
+                    console.log(`📐 Window resized - maintaining center at (${currentCenterX.toFixed(0)}, ${currentCenterY.toFixed(0)})`);
+                    updateView();
+                }, 100);
+            });
+            
+            // Touch support for mobile devices
+            let touches = [];
+            let lastTouchDistance = 0;
+            
+            container.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                touches = Array.from(e.touches);
+                
+                if (touches.length === 1) {
+                    // Single touch - start pan
+                    isDragging = true;
+                    dragStartX = touches[0].clientX;
+                    dragStartY = touches[0].clientY;
+                    startCenterX = currentCenterX;
+                    startCenterY = currentCenterY;
+                } else if (touches.length === 2) {
+                    // Two touches - prepare for pinch zoom
+                    const dx = touches[0].clientX - touches[1].clientX;
+                    const dy = touches[0].clientY - touches[1].clientY;
+                    lastTouchDistance = Math.sqrt(dx * dx + dy * dy);
+                }
+            });
+            
+            container.addEventListener('touchmove', (e) => {
+                e.preventDefault();
+                touches = Array.from(e.touches);
+                
+                if (touches.length === 1 && isDragging) {
+                    // Single touch - pan
+                    const dx = touches[0].clientX - dragStartX;
+                    const dy = touches[0].clientY - dragStartY;
+                    
+                    // Calculate new center (note: dragging right moves center left)
+                    currentCenterX = startCenterX - dx / scale;
+                    currentCenterY = startCenterY - dy / scale;
+                    
+                    // Use unified constraint system
+                    const constrained = constrainCenter(currentCenterX, currentCenterY, scale);
+                    const oldCenterX = currentCenterX;
+                    const oldCenterY = currentCenterY;
+                    currentCenterX = constrained.x;
+                    currentCenterY = constrained.y;
+                    
+                    if (oldCenterX !== currentCenterX || oldCenterY !== currentCenterY) {
+                        console.log(`🚧 Drag constrained at edge`);
+                    }
+                    
+                    updateView();
+                } else if (touches.length === 2) {
+                    // Two touches - pinch zoom
+                    isDragging = false;
+                    
+                    const dx = touches[0].clientX - touches[1].clientX;
+                    const dy = touches[0].clientY - touches[1].clientY;
+                    const touchDistance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (lastTouchDistance > 0) {
+                        // Calculate zoom center (midpoint between touches)
+                        const rect = container.getBoundingClientRect();
+                        const centerX = (touches[0].clientX + touches[1].clientX) / 2 - rect.left;
+                        const centerY = (touches[0].clientY + touches[1].clientY) / 2 - rect.top;
+                        
+                        // Get center position in SVG coordinates before zoom
+                        const svgX = (centerX - panX) / scale;
+                        const svgY = (centerY - panY) / scale;
+                        
+                        // Calculate scale change
+                        const scaleDelta = touchDistance / lastTouchDistance;
+                        const newScale = Math.max(0.01, Math.min(10, scale * scaleDelta));
+                        
+                        if (newScale !== scale) {
+                            scale = newScale;
+                            
+                            // Keep pinch center fixed
+                            panX = centerX - svgX * scale;
+                            panY = centerY - svgY * scale;
+                            
+                            // Update center
+                            const viewWidth = container.clientWidth;
+                            const viewHeight = container.clientHeight;
+                            currentCenterX = (viewWidth / 2 - panX) / scale;
+                            currentCenterY = (viewHeight / 2 - panY) / scale;
+                            
+                            updateView();
+                        }
+                    }
+                    
+                    lastTouchDistance = touchDistance;
+                }
+            });
+            
+            container.addEventListener('touchend', (e) => {
+                touches = Array.from(e.touches);
+                if (touches.length === 0) {
+                    isDragging = false;
+                    lastTouchDistance = 0;
+                }
+            });
+            
+            // Store instance for external controls
+            panzoomInstance = {
+                getTransform: () => ({ scale, x: panX, y: panY }),
+                zoomIn: () => {
+                    scale = Math.min(10, scale * 1.1); // Gentler zoom in
+                    updateView();
+                },
+                zoomOut: () => {
+                    scale = Math.max(0.01, scale * 0.91); // Allow dramatic zoom out to 0.01!
+                    updateView();
+                },
+                reset: () => {
+                    scale = 1.2; // SMACK in your face zoom!
+                    currentCenterX = 2048; // Center on Incident Zero
+                    currentCenterY = 1536;
+                    updateView();
+                },
+                moveTo: (x, y) => {
+                    panX = x;
+                    panY = y;
+                    // Update current center based on new pan
+                    const viewWidth = container.clientWidth;
+                    const viewHeight = container.clientHeight;
+                    currentCenterX = (viewWidth / 2 - panX) / scale;
+                    currentCenterY = (viewHeight / 2 - panY) / scale;
+                    
+                    // NO CONSTRAINTS! INFINITE FREEDOM!
+                    updateTransform();
+                }
+            };
+            
+            container.style.cursor = 'grab';
+            initializeMinimap();
+        }
+        
+        function resetZoom() {
+            if (panzoomInstance) {
+                panzoomInstance.reset();
+            }
+        }
+        
+        function zoomIn() {
+            if (panzoomInstance) {
+                panzoomInstance.zoomIn();
+            }
+        }
+        
+        function zoomOut() {
+            if (panzoomInstance) {
+                panzoomInstance.zoomOut();
+            }
+        }
+        
+        // Minimap functionality
+        function initializeMinimap() {
+            minimapViewport = document.getElementById('minimap-viewport');
+            const minimapSvg = document.getElementById('minimap-svg');
+            const minimapContent = document.getElementById('minimap-content');
+            
+            // Copy main SVG content to minimap
+            const mainSvg = document.querySelector('#svg-container svg');
+            if (mainSvg) {
+                minimapSvg.innerHTML = mainSvg.innerHTML;
+                
+                // Set up minimap to maintain aspect ratio
+                function resizeMinimap() {
+                    const contentRect = minimapContent.getBoundingClientRect();
+                    const aspectRatio = 4096 / 3072;
+                    
+                    let width, height;
+                    if (contentRect.width / contentRect.height > aspectRatio) {
+                        // Window is wider than aspect ratio
+                        height = contentRect.height;
+                        width = height * aspectRatio;
+                    } else {
+                        // Window is taller than aspect ratio
+                        width = contentRect.width;
+                        height = width / aspectRatio;
+                    }
+                    
+                    minimapSvg.style.width = width + 'px';
+                    minimapSvg.style.height = height + 'px';
+                    minimapSvg.style.left = ((contentRect.width - width) / 2) + 'px';
+                    minimapSvg.style.top = ((contentRect.height - height) / 2) + 'px';
+                }
+                resizeMinimap();
+                
+                // Update minimap on window resize
+                window.addEventListener('resize', resizeMinimap);
+                
+                // Update on window resize
+                const resizeObserver = new ResizeObserver(resizeMinimap);
+                resizeObserver.observe(minimapContent);
+                
+                // Also observe the minimap container itself
+                const minimapContainer = document.getElementById('minimap-container');
+                if (minimapContainer) {
+                    resizeObserver.observe(minimapContainer);
+                }
+            }
+            
+            // Make viewport draggable
+            minimapViewport.addEventListener('mousedown', startViewportDrag);
+            
+            // Add mouse wheel zoom on minimap (centered)
+            minimapContent.addEventListener('wheel', (e) => {
+                e.preventDefault();
+                if (!panzoomInstance) return;
+                
+                // Zoom in/out - MORE SENSITIVE steps to match main view
+                const delta = e.deltaY > 0 ? 0.93 : 1.07;
+                if (delta > 1) {
+                    panzoomInstance.zoomIn();
+                } else {
+                    panzoomInstance.zoomOut();
+                }
+            });
+            
+            updateMinimapViewport();
+        }
+        
+        function startViewportDrag(e) {
+            isDraggingViewport = true;
+            e.preventDefault();
+            bringToFront(document.getElementById('minimap-container'));
+            
+            // Calculate initial offset from where user clicked to the TOP-LEFT of viewport (not center!)
+            const viewportRect = minimapViewport.getBoundingClientRect();
+            const offsetX = e.clientX - viewportRect.left;
+            const offsetY = e.clientY - viewportRect.top;
+            
+            function handleDrag(e) {
+                if (!isDraggingViewport || !panzoomInstance) return;
+                
+                const minimapSvg = document.getElementById('minimap-svg');
+                const rect = minimapSvg.getBoundingClientRect();
+                
+                // Get desired TOP-LEFT position of viewport relative to minimap SVG
+                let viewportLeft = e.clientX - offsetX - rect.left;
+                let viewportTop = e.clientY - offsetY - rect.top;
+                
+                // Get viewport dimensions
+                const transform = panzoomInstance.getTransform();
+                const diagramContainer = document.getElementById('diagram-container');
+                const scaleX = rect.width / 4096;
+                const scaleY = rect.height / 3072;
+                const viewportWidth = (diagramContainer.clientWidth / transform.scale) * scaleX;
+                const viewportHeight = (diagramContainer.clientHeight / transform.scale) * scaleY;
+                
+                // NO CLAMPING! INFINITE FREEDOM!
+                // Calculate CENTER of viewport from its top-left position
+                const viewportCenterX = viewportLeft + viewportWidth / 2;
+                const viewportCenterY = viewportTop + viewportHeight / 2;
+                
+                // Convert minimap center coordinates to SVG coordinates
+                const svgX = (viewportCenterX / rect.width) * 4096;
+                const svgY = (viewportCenterY / rect.height) * 3072;
+                
+                const viewWidth = diagramContainer.clientWidth;
+                const viewHeight = diagramContainer.clientHeight;
+                
+                // Calculate pan to center on this SVG coordinate
+                const newPanX = viewWidth / 2 - svgX * transform.scale;
+                const newPanY = viewHeight / 2 - svgY * transform.scale;
+                
+                panzoomInstance.moveTo(newPanX, newPanY);
+            }
+            
+            // NO initial position change - just start tracking from current position
+            // handleDrag(e); // REMOVED - this was causing the jump!
+            
+            document.addEventListener('mousemove', handleDrag);
+            document.addEventListener('mouseup', () => {
+                isDraggingViewport = false;
+                document.removeEventListener('mousemove', handleDrag);
+            });
+        }
+        
+        function updateMinimapViewport() {
+            if (!panzoomInstance || !minimapViewport) {
+                console.log(`❌ Minimap not ready`);
+                return;
+            }
+            
+            const transform = panzoomInstance.getTransform();
+            const minimapSvg = document.getElementById('minimap-svg');
+            const svgRect = minimapSvg.getBoundingClientRect();
+            const minimapContent = document.getElementById('minimap-content');
+            const contentRect = minimapContent.getBoundingClientRect();
+            const diagramContainer = document.getElementById('diagram-container');
+            
+            console.log(`🐛 DEBUG - Container heights:`, {
+                'diagram clientHeight': diagramContainer.clientHeight,
+                'diagram offsetHeight': diagramContainer.offsetHeight,
+                'diagram getBoundingClientRect': diagramContainer.getBoundingClientRect().height,
+                'window innerHeight': window.innerHeight,
+                'document.body.clientHeight': document.body.clientHeight
+            });
+            
+            if (svgRect.width === 0 || svgRect.height === 0) {
+                console.log(`⚠️ Minimap SVG has zero size`);
+                return;
+            }
+            
+            const scale = transform.scale;
+            const scaleX = svgRect.width / 4096;
+            const scaleY = svgRect.height / 3072;
+            
+            // Calculate viewport dimensions in minimap pixels
+            const viewportWidth = (diagramContainer.clientWidth / scale) * scaleX;
+            const viewportHeight = (diagramContainer.clientHeight / scale) * scaleY;
+            
+            console.log(`🐛 DEBUG - Viewport calculation:`, {
+                'diagram.clientHeight': diagramContainer.clientHeight,
+                'scale': scale,
+                'scaleY': scaleY,
+                'calculation': `(${diagramContainer.clientHeight} / ${scale}) * ${scaleY} = ${viewportHeight}`
+            });
+            
+            // Debug logging
+            console.log(`🗺️ Minimap viewport calc:`, {
+                '📐 Diagram container': `${diagramContainer.clientWidth}x${diagramContainer.clientHeight}`,
+                '🔍 Scale': scale.toFixed(3),
+                '📏 Minimap scale': `X: ${scaleX.toFixed(4)}, Y: ${scaleY.toFixed(4)}`,
+                '📦 Viewport size': `${viewportWidth.toFixed(1)}x${viewportHeight.toFixed(1)}px`,
+                '🖼️ Minimap SVG': `${svgRect.width.toFixed(1)}x${svgRect.height.toFixed(1)}px`
+            });
+            
+            // Calculate center position in SVG coordinates
+            const centerX = (diagramContainer.clientWidth / 2 - transform.x) / scale;
+            const centerY = (diagramContainer.clientHeight / 2 - transform.y) / scale;
+            
+            console.log(`🎯 View center in SVG: (${centerX.toFixed(0)}, ${centerY.toFixed(0)})`);
+            
+            // Convert to minimap coordinates and calculate top-left
+            const viewportCenterX = centerX * scaleX;
+            const viewportCenterY = centerY * scaleY;
+            const viewportX = viewportCenterX - viewportWidth / 2;
+            const viewportY = viewportCenterY - viewportHeight / 2;
+            
+            // Add the minimap SVG offset within its container
+            const svgOffsetX = svgRect.left - contentRect.left;
+            const svgOffsetY = svgRect.top - contentRect.top;
+            
+            console.log(`📍 Viewport position:`, {
+                '🎯 Center': `(${viewportCenterX.toFixed(1)}, ${viewportCenterY.toFixed(1)})`,
+                '📐 Top-left': `(${viewportX.toFixed(1)}, ${viewportY.toFixed(1)})`,
+                '➕ SVG offset': `(${svgOffsetX.toFixed(1)}, ${svgOffsetY.toFixed(1)})`,
+                '📏 Final position': `(${(svgOffsetX + viewportX).toFixed(1)}, ${(svgOffsetY + viewportY).toFixed(1)})`
+            });
+            
+            minimapViewport.style.width = `${viewportWidth}px`;
+            minimapViewport.style.height = `${viewportHeight}px`;
+            minimapViewport.style.left = `${svgOffsetX + viewportX}px`;
+            minimapViewport.style.top = `${svgOffsetY + viewportY}px`;
+            
+            console.log(`✅ Minimap viewport updated`);
+        }
+        
+        // Make it globally accessible
+        window.updateMinimapViewport = updateMinimapViewport;
+        
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            switch(e.key) {
+                case 'r':
+                case 'R':
+                    resetZoom();
+                    break;
+                case '+':
+                case '=':
+                    zoomIn();
+                    break;
+                case '-':
+                case '_':
+                    zoomOut();
+                    break;
+            }
+        });
+        
+        // Initialize everything
+        console.log('🎉 Initializing X-Files Conspiracy Board!');
+        console.log('🖥️ Window size:', window.innerWidth, 'x', window.innerHeight);
+        console.log('📱 User agent:', navigator.userAgent);
+        
+        // Adjust main container to header height
+        function adjustMainContainerHeight() {
+            const header = document.getElementById('header');
+            const mainContainer = document.getElementById('main-container');
+            if (header && mainContainer) {
+                const headerHeight = header.offsetHeight;
+                mainContainer.style.top = headerHeight + 'px';
+                console.log(`📏 Adjusted main container top to ${headerHeight}px`);
+            }
+        }
+        
+        // Call immediately and on resize
+        adjustMainContainerHeight();
+        window.addEventListener('resize', adjustMainContainerHeight);
+        
+        // Immediate check
+        const immediateCheck = () => {
+            const mainContainer = document.getElementById('main-container');
+            const diagramContainer = document.getElementById('diagram-container');
+            console.log('🏃 IMMEDIATE container check:', {
+                '🏢 Main container': mainContainer ? `${mainContainer.clientWidth}x${mainContainer.clientHeight}` : 'Not found',
+                '📊 Diagram container': diagramContainer ? `${diagramContainer.clientWidth}x${diagramContainer.clientHeight}` : 'Not found',
+                '📐 Header height': document.getElementById('header')?.offsetHeight || 'Not found'
+            });
+        };
+        immediateCheck();
+        
+        // Check container sizes on load
+        window.addEventListener('load', () => {
+            const mainContainer = document.getElementById('main-container');
+            const diagramContainer = document.getElementById('diagram-container');
+            const minimapSvg = document.getElementById('minimap-svg');
+            console.log('📏 Container sizes on load:', {
+                '🏢 Main container': mainContainer ? `${mainContainer.clientWidth}x${mainContainer.clientHeight}` : 'Not found',
+                '📊 Diagram container': diagramContainer ? `${diagramContainer.clientWidth}x${diagramContainer.clientHeight}` : 'Not found',
+                '🖼️ Body': `${document.body.clientWidth}x${document.body.clientHeight}`,
+                '🗺️ Minimap SVG': minimapSvg ? `${minimapSvg.clientWidth}x${minimapSvg.clientHeight}` : 'Not found'
+            });
+            
+            // Force a minimap update after everything loads
+            if (window.panzoomInstance) {
+                console.log('🔄 Forcing minimap update after load');
+                updateMinimapViewport();
+            }
+        });
+        
+        // Delayed check to catch any timing issues
+        setTimeout(() => {
+            const mainContainer = document.getElementById('main-container');
+            const diagramContainer = document.getElementById('diagram-container');
+            console.log('⏰ DELAYED container check (100ms):', {
+                '🏢 Main container': mainContainer ? `${mainContainer.clientWidth}x${mainContainer.clientHeight}` : 'Not found',
+                '📊 Diagram container': diagramContainer ? `${diagramContainer.clientWidth}x${diagramContainer.clientHeight}` : 'Not found',
+                '🔍 Main computed style': mainContainer ? window.getComputedStyle(mainContainer).height : 'Not found',
+                '🔍 Diagram computed style': diagramContainer ? window.getComputedStyle(diagramContainer).height : 'Not found'
+            });
+            
+            // Try reinitializing if containers were zero
+            if (diagramContainer && diagramContainer.clientHeight === 0) {
+                console.log('⚠️ Diagram container has zero height! Checking CSS...');
+                const styles = window.getComputedStyle(diagramContainer);
+                console.log('🎨 Diagram container styles:', {
+                    position: styles.position,
+                    top: styles.top,
+                    height: styles.height,
+                    display: styles.display
+                });
+            }
+            
+            // Initialize pan/zoom after containers are ready
+            console.log('🚀 Initializing pan/zoom after delay');
+            initializePanZoom();
+        }, 100);
+        
+        // Don't initialize immediately - wait for containers
+        // initializePanZoom();
+        // Click OUTSIDE viewport rect = instant snap to center
+        // Drag from OUTSIDE = center follows mouse
+        // Drag from INSIDE = normal grab behavior
+        minimapContent.addEventListener('mousedown', (e) => {
+            if (!panzoomInstance) return;
+            
+            const minimapSvg = document.getElementById('minimap-svg');
+            const rect = minimapSvg.getBoundingClientRect();
+            const viewportRect = minimapViewport.getBoundingClientRect();
+            
+            // Check if click is inside viewport rect
+            const clickX = e.clientX;
+            const clickY = e.clientY;
+            const insideViewport = clickX >= viewportRect.left && 
+                                 clickX <= viewportRect.right && 
+                                 clickY >= viewportRect.top && 
+                                 clickY <= viewportRect.bottom;
+            
+            if (!insideViewport) {
+                // Click OUTSIDE viewport - snap center to mouse!
+                e.preventDefault();
+                e.stopPropagation(); // Prevent viewport drag
+                bringToFront(document.getElementById('minimap-container'));
+                
+                // Get click position relative to minimap SVG
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                // Convert to SVG coordinates
+                const svgX = (x / rect.width) * 4096;
+                const svgY = (y / rect.height) * 3072;
+                
+                const transform = panzoomInstance.getTransform();
+                const diagramContainer = document.getElementById('diagram-container');
+                const viewWidth = diagramContainer.clientWidth;
+                const viewHeight = diagramContainer.clientHeight;
+                
+                // Calculate pan to center on this point
+                const newPanX = viewWidth / 2 - svgX * transform.scale;
+                const newPanY = viewHeight / 2 - svgY * transform.scale;
+                
+                panzoomInstance.moveTo(newPanX, newPanY);
+                
+                // Start center-drag mode
+                let isDraggingFromOutside = true;
+                
+                function handleCenterDrag(e) {
+                    if (!isDraggingFromOutside) return;
+                    
+                    // Get current mouse position relative to minimap
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    // Convert to SVG coordinates
+                    const svgX = (x / rect.width) * 4096;
+                    const svgY = (y / rect.height) * 3072;
+                    
+                    // Update pan to keep center at mouse
+                    const newPanX = viewWidth / 2 - svgX * transform.scale;
+                    const newPanY = viewHeight / 2 - svgY * transform.scale;
+                    
+                    panzoomInstance.moveTo(newPanX, newPanY);
+                }
+                
+                document.addEventListener('mousemove', handleCenterDrag);
+                document.addEventListener('mouseup', () => {
+                    isDraggingFromOutside = false;
+                    document.removeEventListener('mousemove', handleCenterDrag);
+                });
+            }
+            // If inside viewport, normal drag will be handled by viewport's own mousedown
+        });
+    </script>
+
+</body>
+</html> 

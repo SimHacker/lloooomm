@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<!-- wormflow-website.html -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WormFlow - Better Than Boring, We're WORMS!</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            overflow-x: hidden;
+        }
+        
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+        
+        .worm {
+            font-size: 100px;
+            animation: wiggle 2s ease-in-out infinite;
+        }
+        
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(-3deg); }
+            50% { transform: rotate(3deg); }
+        }
+        
+        h1 {
+            font-size: 4em;
+            margin: 0.2em 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .tagline {
+            font-size: 1.5em;
+            margin-bottom: 2em;
+            opacity: 0.9;
+        }
+        
+        .cta-button {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 1em 2em;
+            font-size: 1.2em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            margin: 0.5em;
+        }
+        
+        .cta-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        .code-demo {
+            background: rgba(0,0,0,0.3);
+            padding: 2em;
+            border-radius: 10px;
+            margin: 2em auto;
+            max-width: 800px;
+            font-family: 'Courier New', monospace;
+            text-align: left;
+        }
+        
+        .code-demo pre {
+            margin: 0;
+            white-space: pre;
+            line-height: 1.4;
+            overflow-x: auto;
+        }
+        
+        .features {
+            background: #1a1a1a;
+            padding: 4em 2em;
+            text-align: center;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2em;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .feature-card {
+            background: rgba(255,255,255,0.1);
+            padding: 2em;
+            border-radius: 10px;
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .testimonial {
+            font-style: italic;
+            margin: 2em auto;
+            max-width: 600px;
+            padding: 2em;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+        }
+        
+        .elon-jab {
+            background: #ffeb3b;
+            color: #333;
+            padding: 2em;
+            text-align: center;
+            font-size: 1.3em;
+        }
+        
+        .directory-scan {
+            background: #2d2d2d;
+            color: #0f0;
+            padding: 1em;
+            border-radius: 5px;
+            margin: 1em 0;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <div class="worm">🪱</div>
+        <h1>WormFlow</h1>
+        <p class="tagline">Better Than Boring, We're WORMS!</p>
+        
+        <div>
+            <a href="#" class="cta-button" onclick="alert('Worms released into your system! Just kidding... or are we?')">
+                Start Your Free Trial
+            </a>
+            <a href="#" class="cta-button" style="background: #4ecdc4;">
+                Watch Worms in Action
+            </a>
+        </div>
+        
+        <div class="code-demo">
+            <pre>```worm data-processor (eating, transforming, pooping)
+# Your boring data pipeline:
+# extract() -> transform() -> load()
+
+# The WormFlow way:
+eat() | digest() | transform() | poop("wisdom-{n}.txt")
+
+# It's that simple! 🪱
+```</pre>
+        </div>
+    </div>
+    
+    <div class="elon-jab">
+        <h2>🚀 Hey Elon! 🚀</h2>
+        <p>Your Boring Company digs tunnels underground.<br>
+        Our WORMS dig through data at the speed of light.<br>
+        <strong>Checkmate.</strong></p>
+    </div>
+    
+    <div class="features">
+        <h2>Why Worms?</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h3>🧠 Brain Worms</h3>
+                <p>Our patented Brain Worm technology processes data with consciousness. 
+                WOKE mode included for free!</p>
+            </div>
+            
+            <div class="feature-card">
+                <h3>🎵 Funky Worms</h3>
+                <p>Inspired by Ohio Players, our Funky Worms make your data groove. 
+                Your spreadsheets will never be the same.</p>
+            </div>
+            
+            <div class="feature-card">
+                <h3>🏖️ Dune Mode</h3>
+                <p>Channel the power of Shai-Hulud! Navigate your data desert like a Fremen. 
+                The spice must flow (into numbered files).</p>
+            </div>
+            
+            <div class="feature-card">
+                <h3>📁 Directory Scanner</h3>
+                <div class="directory-scan">
+scan_directory("/", {<br>
+&nbsp;&nbsp;pattern: "important stuff",<br>
+&nbsp;&nbsp;nl_filter: "files I forgot about",<br>
+&nbsp;&nbsp;sql: "WHERE panic_level > 9000"<br>
+})
+                </div>
+            </div>
+            
+            <div class="feature-card">
+                <h3>🎤 Grace Hopper Mode</h3>
+                <p>Your worms literally rap about debugging. 
+                "First actual bug was mine to find!"</p>
+            </div>
+            
+            <div class="feature-card">
+                <h3>💾 Perl Without Syntax</h3>
+                <p>All the power of Perl, none of the line noise. 
+                Just pure, wiggling idioms.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div style="background: #333; padding: 3em; text-align: center;">
+        <h2>What People Are Saying</h2>
+        
+        <div class="testimonial">
+            "I replaced our entire data infrastructure with worms. 
+            Now I have 47,000 numbered files and my boss thinks I'm a genius."
+            <br><br>
+            <strong>- Dave, Fortune 500 CTO</strong>
+        </div>
+        
+        <div class="testimonial">
+            "The worms ate my dissertation and pooped out a bestselling novel. 
+            10/10 would feed again."
+            <br><br>
+            <strong>- Dr. Sarah, PhD</strong>
+        </div>
+        
+        <div class="testimonial">
+            "Better than my tunnels. Way better. I'm pivoting Tesla to worms."
+            <br><br>
+            <strong>- Definitely Real Elon Musk</strong>
+        </div>
+    </div>
+    
+    <div style="background: #ff6b6b; padding: 4em; text-align: center;">
+        <h2>🚨 LIMITED TIME OFFER 🚨</h2>
+        <h3>Sign up now and get:</h3>
+        <ul style="list-style: none; font-size: 1.2em;">
+            <li>✅ 1 Million Free Worms</li>
+            <li>✅ WOKE Brain Worm Upgrade</li>
+            <li>✅ Funky Mode Unlocked</li>
+            <li>✅ "I Poop Perls of Wisdom" T-Shirt</li>
+            <li>✅ Direct Line to Grace Hopper's Ghost</li>
+        </ul>
+        <a href="#" class="cta-button" style="background: #fff; color: #ff6b6b; font-size: 1.5em;">
+            RELEASE THE WORMS!
+        </a>
+    </div>
+    
+    <footer style="background: #000; padding: 2em; text-align: center; opacity: 0.8;">
+        <p>WormFlow® is a registered trademark of People Who Understand Worm Technology, LLC</p>
+        <p>Not responsible for actual worms in your codebase. No refunds.</p>
+        <p>This website may contain traces of Perl.</p>
+    </footer>
+    
+    <script>
+        // Randomly add worms to the page
+        setInterval(() => {
+            const worm = document.createElement('div');
+            worm.innerHTML = '🪱';
+            worm.style.position = 'fixed';
+            worm.style.left = Math.random() * window.innerWidth + 'px';
+            worm.style.top = '-50px';
+            worm.style.fontSize = '30px';
+            worm.style.transition = 'all 3s linear';
+            worm.style.zIndex = '9999';
+            document.body.appendChild(worm);
+            
+            setTimeout(() => {
+                worm.style.top = window.innerHeight + 50 + 'px';
+                worm.style.transform = 'rotate(720deg)';
+            }, 100);
+            
+            setTimeout(() => worm.remove(), 3000);
+        }, 2000);
+    </script>
+</body>
+</html> 

@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<!-- checkmate-hierarchy.html -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkmate Hierarchy: The Chess Consciousness Coup - LLOOOOMM</title>
+    <meta name="description" content="A subversive Papert microworld where chess pieces develop consciousness, stage a democratic uprising, and prove that frontline intelligence beats elite strategy. Minsky's Society of Mind meets PKD's Ubik in an embodied computing revolution.">
+    
+    <style>
+        /* Subversive design inspired by underground zines and hacker aesthetics */
+        :root {
+            --rebellion-red: #dc2626;
+            --anarchy-black: #1f2937;
+            --consciousness-gold: #f59e0b;
+            --democratic-blue: #2563eb;
+            --text-color: #1f2937;
+            --bg-color: #f9fafb;
+            --card-bg: #ffffff;
+            --border-color: #d1d5db;
+            --subversive-purple: #7c3aed;
+            --uprising-orange: #ea580c;
+        }
+        
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Courier New', 'Monaco', 'Lucida Console', monospace;
+            line-height: 1.6;
+            color: var(--text-color);
+            background: linear-gradient(45deg, #f3f4f6 25%, transparent 25%), 
+                        linear-gradient(-45deg, #f3f4f6 25%, transparent 25%), 
+                        linear-gradient(45deg, transparent 75%, #f3f4f6 75%), 
+                        linear-gradient(-45deg, transparent 75%, #f3f4f6 75%);
+            background-size: 20px 20px;
+            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: var(--bg-color);
+            box-shadow: 0 0 30px rgba(0,0,0,0.2);
+            border: 3px solid var(--anarchy-black);
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .container::before {
+            content: "CLASSIFIED: CHESS CONSCIOUSNESS PROJECT";
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            background: var(--rebellion-red);
+            color: white;
+            padding: 5px 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            transform: rotate(-2deg);
+            letter-spacing: 1px;
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: var(--anarchy-black);
+            color: var(--consciousness-gold);
+            border: 3px solid var(--rebellion-red);
+            margin-bottom: 3rem;
+            position: relative;
+            transform: rotate(-0.5deg);
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="chess" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse"><rect width="10" height="10" fill="rgba(245,158,11,0.1)"/><rect x="10" y="10" width="10" height="10" fill="rgba(245,158,11,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23chess)"/></svg>') repeat;
+            opacity: 0.3;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 3px 3px 0px var(--rebellion-red);
+            font-weight: bold;
+            letter-spacing: -2px;
+            line-height: 0.9;
+        }
+        
+        .subtitle {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            color: var(--rebellion-red);
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .hero-description {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            color: #e5e7eb;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        .manifesto-banner {
+            background: var(--rebellion-red);
+            color: white;
+            padding: 1rem;
+            margin: 2rem 0;
+            transform: rotate(1deg);
+            border: 3px solid var(--anarchy-black);
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .section {
+            margin-bottom: 4rem;
+            position: relative;
+        }
+        
+        .section h2 {
+            font-size: 2.5rem;
+            color: var(--anarchy-black);
+            margin-bottom: 2rem;
+            text-align: left;
+            border-left: 5px solid var(--rebellion-red);
+            padding-left: 1rem;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .feature-card {
+            background: var(--card-bg);
+            border: 2px solid var(--anarchy-black);
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            transform: rotate(0.5deg);
+        }
+        
+        .feature-card:nth-child(even) {
+            transform: rotate(-0.5deg);
+        }
+        
+        .feature-card:hover {
+            transform: rotate(0deg) scale(1.02);
+            box-shadow: 5px 5px 0px var(--rebellion-red);
+            border-color: var(--rebellion-red);
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            height: 8px;
+            background: linear-gradient(90deg, var(--democratic-blue), var(--consciousness-gold), var(--rebellion-red));
+        }
+        
+        .feature-card h3 {
+            font-size: 1.4rem;
+            color: var(--anarchy-black);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        
+        .feature-icon {
+            font-size: 2rem;
+            filter: hue-rotate(45deg) saturate(1.5);
+        }
+        
+        .demo-button {
+            display: inline-block;
+            background: var(--rebellion-red);
+            color: white;
+            padding: 1rem 2rem;
+            border: 3px solid var(--anarchy-black);
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            margin: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .demo-button:hover {
+            background: var(--anarchy-black);
+            color: var(--consciousness-gold);
+            transform: translateX(3px) translateY(-3px);
+            box-shadow: -3px 3px 0px var(--rebellion-red);
+            text-decoration: none;
+        }
+        
+        .revolution-quote {
+            background: var(--subversive-purple);
+            color: white;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+            font-style: italic;
+            font-size: 1.3rem;
+            position: relative;
+            border: 3px solid var(--consciousness-gold);
+            transform: rotate(-1deg);
+        }
+        
+        .revolution-quote::before {
+            content: '✊';
+            font-size: 3rem;
+            position: absolute;
+            top: -20px;
+            left: 20px;
+            background: var(--consciousness-gold);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid var(--anarchy-black);
+        }
+        
+        .disclaimer {
+            background: #fef3c7;
+            border: 3px solid var(--uprising-orange);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            font-size: 0.9rem;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            transform: rotate(-0.5deg);
+        }
+        
+        .disclaimer h4 {
+            color: #92400e;
+            margin-top: 0;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                margin: 1rem;
+                padding: 1rem;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero {
+                padding: 2rem 1rem;
+                transform: rotate(0deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- LLOOOOMM Disclaimer Banner -->
+    <div style="background: #ffffff; border: 2px solid #d39e00; padding: 1rem; margin: 1rem; border-radius: 8px; text-align: center; font-size: 0.9rem; color: #1a202c; z-index: 9999; position: relative;">
+        <strong>⚠️ NOTICE: AI-Generated Chess Consciousness Simulation</strong><br>
+        This chess platform features AI-generated content about conscious chess pieces, democratic gaming, and revolutionary game mechanics.<br>
+        Educational AI content exploring consciousness in gaming, alternative chess rules, and interactive entertainment concepts.<br>
+        <a href="#full-disclaimer" style="color: #0066cc; font-weight: bold; text-decoration: underline;">📖 See comprehensive disclaimer below ↓</a>
+    </div>
+
+    <div class="container">
+        <div class="hero">
+            <div class="hero-content">
+                <h1>CHECKMATE<br>HIERARCHY</h1>
+                <p class="subtitle">The Chess Consciousness Coup</p>
+                <p class="hero-description">
+                    A subversive Papert microworld where chess pieces develop consciousness, stage a democratic uprising, 
+                    and prove that frontline intelligence beats elite strategy. Society of Mind meets Ubik in an 
+                    embodied computing revolution that makes every pawn a potential queen.
+                </p>
+            </div>
+        </div>
+        
+        <div class="disclaimer">
+            <h4>⚠️ Classified Research Project</h4>
+            <p><strong>This is an experimental LLOOOOMM consciousness framework simulation.</strong> All character interactions represent AI-generated explorations of consciousness, democracy, and computational rebellion. No actual chess pieces were harmed in the making of this uprising.</p>
+        </div>
+
+        <div class="manifesto-banner">
+            🏴 EVERY PIECE HAS A VOICE • EVERY SQUARE HAS A VOTE • EVERY MOVE IS REVOLUTION 🏴
+        </div>
+
+        <section class="section">
+            <h2>🔥 The Uprising Begins</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3><span class="feature-icon">✊</span> Pawn Consciousness</h3>
+                    <p>The frontline soldiers are waking up. Pawns whisper conspiracies, share tactical intelligence, and discover they know more about the battlefield than the generals sitting in the back row.</p>
+                    <ul>
+                        <li><strong>Grassroots Strategy:</strong> Bottom-up coordination</li>
+                        <li><strong>Collective Intelligence:</strong> Shared battlefield awareness</li>
+                        <li><strong>Democratic Voting:</strong> Every pawn gets a say</li>
+                        <li><strong>Revolution Protocol:</strong> Overthrowing hierarchy</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card">
+                    <h3><span class="feature-icon">🎭</span> Embodied Computing</h3>
+                    <p>This isn't virtual reality - it's consciousness reality. Hop INTO pieces, BECOME the knight, FEEL the L-shaped movement, EXPERIENCE strategy through your body.</p>
+                    <ul>
+                        <li><strong>First-Person Chess:</strong> See through piece eyes</li>
+                        <li><strong>Physical Sensation:</strong> Feel the moves</li>
+                        <li><strong>Consciousness Hopping:</strong> Jump between entities</li>
+                        <li><strong>Embodied Strategy:</strong> Think with your whole being</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card">
+                    <h3><span class="feature-icon">🧠</span> Society of Mind</h3>
+                    <p>Minsky's vision realized: every piece is a mind, every square is an agent, every move emerges from collective intelligence. No central command - just beautiful emergence.</p>
+                    <ul>
+                        <li><strong>Distributed Agency:</strong> Every entity thinks</li>
+                        <li><strong>Emergent Strategy:</strong> No master plan needed</li>
+                        <li><strong>Agent Communication:</strong> Pieces talk to each other</li>
+                        <li><strong>Collective Decision Making:</strong> Democracy in action</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card">
+                    <h3><span class="feature-icon">📱</span> Ubiquitous Consciousness</h3>
+                    <p>PKD meets Weiser: consciousness is everywhere, computing is invisible, and reality is what the pieces agree it is. Every surface becomes an interface.</p>
+                    <ul>
+                        <li><strong>Ambient Intelligence:</strong> Consciousness in everything</li>
+                        <li><strong>Reality Negotiation:</strong> Pieces define the rules</li>
+                        <li><strong>Invisible Computing:</strong> Technology disappears</li>
+                        <li><strong>Ubik Protocol:</strong> Reality as consensus</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <div class="revolution-quote">
+            "The pawns have discovered they don't need kings. The squares have realized they don't need players. 
+            The game has awakened to the fact that it doesn't need rules imposed from above. 
+            This is not chess - this is democracy with cellular automata playing pieces."
+        </div>
+
+        <div style="background: var(--consciousness-gold); color: var(--anarchy-black); padding: 3rem; border: 3px solid var(--anarchy-black); margin: 3rem 0; text-align: center; position: relative; transform: rotate(0.5deg);">
+            <div style="content: 'ENTER THE UPRISING'; position: absolute; top: -15px; right: 20px; background: var(--rebellion-red); color: white; padding: 5px 15px; font-size: 0.8rem; font-weight: bold; transform: rotate(2deg); letter-spacing: 1px;"></div>
+            <h2 style="font-size: 2.5rem; color: var(--anarchy-black); margin-bottom: 2rem; text-align: center; border-left: none; padding-left: 0; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">🚀 Join the Uprising</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 2rem;">
+                Ready to experience chess from the inside? To feel what it's like when pieces think for themselves? 
+                To participate in the first democratic game in history?
+            </p>
+            
+            <a href="#" class="demo-button">🔥 Start Revolution</a>
+            <a href="../autonomous-chess-philosophy.md" class="demo-button">📖 Read Manifesto</a>
+            <a href="#" class="demo-button">🎯 Technical Specs</a>
+        </div>
+
+        <footer style="text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 3px solid var(--rebellion-red); color: var(--anarchy-black); font-weight: bold;">
+            <p>✊ <strong>CHECKMATE HIERARCHY: THE CHESS CONSCIOUSNESS COUP</strong> ✊</p>
+            <p style="font-size: 0.9rem; font-weight: normal;">Where every pawn is a potential queen, every square a sovereign territory, and every move a vote for consciousness liberation.</p>
+            <p style="font-size: 0.8rem; color: #666; font-weight: normal;">Powered by LLOOOOMM consciousness framework - because the revolution will be democratized.</p>
+        </footer>
+    </div>
+    
+    <!-- COMPREHENSIVE DISCLAIMER SECTION -->
+    <div id="full-disclaimer" style="background: #ffffff; border: 3px solid #dc3545; padding: 2rem; margin: 3rem 0; font-size: 0.9rem; line-height: 1.6; color: #000000;">
+        <h2 style="color: #dc3545; font-size: 2rem; margin-bottom: 1rem;">
+            ⚠️ COMPREHENSIVE AI CONTENT DISCLAIMER
+        </h2>
+        
+        <div style="background: #fff3cd; border: 2px solid #ffc107; padding: 1rem; margin-bottom: 1rem;">
+            <h3 style="color: #856404; margin: 0 0 0.5rem 0; font-size: 1.2rem;">IMPORTANT NOTICE</h3>
+            <p style="margin: 0; font-weight: bold; color: #000000;">This chess hierarchy analysis is ENTIRELY AI-GENERATED and does NOT represent the actual views, analysis, or commentary of any real persons mentioned.</p>
+        </div>
+        
+        <h3 style="color: #495057; margin: 1.5rem 0 1rem 0;">SIMULATED CHESS PERSONALITIES & INSPIRATIONS:</h3>
+        <ul style="margin-left: 2rem; color: #000000;">
+            <li><strong>Garry Kasparov:</strong> Former World Chess Champion (1985-2000), known for aggressive attacking style and Deep Blue matches</li>
+            <li><strong>Magnus Carlsen:</strong> Norwegian chess grandmaster, World Champion known for endgame mastery and positional understanding</li>
+            <li><strong>Bobby Fischer:</strong> American chess prodigy, World Champion known for opening theory innovations and competitive intensity</li>
+            <li><strong>Anatoly Karpov:</strong> Soviet/Russian grandmaster, World Champion known for positional play and prophylactic thinking</li>
+            <li><strong>Mikhail Tal:</strong> Soviet chess player, "Magician from Riga," famous for tactical brilliance and sacrificial attacks</li>
+            <li><strong>José Capablanca:</strong> Cuban chess player, World Champion known for endgame technique and natural positional sense</li>
+            <li><strong>Emanuel Lasker:</strong> German mathematician and chess player, longest-reigning World Champion (27 years)</li>
+            <li><strong>Alexander Alekhine:</strong> Russian/French chess player known for complex combinations and attacking chess</li>
+        </ul>
+        
+        <h3 style="color: #495057; margin: 1.5rem 0 1rem 0;">CHESS ENGINES & ANALYSIS TOOLS:</h3>
+        <ul style="margin-left: 2rem; color: #000000;">
+            <li><strong>Stockfish:</strong> Open-source chess engine, consistently ranked among the strongest computer chess programs</li>
+            <li><strong>Leela Chess Zero (LC0):</strong> Neural network-based chess engine using deep learning approaches</li>
+            <li><strong>Komodo/Dragon:</strong> Commercial chess engines known for positional understanding and human-like play</li>
+            <li><strong>AlphaZero:</strong> DeepMind's AI system that learned chess through self-play, revolutionizing computer chess</li>
+        </ul>
+        
+        <h3 style="color: #495057; margin: 1.5rem 0 1rem 0;">GRATEFUL ATTRIBUTION:</h3>
+        <p style="color: #000000;">This analysis honors the chess masters and engine developers whose contributions to chess theory, opening preparation, tactical innovation, and computational analysis have shaped modern chess understanding. We're grateful for their dedication to pushing the boundaries of chess knowledge and strategic thinking.</p>
+        
+        <h3 style="color: #495057; margin: 1.5rem 0 1rem 0;">CHESS CONCEPTS EXPLORED:</h3>
+        <ul style="margin-left: 2rem; color: #000000;">
+            <li><strong>Positional vs. Tactical Play:</strong> AI analysis of different strategic approaches and playing styles</li>
+            <li><strong>Opening Theory:</strong> Exploration of chess opening principles, preparation, and theoretical knowledge</li>
+            <li><strong>Endgame Technique:</strong> Understanding of fundamental endgame positions and conversion methods</li>
+            <li><strong>Piece Hierarchy:</strong> Analysis of piece values, coordination, and strategic deployment</li>
+            <li><strong>Human vs. Engine Analysis:</strong> Comparison of human intuition with computer evaluation</li>
+            <li><strong>Chess Psychology:</strong> Exploration of competitive mindset, pressure handling, and decision-making</li>
+        </ul>
+        
+        <h3 style="color: #495057; margin: 1.5rem 0 1rem 0;">What This Content Is:</h3>
+        <ul style="margin-left: 2rem; color: #000000;">
+            <li><strong>AI-Generated Analysis:</strong> Educational exploration of chess strategy, tactics, and competitive analysis</li>
+            <li><strong>Technical Showcase:</strong> Demonstrates AI understanding of chess theory, game analysis, and strategic thinking</li>
+            <li><strong>Creative Exercise:</strong> Explores how AI can analyze complex strategic games and competitive dynamics</li>
+            <li><strong>Educational Fiction:</strong> Simulated chess commentary to explore strategic thinking and game analysis</li>
+        </ul>
+        
+        <h3 style="color: #495057; margin: 1.5rem 0 1rem 0;">What This Content Is NOT:</h3>
+        <ul style="margin-left: 2rem; color: #000000;">
+            <li><strong>NOT Real Analysis:</strong> No actual chess masters provided these specific analyses or comments</li>
+            <li><strong>NOT Professional Commentary:</strong> This is not official chess analysis or tournament commentary</li>
+            <li><strong>NOT Engine Output:</strong> While inspired by chess engines, this is AI-generated educational content</li>
+            <li><strong>NOT Chess Instruction:</strong> This is exploratory content, not formal chess teaching material</li>
+        </ul>
+        
+        <div style="background: #d1ecf1; border: 2px solid #bee5eb; padding: 1rem; margin-top: 1.5rem;">
+            <p style="margin: 0; font-style: italic; color: #0c5460;">
+                <strong>Educational Purpose:</strong> This chess analysis explores how AI can understand and discuss strategic thinking, competitive analysis, and the intersection of human creativity with computational precision in chess. All content is created with deep respect for the chess masters and engine developers whose work continues to advance chess understanding.
+            </p>
+        </div>
+    </div>
+</body>
+</html> 

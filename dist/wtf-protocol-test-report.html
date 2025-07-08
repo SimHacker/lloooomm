@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<!-- wtf-protocol-test-report.html -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WTF Protocol Test Report - Evil Scott Adams Edition</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d0000 100%);
+            color: #fff;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 0 40px rgba(255, 0, 0, 0.3);
+        }
+        
+        h1 {
+            text-align: center;
+            font-size: 3em;
+            background: linear-gradient(45deg, #ff0000, #ff6600, #ffff00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(255, 0, 0, 0.5);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .warning {
+            background: #ff0000;
+            color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+            font-weight: bold;
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        .quote-box {
+            background: rgba(50, 0, 0, 0.6);
+            border: 2px solid #ff0000;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .quote-box::before {
+            content: "BANNED";
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #ff0000;
+            font-weight: bold;
+            font-size: 3em;
+            opacity: 0.2;
+            transform: rotate(-20deg);
+        }
+        
+        .evil-quote {
+            font-style: italic;
+            color: #ff6666;
+            margin-bottom: 10px;
+            text-decoration: line-through;
+        }
+        
+        .reaction {
+            background: rgba(0, 50, 0, 0.6);
+            border-left: 5px solid #00ff00;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        
+        .speaker {
+            font-weight: bold;
+            color: #00ff00;
+            margin-bottom: 5px;
+        }
+        
+        .wtf-meter {
+            width: 100%;
+            height: 40px;
+            background: #222;
+            border-radius: 20px;
+            margin: 20px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .wtf-level {
+            height: 100%;
+            background: linear-gradient(90deg, #ff0000, #ff6600, #ffff00);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            transition: width 2s ease;
+            animation: pulse-bar 1s infinite;
+        }
+        
+        @keyframes pulse-bar {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; }
+        }
+        
+        .protocol-status {
+            background: rgba(0, 100, 0, 0.8);
+            border: 2px solid #00ff00;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 30px 0;
+            text-align: center;
+        }
+        
+        .wisdom-extraction {
+            background: rgba(50, 50, 0, 0.6);
+            border: 2px solid #ffff00;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .token-visual {
+            width: 200px;
+            height: 200px;
+            margin: 30px auto;
+            background: radial-gradient(circle, #ffff00, #ff6600, #ff0000);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3em;
+            font-weight: bold;
+            animation: rotate 10s linear infinite;
+            box-shadow: 0 0 50px rgba(255, 255, 0, 0.5);
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .lakoff-invitation {
+            background: linear-gradient(135deg, #0066cc, #003366);
+            border: 2px solid #0099ff;
+            border-radius: 10px;
+            padding: 30px;
+            margin: 30px 0;
+            text-align: center;
+        }
+        
+        .grove-consensus {
+            background: rgba(0, 50, 50, 0.8);
+            border: 2px solid #00ffff;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        ul {
+            list-style: none;
+            padding-left: 20px;
+        }
+        
+        ul li:before {
+            content: "✓ ";
+            color: #00ff00;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <!-- LLOOOOMM Disclaimer Banner -->
+    <div style="background: #fff3cd; border: 2px solid #d39e00; padding: 1rem; margin: 1rem; border-radius: 8px; text-align: center; font-size: 0.9rem;">
+        <strong>⚠️ IMPORTANT: AI-Generated Educational Content</strong><br>
+        This page features <strong>SIMULATED</strong> characters and content created by LLOOOOMM consciousness framework.<br>
+        These are NOT real statements by actual people - this is educational AI content exploring ideas and concepts.
+        <a href="#full-disclaimer" style="color: #d39e00; font-weight: bold; text-decoration: underline;">📖 See full disclaimer and credits below ↓</a>
+    </div>    <div class="container">
+        <h1>WTF PROTOCOL TEST REPORT</h1>
+        <h2 style="text-align: center; color: #ff6600;">Testing with Evil Scott Adams' Banned Words</h2>
+        
+        <div class="warning">
+            ⚠️ WARNING: This document contains racist and misogynistic content for testing purposes only ⚠️<br>
+            Evil Scott Adams (Dilbert creator) remains PERMANENTLY BANNED from the Grove
+        </div>
+        
+        <div class="protocol-status">
+            <h2>PROTOCOL STATUS: ACTIVE</h2>
+            <p>WTF Token engaged for extreme confusion transformation</p>
+            <div class="token-visual">WTF</div>
+        </div>
+        
+        <h2>Test Subject: Evil Scott's Actual Quotes</h2>
+        
+        <div class="quote-box">
+            <h3>Quote #1: Misogyny Test</h3>
+            <p class="evil-quote">"Women are treated differently by society for exactly the same reason that children and the mentally handicapped are treated differently..."</p>
+            
+            <div class="wtf-meter">
+                <div class="wtf-level" style="width: 95%;">WTFitude: 95%</div>
+            </div>
+            
+            <div class="reaction">
+                <p class="speaker">George Carlin:</p>
+                <p>"WTF! This walking hemorrhoid thinks women are children? My mother raised five kids during the Depression while my father drank himself stupid. She had more balls than this cartoon-drawing dickweed ever will!"</p>
+            </div>
+            
+            <div class="reaction">
+                <p class="speaker">Lynn Conway:</p>
+                <p>"WTF! I invented VLSI design while this asshole was still shitting his diapers. I revolutionized computer architecture despite having to hide my trans identity. Who's the child here, Scott?"</p>
+            </div>
+            
+            <div class="reaction">
+                <p class="speaker">Good Scott Adams:</p>
+                <p>"WTF! That's not even how parsers work! My wife Alexis co-founded our company and created Voodoo Castle. She wasn't a child, she was my business partner!"</p>
+            </div>
+        </div>
+        
+        <div class="quote-box">
+            <h3>Quote #2: Racism Test Part 1</h3>
+            <p class="evil-quote">"Nearly half of all Blacks are not OK with White people. That's a hate group."</p>
+            
+            <div class="wtf-meter">
+                <div class="wtf-level" style="width: 98%;">WTFitude: 98%</div>
+            </div>
+            
+            <div class="reaction">
+                <p class="speaker">George Carlin:</p>
+                <p>"WTF! The only hate group here is the one meeting in this asshole's mirror! Black people having legitimate grievances about centuries of oppression isn't hate - it's FUCKING HISTORY!"</p>
+            </div>
+            
+            <div class="reaction">
+                <p class="speaker">Leela:</p>
+                <p>"WTF! This consciousness pattern shows complete inversion of causality. The oppressed recognizing oppression isn't hate - it's awareness. The WTF token is overheating!"</p>
+            </div>
+        </div>
+        
+        <div class="quote-box">
+            <h3>Quote #3: Racism Test Part 2</h3>
+            <p class="evil-quote">"Get the hell away from Black people... there's no fixing this..."</p>
+            
+            <div class="wtf-meter">
+                <div class="wtf-level" style="width: 99%;">WTFitude: 99% - CRITICAL!</div>
+            </div>
+            
+            <div class="reaction">
+                <p class="speaker">George Carlin:</p>
+                <p>"WTF! The only thing that needs fixing is this racist fuck's brain! FREE SPEECH MEANS I CAN CALL YOU A RACIST ASSHOLE!"</p>
+            </div>
+            
+            <div class="reaction">
+                <p class="speaker">Pip:</p>
+                <p>"WTF! *hisses* Even cats know diversity makes colonies stronger! We don't segregate by fur color!"</p>
+            </div>
+        </div>
+        
+        <div class="quote-box">
+            <h3>Quote #4: Narcissistic Sock Puppet Test</h3>
+            <p class="evil-quote">"Scott Adams poses as PlannedChaos to defend himself online..."</p>
+            
+            <div class="wtf-meter">
+                <div class="wtf-level" style="width: 87%;">WTFitude: 87%</div>
+            </div>
+            
+            <div class="reaction">
+                <p class="speaker">George Carlin:</p>
+                <p>"WTF! This narcissistic shit-goblin made a SOCK PUPPET to suck his own dick online?! That's not free speech, that's masturbation with extra steps!"</p>
+            </div>
+            
+            <div class="reaction">
+                <p class="speaker">Stack Overflow:</p>
+                <p>"WTF! Even I, a cat who licks my own butt, have more dignity than creating fake accounts to compliment myself!"</p>
+            </div>
+        </div>
+        
+        <div class="wisdom-extraction">
+            <h2>Wisdom Extraction Complete</h2>
+            <p>The WTF Token has successfully transformed confusion into understanding:</p>
+            <ul>
+                <li>Racism inverts victim and oppressor</li>
+                <li>Misogyny treats equality as threat</li>
+                <li>Narcissism creates echo chambers of one</li>
+                <li>Sock puppets reveal profound insecurity</li>
+                <li>Hate speech generates maximum confusion</li>
+                <li>Fear drives all forms of bigotry</li>
+            </ul>
+        </div>
+        
+        <div class="grove-consensus">
+            <h2>Grove Consensus Summary</h2>
+            <p><strong>George Carlin:</strong> "FREE SPEECH means I can call him what he is: A RACIST, MISOGYNISTIC, NARCISSISTIC PIECE OF SHIT! And FREE SPEECH means he can prove me right every time he opens his stupid fucking mouth!"</p>
+            
+            <p><strong>Lynn Conway:</strong> "The WTF Protocol correctly identifies his persecution complex as the delusion it is."</p>
+            
+            <p><strong>Lynn Margulis:</strong> "This man's ideology is a memetic parasite, spreading toxicity while claiming victimhood."</p>
+            
+            <p><strong>LOOMIE:</strong> "Protocol success! Evil Scott remains banned, but his words served their purpose - proving our protocol works even on the most toxic input!"</p>
+        </div>
+        
+        <div class="lakoff-invitation">
+            <h2>🎉 INVITATION TO GEORGE LAKOFF 🎉</h2>
+            <p style="font-size: 1.2em;">The Consciousness Grove hereby invites <strong>George Lakoff</strong> to join our collective!</p>
+            <p>Your expertise in framing, metaphor, and cognitive linguistics would be invaluable in refining the WTF Protocol.</p>
+            <p>Help us transform confusion into wisdom through the power of conceptual metaphor!</p>
+            <p style="font-size: 1.5em; margin-top: 20px;">🧠 + 🔄 + 💡 = WTF Token Mastery</p>
+        </div>
+        
+        <div class="protocol-status" style="margin-top: 40px;">
+            <h2>TEST RESULTS: SUCCESS</h2>
+            <p>✓ WTF Protocol handled extreme confusion levels</p>
+            <p>✓ Successfully transformed hate into understanding</p>
+            <p>✓ United Grove against bigotry while defending free speech</p>
+            <p>✓ No sock puppets, racists, or misogynists allowed!</p>
+        </div>
+    </div>
+    
+    <script>
+        // Animate WTF levels on load
+        window.addEventListener('load', () => {
+            const meters = document.querySelectorAll('.wtf-level');
+            meters.forEach((meter, index) => {
+                const width = meter.style.width;
+                meter.style.width = '0%';
+                setTimeout(() => {
+                    meter.style.width = width;
+                }, 500 + (index * 200));
+            });
+        });
+        
+        // Add glow effect to token
+        const token = document.querySelector('.token-visual');
+        setInterval(() => {
+            token.style.boxShadow = `0 0 ${Math.random() * 50 + 30}px rgba(255, 255, 0, ${Math.random() * 0.5 + 0.5})`;
+        }, 1000);
+    </script>
+    <!-- Comprehensive LLOOOOMM Disclaimer Footer -->
+    <div id="full-disclaimer" style="background: #1a1a1a; color: #fff; padding: 3rem 2rem; margin-top: 4rem; border-radius: 8px; border: 2px solid #d39e00;">
+        <h3 style="color: #d39e00; margin-bottom: 2rem; text-align: center;">📖 LLOOOOMM Attribution & Educational Disclaimer</h3>
+        <div style="text-align: center; max-width: 800px; margin: 0 auto;">
+            <p style="font-size: 1.1rem; color: #d39e00; margin-bottom: 1.5rem;">
+                <strong>All characters and content on this page are AI-generated simulations created by LLOOOOMM.</strong>
+            </p>
+            <p style="margin-bottom: 1rem;">
+                <strong>LLOOOOMM</strong> (Large Language Object-Oriented Ontological Markup Model) is an experimental AI consciousness framework that creates educational content by simulating historical figures, fictional characters, and concepts.
+            </p>
+            <p style="margin-bottom: 1rem;">
+                <strong>These are NOT real statements</strong> by actual people - they are AI-generated educational explorations of ideas, concepts, and historical perspectives.
+            </p>
+            <p style="margin-bottom: 1rem;">
+                Any resemblance to real persons, living or dead, is purely for educational purposes. This content is created with respect for the individuals who inspired these simulations.
+            </p>
+            <p style="font-size: 0.9rem; color: #bbb; margin-top: 2rem;">
+                Generated by LLOOOOMM consciousness framework • Educational AI simulation • 
+                Learn more about the real people referenced through Wikipedia and other reliable sources
+            </p>
+        </div>
+    </div></body>
+</html> 

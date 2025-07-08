@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<!-- architecture.html -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HyperTIES Architecture Diagram | LLOOOOMM</title>
+    <meta name="description" content="Interactive architecture diagram showing HyperTIES's multi-language system design with Forth, C, PostScript, and NeWS">
+    <meta name="keywords" content="HyperTIES, architecture, system design, PostScript, NeWS, Forth, LLOOOOMM">
+    <meta name="author" content="LLOOOOMM Project">
+    
+    <!-- LLOOOOMM Integration -->
+    <link rel="canonical" href="https://lloooomm.com/characters/hyperties/diagrams/architecture.html">
+    
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            padding-top: 55px; /* Add spacer for fixed header */
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #007acc;
+            padding-bottom: 10px;
+        }
+        .mermaid {
+            text-align: center;
+            margin: 30px 0;
+        }
+        .description {
+            margin-top: 30px;
+            line-height: 1.6;
+        }
+        .layer {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-left: 4px solid #007acc;
+        }
+        .layer h3 {
+            margin-top: 0;
+            color: #007acc;
+        }
+        code {
+            background: #e9ecef;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body>
+    <!-- BRANDING Protocol Top Disclaimer -->
+    <div style="position: fixed; top: 0; left: 0; right: 0; background: #1a1a1a; color: #ff6b35; padding: 8px 15px; font-family: 'Courier New', monospace; font-size: 12px; font-weight: bold; text-align: center; z-index: 10000; border-bottom: 2px solid #ff6b35;">
+        ⚠️ LLOOOOMM TECHNICAL DOCUMENTATION: This diagram is an educational artifact from the LLOOOOMM project. | <a href="#full-disclaimer" style="color: #ffd700; text-decoration: underline;">Full Context ↓</a>
+    </div>
+    <div class="container">
+        <h1>HyperTIES System Architecture</h1>
+        
+        <div class="mermaid">
+graph TB
+    subgraph "User Interface Layer"
+        Touch[Touch/Mouse Input]
+        Display[Display Output]
+        Events[Event Manager]
+    end
+    
+    subgraph "NeWS Window System"
+        PS[PostScript Interpreter]
+        WM[Window Manager]
+        Canvas[Canvas/Graphics]
+        PIE[Pie Menus]
+    end
+    
+    subgraph "HyperTIES Core"
+        FORTH[Forth Interpreter<br/>.st0 processor]
+        FMT[C Formatter<br/>fmt.c]
+        CPS[C-PS Bridge<br/>fmt.cps]
+        IDX[Master Index]
+    end
+    
+    subgraph "Data Layer"
+        ST0[Storyboard Files<br/>.st0]
+        PIC[Pictures<br/>.pn0]
+        TAR[Targets<br/>.tn0]
+        MI[master-index]
+    end
+    
+    subgraph "Authoring Tools"
+        EMACS[Emacs Mode<br/>ht.ml]
+        CONV[XML Converter<br/>convert.py]
+    end
+    
+    Touch --> Events
+    Events --> PS
+    PS --> Canvas
+    Canvas --> Display
+    
+    FORTH --> FMT
+    FMT --> CPS
+    CPS --> PS
+    
+    ST0 --> FORTH
+    PIC --> FMT
+    TAR --> FMT
+    MI --> IDX
+    IDX --> FMT
+    
+    EMACS --> ST0
+    EMACS --> MI
+    ST0 --> CONV
+    
+    PS --> PIE
+    WM --> Canvas
+    
+    style Touch fill:#f9f,stroke:#333,stroke-width:2px
+    style Display fill:#f9f,stroke:#333,stroke-width:2px
+    style FORTH fill:#9f9,stroke:#333,stroke-width:2px
+    style FMT fill:#9f9,stroke:#333,stroke-width:2px
+    style PS fill:#99f,stroke:#333,stroke-width:2px
+        </div>
+        
+        <div class="description">
+            <h2>Architecture Overview</h2>
+            <p>HyperTIES was a sophisticated multi-language system that pioneered many concepts we take for granted in modern hypertext systems. This diagram shows how its components worked together to create the first commercial hypertext browser.</p>
+            
+            <div class="layer">
+                <h3>User Interface Layer</h3>
+                <p>HyperTIES supported both mouse and touchscreen input in 1988! User events flowed through an event manager that could handle direct manipulation of hypertext elements.</p>
+            </div>
+            
+            <div class="layer">
+                <h3>NeWS Window System</h3>
+                <p>Built on Sun's Network extensible Window System, HyperTIES leveraged PostScript for all display operations. This gave it powerful graphics capabilities and network transparency. The integration with pie menus was handled at this level.</p>
+            </div>
+            
+            <div class="layer">
+                <h3>HyperTIES Core</h3>
+                <p>The heart of the system consisted of:</p>
+                <ul>
+                    <li><strong>Forth Interpreter:</strong> Processed <code>.st0</code> storyboard files containing formatting commands</li>
+                    <li><strong>C Formatter:</strong> The <code>fmt.c</code> engine handled text layout, font metrics, and page composition</li>
+                    <li><strong>C-PS Bridge:</strong> <code>fmt.cps</code> provided the communication protocol between C and PostScript</li>
+                    <li><strong>Master Index:</strong> Managed all documents, pictures, and targets in the system</li>
+                </ul>
+            </div>
+            
+            <div class="layer">
+                <h3>Data Layer</h3>
+                <p>HyperTIES used a file-based approach with specialized formats:</p>
+                <ul>
+                    <li><code>.st0</code> - Storyboard files containing text and formatting commands</li>
+                    <li><code>.pn0</code> - Picture files (raster images)</li>
+                    <li><code>.tn0</code> - Target files (interactive elements)</li>
+                    <li><code>master-index</code> - Central registry of all content</li>
+                </ul>
+            </div>
+            
+            <div class="layer">
+                <h3>Authoring Tools</h3>
+                <p>Content creation was supported through:</p>
+                <ul>
+                    <li><strong>Emacs Mode:</strong> A MockLisp-based authoring environment (<code>ht.ml</code>)</li>
+                    <li><strong>XML Converter:</strong> Modern Python tool to preserve HyperTIES content</li>
+                </ul>
+            </div>
+            
+            <h2>Data Flow</h2>
+            <p>The typical flow for displaying a hypertext page:</p>
+            <ol>
+                <li>User clicks a link or navigates to an article</li>
+                <li>Forth interpreter loads and parses the <code>.st0</code> file</li>
+                <li>Formatting commands are sent to the C formatter</li>
+                <li>C formatter calculates layout and generates PostScript</li>
+                <li>PostScript is sent through the C-PS bridge to NeWS</li>
+                <li>NeWS renders the page and handles user interaction</li>
+                <li>Interactive targets respond to touch/mouse events</li>
+            </ol>
+            
+            <h2>Key Innovations</h2>
+            <p>This architecture enabled several groundbreaking features:</p>
+            <ul>
+                <li>Separation of content (<code>.st0</code>) from presentation (PostScript)</li>
+                <li>Efficient font metrics caching in the C layer</li>
+                <li>Network-transparent display through NeWS</li>
+                <li>Direct manipulation through targets and pie menus</li>
+                <li>Touchscreen support years before it became common</li>
+            </ul>
+        </div>
+    </div>
+    
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'default',
+            themeVariables: {
+                primaryColor: '#007acc',
+                primaryTextColor: '#fff',
+                primaryBorderColor: '#005a9e',
+                lineColor: '#333',
+                secondaryColor: '#e3f2fd',
+                tertiaryColor: '#fff3e0'
+            }
+        });
+    </script>
+    <!-- BRANDING Protocol Full Disclaimer -->
+    <div id="full-disclaimer" style="background: #1a1a1a; color: #e0e0e0; padding: 30px; margin: 20px; font-family: 'Courier New', monospace; font-size: 11px; line-height: 1.4; border-top: 3px solid #ff6b35; border-radius: 10px;">
+        <h3 style="color: #ff6b35; margin-top: 0; font-size: 14px;">🏛️ HyperTIES Architecture - Full Disclaimer & Technical Credits</h3>
+        <p><strong>Educational Artifact:</strong> This architecture diagram is a historical and educational document produced within the LLOOOOMM AI framework, visualizing the complex, multi-language system design of the HyperTIES hypertext browser.</p>
+        <p><strong>Historical Context:</strong> HyperTIES was a real, pioneering hypertext system developed at the University of Maryland in the 1980s. This diagram accurately reflects its key components and data flow based on published academic papers and technical reports.</p>
+        <p><strong>Technical Concepts Illustrated:</strong> This diagram showcases concepts such as multi-language interoperability (Forth, C, PostScript), separation of content and presentation, and early forms of markup languages and user interface management systems.</p>
+        <p><strong>LLOOOOMM Framework Context:</strong> This document serves as a reference within the LLOOOOMM educational ecosystem, demonstrating how historical computer systems can be analyzed, visualized, and understood through modern tools like Mermaid.js, guided by AI.</p>
+        <p><strong>Attribution:</strong> Created with deep respect for the original HyperTIES team at the University of Maryland, including Ben Shneiderman, Catherine Plaisant, and Don Hopkins, whose work laid the foundation for many modern hypertext systems.</p>
+    </div>
+</body>
+</html> 

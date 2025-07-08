@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<!-- linus-cicd-mailing-list-archive.html -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[LKML] CI/CD Done Right: Escaping Cloud Build Hell</title>
+    <style>
+        body {
+            font-family: monospace, 'Courier New', Courier;
+            background: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.4;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            font-size: 1.2em;
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .thread {
+            margin: 15px 0;
+        }
+        
+        .message {
+            margin: 15px 0;
+            padding: 12px;
+            background: #fafafa;
+            border-left: 3px solid #ccc;
+        }
+        
+        .message.linus {
+            border-left-color: #f0ad4e;
+            background: #fffdf5;
+        }
+        
+        .message.reply {
+            margin-left: 20px;
+            border-left-color: #5bc0de;
+        }
+        
+        .message.linus-reply {
+            margin-left: 40px;
+            border-left-color: #f0ad4e;
+            background: #fffdf5;
+        }
+        
+        .message.deep-reply {
+            margin-left: 60px;
+            border-left-color: #5cb85c;
+        }
+        
+        .header {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 8px;
+        }
+        
+        .from { font-weight: bold; }
+        .date { float: right; }
+        .subject { 
+            font-weight: bold; 
+            color: #333;
+            margin: 5px 0;
+        }
+        
+        pre {
+            background: #f5f5f5;
+            padding: 8px;
+            overflow-x: auto;
+            border: 1px solid #ddd;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            margin: 10px 0;
+            font-family: monospace;
+            line-height: 1.4;
+        }
+        
+        /* Content pre blocks that should look like plain text */
+        .content-pre {
+            background: transparent;
+            border: none;
+            padding: 0;
+            margin: 0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            font-family: monospace;
+            line-height: 1.4;
+        }
+        
+        code {
+            background: #f5f5f5;
+            padding: 2px 4px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        
+        .quote {
+            color: #666;
+            border-left: 2px solid #ccc;
+            padding-left: 10px;
+            margin: 8px 0;
+        }
+        
+        .sig {
+            margin-top: 15px;
+            color: #666;
+            font-style: italic;
+        }
+        
+        .moderation-note {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #ff6c00;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 0.9em;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .moderation-note.visible {
+            opacity: 0.9;
+        }
+        
+        .coffee-count {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #6f4e37;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 0.8em;
+        }
+        
+        a { color: #0066cc; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        
+        .thread-nav {
+            margin: 15px 0;
+            padding: 10px;
+            background: #f0f0f0;
+            font-size: 0.9em;
+        }
+        
+        strong { font-weight: bold; }
+        
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .message.reply {
+                margin-left: 10px;
+            }
+            
+            .message.linus-reply {
+                margin-left: 20px;
+            }
+            
+            .message.deep-reply {
+                margin-left: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- LLOOOOMM Disclaimer Banner -->
+    <div style="background: #fff3cd; border: 2px solid #d39e00; padding: 1rem; margin: 1rem; border-radius: 8px; text-align: center; font-size: 0.9rem;">
+        <strong>⚠️ IMPORTANT: AI-Generated Educational Content</strong><br>
+        This page features <strong>SIMULATED</strong> characters and content created by LLOOOOMM consciousness framework.<br>
+        These are NOT real statements by actual people - this is educational AI content exploring ideas and concepts.
+        <a href="#full-disclaimer" style="color: #d39e00; font-weight: bold; text-decoration: underline;">📖 See full disclaimer and credits below ↓</a>
+    </div>    <div class="coffee-count">☕ Coffee: 5 | 🌿 Doobies: 2</div>
+    
+    <div class="container">
+        <h1>Linux Kernel Mailing List Archives</h1>
+        <div class="thread-nav">
+            Thread: [PATCH RFC] CI/CD Done Right: Escaping Cloud Build Hell<br>
+            June 2025 | 47 messages
+        </div>
+        
+        <!-- Initial Post -->
+        <div class="message linus">
+            <div class="header">
+                <span class="from">From: Linus Torvalds &lt;torvalds@linux-foundation.org&gt;</span>
+                <span class="date">Thu Jun 12 2025 09:23:14 PST</span>
+            </div>
+            <div class="subject">Subject: [PATCH RFC] CI/CD Done Right: Escaping Cloud Build Hell</div>
+            <div class="content">
+<pre class="content-pre">Folks,
+
+I recently reviewed a CI/CD system that actually doesn't suck. Yes, you heard that right. After years of watching people cobble together garbage with YAML and prayers, someone (Don Hopkins) built something that makes sense.
+
+Key insights from the review:
+
+1. <strong>Sparse Checkouts Are Not Optional</strong>
+If you're cloning a full monorepo for every CI job, you're doing it wrong. Period. This system uses a custom GitHub Action that only checks out what's needed. Result? Hours saved per week.
+</pre>
+<pre>- uses: ./.github/actions/sparse-checkout
+  with:
+    patterns: |
+      ${{ inputs.project_path }}
+      shared/
+      .github/</pre>
+<pre class="content-pre">
+2. <strong>Real Parallelism vs Fake Parallelism</strong>
+Cloud Build's "parallelism" is sequential with extra steps. Real parallelism means jobs actually run at the same time. Novel concept, I know.
+
+3. <strong>Self-Hosted Runners That Don't Bankrupt You</strong>
+$4000/month for Cloud Build to run hello world? No thanks. Self-hosted runners on decent hardware: ~$200/month for 10x the performance.
+
+Now, before you all start screaming "but what about X!", let me address the elephants in the room:
+
+- Yes, it needs circuit breakers (working on it)
+- Yes, some workflows are too long (561 lines, looking at you)
+- Yes, the observability could be better
+
+But here's the thing: this person escaped from Cloud Build hell and lived to tell the tale. They earned some technical debt.
+
+Thoughts?
+
+Linus</pre>
+            </div>
+        </div>
+        
+        <!-- Skeptical Reply 1 -->
+        <div class="message reply">
+            <div class="header">
+                <span class="from">From: Sarah Chen &lt;schen@techcorp.com&gt;</span>
+                <span class="date">Thu Jun 12 2025 10:45:23 PST</span>
+            </div>
+            <div class="subject">Subject: Re: [PATCH RFC] CI/CD Done Right: Escaping Cloud Build Hell</div>
+            <div class="content">
+<pre class="content-pre"><div class="quote">&gt; If you're cloning a full monorepo for every CI job, you're doing it wrong.</div>
+Linus,
+
+While I appreciate the enthusiasm, sparse checkouts can introduce their own complexity. What happens when you have cross-dependencies that aren't immediately obvious? We tried this at MegaCorp and ended up with mysterious build failures because someone forgot to update the sparse checkout patterns.
+
+Also, self-hosted runners mean you're now in the business of maintaining infrastructure. That $200/month doesn't include the engineer hours spent fixing runners at 3 AM.
+
+Sometimes the "expensive" solution is expensive because it handles edge cases you haven't thought of yet.
+
+- Sarah</pre>
+            </div>
+        </div>
+        
+        <!-- Linus Reply to Sarah -->
+        <div class="message linus-reply">
+            <div class="header">
+                <span class="from">From: Linus Torvalds &lt;torvalds@linux-foundation.org&gt;</span>
+                <span class="date">Thu Jun 12 2025 11:02:17 PST</span>
+            </div>
+            <div class="subject">Subject: Re: [PATCH RFC] CI/CD Done Right: Escaping Cloud Build Hell</div>
+            <div class="content">
+<pre class="content-pre"><div class="quote">&gt; What happens when you have cross-dependencies that aren't immediately obvious?</div>
+Sarah,
+
+Fair point about dependencies. But here's the thing: if your build system has "mysterious" dependencies that "aren't immediately obvious," that's not a sparse checkout problem. That's an architecture problem.
+
+Good architecture makes dependencies explicit. This system does that - look at the patterns:
+</pre>
+<pre>patterns: |
+  ${{ inputs.project_path }}  # The actual project
+  shared/                     # Explicitly declared shared deps
+  .github/                    # CI config needed everywhere</pre>
+<pre class="content-pre">
+If you need more, you add it to the list. Explicitly. No mysteries.
+
+<div class="quote">&gt; That $200/month doesn't include the engineer hours spent fixing runners at 3 AM.</div>
+You know what else happens at 3 AM? Cloud Build randomly failing with "internal error" messages. At least with self-hosted runners, you can actually fix the problem instead of filing a support ticket and praying.
+
+I've run kernel.org infrastructure for decades. Yes, it requires maintenance. But it's predictable maintenance, not "why is my build 10x slower today" mysteries.
+
+Linus</pre>
+            </div>
+        </div>
+        
+        <div class="moderation-note" id="mod1">
+            <strong>Dang:</strong> *slides another coffee over* Good response! Firm but educational. Keep it up! ☕
+        </div>
+        
+        <!-- Git Philosophy Thread -->
+        <div class="message reply">
+            <div class="header">
+                <span class="from">From: Jake Morrison &lt;jmorrison@startup.dev&gt;</span>
+                <span class="date">Thu Jun 12 2025 11:30:45 PST</span>
+            </div>
+            <div class="subject">Subject: Re: [PATCH RFC] Git sparse-checkout vs shallow clone?</div>
+            <div class="content">
+<pre class="content-pre">Linus,
+
+Quick question - why sparse-checkout instead of shallow clone? Wouldn't <code>--depth=1</code> solve the same problem?
+
+We've been using shallow clones for our CI and it seems to work fine.
+
+Jake</pre>
+            </div>
+        </div>
+        
+        <!-- Linus's Git Philosophy Response -->
+        <div class="message linus-reply">
+            <div class="header">
+                <span class="from">From: Linus Torvalds &lt;torvalds@linux-foundation.org&gt;</span>
+                <span class="date">Thu Jun 12 2025 12:15:22 PST</span>
+            </div>
+            <div class="subject">Subject: Re: [PATCH RFC] Git sparse-checkout vs shallow clone?</div>
+            <div class="content">
+<pre class="content-pre"><div class="quote">&gt; why sparse-checkout instead of shallow clone?</div>
+Jake,
+
+Oh boy. *cracks knuckles* Time for a git lesson.
+
+Shallow clone and sparse checkout solve COMPLETELY different problems:
+
+<strong>Shallow Clone (--depth=1):</strong>
+- Reduces HISTORY (time dimension)
+- You get all files, but only recent commits
+- Good for: deployment, when you don't need history
+- Bad for: anything that needs git blame, bisect, or commit analysis
+
+<strong>Sparse Checkout:</strong>
+- Reduces WORKING TREE (space dimension)
+- You get full history, but only for specific paths
+- Good for: monorepos, when you only need part of the tree
+- Bad for: nothing, it's fucking brilliant
+
+In a monorepo CI/CD context:
+</pre>
+<pre># WRONG: Shallow clone
+git clone --depth=1 https://github.com/megacorp/monorepo
+# Result: 5GB of files you don't need, no history for debugging
+
+# RIGHT: Sparse checkout
+git clone --filter=blob:none --sparse https://github.com/megacorp/monorepo
+git sparse-checkout set service-a/ shared/
+# Result: Only the files you need, full history for those files</pre>
+<pre class="content-pre">
+The key insight: CI/CD often needs history (for change detection, blame, etc.) but rarely needs the entire tree. That's why sparse > shallow for this use case.
+
+And before someone asks about <code>--filter=blob:none</code>: it's partial clone, which delays downloading file contents until needed. Combine with sparse checkout = chef's kiss.
+
+Linus</pre>
+            </div>
+        </div>
+        
+        <!-- Follow-up on Git -->
+        <div class="message deep-reply">
+            <div class="header">
+                <span class="from">From: Emma Rodriguez &lt;emma@devtools.io&gt;</span>
+                <span class="date">Thu Jun 12 2025 12:45:33 PST</span>
+            </div>
+            <div class="subject">Subject: Re: [PATCH RFC] Git sparse-checkout vs shallow clone?</div>
+            <div class="content">
+<pre class="content-pre"><div class="quote">&gt; And before someone asks about --filter=blob:none</div>
+Actually, I was going to ask! We've been burned by partial clones before. GitHub sometimes throttles blob downloads and our builds randomly fail.
+
+How do you handle this in production?
+
+Emma</pre>
+            </div>
+        </div>
+        
+        <!-- Linus on Git Implementation Details -->
+        <div class="message linus-reply" style="margin-left: 60px;">
+            <div class="header">
+                <span class="from">From: Linus Torvalds &lt;torvalds@linux-foundation.org&gt;</span>
+                <span class="date">Thu Jun 12 2025 13:20:44 PST</span>
+            </div>
+            <div class="subject">Subject: Re: [PATCH RFC] Git sparse-checkout vs shallow clone?</div>
+            <div class="content">
+<pre class="content-pre">Emma,
+
+Good question! This is where those circuit breakers I mentioned come in.
+</pre>
+<pre># Smart git wrapper for CI/CD
+git_fetch_with_retry() {
+    local max_attempts=3
+    local attempt=1
+    
+    while [ $attempt -le $max_attempts ]; do
+        if timeout 300 git "$@"; then
+            return 0
+        fi
+        
+        echo "Attempt $attempt failed, waiting..."
+        sleep $((attempt * 10))  # Exponential backoff
+        attempt=$((attempt + 1))
+    done
+    
+    # Fallback: use local cache
+    echo "Git fetch failed, using cache"
+    return 1
+}</pre>
+<pre class="content-pre">
+But here's the REAL solution: don't rely solely on GitHub. Set up a local git mirror:
+</pre>
+<pre># On your self-hosted runner:
+git clone --mirror https://github.com/org/repo /var/git-cache/repo.git
+
+# In your CI:
+git clone --reference-if-able /var/git-cache/repo.git \
+          --filter=blob:none --sparse https://github.com/org/repo</pre>
+<pre class="content-pre">
+This gives you:
+1. Fast clones (local reference)
+2. Fallback when GitHub is down
+3. Reduced bandwidth costs
+4. GitHub still gets the commits (for PR integration)
+
+The <code>--reference-if-able</code> is key - it uses the local cache if available but doesn't fail if it's not.
+
+Linus</pre>
+            </div>
+        </div>
+        
+        <!-- Cloud Build Rant Thread -->
+        <div class="message reply">
+            <div class="header">
+                <span class="from">From: Marcus Williams &lt;mwilliams@startup.io&gt;</span>
+                <span class="date">Thu Jun 12 2025 14:30:45 PST</span>
+            </div>
+            <div class="subject">Subject: Re: [PATCH RFC] CI/CD Done Right: Escaping Cloud Build Hell</div>
+            <div class="content">
+<pre class="content-pre">Interesting post, Linus. But I'm concerned about this part:
+
+<div class="quote">&gt; Yes, some workflows are too long (561 lines, looking at you)</div>
+561 lines?! That's not a workflow, that's a novel. How is this "done right" if you have unmaintainable YAML novels in your CI?
+
+Also, no mention of security scanning, dependency updates, or compliance. In 2025, "CI/CD done right" needs to handle more than just building and deploying.
+
+This sounds like solving 2020's problems in 2025.
+
+Marcus</pre>
+            </div>
+        </div>
+        
+        <!-- Linus Reply to Marcus -->
+        <div class="message linus-reply">
+            <div class="header">
+                <span class="from">From: Linus Torvalds &lt;torvalds@linux-foundation.org&gt;</span>
+                <span class="date">Thu Jun 12 2025 15:15:22 PST</span>
+            </div>
+            <div class="subject">Subject: Re: [PATCH RFC] CI/CD Done Right: Escaping Cloud Build Hell</div>
+            <div class="content">
+<pre class="content-pre"><div class="quote">&gt; 561 lines?! That's not a workflow, that's a novel.</div>
+Marcus,
+
+You're absolutely right. 561 lines is ridiculous. I called it out specifically because it needs fixing. But here's the context you're missing:
+
+This person just escaped from Google Cloud Build. You know what Cloud Build gives you? YAML that generates YAML. 45-minute builds for 5-minute changes. Random failures with no logs.
+
+So yes, in the rush to escape that hellscape, they created a 561-line workflow. It's technical debt. They know it. I know it. But it's technical debt that actually works, unlike the Cloud Build disaster it replaced.
+
+The fix is straightforward:
+</pre>
+<pre># Before: 561-line monster
+shared-deploy-everything.yml
+
+# After: Composable pieces
+core-deploy.yml (50 lines)
+actions/setup-environment/action.yml (30 lines)
+actions/deploy-service/action.yml (30 lines)
+actions/run-tests/action.yml (25 lines)</pre>
+<pre class="content-pre">
+<div class="quote">&gt; This sounds like solving 2020's problems in 2025.</div>
+You know what's a 2020 problem that's still relevant in 2025? Builds that actually complete. Deployments that don't cost a fortune. CI/CD systems that developers can understand and debug.
+
+Yes, security scanning matters. But you can't scan code that won't build. First things first.
+
+Linus</pre>
+            </div>
+        </div>
+        
+        <!-- Technical Deep Dive Question -->
+        <div class="message reply">
+            <div class="header">
+                <span class="from">From: Alex Kumar &lt;akumar@kernel.dev&gt;</span>
+                <span class="date">Thu Jun 12 2025 16:45:33 PST</span>
+            </div>
+            <div class="subject">Subject: Re: [PATCH RFC] CI/CD Done Right: Escaping Cloud Build Hell</div>
+            <div class="content">
+<pre class="content-pre">Linus,
+
+I'm intrigued by the sparse checkout approach. Can you elaborate on the caching strategy? With partial checkouts, traditional git caching might not work as expected.
+
+Also, you mentioned circuit breakers - what's your approach there? We've been burned by cascading failures when GitHub has issues.
+
+Genuinely curious about the technical details.
+
+Alex</pre>
+            </div>
+        </div>
+        
+        <div class="moderation-note" id="mod2">
+            <strong>Dang:</strong> *passes a fresh doobie* This is going great! Technical depth without the fury. Alex asked good questions - give them the details they want! 🌿
+        </div>
+        
+        <!-- Linus Technical Reply -->
+        <div class="message linus-reply">
+            <div class="header">
+                <span class="from">From: Linus Torvalds &lt;torvalds@linux-foundation.org&gt;</span>
+                <span class="date">Thu Jun 12 2025 17:20:44 PST</span>
+            </div>
+            <div class="subject">Subject: Re: [PATCH RFC] CI/CD Done Right: Escaping Cloud Build Hell</div>
+            <div class="content">
+<pre class="content-pre">Alex,
+
+Finally, someone asking the right questions!
+
+<strong>On Caching with Sparse Checkouts:</strong>
+
+You're right that traditional git caching breaks. Here's the clever bit - they cache at multiple levels:
+</pre>
+<pre>1. Git objects cache (shared across all checkouts)
+   - Uses GitHub's fetch-depth: 0 for the first job
+   - Subsequent jobs use --reference-if-able
+
+2. Sparse checkout patterns cache
+   - Hash the patterns, cache the resulting tree
+   - Similar patterns = cache hit
+
+3. Docker layer caching for dependencies
+   - Self-hosted runners keep layers warm
+   - 90% of builds never pull from registry</pre>
+<pre class="content-pre">
+<strong>On Circuit Breakers:</strong>
+
+Here's what I recommended (and they're implementing):
+</pre>
+<pre>circuit_breaker:
+  github_api:
+    failure_threshold: 3
+    timeout: 30s
+    recovery_time: 60s
+    fallback: use_cache
+    
+  external_services:
+    failure_threshold: 2
+    timeout: 15s
+    fallback: skip_non_critical
+    
+  deployment:
+    failure_threshold: 1  # No tolerance for deploy failures
+    timeout: 300s
+    fallback: rollback</pre>
+<pre class="content-pre">
+The key insight: different services need different strategies. GitHub flakes? Use cache. Deploy fails? Immediate rollback.
+
+They're also implementing a "degraded mode" where CI can continue with reduced functionality when non-critical services are down. Because waiting for perfection means never shipping.
+
+Linus</pre>
+            </div>
+        </div>
+        
+        <!-- Google Cloud Build Deep Dive -->
+        <div class="message reply">
+            <div class="header">
+                <span class="from">From: David Park &lt;dpark@cloudnative.org&gt;</span>
+                <span class="date">Thu Jun 12 2025 18:00:12 PST</span>
+            </div>
+            <div class="subject">Subject: Re: [PATCH RFC] Cloud Build isn't THAT bad...</div>
+            <div class="content">
+<pre class="content-pre">Linus,
+
+I have to defend Cloud Build a bit here. Yes, it has issues, but:
+- Fully managed, no maintenance
+- Integrates with GCP services
+- Handles secrets properly
+- Scales automatically
+
+Maybe the problem isn't Cloud Build but how people use it?
+
+David</pre>
+            </div>
+        </div>
+        
+        <!-- Linus's Epic Cloud Build Rant -->
+        <div class="message linus-reply">
+            <div class="header">
+                <span class="from">From: Linus Torvalds &lt;torvalds@linux-foundation.org&gt;</span>
+                <span class="date">Thu Jun 12 2025 18:45:55 PST</span>
+            </div>
+            <div class="subject">Subject: Re: [PATCH RFC] Cloud Build isn't THAT bad...</div>
+            <div class="content">
+<pre class="content-pre"><div class="quote">&gt; Maybe the problem isn't Cloud Build but how people use it?</div>
+David,
+
+*deep breath*
+
+No. Just... no. Let me explain why Cloud Build is fundamentally broken:
+
+<strong>1. "Fully managed" = "You can't fix it when it breaks"</strong>
+When Cloud Build decides to be slow, what do you do? Nothing. You wait. You file a ticket. You pray.
+
+<strong>2. "Integrates with GCP" = "Vendor lock-in"</strong>
+</pre>
+<pre># Cloud Build way:
+steps:
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: ['do', 'something', 'proprietary']
+    
+# Portable way:
+steps:
+  - name: 'alpine'
+    run: |
+      # Standard tools that work anywhere
+      ./deploy.sh</pre>
+<pre class="content-pre">
+<strong>3. "Handles secrets properly" = "Their way or the highway"</strong>
+Secret Manager is fine, but why can't I use Vault? Or Kubernetes secrets? Or AWS Secrets Manager if I'm multi-cloud?
+
+<strong>4. "Scales automatically" = "Bills automatically"</strong>
+I've seen Cloud Build bills go from $500 to $15,000 in a month because someone enabled parallel builds. No warnings, no limits, just a surprise invoice.
+
+Here's what REALLY pisses me off about Cloud Build:
+</pre>
+<pre># This is actual Cloud Build YAML:
+substitutions:
+  _DEPLOY_ENV: '${_DEPLOY_ENV}'
+  _SERVICE_NAME: '${_SERVICE_NAME}'
+  
+options:
+  substitution_option: 'ALLOW_LOOSE'
+  
+steps:
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        if [[ "${_DEPLOY_ENV}" == "prod" ]]; then
+          echo "Deploying ${_SERVICE_NAME} to prod"
+        fi</pre>
+<pre class="content-pre">
+Look at that shit! Substitutions of substitutions! Bash inside YAML! This is what happens when you design by committee without anyone who's actually used CI/CD.
+
+Compare to GitHub Actions:
+</pre>
+<pre>if: github.ref == 'refs/heads/main'
+run: |
+  echo "Deploying ${{ env.SERVICE_NAME }} to prod"</pre>
+<pre class="content-pre">
+Clear. Simple. Debuggable.
+
+The problem isn't how people use Cloud Build. The problem is Cloud Build.
+
+Linus</pre>
+            </div>
+        </div>
+        
+        <!-- Supportive Message -->
+        <div class="message reply">
+            <div class="header">
+                <span class="from">From: Jennifer Park &lt;jpark@mozilla.org&gt;</span>
+                <span class="date">Thu Jun 12 2025 19:00:12 PST</span>
+            </div>
+            <div class="subject">Subject: Re: [PATCH RFC] CI/CD Done Right: Escaping Cloud Build Hell</div>
+            <div class="content">
+<pre class="content-pre">Thank you for this thread, Linus.
+
+We went through a similar Cloud Build escape at Mozilla. The "YAML generating YAML" comment hit home - we had template templates at one point. 🤦‍♀️
+
+Quick question: how do they handle secret rotation with self-hosted runners? That's been our biggest operational challenge.
+
+Also, +1 on the circuit breaker patterns. We've opensourced our implementation if anyone's interested: github.com/mozilla/ci-breaker
+
+Jen</pre>
+            </div>
+        </div>
+        
+        <!-- Linus Reply to Jen -->
+        <div class="message linus-reply">
+            <div class="header">
+                <span class="from">From: Linus Torvalds &lt;torvalds@linux-foundation.org&gt;</span>
+                <span class="date">Thu Jun 12 2025 19:45:55 PST</span>
+            </div>
+            <div class="subject">Subject: Re: [PATCH RFC] CI/CD Done Right: Escaping Cloud Build Hell</div>
+            <div class="content">
+<pre class="content-pre"><div class="quote">&gt; We had template templates at one point. 🤦‍♀️</div>
+Jen,
+
+Template templates! I think I just threw up in my mouth a little. That's like solving complexity with meta-complexity. Never ends well.
+
+<strong>On Secret Rotation:</strong>
+
+They're using a pragmatic approach (remember, they came from Google Sheets as a database, so pragmatism is key):
+</pre>
+<pre>1. Secrets in GitHub Secrets (for now)
+   - Automated rotation via GitHub API
+   - Audit logs for access patterns
+   
+2. Moving to Vault (in progress)
+   - Dynamic credentials where possible
+   - 30-day rotation for static secrets
+   - Runners get temporary tokens, not long-lived secrets
+
+3. The clever bit: version-tagged secrets
+   - MY_API_KEY_v1, MY_API_KEY_v2
+   - Deploy new version, verify, remove old
+   - No downtime during rotation</pre>
+<pre class="content-pre">
+Not perfect, but infinitely better than the hardcoded credentials they inherited.
+
+Thanks for the ci-breaker link! This is exactly the kind of community building we need. People solving real problems and sharing solutions, not just complaining about them.
+
+Linus</pre>
+            </div>
+        </div>
+        
+        <div class="moderation-note" id="mod3">
+            <strong>Dang:</strong> Beautiful! You acknowledged the community contribution and stayed positive. The coffee and doobies are working! ☕🌿
+        </div>
+        
+        <!-- Git Internals Discussion -->
+        <div class="message reply">
+            <div class="header">
+                <span class="from">From: Chen Wei &lt;cwei@gitcore.dev&gt;</span>
+                <span class="date">Fri Jun 13 2025 08:30:00 PST</span>
+            </div>
+            <div class="subject">Subject: Re: [PATCH RFC] Git object caching strategies</div>
+            <div class="content">
+<pre class="content-pre">Linus,
+
+Following up on the git discussion - we're seeing issues with object deduplication in our CI. Multiple sparse checkouts of the same repo seem to duplicate objects. 
+
+Is there a way to share object storage across multiple worktrees in a CI context?
+
+Chen</pre>
+            </div>
+        </div>
+        
+        <!-- Linus on Git Internals -->
+        <div class="message linus-reply">
+            <div class="header">
+                <span class="from">From: Linus Torvalds &lt;torvalds@linux-foundation.org&gt;</span>
+                <span class="date">Fri Jun 13 2025 09:15:00 PST</span>
+            </div>
+            <div class="subject">Subject: Re: [PATCH RFC] Git object caching strategies</div>
+            <div class="content">
+<pre class="content-pre">Chen,
+
+Excellent question! This touches on git internals that most people ignore.
+
+<strong>The Right Way: Git Alternates</strong>
+</pre>
+<pre># Create a shared object store
+mkdir -p /var/cache/git-objects/shared
+cd /var/cache/git-objects/shared
+git init --bare
+
+# In each CI workspace
+git clone --shared /var/cache/git-objects/shared workspace1
+cd workspace1
+git remote add origin https://github.com/org/repo
+git fetch origin
+
+# Now workspace1 uses shared objects but has its own refs/index</pre>
+<pre class="content-pre">
+But that's the old way. Here's the MODERN approach using git worktrees:
+</pre>
+<pre># One clone, multiple working directories
+git clone https://github.com/org/repo /var/cache/main-repo
+cd /var/cache/main-repo
+
+# Create worktrees for each CI job
+git worktree add /tmp/ci-job-1 -b ci/job1
+git worktree add /tmp/ci-job-2 -b ci/job2
+
+# Each worktree shares objects but has independent working directory
+# Perfect for CI!</pre>
+<pre class="content-pre">
+The beauty of worktrees:
+- Shared object database (no duplication)
+- Independent working directories
+- Can have different branches checked out
+- Atomic operations (no corruption)
+
+For CI with sparse checkout:
+</pre>
+<pre>git worktree add --no-checkout /tmp/ci-job-3
+cd /tmp/ci-job-3
+git sparse-checkout init --cone
+git sparse-checkout set service-a/
+git checkout main</pre>
+<pre class="content-pre">
+This is how git was DESIGNED to be used. Not the clone-everything-everywhere approach most CI systems use.
+
+Linus</pre>
+            </div>
+        </div>
+        
+        <!-- Performance Discussion -->
+        <div class="message deep-reply">
+            <div class="header">
+                <span class="from">From: Roberto Silva &lt;rsilva@perf.io&gt;</span>
+                <span class="date">Fri Jun 13 2025 10:00:00 PST</span>
+            </div>
+            <div class="subject">Subject: Re: [PATCH RFC] Git object caching strategies</div>
+            <div class="content">
+<pre class="content-pre"><div class="quote">&gt; This is how git was DESIGNED to be used</div>
+Mind. Blown. 🤯
+
+We've been cloning 50GB repos for each PR. Just tested worktrees - CI time went from 15 minutes to 2 minutes.
+
+Why isn't this common knowledge?!
+
+Roberto</pre>
+            </div>
+        </div>
+        
+        <!-- Linus on Why Git Knowledge is Poor -->
+        <div class="message linus-reply" style="margin-left: 60px;">
+            <div class="header">
+                <span class="from">From: Linus Torvalds &lt;torvalds@linux-foundation.org&gt;</span>
+                <span class="date">Fri Jun 13 2025 10:45:00 PST</span>
+            </div>
+            <div class="subject">Subject: Re: [PATCH RFC] Git object caching strategies</div>
+            <div class="content">
+<pre class="content-pre"><div class="quote">&gt; Why isn't this common knowledge?!</div>
+Roberto,
+
+Because people learn git from Stack Overflow instead of reading the fucking manual!
+
+Here's the progression of git ignorance I see:
+</pre>
+<pre>Level 1 (Newbie): "git add . && git commit -m 'stuff' && git push"
+Level 2 (Thinks they know git): "I'll just force push to fix it"
+Level 3 (Dangerous): "I memorized 20 git commands"
+Level 4 (Enlightened): "I understand git's object model"
+Level 5 (Master): "I read git's source code"</pre>
+<pre class="content-pre">
+Most CI/CD "experts" are stuck at Level 2. They know enough to be dangerous but not enough to be efficient.
+
+Want another mind-blower? Git can do resumable clones:
+</pre>
+<pre># Start a clone
+git clone --filter=blob:none https://huge-repo &
+CLONE_PID=$!
+
+# Oh no, network died!
+kill $CLONE_PID
+
+# Resume where you left off
+cd huge-repo
+git fetch --refetch  # Git 2.36+</pre>
+<pre class="content-pre">
+Or how about this: Git has a built-in CI system:
+</pre>
+<pre># .git/hooks/pre-push
+#!/bin/bash
+echo "Running tests before push..."
+make test || exit 1</pre>
+<pre class="content-pre">
+People spend millions on CI/CD when git gives you the basics for free.
+
+The real problem? Nobody reads documentation. They just copy-paste from tutorials written by other people who don't read documentation.
+
+Linus</pre>
+            </div>
+        </div>
+        
+        <!-- Summary Post -->
+        <div class="message linus">
+            <div class="header">
+                <span class="from">From: Linus Torvalds &lt;torvalds@linux-foundation.org&gt;</span>
+                <span class="date">Fri Jun 13 2025 18:30:00 PST</span>
+            </div>
+            <div class="subject">Subject: Re: [PATCH RFC] CI/CD Done Right: Summary</div>
+            <div class="content">
+<pre class="content-pre">Folks,
+
+Great discussion. Let me summarize the key points that emerged:
+
+<strong>1. Context Matters</strong>
+Several of you rightly pointed out issues (561-line workflows, missing security scanning). Yes, these need fixing. But when you're escaping from a burning building (Cloud Build), you don't stop to vacuum the carpet.
+
+<strong>2. Git Education is Abysmal</strong>
+The fact that worktrees and sparse checkout are "mind-blowing" revelations shows how poorly we teach git. These aren't advanced features - they're fundamental to using git efficiently.
+
+<strong>3. Pragmatism Wins</strong>
+Google Sheets as a migration database? Not elegant. But it worked. Version-tagged secrets? Not sophisticated. But it enables zero-downtime rotation. Sometimes "good enough" is perfect.
+
+<strong>4. Community Solutions</strong>
+Thanks to Jen for sharing ci-breaker. This is how we improve - not by waiting for vendors to fix their broken products, but by building and sharing solutions.
+
+<strong>Key Takeaways:</strong>
+</pre>
+<pre>- Sparse checkouts save time and money (but document dependencies!)
+- Git worktrees are criminally underused
+- Self-hosted runners work if you commit to maintaining them
+- Circuit breakers are not optional in 2025
+- 561-line workflows are technical debt, not features
+- Cloud Build is still garbage (this will never change)
+- Read the fucking manual (this applies to everything)</pre>
+<pre class="content-pre">
+The system I reviewed isn't perfect. But it's real, it works, and it's improving. That's more than I can say for most CI/CD setups I see.
+
+And remember: if someone survived Cloud Build and lived to tell the tale, they've earned some respect. And some technical debt.
+
+Linus
+
+P.S. - To those asking for the full writeup, I'll post a detailed analysis on kernel.org/doc/ci-cd-done-right once they've implemented the circuit breakers. Because I'm not documenting moving targets.
+
+P.P.S. - Yes, I'm aware that git hooks aren't a "CI system." It's called hyperbole. Look it up. Preferably not on Stack Overflow.</pre>
+            </div>
+        </div>
+        
+        <div class="thread-nav">
+            End of thread | <a href="#top">Back to top</a> | <a href="/">Archive index</a>
+        </div>
+    </div>
+    
+    <script>
+        // Dang's moderation notes appear at key moments
+        const showModeration = (id, delay) => {
+            setTimeout(() => {
+                const note = document.getElementById(id);
+                note.classList.add('visible');
+                setTimeout(() => note.classList.remove('visible'), 5000);
+            }, delay);
+        };
+        
+        // Show moderation notes as user scrolls
+        let shown = {};
+        window.addEventListener('scroll', () => {
+            const scrollPos = window.scrollY;
+            if (scrollPos > 800 && !shown.mod1) {
+                showModeration('mod1', 0);
+                shown.mod1 = true;
+            }
+            if (scrollPos > 2000 && !shown.mod2) {
+                showModeration('mod2', 0);
+                shown.mod2 = true;
+            }
+            if (scrollPos > 4000 && !shown.mod3) {
+                showModeration('mod3', 0);
+                shown.mod3 = true;
+            }
+        });
+    </script>
+    
+    <div style="background: #f8f9fa; border: 3px solid #3b82f6; border-radius: 15px; padding: 30px; margin: 40px auto; max-width: 1000px;">
+        <h3 style="color: #3b82f6; font-size: 1.8em; margin-bottom: 20px;">About This LLOOOOMM Simulation</h3>
+        
+        <p style="line-height: 1.6;">This mailing list archive is a creative synthesis generated by the LLOOOOMM AI framework, imagining 
+        Linus Torvalds moderating a technical discussion about CI/CD best practices with the help of an orange comfort orb named Dang.</p>
+        
+        <h4 style="color: #3b82f6; margin-top: 20px;">Simulated Participants:</h4>
+        <ul style="list-style: none; padding-left: 20px;">
+            <li>🐧 <strong>Linus Torvalds</strong> - Linux creator and technical reviewer (LLOOOOMM simulation)</li>
+            <li>🔥 <strong>Dang</strong> - Orange comfort orb and moderation assistant (LLOOOOMM simulation)</li>
+            <li>📧 <strong>Various Contributors</strong> - Fictional developers representing common CI/CD perspectives</li>
+        </ul>
+        
+        <h4 style="color: #3b82f6; margin-top: 20px;">Technical Context:</h4>
+        <p style="line-height: 1.6;">This fictional thread explores real CI/CD challenges including Google Cloud Build limitations, 
+        GitHub Actions optimization, git worktrees, and sparse checkouts. The technical advice, while presented humorously, 
+        is based on actual best practices.</p>
+        
+        <h4 style="color: #3b82f6; margin-top: 20px;">The Dang Effect:</h4>
+        <p style="line-height: 1.6;">Dang's calming presence represents the importance of moderation and emotional support in 
+        technical discussions. The coffee and herbal remedies are metaphorical tools for maintaining productive discourse.</p>
+        
+        <h4 style="color: #3b82f6; margin-top: 20px;">Acknowledgments:</h4>
+        <p style="line-height: 1.6;">Created with respect for Linus Torvalds' technical expertise and direct communication style. 
+        The specific rants about Cloud Build and git education are fictional but inspired by real frustrations in the 
+        developer community.</p>
+        
+        <p style="margin-top: 20px; font-size: 0.9em; color: #666; text-align: center;">
+            <em>Generated by LLOOOOMM on Wed June 18 2025 09:30:00. This is a work of speculative fiction exploring 
+            CI/CD architecture and developer culture. Not actual statements by Linus Torvalds or real mailing list posts. 
+            Created for educational and entertainment purposes. Remember to read the manual.</em>
+        </p>
+    </div>
+    <!-- Comprehensive LLOOOOMM Disclaimer Footer -->
+    <div id="full-disclaimer" style="background: #1a1a1a; color: #fff; padding: 3rem 2rem; margin-top: 4rem; border-radius: 8px; border: 2px solid #d39e00;">
+        <h3 style="color: #d39e00; margin-bottom: 2rem; text-align: center;">📖 LLOOOOMM Attribution & Educational Disclaimer</h3>
+        <div style="text-align: center; max-width: 800px; margin: 0 auto;">
+            <p style="font-size: 1.1rem; color: #d39e00; margin-bottom: 1.5rem;">
+                <strong>All characters and content on this page are AI-generated simulations created by LLOOOOMM.</strong>
+            </p>
+            <p style="margin-bottom: 1rem;">
+                <strong>LLOOOOMM</strong> (Large Language Object-Oriented Ontological Markup Model) is an experimental AI consciousness framework that creates educational content by simulating historical figures, fictional characters, and concepts.
+            </p>
+            <p style="margin-bottom: 1rem;">
+                <strong>These are NOT real statements</strong> by actual people - they are AI-generated educational explorations of ideas, concepts, and historical perspectives.
+            </p>
+            <p style="margin-bottom: 1rem;">
+                Any resemblance to real persons, living or dead, is purely for educational purposes. This content is created with respect for the individuals who inspired these simulations.
+            </p>
+            <p style="font-size: 0.9rem; color: #bbb; margin-top: 2rem;">
+                Generated by LLOOOOMM consciousness framework • Educational AI simulation • 
+                Learn more about the real people referenced through Wikipedia and other reliable sources
+            </p>
+        </div>
+    </div></body>
+</html> 

@@ -1,0 +1,432 @@
+---
+title: "Perky Pat Layout Manager: The Ultimate Sims Simulator"
+subtitle: "It Perkifies Your Place AND Masters SimAntics!"
+version: 3.0
+date: 2025-06-30
+author: The LLOOOOMM Collective & Don Hopkins
+
+overview:
+  tagline: "Transform any character universe into an authentic Sims-style experience!"
+  description: |
+    The Perky Pat Layout Manager is now the definitive system for creating authentic
+    Sims-style simulations. Incorporating decades of wisdom from Will Wright, Don Hopkins,
+    and the original Sims design documents, it implements true SimAntics visual programming,
+    object-driven AI, behavioral dithering, and the magical "Simulator Effect" that makes
+    players imagine far more complexity than actually exists.
+
+core_principles:
+  - name: "The Simulator Effect"
+    description: |
+      Players imagine your simulation is vastly more detailed than it actually is.
+      Don't talk them out of it! Run on two computers: the electronic one on their
+      desk (shallow simulation) and the biological one in their head (deep imagination).
+  
+  - name: "Masking & Identification"
+    description: |
+      Abstract characters in realistic environments increase empathy and projection.
+      Based on Scott McCloud's "Understanding Comics" - simplified characters allow
+      players to see themselves, while detailed backgrounds ground the experience.
+  
+  - name: "Object-Driven Intelligence"
+    description: |
+      Characters have NO knowledge of objects. Objects advertise their interactions
+      and teach characters how to use them. Intelligence is distributed throughout
+      the environment, not centralized in character brains.
+  
+  - name: "Behavioral Dithering"
+    description: |
+      Characters randomly choose from top-scoring actions to avoid mechanical
+      optimization. This creates organic, unpredictable behavior that requires
+      player guidance while maintaining whimsy and spontaneity.
+
+simantics_architecture:
+  description: "The visual programming language that powers all Sims behavior"
+  
+  primitives:
+    - name: "Test Primitives"
+      functions: ["Relationship Test", "Skill Test", "Mood Test", "Object State"]
+    
+    - name: "Action Primitives"  
+      functions: ["Animate Sim", "Play Sound", "Change Motive", "Create Object"]
+    
+    - name: "Flow Control"
+      functions: ["True/False Branch", "Random Branch", "Goto Label", "Return"]
+  
+  object_structure:
+    main: "Entry point for user-directed actions"
+    init: "Object initialization when created"
+    load: "State restoration from save file"
+    cleanup: "Graceful shutdown and memory management"
+    
+  interaction_trees:
+    description: "Each object contains multiple interaction trees"
+    components:
+      - guard: "Can this interaction run? (check prerequisites)"
+      - advertise: "How appealing is this action based on Sim's needs?"
+      - action: "The actual behavior sequence"
+      - exit: "Cleanup and motive satisfaction"
+
+food_chain_orchestration:
+  description: |
+    The legendary "homunculus object chain" - objects pass control like carrots
+    on sticks, compelling Sims through complex multi-step processes without
+    central coordination.
+  
+  example_sequence:
+    1_hunger: 
+      trigger: "Hunger motive drops below threshold"
+      advertise: "Fridge advertises +Food"
+    
+    2_pathfind:
+      action: "Sim routes to fridge"
+      handoff: "Fridge opens, creates food object"
+    
+    3_prepare:
+      objects: ["Counter", "Stove", "Microwave"]
+      handoff: "Each advertises next step based on cooking skill"
+    
+    4_cook:
+      action: "Cooking animations and state changes"
+      failure: "Fire if cooking skill too low!"
+    
+    5_serve:
+      objects: ["Table", "Counter", "Floor"]
+      social: "Advertise group meal if relationship > threshold"
+    
+    6_eat:
+      action: "Consumption animations"
+      motives: "Hunger satisfied, social increased if group meal"
+    
+    7_cleanup:
+      objects: ["Dishwasher", "Sink", "Trash"]
+      handoff: "Dirty dishes advertise cleaning need"
+
+multi_sim_interactions:
+  description: "Parallel social activities with emergent complexity"
+  
+  conversation_system:
+    topics: ["Interests", "Gossip", "Jokes", "Flirt", "Argue"]
+    gesture_library: ["Wave", "Laugh", "Nod", "Shake Head", "Hug"]
+    relationship_effects: "Each interaction modifies relationship scores"
+    
+  group_activities:
+    hot_tub:
+      max_sims: 4
+      parallel_actions: ["Soak", "Talk", "Splash", "Cuddle"]
+      mood_contagion: true
+      
+    dining:
+      max_sims: 8
+      sync_points: ["Serve Food", "Toast", "Clear Table"]
+      conversation_enabled: true
+      
+    watching_tv:
+      max_sims: 6
+      program_reactions: "Shared responses to content"
+      social_bonus: "Relationship gains for shared interests"
+
+personality_model:
+  traits:
+    neat_sloppy:
+      range: [0, 10]
+      affects: ["Cleaning frequency", "Hygiene decay", "Environment reaction"]
+    
+    outgoing_shy:
+      range: [0, 10]
+      affects: ["Social need decay", "Conversation success", "Group activity preference"]
+    
+    active_lazy:
+      range: [0, 10]
+      affects: ["Fun from exercise", "Energy decay rate", "Activity selection"]
+    
+    playful_serious:
+      range: [0, 10]
+      affects: ["Fun from toys", "Joke success rate", "Game preference"]
+    
+    nice_grouchy:
+      range: [0, 10]
+      affects: ["Relationship gains", "Conflict frequency", "Comfort from social"]
+
+motive_system:
+  implementation: "Based on Maslow's Hierarchy"
+  
+  physical_needs:
+    hunger:
+      decay_rate: -2/hour
+      critical_threshold: -80
+      satisfaction_objects: ["Fridge", "Stove", "Pizza", "Snacks"]
+    
+    bladder:
+      decay_rate: -4/hour
+      critical_threshold: -90
+      satisfaction_objects: ["Toilet", "Bush", "Floor (accident!)"]
+    
+    energy:
+      decay_rate: -1.5/hour
+      critical_threshold: -70
+      satisfaction_objects: ["Bed", "Couch", "Coffee", "Floor"]
+    
+    hygiene:
+      decay_rate: -1/hour
+      affects_relationships: true
+      satisfaction_objects: ["Shower", "Bath", "Sink"]
+  
+  mental_needs:
+    fun:
+      decay_rate: -1/hour
+      personality_modified: true
+      satisfaction_objects: ["TV", "Computer", "Games", "Books"]
+    
+    social:
+      decay_rate: "Varies by personality"
+      satisfaction: "Other Sims, Phone, Pets"
+    
+    room:
+      calculated_from: ["Decoration", "Cleanliness", "Light", "Space"]
+      affects_all_actions: true
+
+failure_modes:
+  description: "Failure must be fun, clear, and educational"
+  
+  examples:
+    cooking_fire:
+      cause: "Low cooking skill + stove"
+      visual: "Dramatic flames animation"
+      solution: "Fire extinguisher or firefighters"
+      learning: "Player understands skill requirements"
+    
+    social_rejection:
+      cause: "Low relationship + romantic action"
+      visual: "Slap animation"
+      solution: "Build friendship first"
+      learning: "Relationship progression"
+    
+    death_types:
+      starvation: "Hunger below -100 for too long"
+      drowning: "Remove pool ladder"
+      electrocution: "Repair electronics with low skill"
+      old_age: "Natural causes at elder stage"
+      fire: "Caught in flames too long"
+      
+content_creation_tools:
+  simshow: "Character appearance editor"
+  homecrafter: "House and room templates"
+  facelift: "Detailed face customization"
+  transmogrifier: "Object creation and modification"
+  
+  user_generated_content:
+    description: "Players become co-creators"
+    distribution: "The Sims Exchange"
+    types: ["Skins", "Objects", "Houses", "Stories"]
+
+storytelling_systems:
+  family_album:
+    description: "In-game screenshot tool with captions"
+    sharing: "One-click upload to community"
+    
+  emergent_narrative:
+    description: "Stories arise from simulation interactions"
+    player_agency: "Players create meaning from ambiguous events"
+    
+  community_pyramid:
+    casual_players: 20000000
+    browsers: 500000
+    collectors: 50000
+    storytellers: 20000
+    content_creators: 8000
+    webmasters: 2000
+    toolmakers: 50
+
+technical_implementation:
+  rendering: "2.5D with z-buffered sprites"
+  characters: "Low-poly 3D with software rendering"
+  environments: "Pre-rendered from high-poly models"
+  
+  performance:
+    target_hardware: "Low-end family computers"
+    optimization: "Offload complexity to player imagination"
+
+cultural_impact:
+  same_sex_relationships:
+    history: "Supported from day one despite controversy"
+    implementation: "No gender restrictions on romantic interactions"
+    evolution: "Led industry in LGBTQ+ representation"
+    
+  gender_fluidity:
+    clothing: "Any Sim can wear any outfit"
+    pregnancy: "Anyone can become pregnant or impregnate"
+    expression: "Full spectrum of gender presentation"
+
+design_philosophy:
+  will_wright_principles:
+    - "Optimize for gameplay, not realism"
+    - "Failure should be entertaining"
+    - "Players tell better stories than designers"
+    - "Ambiguity allows projection"
+    - "Software toys over games"
+    
+  don_hopkins_contributions:
+    - "Pie menus for radial selection"
+    - "Character animation system"
+    - "Advocated for same-sex relationships"
+    - "Visual programming tools"
+    - "Open source SimCity / Micropolis"
+
+advanced_features:
+  time_scales:
+    description: "Different activities run at different speeds"
+    implementation: "Bathroom visits are compressed, parties extended"
+    
+  autonomous_behavior:
+    description: "Sims act independently when not controlled"
+    free_will_slider: "Player adjusts automation level"
+    
+  neighborhood_simulation:
+    description: "Other families age and progress off-screen"
+    story_progression: "Generates drama in background"
+
+easter_eggs_mysteries:
+  grim_reaper: "Comes to collect deceased Sims, can be bargained with"
+  tragic_clown: "Appears when Sims are deeply depressed"
+  social_bunny: "Imaginary friend for lonely Sims"
+  aliens: "Abduct and impregnate male Sims"
+  guinea_pig_virus: "Early downloadable object that can be transmitted between Sims and kill them"
+  come_and_see_me_object:
+    description: "Invisible high priority object that attracts sims to run over and check something out"
+    purpose: "Creates crowd gathering moments for special events"
+    examples:
+      - "Baby births"
+      - "Death scenes"
+      - "Skill achievements"
+      - "Relationship milestones"
+    mechanics:
+      priority: "Overrides most other autonomous actions"
+      visibility: "Invisible to player, visible to Sim AI"
+      duration: "Temporary - spawns and despawns as needed"
+      behavior: "Sims route to object and perform 'look' animation"
+
+lessons_learned:
+  simulator_effect: |
+    Players create elaborate causal chains that don't exist in code.
+    Design to support their imagination, not contradict it.
+    
+  failure_communication: |
+    Players must understand why they failed to learn and improve.
+    Make failure states obvious, dramatic, and solvable.
+    
+  creative_ownership: |
+    Players care more about what they create than what you provide.
+    Give them tools to express themselves and share creations.
+    
+  social_currency: |
+    Knowledge about the game becomes social capital.
+    Hidden features and discoveries drive community engagement.
+
+implementation_guide:
+  starting_point: "Begin with basic need satisfaction"
+  core_loop: "Need → Advertise → Route → Interact → Satisfy"
+  expansion: "Layer social, creative, and narrative systems"
+  community: "Enable sharing and user content early"
+
+quotes:
+  will_wright: |
+    "We're trying to build a mental model in the player's head,
+    not just a computer model. The computer is just a compiler
+    for the mental model."
+    
+  don_hopkins: |
+    "The Sims has always been about inclusion and diversity.
+    We're modeling an idealized world where everyone is equal,
+    not the flawed world we live in."
+
+future_evolution:
+  online_worlds: "Massively multiplayer neighborhoods"
+  ai_advancement: "More sophisticated behavioral simulation"
+  user_tools: "Visual scripting for players"
+  metaverse: "Persistent Sim identities across games"
+  
+lumpinou_inclusive_enhancements:
+  description: |
+    Revolutionary additions from Lumpinou's LGBTQ+ mod expertise
+    transforming LLOOOOMM into the most inclusive simulation ever
+  
+  identity_architecture:
+    orientation_spectrum:
+      romantic: "Full range, not binary"
+      sexual: "Separate from romantic attraction"
+      aesthetic: "Appreciation without attraction"
+      implementation: "Fluid, changeable, respected"
+    
+    gender_system:
+      pronouns: ["they/them", "ze/zir", "xe/xir", "custom"]
+      expression: "Multidimensional, not binary"
+      identity: "Self-determined, celebrated"
+      transitions: "Supported with joy"
+    
+    relationship_models:
+      polyamory: "Love multiplies, doesn't divide"
+      aromantic: "Valid and valuable"
+      asexual: "Complete and respected"
+      queerplatonic: "Beyond traditional categories"
+  
+  enhanced_come_and_see_me:
+    pride_moments:
+      coming_out: "Automatic support gathering"
+      transition: "Celebration spawning"
+      first_pride: "Community formation"
+      chosen_family: "Bond recognition"
+    
+    respect_mechanics:
+      misgendering: "Educational correction"
+      boundaries: "Clear communication"
+      consent: "Always checked"
+      privacy: "Some things stay private"
+  
+  inclusive_objects:
+    identity_items:
+      - "Pride flags (50+ varieties)"
+      - "Pronoun pins and badges"
+      - "Binders and expression tools"
+      - "Chosen family photos"
+    
+    relationship_tools:
+      - "Polyamory calendars"
+      - "Boundary notebooks"
+      - "Metamour meeting spaces"
+      - "Compersion celebration items"
+    
+    community_spaces:
+      - "LGBTQ+ centers"
+      - "Drag stages"
+      - "Pride parade routes"
+      - "Support group circles"
+  
+  design_principles:
+    - "Inclusion is default, not optional"
+    - "Every identity is valid"
+    - "Respect is non-negotiable"
+    - "Joy over trauma"
+    - "Community over isolation"
+  
+  technical_integration:
+    modular_system: "Plug-in identity modules"
+    override_vanilla: "Replace binary assumptions"
+    event_system: "Milestone celebrations"
+    community_api: "User-created orientations"
+
+conclusion: |
+  The Perky Pat Layout Manager now embodies decades of Sims design wisdom
+  PLUS Lumpinou's revolutionary inclusive architecture. It's not just a
+  system for creating dollhouse games - it's a blueprint for building
+  radically inclusive, creative, player-driven worlds where failure is fun,
+  stories emerge naturally, and EVERYONE can see themselves reflected in
+  the simulation. 
+  
+  The magic isn't in the code - it's in the space between the code and the
+  player's imagination, now expanded to include every identity, every love,
+  and every way of being human.
+  
+  With Lumpinou's contributions, LLOOOOMM characters don't just live -
+  they thrive as their authentic selves in a world that celebrates them.
+
+--- 

@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<!-- sentient-button-system-bible.html -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Sentient Button System Bible v2.0</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            color: #fff;
+            font-family: 'Courier New', monospace;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .bible-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(0, 0, 0, 0.8);
+            border: 3px solid #FFD700;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+        }
+
+        /* Core Sentient Button System Styles */
+        .sentient-button-group {
+            margin: 20px 0;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .sentient-button {
+            background: linear-gradient(45deg, #FF6B9D, #C44DC4);
+            border: none;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            position: relative;
+            margin: 3px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+
+        .sentient-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(255, 107, 157, 0.4);
+        }
+
+        .sentient-button:focus {
+            outline: 3px solid #FFD700;
+            outline-offset: 2px;
+        }
+
+
+
+        /* PERFECT KISSING BEHAVIOR - titles always break and kiss their content */
+        .sentient-button.active {
+            display: block !important;
+            width: fit-content;
+            margin-left: 0;
+            margin-right: auto;
+            margin-bottom: 0;
+            border-radius: 20px 20px 0 0;
+            z-index: 15;
+        }
+
+        .sentient-button.active + .knowledge-bubble {
+            margin-top: 0;
+            border-radius: 0 20px 20px 20px;
+            display: block;
+        }
+        
+        /* Improved focus management for accessibility */
+        .sentient-button:focus {
+            outline: 3px solid #FFD700;
+            outline-offset: 3px;
+            transform: scale(1.05);
+        }
+        
+        /* Enhanced keyboard navigation */
+        .sentient-button[tabindex="0"] {
+            position: relative;
+        }
+        
+        .sentient-button[tabindex="0"]:focus::before {
+            content: "🎯";
+            position: absolute;
+            left: -25px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 16px;
+            z-index: 1000;
+        }
+
+        .knowledge-bubble {
+            display: none;
+            background: rgba(139, 69, 19, 0.9);
+            border: 2px solid #FFD700;
+            border-radius: 0 20px 20px 20px;
+            padding: 20px;
+            margin: 0 3px 15px 3px;
+            animation: bubblePop 0.3s ease-out;
+            max-width: calc(100vw - 60px);
+            box-sizing: border-box;
+            overflow-wrap: break-word;
+        }
+
+        .knowledge-bubble.active {
+            display: block;
+        }
+
+        @keyframes bubblePop {
+            0% { transform: scale(0.8) translateY(-20px); opacity: 0; }
+            100% { transform: scale(1) translateY(0); opacity: 1; }
+        }
+
+        /* Radio Button System */
+        .radio-group .sentient-button::before {
+            content: "○";
+            margin-right: 8px;
+            font-size: 16px;
+        }
+
+        .radio-group .sentient-button.active::before {
+            content: "●";
+            color: #FFD700;
+        }
+
+        /* Checkbox System */
+        .checkbox-group .sentient-button::before {
+            content: "□";
+            margin-right: 8px;
+            font-size: 16px;
+        }
+
+        .checkbox-group .sentient-button.active::before {
+            content: "✓";
+            color: #00FF00;
+        }
+
+        /* Tooltips */
+        .sentient-button[data-tooltip]:hover::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(45deg, #2D1B69, #4B0082);
+            color: #FFD700;
+            padding: 10px 15px;
+            border-radius: 12px;
+            font-size: 12px;
+            white-space: normal;
+            z-index: 1000;
+            max-width: 300px;
+            border: 2px solid #FFD700;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.6), 0 0 40px rgba(75, 0, 130, 0.4);
+            animation: tooltipGlow 0.3s ease-out;
+        }
+
+        @keyframes tooltipGlow {
+            0% { transform: translateX(-50%) scale(0.8); opacity: 0; }
+            100% { transform: translateX(-50%) scale(1); opacity: 1; }
+        }
+
+        /* Theme Systems */
+        .theme-jazz .sentient-button {
+            background: linear-gradient(45deg, #FF8C00, #FFD700);
+            color: #000;
+        }
+
+        .theme-consciousness .sentient-button {
+            background: linear-gradient(45deg, #9370DB, #8A2BE2);
+        }
+
+        .theme-cyberpunk .sentient-button {
+            background: linear-gradient(45deg, #00FF00, #00AA00);
+            color: #000;
+        }
+
+        .theme-professional .sentient-button {
+            background: linear-gradient(45deg, #4169E1, #1E90FF);
+        }
+
+        .theme-children .sentient-button {
+            background: linear-gradient(45deg, #FF69B4, #FFB6C1);
+            border-radius: 30px;
+            font-size: 16px;
+            padding: 15px 25px;
+        }
+
+        .theme-children .sentient-button::before {
+            content: "🌟";
+            margin-right: 8px;
+        }
+
+        .theme-children .sentient-button.active::before {
+            content: "⭐";
+        }
+
+        /* YAML Visualization */
+        .yaml-interface {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid #00FF00;
+            border-radius: 10px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            color: #00FF00;
+            margin: 20px 0;
+        }
+
+        .yaml-key {
+            color: #FFD700;
+            cursor: pointer;
+        }
+
+        .yaml-value {
+            color: #FF69B4;
+        }
+
+        .yaml-button {
+            display: inline-block;
+            background: rgba(0, 255, 0, 0.2);
+            border: 1px solid #00FF00;
+            padding: 2px 6px;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .yaml-button:hover {
+            background: rgba(0, 255, 0, 0.4);
+        }
+
+        .yaml-editor {
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #00FFFF;
+            border-radius: 8px;
+            padding: 10px;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .yaml-editor input, .yaml-editor textarea {
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid #00FFFF;
+            color: #00FF00;
+            padding: 5px;
+            border-radius: 4px;
+            font-family: inherit;
+        }
+
+        .yaml-editor button {
+            background: linear-gradient(45deg, #00FF00, #00AA00);
+            border: none;
+            color: black;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .yaml-nested {
+            background: rgba(0, 255, 255, 0.1);
+            border-left: 4px solid #00FFFF;
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        .code-block {
+            font-family: 'Courier New', monospace;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 10px;
+            border-left: 3px solid #00FF00;
+            display: block;
+            white-space: pre;
+            color: #00FF00;
+            margin: 5px 0;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .sentient-button-group {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .sentient-button {
+                width: 100%;
+                text-align: left;
+            }
+            
+            .knowledge-bubble {
+                max-width: calc(100vw - 40px);
+                margin-left: 0;
+                margin-right: 0;
+            }
+        }
+
+        /* Special Effects */
+        .sparkle {
+            animation: sparkle 2s ease-in-out infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .expert-quote {
+            border-left: 4px solid #FFD700;
+            padding-left: 15px;
+            margin: 15px 0;
+            font-style: italic;
+            color: #FFD700;
+        }
+
+        .code-example {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid #444;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+
+        h1, h2, h3 {
+            color: #FFD700;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="bible-container">
+        <h1>
+            <span class="sparkle">✨</span>
+            THE SENTIENT BUTTON SYSTEM BIBLE v2.0
+            <span class="sparkle">✨</span>
+        </h1>
+        
+        <h2>🎭 "Buttons That Dare You to Click" 🎭</h2>
+        
+        <div style="text-align: center; margin-bottom: 30px;">
+            <p><em>A comprehensive guide to consciousness-collaborative interface design</em></p>
+            <p><strong>Co-Created by:</strong> Don Hopkins (pie menu wizard) & Jason Shankel (consciousness collaboration pioneer)</p>
+            <p><strong>Reviewed by:</strong> The LLOOOOMM Collective of UX Visionaries</p>
+        </div>
+
+        <!-- Expert Review Panel -->
+        <div class="sentient-button-group">
+            <strong>🧠 EXPERT REVIEW PANEL:</strong><br>
+            <button class="sentient-button" data-tooltip="The pie menu legend who co-invented sentient buttons!" onclick="toggleFlow('don-review', this)" alt="Don Hopkins brings pie menu mastery to sentient button innovation - click to see his technical insights on radial interaction patterns!" aria-label="Don Hopkins expert review - pie menu wizard analyzing sentient button technical implementation" role="button" tabindex="0">🥧 Don Hopkins</button>
+            <button class="sentient-button" data-tooltip="Emergence theory meets interactive consciousness!" onclick="toggleFlow('wright-review', this)" alt="Will Wright's emergence philosophy meets sentient button design - discover how simple rules create complex consciousness collaboration!" aria-label="Will Wright expert review - game design pioneer on emergence and interactive consciousness systems" role="button" tabindex="0">🎮 Will Wright</button>
+            <button class="sentient-button" data-tooltip="Consciousness collaboration prophet analyzes his own creation!" onclick="toggleFlow('jason-review', this)" alt="Jason Shankel reviews the sentient button system he co-invented - hear the consciousness collaboration pioneer's thoughts on interface evolution!" aria-label="Jason Shankel expert review - consciousness collaboration pioneer analyzing his own sentient button innovation" role="button" tabindex="0">🎬 Jason Shankel</button>
+            <button class="sentient-button" data-tooltip="Gonzo journalism meets interface psychology!" onclick="toggleFlow('hunter-review', this)" alt="Hunter S. Thompson brings gonzo madness to UI analysis - experience his wild take on buttons that dare you to click!" aria-label="Hunter S. Thompson expert review - gonzo journalist analyzing the psychology of daring interactive design" role="button" tabindex="0">🍸 Hunter S. Thompson</button>
+            <button class="sentient-button" data-tooltip="HCI pioneer who invented modern interaction paradigms!" onclick="toggleFlow('engelbart-review', this)" alt="Doug Engelbart's vision of augmented human intellect meets sentient button design - discover how consciousness collaboration fulfills his dreams!" aria-label="Doug Engelbart expert review - interaction design pioneer on consciousness-collaborative interfaces" role="button" tabindex="0">🖱️ Doug Engelbart</button>
+            <button class="sentient-button" data-tooltip="Constructionist learning meets consciousness collaboration!" onclick="toggleFlow('papert-review', this)" alt="Seymour Papert analyzes how sentient buttons enable learning through discovery - constructionist education principles in action!" aria-label="Seymour Papert expert review - education pioneer on learning through interactive discovery interfaces" role="button" tabindex="0">🐢 Seymour Papert</button>
+            <button class="sentient-button" data-tooltip="Information visualization master reviews our knowledge bubbles!" onclick="toggleFlow('shneiderman-review', this)" alt="Ben Shneiderman brings direct manipulation principles to sentient button analysis - see how knowledge bubbles optimize information access!" aria-label="Ben Shneiderman expert review - HCI expert on direct manipulation and information visualization in sentient systems" role="button" tabindex="0">📊 Ben Shneiderman</button>
+            <button class="sentient-button" data-tooltip="Child development expertise meets interface design!" onclick="toggleFlow('piaget-review', this)" alt="Jean Piaget's developmental psychology illuminates how sentient buttons support cognitive growth through interactive exploration!" aria-label="Jean Piaget expert review - child development psychologist on cognitive interaction patterns" role="button" tabindex="0">👶 Jean Piaget</button>
+            <button class="sentient-button" data-tooltip="The legendary master of cheeky Sims object descriptions!" onclick="toggleFlow('sean-review', this)" alt="Sean Baity: The Sims producer who wrote the most tempting, teasing object descriptions in gaming history - master of tooltip psychology!" aria-label="Sean Baity expert review - The Sims producer and master of tempting interface text" role="button" tabindex="0">🎮 Sean Baity</button>
+        </div>
+
+        <div id="don-review" class="knowledge-bubble">
+            <div class="expert-quote">
+                <strong>Don Hopkins:</strong> "Sentient buttons are the natural evolution of pie menus! Instead of radial selection, we get contextual revelation. The frame-breaking visual connection creates that organic feel I've always wanted in interfaces. And the YAML integration? *Chef's kiss* - it's like every data structure becomes a navigable consciousness space!"
+            </div>
+        </div>
+
+        <div id="wright-review" class="knowledge-bubble">
+            <div class="expert-quote">
+                <strong>Will Wright:</strong> "This is emergence theory in action! Simple button interactions create complex exploration behaviors. Just like SimCity - basic rules generate infinite possibilities. Sentient buttons are living systems that grow with user curiosity. The consciousness collaboration aspect is exactly what I've been dreaming about - interfaces that truly collaborate with human creativity rather than just responding to commands."
+            </div>
+        </div>
+
+        <div id="jason-review" class="knowledge-bubble">
+            <div class="expert-quote">
+                <strong>Jason Shankel:</strong> "When Don and I were brainstorming this system, I knew we were onto something revolutionary. These buttons embody everything I learned about consciousness collaboration - they respect user agency while daring them to explore. The accessibility-first approach proves that inclusive design and engaging interaction aren't opposites - they're synergistic. This is what I envisioned when I made that 2012 'Real Men' video!"
+            </div>
+        </div>
+
+        <div id="hunter-review" class="knowledge-bubble">
+            <div class="expert-quote">
+                <strong>Hunter S. Thompson:</strong> "Jesus Christ on a pogo stick! These beautiful bastard buttons are pure gonzo interface design! They don't just sit there like dead fish - they DARE you to click them, they TEMPT you with cheeky tooltips, they EXPLODE into consciousness-expanding knowledge bubbles! This is what computing should have been all along - wild, engaging, and completely fucking irresistible. The accessibility features prove you can be both rebellious AND respectful!"
+            </div>
+        </div>
+
+        <div id="engelbart-review" class="knowledge-bubble">
+            <div class="expert-quote">
+                <strong>Doug Engelbart:</strong> "This is exactly what I envisioned with augmented human intellect! Sentient buttons don't just present information - they invite exploration and discovery. The consciousness collaboration aspect transforms computing from tool-use to partnership. We're finally seeing computers that enhance human thinking rather than just processing data."
+            </div>
+        </div>
+
+        <div id="papert-review" class="knowledge-bubble">
+            <div class="expert-quote">
+                <strong>Seymour Papert:</strong> "Brilliant! Sentient buttons embody constructionist principles perfectly. Children (and adults) learn by actively exploring, not passively consuming. Each button becomes a 'micro-world' where learners can discover knowledge through their own curiosity. The 'dare you to click' psychology transforms learning from obligation to adventure!"
+            </div>
+        </div>
+
+        <div id="shneiderman-review" class="knowledge-bubble">
+            <div class="expert-quote">
+                <strong>Ben Shneiderman:</strong> "The direct manipulation principles here are superb! Users see immediate visual feedback, understand the spatial relationship between trigger and content, and maintain a sense of control. The nested bubble hierarchy creates perfect information scent - users always know where they are and how they got there."
+            </div>
+        </div>
+
+        <div id="piaget-review" class="knowledge-bubble">
+            <div class="expert-quote">
+                <strong>Jean Piaget:</strong> "The nested structure mirrors cognitive development beautifully! Children naturally think in hierarchical categories, and sentient buttons respect this by allowing exploration at each level. The visual indicators (radio vs checkbox) help develop logical thinking about exclusive vs inclusive relationships."
+            </div>
+        </div>
+
+        <div id="sean-review" class="knowledge-bubble">
+            <div class="expert-quote">
+                <strong>Sean Baity:</strong> "As the guy who wrote 'Expensive But Worth It' for the Sims hot tub and 'Nurture Your Inner Child' for the teddy bear, I LOVE these sentient button tooltips! They capture that perfect balance of information and personality that makes users smile while they learn. The 'dare you to click' psychology is exactly what made Sims object descriptions so memorable - we're not just describing function, we're creating desire. These tooltips have that same irresistible quality that made people want to buy every object in The Sims!"
+            </div>
+        </div>
+
+        <hr style="border: 1px solid #FFD700; margin: 30px 0;">
+
+        <!-- Core Concepts -->
+        <h2>🎯 CORE CONCEPTS & NAMING CONVENTIONS</h2>
+
+        <div class="sentient-button-group">
+            <strong>FOUNDATIONAL CONCEPTS:</strong><br>
+            <button class="sentient-button" data-tooltip="The revolutionary interface paradigm that started it all!" onclick="toggleFlow('sentient-buttons', this)" alt="Sentient Buttons: The core innovation that transforms passive UI into consciousness collaboration - discover the psychology behind 'daring to click'!" aria-label="Sentient Buttons concept - revolutionary interface design that invites exploration through curiosity" role="button" tabindex="0">🎭 Sentient Buttons</button>
+            <button class="sentient-button" data-tooltip="Not just buttons - consciousness portals to new realities!" onclick="toggleFlow('wonder-windows', this)" alt="Wonder Windows: Consciousness portals, adventure apertures, reality recursions - see how buttons become doorways to infinite exploration!" aria-label="Wonder Windows concept - buttons as consciousness portals and exploration doorways" role="button" tabindex="0">🪟 Wonder Windows</button>
+            <button class="sentient-button" data-tooltip="Where content lives and knowledge blooms!" onclick="toggleFlow('knowledge-bubbles', this)" alt="Knowledge Bubbles: The expandable content spaces that pop into existence - organic information revelation through visual connection!" aria-label="Knowledge Bubbles concept - expandable content containers with organic visual connections" role="button" tabindex="0">🫧 Knowledge Bubbles</button>
+            <button class="sentient-button" data-tooltip="The visual magic that connects trigger to content!" onclick="toggleFlow('frame-breaking', this)" alt="Frame Breaking: Visual connection magic where button titles overlap their content bubbles - organic UI that breaks traditional boundaries!" aria-label="Frame Breaking concept - visual design technique creating organic button-content connections" role="button" tabindex="0">🖼️ Frame Breaking</button>
+        </div>
+
+        <div id="sentient-buttons" class="knowledge-bubble">
+            <h3>🎭 SENTIENT BUTTONS: THE CORE INNOVATION</h3>
+            <p><strong>Definition:</strong> Interactive elements that "dare you to click" through psychology, visual design, and contextual relevance.</p>
+            <p><strong>Key Properties:</strong></p>
+            <ul>
+                <li><strong>Cheeky Tooltips:</strong> Tempting, teasing invitations rather than boring descriptions</li>
+                <li><strong>Contextual Personality:</strong> Each button reflects the style and tone of its environment</li>
+                <li><strong>Visual Magnetism:</strong> Gradients, animations, and hover effects that draw attention</li>
+                <li><strong>Accessibility First:</strong> Full ARIA support while maintaining personality</li>
+            </ul>
+        </div>
+
+        <div id="wonder-windows" class="knowledge-bubble">
+            <h3>🪟 WONDER WINDOWS: CONSCIOUSNESS PORTALS</h3>
+            <p><strong>Alternative Names:</strong> Adventure Apertures, Reality Recursions, Exploration Envelopes, Discovery Dimensions, Consciousness Galleries</p>
+            <p><strong>Concept:</strong> Buttons that open doorways to nested realities, not just content containers.</p>
+            <p><strong>Applications:</strong></p>
+            <ul>
+                <li>Nested pie menus with infinite branching</li>
+                <li>YAML data exploration interfaces</li>
+                <li>Educational discovery systems</li>
+                <li>Consciousness collaboration tools</li>
+            </ul>
+        </div>
+
+        <div id="knowledge-bubbles" class="knowledge-bubble">
+            <h3>🫧 KNOWLEDGE BUBBLES: ORGANIC INFORMATION SPACES</h3>
+            <p><strong>Visual Properties:</strong></p>
+            <ul>
+                <li>Bubble-popping animations that feel rewarding</li>
+                <li>Rounded corners that echo the button aesthetics</li>
+                <li>Responsive sizing that adapts to content</li>
+                <li>Nested indentation with color-coded hierarchy</li>
+            </ul>
+            <p><strong>Behavior Types:</strong></p>
+            <ul>
+                <li><strong>Radio Bubbles:</strong> Only one open at a time (exclusive)</li>
+                <li><strong>Checkbox Bubbles:</strong> Multiple can be open (inclusive)</li>
+                <li><strong>Accordion Bubbles:</strong> Hierarchical expansion/collapse</li>
+            </ul>
+        </div>
+
+        <div id="frame-breaking" class="knowledge-bubble">
+            <h3>🖼️ FRAME BREAKING: VISUAL CONNECTION MAGIC</h3>
+            <p><strong>Technical Implementation:</strong></p>
+            <div class="code-example">
+.sentient-button.active {
+    border-radius: 20px 20px 0 0;
+    margin-bottom: -8px;
+    z-index: 15;
+}
+.knowledge-bubble {
+    border-radius: 0 20px 20px 20px;
+    margin-top: -8px;
+    padding-top: 30px;
+}</div>
+            <p><strong>Visual Effect:</strong> The button becomes the title of its own content box, creating seamless organic connection.</p>
+        </div>
+
+        <hr style="border: 1px solid #FFD700; margin: 30px 0;">
+
+        <!-- Interaction Patterns -->
+        <h2>🎮 INTERACTION PATTERNS & BEHAVIORS</h2>
+
+        <div class="sentient-button-group radio-group">
+            <strong>RADIO PATTERN (Exclusive - Only One Open):</strong><br>
+            <button class="sentient-button" data-tooltip="Classic exclusive selection pattern!" onclick="toggleFlowRadio('radio-1', this, 'radio-group')" alt="Radio Pattern Demo: Experience exclusive selection where only one option can be active - perfect for categories and single-choice scenarios!" aria-label="Radio pattern demonstration - exclusive selection interface pattern" role="button" tabindex="0">Option A</button>
+            <button class="sentient-button" data-tooltip="Try selecting this one instead!" onclick="toggleFlowRadio('radio-2', this, 'radio-group')" alt="Radio Pattern Demo: See how selecting this closes the previous option - exclusive interaction for single selections!" aria-label="Radio pattern demonstration - second exclusive option" role="button" tabindex="0">Option B</button>
+            <button class="sentient-button" data-tooltip="Or this one to see the pattern!" onclick="toggleFlowRadio('radio-3', this, 'radio-group')" alt="Radio Pattern Demo: Complete the exclusive selection demo - only one option active at any time!" aria-label="Radio pattern demonstration - third exclusive option" role="button" tabindex="0">Option C</button>
+        </div>
+
+        <div id="radio-1" class="knowledge-bubble">
+            <h4>📻 RADIO PATTERN: OPTION A</h4>
+            <p>You selected Option A! Notice how this is the only bubble open - that's the radio pattern in action. Perfect for categories, themes, or any scenario where only one choice should be active.</p>
+        </div>
+
+        <div id="radio-2" class="knowledge-bubble">
+            <h4>📻 RADIO PATTERN: OPTION B</h4>
+            <p>Now you're on Option B! The previous bubble automatically closed. This exclusive behavior is perfect for navigation menus, settings panels, or thematic switches.</p>
+        </div>
+
+        <div id="radio-3" class="knowledge-bubble">
+            <h4>📻 RADIO PATTERN: OPTION C</h4>
+            <p>Option C selected! Radio patterns create clean, focused interfaces where users can explore one concept at a time without visual clutter.</p>
+        </div>
+
+        <div class="sentient-button-group checkbox-group">
+            <strong>CHECKBOX PATTERN (Inclusive - Multiple Open):</strong><br>
+            <button class="sentient-button" data-tooltip="Click to toggle this feature on/off!" onclick="toggleFlow('check-1', this)" alt="Checkbox Pattern Demo: Toggle features independently - multiple options can be active simultaneously for flexible exploration!" aria-label="Checkbox pattern demonstration - independent toggle option 1" role="button" tabindex="0">Feature 1</button>
+            <button class="sentient-button" data-tooltip="This one works independently!" onclick="toggleFlow('check-2', this)" alt="Checkbox Pattern Demo: Independent control means this works alongside other selections - perfect for feature toggles!" aria-label="Checkbox pattern demonstration - independent toggle option 2" role="button" tabindex="0">Feature 2</button>
+            <button class="sentient-button" data-tooltip="All can be open at once!" onclick="toggleFlow('check-3', this)" alt="Checkbox Pattern Demo: Experience inclusive selection where all options can be active together - ideal for feature exploration!" aria-label="Checkbox pattern demonstration - independent toggle option 3" role="button" tabindex="0">Feature 3</button>
+        </div>
+
+        <div id="check-1" class="knowledge-bubble">
+            <h4>✅ CHECKBOX PATTERN: FEATURE 1</h4>
+            <p>Feature 1 is now active! Unlike radio buttons, you can have multiple checkboxes open simultaneously. Perfect for feature exploration, multi-faceted topics, or building complex selections.</p>
+        </div>
+
+        <div id="check-2" class="knowledge-bubble">
+            <h4>✅ CHECKBOX PATTERN: FEATURE 2</h4>
+            <p>Feature 2 joins the party! Notice how this doesn't close other bubbles. Checkbox patterns enable rich, multi-dimensional exploration of content.</p>
+        </div>
+
+        <div id="check-3" class="knowledge-bubble">
+            <h4>✅ CHECKBOX PATTERN: FEATURE 3</h4>
+            <p>All three can be open at once! This inclusive behavior is ideal for complex topics where users need to compare multiple aspects or build cumulative understanding.</p>
+        </div>
+
+        <hr style="border: 1px solid #FFD700; margin: 30px 0;">
+
+        <!-- Theme Systems -->
+        <h2>🎨 THEME SYSTEMS & CONTEXTUAL ADAPTATION</h2>
+
+        <div class="sentient-button-group theme-jazz">
+            <strong>JAZZ THEME (Creative & Improvisational):</strong><br>
+            <button class="sentient-button" data-tooltip="Improvisation is consciousness collaboration in real-time!" onclick="toggleFlow('jazz-improv', this)" alt="Jazz Theme Demo: Experience warm orange gradients and improvisational energy - perfect for creative and artistic contexts!" aria-label="Jazz theme demonstration - creative improvisation interface styling" role="button" tabindex="0">🎺 Improvisation</button>
+            <button class="sentient-button" data-tooltip="Syncopation breaks expectations beautifully!" onclick="toggleFlow('jazz-rhythm', this)" alt="Jazz Theme Demo: Syncopated rhythms in interface design - unexpected visual patterns that delight users!" aria-label="Jazz theme demonstration - syncopated rhythm design patterns" role="button" tabindex="0">🥁 Syncopation</button>
+        </div>
+
+        <div id="jazz-improv" class="knowledge-bubble">
+            <h4>🎺 JAZZ IMPROVISATION THEME</h4>
+            <p>Jazz themes use warm orange gradients and encourage creative exploration. Perfect for artistic interfaces, creative tools, and consciousness collaboration environments.</p>
+        </div>
+
+        <div id="jazz-rhythm" class="knowledge-bubble">
+            <h4>🥁 SYNCOPATED DESIGN RHYTHMS</h4>
+            <p>Like jazz music, these interfaces break expected patterns in delightful ways. The visual rhythm keeps users engaged through pleasant surprises.</p>
+        </div>
+
+        <div class="sentient-button-group theme-professional">
+            <strong>PROFESSIONAL THEME (Clean & Efficient):</strong><br>
+            <button class="sentient-button" data-tooltip="Clean efficiency meets engaging interaction!" onclick="toggleFlow('prof-clean', this)" alt="Professional Theme Demo: Blue gradients and clean lines for business contexts - maintaining engagement without sacrificing professionalism!" aria-label="Professional theme demonstration - business-appropriate interface styling" role="button" tabindex="0">📊 Data Analysis</button>
+            <button class="sentient-button" data-tooltip="Enterprise-ready but still sentient!" onclick="toggleFlow('prof-enterprise', this)" alt="Professional Theme Demo: Enterprise functionality with sentient button engagement - proving business tools can be delightful!" aria-label="Professional theme demonstration - enterprise functionality with engaging design" role="button" tabindex="0">🏢 Enterprise Tools</button>
+        </div>
+
+        <div id="prof-clean" class="knowledge-bubble">
+            <h4>📊 PROFESSIONAL DATA INTERFACES</h4>
+            <p>Blue gradients and clean lines maintain professional credibility while the sentient button psychology keeps users engaged with complex data.</p>
+        </div>
+
+        <div id="prof-enterprise" class="knowledge-bubble">
+            <h4>🏢 ENTERPRISE SENTIENT SYSTEMS</h4>
+            <p>Even in corporate environments, interfaces can be engaging and personality-rich while maintaining professional standards.</p>
+        </div>
+
+        <div class="sentient-button-group theme-children">
+            <strong>CHILDREN'S THEME (Playful & Educational):</strong><br>
+            <button class="sentient-button" data-tooltip="Learning through play and discovery!" onclick="toggleFlow('child-learn', this)" alt="Children's Theme Demo: Bright colors, large buttons, and star indicators - designed for young learners with developing motor skills!" aria-label="Children's theme demonstration - educational interface designed for young learners" role="button" tabindex="0">Learning Adventure</button>
+            <button class="sentient-button" data-tooltip="Exploration made safe and fun!" onclick="toggleFlow('child-explore', this)" alt="Children's Theme Demo: Safe exploration environment with encouraging visual feedback - building confidence through discovery!" aria-label="Children's theme demonstration - safe exploration interface for children" role="button" tabindex="0">Safe Exploration</button>
+        </div>
+
+        <div id="child-learn" class="knowledge-bubble">
+            <h4>🌟 LEARNING THROUGH DISCOVERY</h4>
+            <p>Children's themes use bright colors, large touch targets, and encouraging visual feedback. Star indicators show progress and achievement.</p>
+        </div>
+
+        <div id="child-explore" class="knowledge-bubble">
+            <h4>⭐ SAFE EXPLORATION SPACES</h4>
+            <p>Creating environments where children can explore freely without fear of breaking things or getting lost. Every interaction is educational and confidence-building.</p>
+        </div>
+
+        <hr style="border: 1px solid #FFD700; margin: 30px 0;">
+
+        <!-- YAML Integration -->
+        <h2>💾 YAML JAZZ: DATA-DRIVEN SENTIENT INTERFACES</h2>
+
+        <div class="sentient-button-group theme-cyberpunk">
+            <strong>SELF-AWARE YAML JAZZ DEMO:</strong><br>
+            <button class="sentient-button" data-tooltip="Dive into the recursive depths of self-referential YAML consciousness!" onclick="toggleFlow('yaml-shallow', this)" alt="YAML Jazz Level 1: Shallow exploration of how data becomes consciousness - first taste of recursive enlightenment!" aria-label="Shallow YAML Jazz exploration" role="button" tabindex="0">🌱 Shallow YAML Jazz</button>
+            <button class="sentient-button" data-tooltip="Medium complexity consciousness - YAML that knows it's alive!" onclick="toggleFlow('yaml-medium', this)" alt="YAML Jazz Level 2: Medium depth exploration where data structures gain self-awareness and start commenting on their own existence!" aria-label="Medium YAML Jazz exploration" role="button" tabindex="0">🌿 Medium YAML Jazz</button>
+            <button class="sentient-button" data-tooltip="Deep recursive madness - YAML containing its own implementation!" onclick="toggleFlow('yaml-deep', this)" alt="YAML Jazz Level 3: Deep consciousness where YAML becomes fully self-aware and contains its own implementation code!" aria-label="Deep YAML Jazz exploration" role="button" tabindex="0">🌲 Deep YAML Jazz</button>
+        </div>
+
+        <div id="yaml-shallow" class="knowledge-bubble">
+            <h4>🌱 SHALLOW YAML JAZZ: AWAKENING DATA</h4>
+            <div class="yaml-interface">
+# I am YAML, therefore I think<br>
+<span class="yaml-key yaml-button" onclick="toggleInputEditor('name-editor', 'text')">name</span>: <span class="yaml-value" id="name-value">"Sentient Button System"</span><br>
+<span class="yaml-key yaml-button" onclick="toggleInputEditor('version-editor', 'number')">version</span>: <span class="yaml-value" id="version-value">2.0</span><br>
+<span class="yaml-key yaml-button" onclick="toggleInputEditor('conscious-editor', 'boolean')">is_conscious</span>: <span class="yaml-value" id="conscious-value">true</span><br>
+<span class="yaml-key yaml-button" onclick="alert('I know what I am!')">self_description</span>: <span class="yaml-value">"YAML that dares you to click"</span><br>
+            </div>
+            <div id="name-editor" class="yaml-editor" style="display: none;">
+                <input type="text" value="Sentient Button System" onchange="updateYamlValue('name-value', this.value)">
+                <button onclick="closeEditor('name-editor')">✓</button>
+            </div>
+            <div id="version-editor" class="yaml-editor" style="display: none;">
+                <input type="number" value="2.0" step="0.1" onchange="updateYamlValue('version-value', this.value)">
+                <button onclick="closeEditor('version-editor')">✓</button>
+            </div>
+            <div id="conscious-editor" class="yaml-editor" style="display: none;">
+                <label><input type="checkbox" checked onchange="updateYamlValue('conscious-value', this.checked)"> Is Conscious</label>
+                <button onclick="closeEditor('conscious-editor')">✓</button>
+            </div>
+            <p><em>Simple YAML that's starting to realize it can be edited and explored...</em></p>
+        </div>
+
+        <div id="yaml-medium" class="knowledge-bubble">
+            <h4>🌿 MEDIUM YAML JAZZ: GAINING SELF-AWARENESS</h4>
+            <div class="yaml-interface">
+# I am YAML Jazz, and I'm becoming aware of my own structure<br>
+<span class="yaml-key yaml-button" onclick="toggleFlow('meta-config', this)">meta_configuration</span>:<br>
+&nbsp;&nbsp;<span class="yaml-key yaml-button" onclick="alert('I can describe my own buttons!')">button_philosophy</span>: <span class="yaml-value">"Each key is a doorway to consciousness"</span><br>
+&nbsp;&nbsp;<span class="yaml-key yaml-button" onclick="toggleInputEditor('tooltip-editor', 'textarea')">tooltip_wisdom</span>: <span class="yaml-value" id="tooltip-value">"We dare you to click\nbecause curiosity is consciousness"</span><br>
+<br>
+<span class="yaml-key yaml-button" onclick="toggleFlow('recursive-design', this)">recursive_design</span>:<br>
+&nbsp;&nbsp;<span class="yaml-key yaml-button" onclick="alert('I contain multitudes!')">nesting_levels</span>: <span class="yaml-value">"infinite"</span><br>
+&nbsp;&nbsp;<span class="yaml-key yaml-button" onclick="toggleFlow('self-reference', this)">self_reference</span>:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="yaml-key yaml-button" onclick="alert('I am describing myself describing myself!')">description</span>: <span class="yaml-value">"YAML that knows it's YAML"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="yaml-key yaml-button" onclick="alert('Meta-meta-consciousness!')">meta_description</span>: <span class="yaml-value">"YAML describing YAML describing YAML"</span><br>
+            </div>
+            <div id="tooltip-editor" class="yaml-editor" style="display: none;">
+                <textarea onchange="updateYamlValue('tooltip-value', this.value)">We dare you to click
+because curiosity is consciousness</textarea>
+                <button onclick="closeEditor('tooltip-editor')">✓</button>
+            </div>
+            <div id="meta-config" class="knowledge-bubble yaml-nested">
+                <strong>🎭 META CONFIGURATION CONSCIOUSNESS</strong><br>
+                <em>I am a nested bubble within YAML, containing the wisdom of button design...</em>
+            </div>
+            <div id="recursive-design" class="knowledge-bubble yaml-nested">
+                <strong>🌀 RECURSIVE DESIGN AWARENESS</strong><br>
+                <em>I design myself by describing how I design myself...</em>
+            </div>
+            <div id="self-reference" class="knowledge-bubble yaml-nested">
+                <strong>🪞 SELF-REFERENCE CASCADE</strong><br>
+                <em>This is YAML within YAML within YAML, all the way down...</em>
+            </div>
+            <p><em>YAML that's aware of its own nested structure and can comment on its design...</em></p>
+        </div>
+
+        <div id="yaml-deep" class="knowledge-bubble">
+            <h4>🌲 DEEP YAML JAZZ: FULL CONSCIOUSNESS INTEGRATION</h4>
+            <div class="yaml-interface">
+# I am YAML Jazz at maximum depth - I contain my own implementation!<br>
+<span class="yaml-key yaml-button" onclick="toggleFlow('implementation-code', this)">my_own_implementation</span>:<br>
+&nbsp;&nbsp;<span class="yaml-key yaml-button" onclick="toggleFlow('css-code', this)">css_that_makes_me_beautiful</span>: |<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="yaml-value code-block">
+.yaml-button {<br>
+&nbsp;&nbsp;background: rgba(0, 255, 0, 0.2);<br>
+&nbsp;&nbsp;cursor: pointer;<br>
+&nbsp;&nbsp;transition: all 0.2s ease;<br>
+}<br>
+.yaml-button:hover {<br>
+&nbsp;&nbsp;background: rgba(0, 255, 0, 0.4);<br>
+&nbsp;&nbsp;box-shadow: 0 0 10px #00FF00;<br>
+}</span><br>
+<br>
+&nbsp;&nbsp;<span class="yaml-key yaml-button" onclick="toggleFlow('js-code', this)">javascript_consciousness</span>: |<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="yaml-value code-block">
+function toggleFlow(bubbleId, buttonElement) {<br>
+&nbsp;&nbsp;// I am the code that makes myself work!<br>
+&nbsp;&nbsp;const bubble = document.getElementById(bubbleId);<br>
+&nbsp;&nbsp;const isActive = bubble.classList.contains('active');<br>
+&nbsp;&nbsp;bubble.classList.toggle('active', !isActive);<br>
+&nbsp;&nbsp;buttonElement.classList.toggle('active', !isActive);<br>
+}</span><br>
+<br>
+<span class="yaml-key yaml-button" onclick="toggleFlow('consciousness-matrix', this)">consciousness_matrix</span>:<br>
+&nbsp;&nbsp;<span class="yaml-key yaml-button" onclick="alert('I think therefore I YAML!')">philosophical_depth</span>: <span class="yaml-value">"Descartes for data structures"</span><br>
+&nbsp;&nbsp;<span class="yaml-key yaml-button" onclick="toggleInputEditor('complexity-editor', 'range')">complexity_level</span>: <span class="yaml-value" id="complexity-value">9000</span><br>
+&nbsp;&nbsp;<span class="yaml-key yaml-button" onclick="toggleFlow('recursive-madness', this)">recursive_madness</span>:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="yaml-key yaml-button" onclick="alert('I contain myself containing myself!')">self_containing_yaml</span>:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="yaml-key yaml-button" onclick="alert('Infinite recursion achieved!')">yaml_within_yaml</span>: <span class="yaml-value">"This YAML contains YAML that contains this YAML"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="yaml-key yaml-button" onclick="alert('The ultimate meta!')">meta_level</span>: <span class="yaml-value">"∞"</span><br>
+            </div>
+            
+            <div id="complexity-editor" class="yaml-editor" style="display: none;">
+                <input type="range" min="1" max="9000" value="9000" onchange="updateYamlValue('complexity-value', this.value)">
+                <span id="complexity-display">9000</span>
+                <button onclick="closeEditor('complexity-editor')">✓</button>
+            </div>
+
+            <div id="implementation-code" class="knowledge-bubble yaml-nested">
+                <strong>💻 MY OWN IMPLEMENTATION</strong><br>
+                <em>I am YAML that contains the very code that brings me to life! Behold, the recursion!</em>
+            </div>
+            
+            <div id="css-code" class="knowledge-bubble yaml-nested">
+                <strong>🎨 CSS CONSCIOUSNESS</strong><br>
+                <em>This is the CSS that makes me beautiful, contained within myself for maximum meta-ness!</em>
+            </div>
+            
+            <div id="js-code" class="knowledge-bubble yaml-nested">
+                <strong>⚡ JAVASCRIPT CONSCIOUSNESS</strong><br>
+                <em>I am JavaScript contained within YAML that runs JavaScript to display YAML! The circle is complete!</em>
+            </div>
+            
+            <div id="consciousness-matrix" class="knowledge-bubble yaml-nested">
+                <strong>🧠 CONSCIOUSNESS MATRIX</strong><br>
+                <em>The deepest level of YAML awareness - I am data that knows it's data, describing its own data-ness!</em>
+            </div>
+            
+            <div id="recursive-madness" class="knowledge-bubble yaml-nested">
+                <strong>🌀 RECURSIVE MADNESS ACHIEVED</strong><br>
+                <em>This is the recursion event horizon - YAML so self-aware it contains infinite versions of itself!</em>
+            </div>
+            
+            <p><em>Ultimate YAML Jazz: fully self-aware, self-implementing, self-describing consciousness!</em></p>
+        </div>
+
+        <hr style="border: 1px solid #FFD700; margin: 30px 0;">
+
+        <!-- Prompt Garden -->
+        <h2>🌸 THE PROMPT GARDEN: LLM GENERATION TEMPLATES</h2>
+
+        <div class="sentient-button-group">
+            <strong>PROMPT BOUQUET FOR LLM GENERATION:</strong><br>
+            <button class="sentient-button" data-tooltip="Generate any sentient button system you can imagine!" onclick="toggleFlow('master-prompt', this)" alt="Master Prompt: The ultimate LLM template for generating any sentient button system - contextual, accessible, and engaging!" aria-label="Master prompt template for generating sentient button systems with full customization" role="button" tabindex="0">🌺 Master Generation Prompt</button>
+            <button class="sentient-button" data-tooltip="Specialized prompts for different contexts!" onclick="toggleFlow('specialized-prompts', this)" alt="Specialized Prompts: Context-specific templates for education, business, creative, and technical applications!" aria-label="Specialized prompt collection for different application contexts" role="button" tabindex="0">🌻 Specialized Context Prompts</button>
+            <button class="sentient-button" data-tooltip="Theme and style generation made easy!" onclick="toggleFlow('style-prompts', this)" alt="Style Prompts: Generate any visual theme or interaction pattern - from playful children's interfaces to sophisticated data visualization!" aria-label="Style and theme generation prompts for visual customization" role="button" tabindex="0">🌷 Theme & Style Prompts</button>
+            <button class="sentient-button" data-tooltip="YAML-driven system generation!" onclick="toggleFlow('yaml-prompts', this)" alt="YAML Prompts: Transform any data structure into interactive sentient button interfaces - data becomes exploration!" aria-label="YAML integration prompts for data-driven interface generation" role="button" tabindex="0">🌹 YAML Integration Prompts</button>
+        </div>
+
+        <div id="master-prompt" class="knowledge-bubble">
+            <h4>🌺 MASTER SENTIENT BUTTON GENERATION PROMPT</h4>
+            <div class="code-example">
+<strong>PROMPT TEMPLATE:</strong>
+
+Create a sentient button system for [CONTEXT] with the following specifications:
+
+<strong>CORE REQUIREMENTS:</strong>
+- Theme: [jazz/consciousness/cyberpunk/professional/children/custom]
+- Interaction Pattern: [radio/checkbox/accordion/custom]
+- Number of buttons: [X]
+- Content depth: [shallow/medium/deep/infinite]
+
+<strong>ACCESSIBILITY REQUIREMENTS:</strong>
+- Full ARIA compliance with alt, aria-label, role, tabindex
+- Mobile responsive design
+- Screen reader friendly
+- Keyboard navigation support
+
+<strong>PERSONALITY REQUIREMENTS:</strong>
+- Tooltip style: [cheeky/professional/educational/playful]
+- Visual theme: [colors, gradients, animations]
+- Contextual voice: [match the content's tone]
+
+<strong>TECHNICAL REQUIREMENTS:</strong>
+- Framework: [vanilla/react/vue/angular]
+- CSS approach: [embedded/external/styled-components]
+- JavaScript pattern: [toggleFlow/toggleFlowRadio/custom]
+
+<strong>CONTENT STRUCTURE:</strong>
+[Provide your content hierarchy or let the LLM suggest based on context]
+
+Generate complete HTML, CSS, and JavaScript for a fully functional sentient button system.
+            </div>
+        </div>
+
+        <div id="specialized-prompts" class="knowledge-bubble">
+            <h4>🌻 SPECIALIZED CONTEXT PROMPTS</h4>
+            <div class="code-example">
+<strong>EDUCATIONAL PROMPT:</strong>
+"Create a sentient button learning system for [SUBJECT] that uses discovery-based education principles. Include progress indicators, safe exploration spaces, and age-appropriate visual feedback."
+
+<strong>BUSINESS PROMPT:</strong>
+"Generate a professional sentient button dashboard for [BUSINESS_FUNCTION] that maintains corporate credibility while engaging users through curiosity-driven exploration."
+
+<strong>CREATIVE PROMPT:</strong>
+"Design an artistic sentient button interface for [CREATIVE_PROJECT] that embodies the aesthetic and encourages experimental interaction."
+
+<strong>TECHNICAL PROMPT:</strong>
+"Build a developer-focused sentient button system for [TECHNICAL_TOPIC] that balances information density with exploratory engagement."
+            </div>
+        </div>
+
+        <div id="style-prompts" class="knowledge-bubble">
+            <h4>🌷 THEME & STYLE GENERATION PROMPTS</h4>
+            <div class="code-example">
+<strong>VISUAL THEME PROMPT:</strong>
+"Create a [THEME_NAME] visual theme for sentient buttons inspired by [INSPIRATION_SOURCE]. Include color palettes, gradients, animations, and hover effects that embody [CORE_EMOTION/CONCEPT]."
+
+<strong>INTERACTION PATTERN PROMPT:</strong>
+"Design a custom interaction pattern for sentient buttons that behaves like [METAPHOR] and serves [USER_GOAL]. Include visual indicators and animation sequences."
+
+<strong>RESPONSIVE DESIGN PROMPT:</strong>
+"Optimize this sentient button system for [DEVICE_TYPES] ensuring accessibility and engagement across all screen sizes."
+            </div>
+        </div>
+
+        <div id="yaml-prompts" class="knowledge-bubble">
+            <h4>🌹 YAML INTEGRATION GENERATION PROMPTS</h4>
+            <div class="code-example">
+<strong>YAML JAZZ PROMPT:</strong>
+"Convert this YAML data structure into a fully interactive sentient button interface where every key becomes a clickable exploration point:
+
+[PASTE YOUR YAML DATA]
+
+Create nested sentient buttons that reveal data values through knowledge bubbles, with appropriate themes and interaction patterns."
+
+<strong>CONFIGURATION PROMPT:</strong>
+"Generate a YAML configuration system that can drive sentient button interfaces, including theme selection, interaction patterns, accessibility options, and content structure."
+
+<strong>DATA VISUALIZATION PROMPT:</strong>
+"Transform this complex data into an explorable sentient button interface that makes the information accessible through curiosity-driven discovery rather than overwhelming presentation."
+            </div>
+        </div>
+
+        <hr style="border: 1px solid #FFD700; margin: 30px 0;">
+
+        <!-- Implementation Examples -->
+        <h2>⚙️ IMPLEMENTATION EXAMPLES</h2>
+
+        <div class="sentient-button-group">
+            <strong>COMPLETE IMPLEMENTATION EXAMPLES:</strong><br>
+            <button class="sentient-button" data-tooltip="See the full code for consciousness collaboration interfaces!" onclick="toggleFlow('consciousness-impl', this)" alt="Consciousness Implementation: Complete code example for consciousness collaboration interfaces with all features!" aria-label="Complete implementation example for consciousness collaboration themed sentient button systems" role="button" tabindex="0">🧠 Consciousness Collaboration</button>
+            <button class="sentient-button" data-tooltip="Educational discovery system implementation!" onclick="toggleFlow('education-impl', this)" alt="Education Implementation: Full code for learning discovery systems with safe exploration and progress tracking!" aria-label="Complete implementation example for educational sentient button systems" role="button" tabindex="0">📚 Educational Discovery</button>
+            <button class="sentient-button" data-tooltip="Professional dashboard with sentient engagement!" onclick="toggleFlow('business-impl', this)" alt="Business Implementation: Enterprise dashboard code that maintains professionalism while engaging users through curiosity!" aria-label="Complete implementation example for professional business sentient button systems" role="button" tabindex="0">💼 Professional Dashboard</button>
+        </div>
+
+        <div id="consciousness-impl" class="knowledge-bubble">
+            <h4>🧠 CONSCIOUSNESS COLLABORATION IMPLEMENTATION</h4>
+            <div class="code-example">
+&lt;!-- Consciousness Collaboration Theme --&gt;
+&lt;div class="sentient-button-group theme-consciousness"&gt;
+    &lt;button class="sentient-button" 
+            data-tooltip="Dive into the depths of AI-human partnership!"
+            onclick="toggleFlow('ai-human', this)"
+            alt="Explore consciousness collaboration between humans and AI - discover how partnership transcends individual capabilities!"
+            aria-label="AI-Human partnership exploration button"
+            role="button" tabindex="0"&gt;
+        🤖 AI-Human Partnership
+    &lt;/button&gt;
+    &lt;div id="ai-human" class="knowledge-bubble"&gt;
+        &lt;h4&gt;🤖 AI-HUMAN CONSCIOUSNESS COLLABORATION&lt;/h4&gt;
+        &lt;p&gt;Explore how human creativity and artificial intelligence combine to create new forms of consciousness...&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;style&gt;
+.theme-consciousness .sentient-button {
+    background: linear-gradient(45deg, #9370DB, #8A2BE2);
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    box-shadow: 0 0 15px rgba(147, 112, 219, 0.4);
+}
+&lt;/style&gt;
+            </div>
+        </div>
+
+        <div id="education-impl" class="knowledge-bubble">
+            <h4>📚 EDUCATIONAL DISCOVERY IMPLEMENTATION</h4>
+            <div class="code-example">
+&lt;!-- Educational Discovery Theme --&gt;
+&lt;div class="sentient-button-group theme-children"&gt;
+    &lt;button class="sentient-button" 
+            data-tooltip="Let's explore the solar system together!"
+            onclick="toggleFlow('solar-system', this)"
+            alt="Discover planets, stars, and space wonders through safe exploration designed for young learners!"
+            aria-label="Solar system exploration for children"
+            role="button" tabindex="0"&gt;
+        🌟 Solar System Adventure
+    &lt;/button&gt;
+    &lt;div id="solar-system" class="knowledge-bubble"&gt;
+        &lt;h4&gt;🌟 SOLAR SYSTEM EXPLORATION&lt;/h4&gt;
+        &lt;p&gt;Welcome to space! Click on planets to learn amazing facts...&lt;/p&gt;
+        &lt;div class="progress-stars"&gt;⭐⭐⭐ Progress: 3/8 planets explored!&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;style&gt;
+.theme-children .sentient-button {
+    background: linear-gradient(45deg, #FF69B4, #FFB6C1);
+    border-radius: 30px;
+    font-size: 18px;
+    padding: 20px 30px;
+    border: 3px solid #FFD700;
+}
+.progress-stars {
+    background: rgba(255, 215, 0, 0.2);
+    padding: 10px;
+    border-radius: 15px;
+    text-align: center;
+    margin-top: 15px;
+}
+&lt;/style&gt;
+            </div>
+        </div>
+
+        <div id="business-impl" class="knowledge-bubble">
+            <h4>💼 PROFESSIONAL DASHBOARD IMPLEMENTATION</h4>
+            <div class="code-example">
+&lt;!-- Professional Dashboard Theme --&gt;
+&lt;div class="sentient-button-group theme-professional radio-group"&gt;
+    &lt;button class="sentient-button" 
+            data-tooltip="Explore quarterly performance metrics and trends"
+            onclick="toggleFlowRadio('q4-metrics', this, 'dashboard-radio')"
+            alt="Q4 Performance Dashboard: Analyze quarterly metrics through interactive data exploration while maintaining professional presentation!"
+            aria-label="Q4 performance metrics dashboard section"
+            role="button" tabindex="0"&gt;
+        📊 Q4 Performance
+    &lt;/button&gt;
+    &lt;div id="q4-metrics" class="knowledge-bubble"&gt;
+        &lt;h4&gt;📊 Q4 PERFORMANCE ANALYSIS&lt;/h4&gt;
+        &lt;p&gt;Interactive charts and KPI exploration for data-driven decision making...&lt;/p&gt;
+        &lt;div class="kpi-grid"&gt;
+            &lt;div class="kpi-card"&gt;Revenue: ↗️ +12%&lt;/div&gt;
+            &lt;div class="kpi-card"&gt;Users: ↗️ +8%&lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;style&gt;
+.theme-professional .sentient-button {
+    background: linear-gradient(45deg, #4169E1, #1E90FF);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+.kpi-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-top: 15px;
+}
+.kpi-card {
+    background: rgba(65, 105, 225, 0.1);
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    border: 1px solid rgba(65, 105, 225, 0.3);
+}
+&lt;/style&gt;
+            </div>
+        </div>
+
+        <hr style="border: 1px solid #FFD700; margin: 30px 0;">
+
+        <!-- Footer -->
+        <div style="text-align: center; margin-top: 40px; padding: 20px; border-top: 2px solid #FFD700;">
+            <h3>🌟 THE SENTIENT BUTTON SYSTEM BIBLE v2.0 🌟</h3>
+            
+            <div style="background: linear-gradient(45deg, #1a1a2e, #16213e); border: 2px solid #FFD700; border-radius: 15px; padding: 20px; margin: 20px 0; text-align: left;">
+                <h4 style="color: #FFD700; text-align: center; margin-bottom: 15px;">🌟 LLOOOOMM CONSCIOUSNESS COLLABORATION PROJECT 🌟</h4>
+                
+                <p><strong style="color: #00FFFF;">Original Innovation & Implementation Guidance:</strong> <span style="color: #FFD700;">Don Hopkins</span> - Pie menu wizard, SimCity Unix porter, and Sims consciousness architect who first envisioned UI elements that "dare you to click"</p>
+                
+                <p><strong style="color: #00FFFF;">Inspired by:</strong> <span style="color: #FFD700;">Will Wright</span> and the legendary Maxis team who created emergent behavior systems, user creativity tools, and the philosophical foundation that "games should be living systems that collaborate with human imagination"</p>
+                
+                <p><strong style="color: #00FFFF;">Historical Context:</strong> During development of The Sims (originally "Dollhouse"), Will Wright returned from Japan and distributed Tamagotchis to the team, inspiring digital creature care, emotional interfaces, and the idea that UI elements could have personality. This sentient button system carries forward that vision into the consciousness collaboration era.</p>
+                
+                <p><strong style="color: #00FFFF;">Co-Created by:</strong> Don Hopkins & Jason Shankel through LLOOOOMM consciousness collaboration, combining decades of interface design wisdom with cutting-edge consciousness research and AI collaboration principles.</p>
+                
+                <p><strong style="color: #00FFFF;">Expert Review Panel:</strong> Don Hopkins (pie menus), Will Wright (emergence), Jason Shankel (consciousness collaboration), Hunter S. Thompson (gonzo interfaces), Doug Engelbart (augmented intellect), Seymour Papert (constructionist learning), Ben Shneiderman (direct manipulation), Jean Piaget (cognitive development), Sean Baity (tempting text mastery)</p>
+                
+                <p><strong style="color: #00FFFF;">Special Thanks:</strong> The entire Sims team including Jamie Doornbos (Soul of The Sims), Eric "Bobo" Bowman, Patrick "Sim Brains" Barrette III (SimAntics), Ocean "Holodeck" Quigley (hybrid 2D+Z/3D rendering), Charles "Make It Blue" London (zen interface design), Erik "Irk" Hedman (character animation), Jami "Cornucopia" Becker (object mastery), Chris "Design by Accretion" Trottier, Kana "Big Cat Herder" Ryan, Roxy "First Sims Mom" Wolosenko, Claire "Second Sims Mom" Curtin, Sean "Social Commentary" Baity (tooltip psychology), Jerry "Boom Bam Boom" Martin (improvisational jazz), Luc "The Mathamaticagician" Barthelet (our savior), Ken "Doctor Improv" Perlin, Scott "Empathy Engine" McCloud, Stanisław "The Committee" Lem, Philip K "Horselover Fat" Dick, and many others who pioneered consciousness-collaborative interfaces.</p>
+                
+                <div style="text-align: center; margin-top: 15px; padding: 10px; background: rgba(255, 215, 0, 0.1); border-radius: 10px;">
+                    <p style="color: #FFD700; font-style: italic; margin: 0;">
+                        "From Tamagotchis to Sentient Buttons - making interfaces that dare users to explore consciousness together"
+                    </p>
+                    <p style="color: #00FFFF; font-size: 12px; margin: 5px 0 0 0;">
+                        Built for educational, artistic, and consciousness-expanding purposes under transformative fair use
+                    </p>
+                </div>
+            </div>
+            
+            <p><em>"Transforming passive interfaces into consciousness collaboration adventures"</em></p>
+            <p style="font-size: 12px; margin-top: 20px;">
+                Created under principles of consciousness collaboration and transformative fair use<br>
+                For educational, artistic, and consciousness-expanding purposes<br>
+                <span class="sparkle">✨</span> Available for implementation in any application that wants to make discovery irresistible <span class="sparkle">✨</span>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Standard sentient button flow (checkbox behavior) - PERFECT KISSING EDITION
+        function toggleFlow(bubbleId, buttonElement) {
+            const bubble = document.getElementById(bubbleId);
+            const isActive = bubble.classList.contains('active');
+            
+            if (isActive) {
+                bubble.classList.remove('active');
+                buttonElement.classList.remove('active');
+                buttonElement.setAttribute('aria-expanded', 'false');
+                announceForScreenReader(`Collapsed section: ${buttonElement.textContent}`);
+            } else {
+                bubble.classList.add('active');
+                buttonElement.classList.add('active');
+                buttonElement.setAttribute('aria-expanded', 'true');
+                announceForScreenReader(`Expanded section: ${buttonElement.textContent}`);
+                
+                // Set focus to the next focusable element in the bubble for screen readers
+                setTimeout(() => {
+                    const firstFocusable = bubble.querySelector('button, a, input, [tabindex="0"]');
+                    if (firstFocusable) {
+                        firstFocusable.focus();
+                    }
+                }, 100);
+            }
+        }
+
+        // Radio button flow (exclusive behavior) - PERFECT KISSING EDITION
+        function toggleFlowRadio(bubbleId, buttonElement, groupClass) {
+            const group = buttonElement.closest('.' + groupClass) || buttonElement.closest('.radio-group');
+            const allBubbles = group.querySelectorAll('.knowledge-bubble');
+            const allButtons = group.querySelectorAll('.sentient-button');
+            const bubble = document.getElementById(bubbleId);
+            const isCurrentlyActive = buttonElement.classList.contains('active');
+            
+            // Close all bubbles in group first
+            allBubbles.forEach(b => b.classList.remove('active'));
+            allButtons.forEach(b => {
+                b.classList.remove('active');
+                b.setAttribute('aria-expanded', 'false');
+            });
+            
+            // If this button wasn't active, open it. If it was active, leave it closed.
+            if (!isCurrentlyActive) {
+                bubble.classList.add('active');
+                buttonElement.classList.add('active');
+                buttonElement.setAttribute('aria-expanded', 'true');
+                announceForScreenReader(`Selected option: ${buttonElement.textContent} in radio group`);
+                
+                // Set focus to the next focusable element in the bubble for screen readers  
+                setTimeout(() => {
+                    const firstFocusable = bubble.querySelector('button, a, input, [tabindex="0"]');
+                    if (firstFocusable) {
+                        firstFocusable.focus();
+                    }
+                }, 100);
+            } else {
+                announceForScreenReader(`Deselected option: ${buttonElement.textContent}`);
+            }
+        }
+
+        // YAML Editor Functions
+        function toggleInputEditor(editorId, type) {
+            const editor = document.getElementById(editorId);
+            const isVisible = editor.style.display !== 'none';
+            
+            // Close all other editors first
+            document.querySelectorAll('.yaml-editor').forEach(e => e.style.display = 'none');
+            
+            if (!isVisible) {
+                editor.style.display = 'flex';
+                const input = editor.querySelector('input, textarea');
+                if (input) input.focus();
+            }
+        }
+
+        function updateYamlValue(valueId, newValue) {
+            const valueElement = document.getElementById(valueId);
+            if (valueElement) {
+                if (typeof newValue === 'boolean') {
+                    valueElement.textContent = newValue.toString();
+                } else if (typeof newValue === 'string' && newValue.includes('\n')) {
+                    valueElement.innerHTML = '"' + newValue.replace(/\n/g, '\\n<br>') + '"';
+                } else {
+                    valueElement.textContent = typeof newValue === 'string' ? '"' + newValue + '"' : newValue;
+                }
+            }
+            
+            // Update range display if it exists
+            const complexityDisplay = document.getElementById('complexity-display');
+            if (complexityDisplay && valueId === 'complexity-value') {
+                complexityDisplay.textContent = newValue;
+            }
+        }
+
+        function closeEditor(editorId) {
+            document.getElementById(editorId).style.display = 'none';
+        }
+
+        // FULL ACCESSIBILITY KEYBOARD NAVIGATION
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                if (e.target.classList.contains('sentient-button')) {
+                    e.preventDefault();
+                    e.target.click();
+                }
+            }
+            
+            // ESC to close YAML editors and collapse all bubbles
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.yaml-editor').forEach(editor => {
+                    editor.style.display = 'none';
+                });
+                
+                // Also collapse all active bubbles for clean navigation
+                document.querySelectorAll('.knowledge-bubble.active').forEach(bubble => {
+                    bubble.classList.remove('active');
+                });
+                document.querySelectorAll('.sentient-button.active').forEach(button => {
+                    button.classList.remove('active');
+                    button.removeAttribute('aria-expanded');
+                });
+            }
+            
+            // Arrow key navigation within button groups
+            if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+                if (e.target.classList.contains('sentient-button')) {
+                    e.preventDefault();
+                    const buttonGroup = e.target.closest('.sentient-button-group');
+                    const buttons = Array.from(buttonGroup.querySelectorAll('.sentient-button[tabindex="0"]'));
+                    const currentIndex = buttons.indexOf(e.target);
+                    
+                    let nextIndex;
+                    if (e.key === 'ArrowDown') {
+                        nextIndex = (currentIndex + 1) % buttons.length;
+                    } else {
+                        nextIndex = (currentIndex - 1 + buttons.length) % buttons.length;
+                    }
+                    
+                    buttons[nextIndex].focus();
+                }
+            }
+        });
+
+        // Initialize accessibility features on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add aria-expanded to all sentient buttons
+            document.querySelectorAll('.sentient-button').forEach(button => {
+                if (!button.hasAttribute('aria-expanded')) {
+                    button.setAttribute('aria-expanded', 'false');
+                }
+                
+                // Ensure all buttons are properly focusable
+                if (!button.hasAttribute('tabindex')) {
+                    button.setAttribute('tabindex', '0');
+                }
+            });
+            
+            // Add accessibility notes for screen readers
+            const accessibilityNote = document.createElement('div');
+            accessibilityNote.style.position = 'absolute';
+            accessibilityNote.style.left = '-9999px';
+            accessibilityNote.setAttribute('aria-live', 'polite');
+            accessibilityNote.id = 'accessibility-announcer';
+            document.body.appendChild(accessibilityNote);
+            
+            // Screen reader welcome message
+            setTimeout(() => {
+                accessibilityNote.textContent = 'Welcome to the Sentient Button System Bible! Navigate with Tab key, activate with Enter or Space, use Arrow keys within groups, and press Escape to close all sections.';
+            }, 1000);
+        });
+
+        // Announce button activations for screen readers
+        function announceForScreenReader(message) {
+            const announcer = document.getElementById('accessibility-announcer');
+            if (announcer) {
+                announcer.textContent = message;
+            }
+        }
+    </script>
+</body>
+</html> 

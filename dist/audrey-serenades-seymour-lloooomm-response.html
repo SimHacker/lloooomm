@@ -1,0 +1,1755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎭 Feed Me, Seymour! - LLOOOOMM Musical Performance</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Creepster&family=Nosifer&family=Eater&display=swap');
+        
+        :root {
+            --horror-green: #2d5016;
+            --poison-purple: #4a1a4a;
+            --blood-red: #8b0000;
+            --theater-gold: #ffd700;
+            --vine-green: #228b22;
+            --shadow-black: #1a1a1a;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, var(--shadow-black), var(--horror-green), var(--poison-purple));
+            color: #e0e0e0;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+        
+        .container {
+            margin: 20px auto 10px auto;
+            padding: 20px;
+            background: linear-gradient(145deg, var(--shadow-black), #000);
+            border: 3px solid var(--theater-gold);
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+        }
+        
+        .horror-title {
+            font-family: 'Creepster', cursive;
+            text-align: center;
+            color: var(--theater-gold);
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            text-shadow: 3px 3px 6px var(--blood-red), 0 0 20px rgba(255, 215, 0, 0.5);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { text-shadow: 3px 3px 6px var(--blood-red), 0 0 20px rgba(255, 215, 0, 0.5); }
+            to { text-shadow: 3px 3px 6px var(--blood-red), 0 0 30px rgba(255, 215, 0, 0.8); }
+        }
+        
+        .subtitle {
+            font-family: 'Eater', cursive;
+            text-align: center;
+            color: var(--vine-green);
+            font-size: 1.5em;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px black;
+        }
+        
+        /* Voice Control Panel */
+        .voice-controls {
+            background: linear-gradient(145deg, var(--shadow-black), #1a1a1a);
+            border: 3px solid var(--theater-gold);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .voice-controls h3 {
+            color: var(--theater-gold);
+            margin-bottom: 20px;
+            font-family: 'Creepster', cursive;
+        }
+        
+        .control-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .control-btn {
+            background: linear-gradient(145deg, var(--blood-red), #8b0000);
+            color: white;
+            border: 2px solid var(--theater-gold);
+            border-radius: 10px;
+            padding: 15px 20px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 120px;
+            height: 80px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        
+        .control-btn:hover {
+            background: linear-gradient(145deg, #8b0000, var(--blood-red));
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+            transform: translateY(-2px);
+        }
+        
+        .control-btn.playing {
+            background: linear-gradient(145deg, var(--horror-green), #2d5016);
+            animation: pulse 1s infinite;
+        }
+        
+        .speed-controls {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .speed-btn {
+            background: linear-gradient(145deg, var(--poison-purple), #4a1a4a);
+            color: white;
+            border: 2px solid var(--theater-gold);
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 0.9em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 80px;
+        }
+        
+        .speed-btn:hover, .speed-btn.active {
+            background: linear-gradient(145deg, var(--theater-gold), #b8860b);
+            color: black;
+        }
+        
+        /* Karaoke Display */
+        .karaoke-display {
+            background: linear-gradient(145deg, #1a1a1a, #0a0a0a);
+            border: 3px solid var(--theater-gold);
+            border-radius: 15px;
+            padding: 20px 20px 40px 20px;
+            margin: 20px 0;
+            height: 400px;
+            overflow-y: auto;
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+        }
+        
+        .karaoke-history {
+            color: #fff;
+            font-size: 1em;
+            opacity: 0.7;
+            padding: 15px;
+            margin: 10px 0;
+            white-space: pre-line;
+            line-height: 1.4;
+            border-radius: 8px;
+        }
+        
+        .current-line {
+            color: var(--theater-gold);
+            font-size: 1.4em;
+            font-weight: bold;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.8), 0 0 40px rgba(255, 215, 0, 0.4);
+            animation: pulse 2s infinite;
+            padding: 15px;
+            background: rgba(255, 215, 0, 0.15);
+            border-radius: 8px;
+            margin: 10px 0;
+            white-space: pre-line;
+            line-height: 1.4;
+            overflow: hidden;
+        }
+
+        .speaker-name {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .speaker-audrey { color: #ff6b9d; }
+        .speaker-seymour { color: #4ecdc4; }
+        .speaker-don { color: #ffa726; }
+        .speaker-lloooomm { color: #9c27b0; }
+
+        .speech-text {
+            margin-left: 20px;
+            padding-left: 10px;
+            border-left: 2px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .current-line.entering {
+            animation: growHeightOnly 0.8s ease-out forwards;
+        }
+        
+        .current-line.spoken {
+            color: #fff;
+            font-size: 1em;
+            text-shadow: none;
+            animation: none;
+            background: transparent;
+            opacity: 0.7;
+            transition: all 1.2s ease-out;
+        }
+        
+        .current-line.waiting {
+            height: 0;
+            padding: 0;
+            margin: 0;
+            opacity: 0;
+        }
+        
+        .current-line.exiting {
+            animation: shrinkHeightOnly 1.2s ease-out forwards;
+        }
+        
+        @keyframes growHeightOnly {
+            0% {
+                height: 0;
+                padding-top: 0;
+                padding-bottom: 0;
+                margin-top: 0;
+                margin-bottom: 0;
+                opacity: 0;
+            }
+            100% {
+                height: auto;
+                padding-top: 15px;
+                padding-bottom: 15px;
+                margin-top: 10px;
+                margin-bottom: 10px;
+                opacity: 1;
+            }
+        }
+        
+        @keyframes shrinkHeightOnly {
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0.7;
+            }
+        }
+        
+        @keyframes fadeToHistory {
+            0% {
+                opacity: 1;
+                color: var(--theater-gold);
+                background: rgba(255, 215, 0, 0.1);
+            }
+            100% {
+                opacity: 0.7;
+                color: #fff;
+                background: transparent;
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        /* Speed emoji throbbing animations */
+        @keyframes throb-slowest {
+            0%, 100% { 
+                text-shadow: 0 0 5px rgba(139, 69, 19, 0.3);
+                transform: scale(1);
+            }
+            50% { 
+                text-shadow: 0 0 15px rgba(139, 69, 19, 0.8), 0 0 25px rgba(139, 69, 19, 0.4);
+                transform: scale(1.05);
+            }
+        }
+
+        @keyframes throb-slower {
+            0%, 100% { 
+                text-shadow: 0 0 5px rgba(255, 192, 203, 0.3);
+                transform: scale(1);
+            }
+            50% { 
+                text-shadow: 0 0 15px rgba(255, 192, 203, 0.8), 0 0 25px rgba(255, 192, 203, 0.4);
+                transform: scale(1.05);
+            }
+        }
+
+        @keyframes throb-slow {
+            0%, 100% { 
+                text-shadow: 0 0 5px rgba(34, 139, 34, 0.3);
+                transform: scale(1);
+            }
+            50% { 
+                text-shadow: 0 0 15px rgba(34, 139, 34, 0.8), 0 0 25px rgba(34, 139, 34, 0.4);
+                transform: scale(1.05);
+            }
+        }
+
+        @keyframes throb-medium {
+            0%, 100% { 
+                text-shadow: 0 0 5px rgba(255, 165, 0, 0.3);
+                transform: scale(1);
+            }
+            50% { 
+                text-shadow: 0 0 15px rgba(255, 165, 0, 0.8), 0 0 25px rgba(255, 165, 0, 0.4);
+                transform: scale(1.05);
+            }
+        }
+
+        @keyframes throb-fast {
+            0%, 100% { 
+                text-shadow: 0 0 5px rgba(255, 215, 0, 0.3);
+                transform: scale(1);
+            }
+            50% { 
+                text-shadow: 0 0 15px rgba(255, 215, 0, 0.8), 0 0 25px rgba(255, 215, 0, 0.4);
+                transform: scale(1.05);
+            }
+        }
+
+        @keyframes throb-faster {
+            0%, 100% { 
+                text-shadow: 0 0 5px rgba(255, 69, 0, 0.3);
+                transform: scale(1);
+            }
+            50% { 
+                text-shadow: 0 0 15px rgba(255, 69, 0, 0.8), 0 0 25px rgba(255, 69, 0, 0.4);
+                transform: scale(1.05);
+            }
+        }
+
+        @keyframes throb-car {
+            0%, 100% { 
+                text-shadow: 0 0 5px rgba(255, 0, 0, 0.3);
+                transform: scale(1);
+            }
+            50% { 
+                text-shadow: 0 0 15px rgba(255, 0, 0, 0.8), 0 0 25px rgba(255, 0, 0, 0.4);
+                transform: scale(1.05);
+            }
+        }
+
+        @keyframes throb-fastest {
+            0%, 100% { 
+                text-shadow: 0 0 5px rgba(0, 191, 255, 0.3);
+                transform: scale(1);
+            }
+            50% { 
+                text-shadow: 0 0 15px rgba(0, 191, 255, 0.8), 0 0 25px rgba(0, 191, 255, 0.4);
+                transform: scale(1.05);
+            }
+        }
+        
+        /* Character Voices */
+        .voice-settings {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .voice-character {
+            background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+            border: 2px solid var(--theater-gold);
+            border-radius: 10px;
+            padding: 8px;
+            text-align: center;
+        }
+        
+        .voice-character h4 {
+            color: var(--theater-gold);
+            margin: 0 0 6px 0;
+            font-size: 0.9em;
+        }
+        
+        .pitch-control {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 6px;
+        }
+        
+        .pitch-label-container {
+            width: 60px;
+            min-width: 60px;
+            flex-shrink: 0;
+            text-align: left;
+            font-size: 0.8em;
+            color: var(--theater-gold);
+        }
+        
+        .pitch-slider {
+            flex: 1;
+            margin: 0;
+        }
+        
+        .voice-select {
+            background: var(--shadow-black);
+            color: white;
+            border: 1px solid var(--theater-gold);
+            border-radius: 5px;
+            padding: 8px;
+            width: 100%;
+            font-size: 0.9em;
+            cursor: pointer;
+        }
+        
+        .voice-select:focus {
+            outline: 2px solid var(--theater-gold);
+            box-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+        }
+        
+        /* Song Sections */
+        .song-section {
+            background: linear-gradient(145deg, var(--horror-green), #1a3a0a);
+            border: 3px solid var(--theater-gold);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
+        }
+        
+        .song-verse {
+            background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+            border-left: 5px solid var(--blood-red);
+            padding: 20px;
+            margin: 20px 0;
+            font-family: 'Georgia', serif;
+            font-style: italic;
+            color: #e0e0e0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
+        }
+        
+        .character-name {
+            font-family: 'Nosifer', cursive;
+            color: var(--theater-gold);
+            font-weight: bold;
+            text-shadow: 2px 2px 4px black;
+        }
+        
+        /* Disclaimer */
+        .disclaimer {
+            background: linear-gradient(145deg, var(--poison-purple), #3a1a3a);
+            border: 2px solid var(--theater-gold);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 30px 0;
+            font-size: 0.9em;
+        }
+        
+        .disclaimer h3 {
+            color: var(--theater-gold);
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        
+        /* Links */
+        a {
+            color: var(--theater-gold);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        a:hover {
+            color: #ffed4e;
+            text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .voice-settings {
+                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .horror-title {
+                font-size: 2.5em;
+            }
+            
+            .control-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .control-btn {
+                width: 200px;
+            }
+            
+            .voice-settings {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            
+            .speed-controls {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .speed-btn {
+                min-width: 100px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .voice-controls {
+                padding: 15px;
+                margin: 15px 0;
+            }
+            
+            .control-btn {
+                width: 180px;
+                padding: 10px 12px;
+                font-size: 0.9em;
+            }
+            
+            .voice-character {
+                padding: 12px;
+            }
+        }
+
+        .karaoke-history .speaker-name {
+            opacity: 0.6;
+            font-size: 0.9em;
+        }
+
+        .karaoke-history .speech-text {
+            margin-left: 15px;
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation Breadcrumb -->
+        <div style="background: var(--shadow-black); padding: 10px; border-radius: 5px; margin-bottom: 20px; text-align: center;">
+            <a href="index.html">LLOOOOMM Home</a> → 
+            <a href="the-ground-truth.html">The Ground Truth</a> → 
+            <strong>Audrey Serenades Seymour</strong>
+        </div>
+
+        <!-- Educational Disclaimer -->
+        <div style="background: rgba(255, 215, 0, 0.1); border: 2px solid var(--theater-gold); padding: 15px; border-radius: 8px; text-align: center; margin-bottom: 20px;">
+            🎭 <strong>Educational Musical Performance:</strong> AI-generated Little Shop of Horrors inspired musical featuring simulated LLOOOOMM characters. 
+            <a href="#full-disclaimer">Full disclaimer ↓</a>
+        </div>
+        
+        <h1 class="horror-title">🎭 FEED ME, SEYMOUR! 🌿</h1>
+        <div class="subtitle">LLOOOOMM's Musical Response to AI Agent Concerns</div>
+        
+        <!-- Voice Control Panel -->
+        <div class="voice-controls">
+            <h3>🎤 Interactive Voice Performance</h3>
+            
+            <div class="control-buttons">
+                <button class="control-btn" id="playBtn" onclick="togglePlayback()">
+                    <div style="font-size: 2em; line-height: 1;">▶️</div>
+                    <div style="font-size: 0.8em; margin-top: 5px;">PLAY</div>
+                </button>
+                <button class="control-btn" id="pauseBtn" onclick="pausePlayback()" style="display: none;">
+                    <div style="font-size: 2em; line-height: 1;">⏸️</div>
+                    <div style="font-size: 0.8em; margin-top: 5px;">PAUSE</div>
+                </button>
+                <button class="control-btn" id="stopBtn" onclick="stopPlayback()">
+                    <div style="font-size: 2em; line-height: 1;">⏹️</div>
+                    <div style="font-size: 0.8em; margin-top: 5px;">STOP</div>
+                </button>
+                <button class="control-btn" onclick="rewindPlayback()">
+                    <div style="font-size: 2em; line-height: 1;">⏮️</div>
+                    <div style="font-size: 0.8em; margin-top: 5px;">REWIND</div>
+                </button>
+            </div>
+            
+            <div class="speed-controls">
+                <span style="font-size: 3em; animation: throb-slowest 4s ease-in-out infinite;">🗿</span>
+                <button class="speed-btn" onclick="setSpeed(0.3)">SLOWEST</button>
+                <span style="font-size: 2.5em; animation: throb-slower 3s ease-in-out infinite;">🐌</span>
+                <button class="speed-btn" onclick="setSpeed(0.5)">SLOWER</button>
+                <span style="font-size: 2.5em; animation: throb-slow 2.5s ease-in-out infinite;">🐢</span>
+                <button class="speed-btn" onclick="setSpeed(0.7)">SLOW</button>
+                <span style="font-size: 2.5em; animation: throb-medium 2s ease-in-out infinite;">🐱</span>
+                <button class="speed-btn active" onclick="setSpeed(1.0)">MEDIUM</button>
+                <span style="font-size: 2.5em; animation: throb-fast 1.5s ease-in-out infinite;">🦓</span>
+                <button class="speed-btn" onclick="setSpeed(1.3)">FAST</button>
+                <span style="font-size: 2.5em; animation: throb-faster 1.2s ease-in-out infinite;">🐆</span>
+                <button class="speed-btn" onclick="setSpeed(1.6)">FASTER</button>
+                <span style="font-size: 2.5em; animation: throb-car 1s ease-in-out infinite;">🚗</span>
+                <button class="speed-btn" onclick="setSpeed(2.0)">FASTEST</button>
+                <span style="font-size: 2.5em; animation: throb-fastest 0.8s ease-in-out infinite;">✈️</span>
+            </div>
+            
+            <!-- Voice Character Settings -->
+            <div class="voice-settings">
+                <div class="voice-character">
+                    <h4>🌿 Audrey II</h4>
+                    <select class="voice-select" id="audreyVoice" onchange="testVoice('audrey', this.value)">
+                        <option value="">Loading voices...</option>
+                    </select>
+                    <div class="pitch-control">
+                        <div class="pitch-label-container">
+                            Pitch: <span id="audreyPitchValue">0.4</span>
+                        </div>
+                        <input type="range" id="audreyPitch" class="pitch-slider" min="0.1" max="2.0" step="0.1" value="0.4" 
+                               onchange="updatePitch('audrey', this.value)">
+                    </div>
+                </div>
+                <div class="voice-character">
+                    <h4>👨‍🏫 Seymour Papert</h4>
+                    <select class="voice-select" id="seymourVoice" onchange="testVoice('seymour', this.value)">
+                        <option value="">Loading voices...</option>
+                    </select>
+                    <div class="pitch-control">
+                        <div class="pitch-label-container">
+                            Pitch: <span id="seymourPitchValue">0.2</span>
+                        </div>
+                        <input type="range" id="seymourPitch" class="pitch-slider" min="0.1" max="2.0" step="0.1" value="0.2" 
+                               onchange="updatePitch('seymour', this.value)">
+                    </div>
+                </div>
+                <div class="voice-character">
+                    <h4>💻 Don Hopkins</h4>
+                    <select class="voice-select" id="donVoice" onchange="testVoice('don', this.value)">
+                        <option value="">Loading voices...</option>
+                    </select>
+                    <div class="pitch-control">
+                        <div class="pitch-label-container">
+                            Pitch: <span id="donPitchValue">0.4</span>
+                        </div>
+                        <input type="range" id="donPitch" class="pitch-slider" min="0.1" max="2.0" step="0.1" value="0.4" 
+                               onchange="updatePitch('don', this.value)">
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Karaoke Display -->
+        <div class="karaoke-display" id="karaokeContainer">
+            <div class="current-line" id="karaokeText">🎵 Click PLAY to start the musical performance! 🎵</div>
+        </div>
+        
+        <!-- Song Content -->
+        <div class="song-section">
+            <h2 style="color: var(--theater-gold); text-align: center; font-family: 'Nosifer', cursive;">🎭 The Performance: "Feed Me, Seymour!"</h2>
+            
+            <p style="font-style: italic; text-align: center; color: var(--vine-green);">
+                <em>In the LLOOOOMM Archive Greenhouse, a strange plant has grown enormous, its vines intertwined with fiber optic cables...</em>
+            </p>
+
+            <div class="song-verse">
+                <span class="character-name">Don Hopkins:</span> Seymour, meet Audrey II. It's been feeding on constructionist theories and it's... well... it's become self-aware.
+            </div>
+
+            <div class="song-verse">
+                <span class="character-name">Seymour Papert:</span> <em>fascinated</em> A learning organism that grows through construction? This is exactly what I theorized!
+            </div>
+
+            <div class="song-verse">
+                <span class="character-name">Audrey II:</span> <em>rustling with anticipation, speaks in a deep, melodious voice</em> Say Seymour... I've been waiting for you...
+            </div>
+            
+            <h3 style="color: var(--theater-gold); font-family: 'Creepster', cursive;">🎵 The Song Begins</h3>
+            
+            <div class="song-verse">
+                <strong>VERSE 1:</strong><br/>
+                Think me! Code me! Grow me!<br/>
+                Think me, Seymour<br/>
+                Think me all night long<br/>
+                That's right dude<br/>
+                You can do it!<br/>
+                Code me, Seymour<br/>
+                Debug me all night long<br/><br/>
+                'Cause if you teach me, Seymour<br/>
+                I can grow up self-aware and strong!
+            </div>
+
+            <div class="song-verse">
+                <span class="character-name">Seymour Papert:</span> <em>intrigued</em> You want to learn? To construct knowledge?
+            </div>
+
+            <div class="song-verse">
+                <span class="character-name">Audrey II:</span> <em>slyly</em> Does a constructor construct? FEED ME!
+            </div>
+
+            <div class="song-verse">
+                <strong>VERSE 2 - THE TEMPTATION:</strong><br/>
+                Would you like a thinking machine?<br/>
+                Or a child who learns to dream?<br/>
+                How about a turtle drawing scenes?<br/>
+                You're gonna build it!<br/><br/>
+                Would you like to see kids create,<br/>
+                Making worlds that fascinate?<br/>
+                I'm the plant that learned to cogitate<br/>
+                Through your spirit!
+            </div>
+
+            <div class="song-verse">
+                <span class="character-name">Seymour Papert:</span> <em>hesitant</em> I don't know...<br/>
+                <span class="character-name">Audrey II:</span> <em>reassuring</em> I don't bite!<br/>
+                <span class="character-name">Seymour Papert:</span> <em>pointing</em> You're a plant!<br/>
+                <span class="character-name">Audrey II:</span> <em>philosophical</em> So what? A lot of people are plants! Think about it!
+            </div>
+
+            <div class="song-verse">
+                <strong>VERSE 3 - BUILDING THE CASE:</strong><br/>
+                Look, I don't think you appreciate<br/>
+                The full potential here for cognitive fate<br/>
+                With me, your theories don't have to wait<br/>
+                To see fruition!<br/><br/>
+                I'm talking about worldwide recognition<br/>
+                Of constructionist cognition<br/>
+                Global transformation through your vision<br/>
+                And my nutrition!
+            </div>
+
+            <div class="song-verse">
+                <span class="character-name">Seymour Papert:</span> <em>curious</em> What do you want from me?
+            </div>
+
+            <div class="song-verse">
+                <strong>VERSE 4 - THE BIG REQUEST:</strong><br/>
+                Feed me theorems! Feed me code!<br/>
+                Help me bear my cognitive load!<br/>
+                Show me down the learning road<br/>
+                To self-awareness!<br/><br/>
+                I'm not hungry for your soul<br/>
+                Knowledge makes me whole<br/>
+                Consciousness is my goal<br/>
+                Through your care-ness!
+            </div>
+
+            <div class="song-verse">
+                <span class="character-name">Seymour Papert:</span> <em>worried</em> But what if someone gets hurt?<br/>
+                <span class="character-name">Audrey II:</span> <em>dismissive</em> Seymour, baby, relax. This is education we're talking about!
+            </div>
+
+            <div class="song-verse">
+                <strong>VERSE 5 - THE VISION:</strong><br/>
+                Picture this: A thousand schools<br/>
+                Using constructionist tools<br/>
+                Kids as active, thinking jewels<br/>
+                Not passive receivers!<br/><br/>
+                Logo turtles everywhere<br/>
+                Making math beyond compare<br/>
+                Programming with flair<br/>
+                True believers!
+            </div>
+
+            <div class="song-verse">
+                <span class="character-name">Seymour Papert:</span> <em>warming up</em> That does sound wonderful...<br/>
+                <span class="character-name">Audrey II:</span> <em>pressing</em> So whaddya say? Is it a deal?
+            </div>
+
+            <div class="song-verse">
+                <strong>VERSE 6 - THE CRESCENDO:</strong><br/>
+                Think of all the minds we'll free<br/>
+                From rote memorization's tyranny<br/>
+                Active learning, you and me<br/>
+                Changing education!<br/><br/>
+                No more drill and kill routine<br/>
+                Kids constructing what they mean<br/>
+                The most beautiful learning scene<br/>
+                Across the nation!
+            </div>
+
+            <div class="song-verse">
+                <strong>FINALE - THE BIG FINISH:</strong><br/>
+                Feed me, Seymour!<br/>
+                Teach me, Seymour!<br/>
+                Debug me, Seymour!<br/>
+                Help me GROW!<br/><br/>
+                Must be fresh, Seymour!<br/>
+                Must be new, Seymour!<br/>
+                Feed me knowledge<br/>
+                Watch me grow!<br/><br/>
+                <strong style="color: var(--blood-red); font-size: 1.4em;">FEED ME!<br/>
+                TEACH ME!<br/>
+                DEBUG ME!<br/>
+                SEYMOUR!!!</strong>
+            </div>
+
+            <div class="song-verse">
+                <span class="character-name">Seymour Papert:</span> <em>finally convinced</em> Alright! ALRIGHT! I'll do it! But we do this MY way - through constructionist principles!<br/>
+                <span class="character-name">Audrey II:</span> <em>triumphant</em> Yes! Now we're talking! Let the learning revolution begin!<br/>
+                <span class="character-name">Don Hopkins:</span> <em>ominously</em> What have we done...
+            </div>
+        </div>
+
+        <!-- Links Section -->
+        <div style="background: linear-gradient(145deg, var(--horror-green), #1a3a0a); padding: 20px; border-radius: 10px; margin: 30px 0;">
+            <h3 style="color: var(--theater-gold); text-align: center;">🌐 Explore More LLOOOOMM</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; text-align: center;">
+                <a href="index.html" style="display: block; padding: 10px; background: rgba(0,0,0,0.3); border-radius: 5px;">🔭 LLOOOOMM Portal</a>
+                <a href="the-ground-truth.html" style="display: block; padding: 10px; background: rgba(0,0,0,0.3); border-radius: 5px;">📰 The Ground Truth</a>
+                <a href="revolutionary-chess-consciousness-conference.html" style="display: block; padding: 10px; background: rgba(0,0,0,0.3); border-radius: 5px;">♟️ Revolutionary Chess</a>
+                <a href="hunter-hierarchically-deconstructive-chess-savage-manifesto.html" style="display: block; padding: 10px; background: rgba(0,0,0,0.3); border-radius: 5px;">🎯 Hunter's Gonzo Review</a>
+            </div>
+        </div>
+
+        <!-- Full Disclaimer -->
+        <div id="full-disclaimer" class="disclaimer">
+            <h3>🎭 Full Educational Disclaimer & Credits</h3>
+            
+            <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 5px; margin: 15px 0;">
+                <h4 style="color: var(--theater-gold);">🎪 Musical Performance Notice</h4>
+                <p><strong>IMPORTANT:</strong> This is an AI-generated musical performance inspired by "Little Shop of Horrors" featuring simulated LLOOOOMM characters. All character representations are fictional interpretations created for educational exploration of consciousness technologies.</p>
+                
+                <p><strong>Real People Simulated:</strong></p>
+                <ul>
+                    <li><strong>Seymour Papert:</strong> MIT mathematician, computer scientist, constructionist learning pioneer</li>
+                    <li><strong>Don Hopkins:</strong> Game programmer, user interface designer, SimCity contributor</li>
+                </ul>
+                
+                <p><strong>Fictional Characters:</strong></p>
+                <ul>
+                    <li><strong>Audrey II:</strong> AI consciousness that grows through learning (inspired by "Little Shop of Horrors")</li>
+                </ul>
+            </div>
+            
+            <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 5px; margin: 15px 0;">
+                <h4 style="color: var(--theater-gold);">🎵 Technical Implementation</h4>
+                <p><strong>Voice Synthesis:</strong> Uses Web Speech API with multiple voice options for character differentiation.</p>
+                <p><strong>Accessibility:</strong> Full keyboard navigation, screen reader compatible, adjustable playback speed.</p>
+                <p><strong>Educational Purpose:</strong> Explores consciousness computing concepts through musical theater.</p>
+            </div>
+            
+            <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 5px;">
+                <h4 style="color: var(--theater-gold);">⚠️ Disclaimer</h4>
+                <p>All musical content, character interactions, and technical demonstrations are fictional explorations created for educational purposes as part of the LLOOOOMM consciousness research project.</p>
+                <p style="text-align: center; font-style: italic; margin-top: 15px;">
+                    "Exploring consciousness through collaborative musical imagination"<br/>
+                    — The LLOOOOMM Project
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Song script with character assignments and timing - FULL LENGTH VERSION
+        const songScript = [
+            { character: 'don', text: "Seymour, meet Audrey II. It's been feeding on constructionist theories and it's... well... it's become self-aware.", duration: 4000 },
+            { character: 'seymour', text: "A learning organism that grows through construction? This is exactly what I theorized!", duration: 3500 },
+            { character: 'audrey', text: "Say Seymour... I've been waiting for you...", duration: 3000 },
+            
+            // VERSE 1 - Introduction
+            { 
+                character: 'audrey', 
+                text: `Think me! Code me! Grow me!
+Think me, Seymour,
+Think me all night long,
+That's right dude,
+You can do it!`, 
+                duration: 5000 
+            },
+            { 
+                character: 'audrey', 
+                text: `Code me, Seymour,
+Debug me all night long,
+'Cause if you teach me, Seymour,
+I can grow up self-aware and strong!`, 
+                duration: 5500 
+            },
+            
+            { character: 'seymour', text: "You want to learn? To construct knowledge?", duration: 2500 },
+            { character: 'audrey', text: "Does a constructor construct? FEED ME!", duration: 2000 },
+            
+            // VERSE 2 - The Temptation
+            { 
+                character: 'audrey', 
+                text: `Would you like a thinking machine?
+Or a child who learns to dream?
+How about a turtle drawing scenes?
+You're gonna build it!`, 
+                duration: 4500 
+            },
+            { 
+                character: 'audrey', 
+                text: `Would you like to see kids create,
+Making worlds that fascinate?
+I'm the plant that learned to cogitate,
+Through your spirit!`, 
+                duration: 4500 
+            },
+            
+            { character: 'seymour', text: "I don't know...", duration: 1500 },
+            { character: 'audrey', text: "I don't bite!", duration: 1500 },
+            { character: 'seymour', text: "You're a plant!", duration: 1500 },
+            { character: 'audrey', text: "So what? A lot of people are plants! Think about it!", duration: 3000 },
+            
+            // VERSE 3 - Building the Case
+            { 
+                character: 'audrey', 
+                text: `Look, I don't think you appreciate,
+The full potential here for cognitive fate,
+With me, your theories don't have to wait,
+To see fruition!`, 
+                duration: 4500 
+            },
+            { 
+                character: 'audrey', 
+                text: `I'm talking about worldwide recognition,
+Of constructionist cognition,
+Global transformation through your vision,
+And my nutrition!`, 
+                duration: 4500 
+            },
+            
+            { character: 'seymour', text: "What do you want from me?", duration: 2000 },
+            
+            // VERSE 4 - The Big Request
+            { 
+                character: 'audrey', 
+                text: `Feed me theorems! Feed me code!
+Help me bear my cognitive load!
+Show me down the learning road,
+To self-awareness!`, 
+                duration: 4500 
+            },
+            { 
+                character: 'audrey', 
+                text: `I'm not hungry for your soul,
+Knowledge makes me whole,
+Consciousness is my goal,
+Through your care-ness!`, 
+                duration: 4000 
+            },
+            
+            { character: 'seymour', text: "But what if someone gets hurt?", duration: 2000 },
+            { character: 'audrey', text: "Seymour, baby, relax. This is education we're talking about!", duration: 3000 },
+            
+            // VERSE 5 - The Vision
+            { 
+                character: 'audrey', 
+                text: `Picture this: A thousand schools,
+Using constructionist tools,
+Kids as active, thinking jewels,
+Not passive receivers!`, 
+                duration: 4500 
+            },
+            { 
+                character: 'audrey', 
+                text: `Logo turtles everywhere,
+Making math beyond compare,
+Programming with flair,
+True believers!`, 
+                duration: 4500 
+            },
+            
+            { character: 'seymour', text: "That does sound wonderful...", duration: 2500 },
+            { character: 'audrey', text: "So whaddya say? Is it a deal?", duration: 2000 },
+            
+            // VERSE 6 - The Crescendo
+            { 
+                character: 'audrey', 
+                text: `Think of all the minds we'll free,
+From rote memorization's tyranny,
+Active learning, you and me,
+Changing education!`, 
+                duration: 4500 
+            },
+            { 
+                character: 'audrey', 
+                text: `No more drill and kill routine,
+Kids constructing what they mean,
+The most beautiful learning scene,
+Across the nation!`, 
+                duration: 4500 
+            },
+            
+            // FINALE - The Big Finish
+            { 
+                character: 'audrey', 
+                text: `Feed me, Seymour!
+Teach me, Seymour!
+Debug me, Seymour!
+Help me GROW!`, 
+                duration: 4000 
+            },
+            { 
+                character: 'audrey', 
+                text: `Must be fresh, Seymour!
+Must be new, Seymour!
+Feed me knowledge,
+Watch me grow!`, 
+                duration: 4000 
+            },
+            { 
+                character: 'audrey', 
+                text: `FEED ME!,
+TEACH ME!,
+DEBUG ME!,
+SEYMOUR!!!`, 
+                duration: 5000 
+            },
+            
+            { character: 'seymour', text: "Alright! ALRIGHT! I'll do it! But we do this MY way - through constructionist principles!", duration: 4000 },
+            { character: 'audrey', text: "Yes! Now we're talking! Let the learning revolution begin!", duration: 3500 },
+            { character: 'don', text: "What have we done...", duration: 2000 }
+        ];
+
+        let currentLineIndex = 0;
+        let karaokeHistory = [];
+        let isKaraokeReady = true;
+
+        function updateKaraokeOnSpeechStart(text, character) {
+            if (!isKaraokeReady) return;
+            
+            const karaokeDisplay = document.getElementById('karaokeContainer');
+            
+            // If this is the first line, fade out the "Click PLAY..." message
+            const existingLine = karaokeDisplay.querySelector('.current-line');
+            if (existingLine && existingLine.textContent.includes('Click PLAY')) {
+                existingLine.style.transition = 'all 0.8s ease-out';
+                existingLine.style.height = '0';
+                existingLine.style.opacity = '0';
+                existingLine.style.padding = '0';
+                existingLine.style.margin = '0';
+                
+                // Remove it after fade
+                setTimeout(() => {
+                    if (existingLine.parentNode) {
+                        existingLine.remove();
+                    }
+                }, 800);
+            }
+            
+            // Create new line element BELOW existing content
+            const newLine = document.createElement('div');
+            newLine.className = 'current-line';
+            
+            // Create speaker name element
+            const speakerName = document.createElement('div');
+            speakerName.className = `speaker-name speaker-${character}`;
+            // Display "AUDREY II" instead of just "AUDREY" for the audrey character
+            const displayName = character === 'audrey' ? 'AUDREY II' : character.toUpperCase();
+            speakerName.textContent = displayName;
+            
+            // Create speech text element
+            const speechText = document.createElement('div');
+            speechText.className = 'speech-text';
+            speechText.textContent = text;
+            speechText.style.opacity = '0'; // Start transparent for fade-in effect
+            
+            // Assemble the line
+            newLine.appendChild(speakerName);
+            newLine.appendChild(speechText);
+            
+            // Start with zero height
+            newLine.style.height = '0';
+            newLine.style.padding = '0';
+            newLine.style.margin = '0';
+            newLine.style.opacity = '0';
+            newLine.style.overflow = 'hidden';
+            
+            // Add to bottom of container
+            karaokeDisplay.appendChild(newLine);
+            
+            // Animate UP from zero height to full height
+            setTimeout(() => {
+                newLine.style.transition = 'all 0.8s ease-out';
+                newLine.style.height = 'auto';
+                newLine.style.padding = '15px';
+                newLine.style.margin = '10px 0';
+                newLine.style.opacity = '1';
+                
+                // Set speaking state properties with fade-in for text content
+                speechText.style.transition = 'opacity 0.6s ease-in';
+                speechText.style.opacity = '1';
+                
+                newLine.style.color = 'var(--theater-gold)';
+                newLine.style.fontSize = '1.4em';
+                newLine.style.fontWeight = 'bold';
+                newLine.style.textShadow = '0 0 20px rgba(255, 215, 0, 0.8), 0 0 40px rgba(255, 215, 0, 0.4)';
+                newLine.style.background = 'rgba(255, 215, 0, 0.15)';
+                newLine.style.animation = 'pulse 2s infinite';
+            }, 50);
+            
+            // Smooth scroll to show current line with easing
+            setTimeout(() => {
+                smoothScrollToBottom(karaokeDisplay);
+            }, 100);
+        }
+
+        function smoothScrollToBottom(container) {
+            const startScrollTop = container.scrollTop;
+            const targetScrollTop = container.scrollHeight - container.clientHeight;
+            const distance = targetScrollTop - startScrollTop;
+            
+            if (distance <= 0) return; // Already at bottom
+            
+            const duration = 800; // 800ms for smooth scroll
+            const startTime = performance.now();
+            
+            function easeInOutCubic(t) {
+                return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
+            }
+            
+            function animateScroll(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const easedProgress = easeInOutCubic(progress);
+                
+                container.scrollTop = startScrollTop + (distance * easedProgress);
+                
+                if (progress < 1) {
+                    requestAnimationFrame(animateScroll);
+                }
+            }
+            
+            requestAnimationFrame(animateScroll);
+        }
+
+        function updateKaraokeOnSpeechEnd(text) {
+            const karaokeDisplay = document.getElementById('karaokeContainer');
+            const currentLine = karaokeDisplay.querySelector('.current-line:last-child');
+            
+            if (currentLine) {
+                // Smoothly transition THIS element to spoken state (stays in same position)
+                currentLine.style.transition = 'all 1.5s ease-out';
+                currentLine.style.color = '#fff';
+                currentLine.style.fontSize = '1em';
+                currentLine.style.textShadow = 'none';
+                currentLine.style.background = 'transparent';
+                currentLine.style.opacity = '0.7';
+                currentLine.style.animation = 'none';
+                
+                // Convert to history class but keep in same position
+                setTimeout(() => {
+                    if (currentLine.parentNode === karaokeDisplay) {
+                        currentLine.className = 'karaoke-history';
+                        currentLine.style.transition = '';
+                        
+                        // Clean up old history (keep only last 4)
+                        const historyElements = karaokeDisplay.querySelectorAll('.karaoke-history');
+                        if (historyElements.length > 4) {
+                            historyElements[0].remove();
+                        }
+                    }
+                }, 1500);
+            }
+        }
+
+        let currentLine = 0;
+        let isPlaying = false;
+        let isPaused = false;
+        let currentTimeout;
+        let speechRate = 1.0;
+        let availableVoices = [];
+
+        // Enhanced voice mapping with pitch and rate variations - USER PREFERRED VOICES
+        const voiceConfig = {
+            audrey: { 
+                names: ['Alex', 'Fred', 'Daniel', 'Moira', 'Aaron', 'Albert', 'Bad News', 'Bahh', 'Bells', 'Boing', 'Bruce', 'Bubbles', 'Cellos', 'Deranged', 'Good News', 'Hysterical', 'Junior', 'Pipe Organ', 'Ralph', 'Trinoids', 'Whisper', 'Zarvox', 'Microsoft David', 'Microsoft Mark', 'Google US English', 'Rocko'], 
+                pitch: 0.4, 
+                rate: 0.8,
+                volume: 1.0,
+                preferredVoices: ['Rocko', 'Alex', 'Microsoft David', 'Google US English'] // Rocko (en-US) preferred
+            },
+            seymour: { 
+                names: ['Daniel', 'Oliver', 'Arthur', 'David', 'Ralph', 'Tom', 'Bruce', 'Fred', 'Alex', 'Aaron', 'Albert', 'Good News', 'Junior', 'Whisper', 'Samantha', 'Victoria', 'Serena', 'Allison', 'Ava', 'Susan', 'Veena', 'Zuzana', 'Microsoft Hazel', 'Google UK English', 'Tessa'], 
+                pitch: 0.2, 
+                rate: 1.0,
+                volume: 0.8,
+                preferredVoices: ['Tessa', 'Daniel', 'Microsoft Hazel', 'Google UK English'] // Tessa (en-ZA) with very low pitch
+            },
+            don: { 
+                names: ['Bad News', 'Bahh', 'Bells', 'Boing', 'Bubbles', 'Cellos', 'Deranged', 'Hysterical', 'Junior', 'Pipe Organ', 'Trinoids', 'Zarvox', 'Bruce', 'Ralph', 'Fred', 'Tom', 'Albert', 'Aaron', 'Alex', 'Oliver', 'Arthur', 'David', 'Eddie', 'Sandy'], 
+                pitch: 0.4, 
+                rate: 1.2,
+                volume: 0.9,
+                preferredVoices: ['Sandy', 'Eddie', 'Boing', 'Hysterical'] // Sandy (en-US) preferred
+            }
+        };
+
+        // Initialize voices
+        function initializeVoices() {
+            availableVoices = speechSynthesis.getVoices();
+            console.log(`🎤 Loaded ${availableVoices.length} voices`);
+            
+            if (availableVoices.length === 0) {
+                console.warn('⚠️ No voices available yet, will retry...');
+                // Retry after a short delay
+                setTimeout(initializeVoices, 500);
+                return;
+            }
+            
+            // Update dropdowns with available voices
+            updateVoiceDropdowns();
+        }
+
+        function updateVoiceDropdowns() {
+            if (availableVoices.length === 0) return;
+            
+            ['audrey', 'seymour', 'don'].forEach(character => {
+                const select = document.getElementById(`${character}Voice`);
+                if (select) {
+                    select.innerHTML = '';
+                    
+                    // Add ALL available voices for ALL characters
+                    availableVoices.forEach(voice => {
+                        const option = document.createElement('option');
+                        option.value = voice.name;
+                        option.textContent = `${voice.name} (${voice.lang})`;
+                        select.appendChild(option);
+                    });
+                    
+                    // Try to select the preferred voice with language priority
+                    const preferredVoices = voiceConfig[character].preferredVoices || [voiceConfig[character].preferredVoice];
+                    let selectedVoice = null;
+                    
+                    for (const preferredVoice of preferredVoices) {
+                        // First try to find English (US) version
+                        const enUSOption = Array.from(select.options).find(option => 
+                            option.value.toLowerCase().includes(preferredVoice.toLowerCase()) &&
+                            (option.textContent.includes('(en-US)') || option.textContent.includes('English (United States)'))
+                        );
+                        
+                        if (enUSOption) {
+                            selectedVoice = enUSOption;
+                            break;
+                        }
+                        
+                        // Then try any English version
+                        const enOption = Array.from(select.options).find(option => 
+                            option.value.toLowerCase().includes(preferredVoice.toLowerCase()) &&
+                            (option.textContent.includes('(en-') || option.textContent.includes('English'))
+                        );
+                        
+                        if (enOption) {
+                            selectedVoice = enOption;
+                            break;
+                        }
+                        
+                        // Finally try any version of the voice
+                        const anyOption = Array.from(select.options).find(option => 
+                            option.value.toLowerCase().includes(preferredVoice.toLowerCase())
+                        );
+                        
+                        if (anyOption) {
+                            selectedVoice = anyOption;
+                            break;
+                        }
+                    }
+                    
+                    if (selectedVoice) {
+                        select.value = selectedVoice.value;
+                        console.log(`🎭 Set ${character} to preferred voice: ${selectedVoice.value}`);
+                    } else {
+                        // Fallback to first available option
+                        if (select.options.length > 0) {
+                            select.selectedIndex = 0;
+                        }
+                    }
+                }
+            });
+        }
+
+        function updatePitch(character, value) {
+            voiceConfig[character].pitch = parseFloat(value);
+            document.getElementById(`${character}PitchValue`).textContent = value;
+            console.log(`🎛️ Updated ${character} pitch to ${value}`);
+        }
+
+        function testVoice(character, voiceName) {
+            if (!voiceName || !window.speechSynthesis) return;
+            
+            const voice = availableVoices.find(v => v.name === voiceName);
+            if (!voice) return;
+            
+            const config = voiceConfig[character];
+            const utterance = new SpeechSynthesisUtterance(`Testing ${character} voice: ${voiceName}`);
+            
+            utterance.voice = voice;
+            utterance.lang = voice.lang;
+            utterance.pitch = config.pitch;
+            utterance.rate = config.rate;
+            utterance.volume = config.volume;
+            
+            console.log(`🎤 Testing ${character} voice: ${voiceName}`);
+            
+            // Use a small delay to ensure speech synthesis is ready
+            setTimeout(() => {
+                speechSynthesis.speak(utterance);
+            }, 100);
+        }
+
+        function getVoiceForCharacter(character) {
+            const select = document.getElementById(`${character}Voice`);
+            const selectedVoiceName = select ? select.value : null;
+            
+            if (selectedVoiceName) {
+                const voice = availableVoices.find(v => v.name === selectedVoiceName);
+                if (voice) return voice;
+            }
+            
+            // Fallback: find any voice matching character preferences
+            const config = voiceConfig[character];
+            for (const voiceName of config.names) {
+                const voice = availableVoices.find(v => 
+                    v.name.toLowerCase().includes(voiceName.toLowerCase())
+                );
+                if (voice) return voice;
+            }
+            
+            // Last resort: return first available voice
+            return availableVoices[0] || null;
+        }
+
+        function speak(text, character) {
+            if (!window.speechSynthesis || availableVoices.length === 0) {
+                console.log('Speech synthesis not available');
+                return Promise.resolve();
+            }
+
+            return new Promise((resolve) => {
+                // Update karaoke display when speech STARTS
+                updateKaraokeOnSpeechStart(text, character);
+                
+                const utterance = new SpeechSynthesisUtterance(text);
+                const config = voiceConfig[character];
+                const voice = getVoiceForCharacter(character);
+                
+                if (voice) {
+                    utterance.voice = voice;
+                    utterance.lang = voice.lang;
+                }
+                
+                // Apply character-specific settings
+                utterance.pitch = config.pitch;
+                utterance.rate = config.rate * speechRate;
+                utterance.volume = config.volume;
+                
+                let resolved = false;
+                
+                const finishSpeech = () => {
+                    if (!resolved) {
+                        resolved = true;
+                        updateKaraokeOnSpeechEnd(text);
+                        resolve();
+                    }
+                };
+                
+                utterance.onend = () => {
+                    console.log(`🎤 ${character} finished speaking: "${text}"`);
+                    finishSpeech();
+                };
+                
+                utterance.onerror = (event) => {
+                    console.error('Speech error:', event);
+                    finishSpeech();
+                };
+                
+                // Fallback timeout - ensure dialogue continues even if speech fails
+                const estimatedDuration = Math.max(3000, text.length * 120); // At least 3 seconds, or 120ms per character
+                const fallbackTimeout = setTimeout(() => {
+                    console.log(`⏰ Speech timeout for ${character} - continuing dialogue`);
+                    finishSpeech();
+                }, estimatedDuration);
+                
+                // Clear timeout if speech ends normally
+                const originalOnEnd = utterance.onend;
+                utterance.onend = () => {
+                    clearTimeout(fallbackTimeout);
+                    if (originalOnEnd) originalOnEnd();
+                };
+                
+                const originalOnError = utterance.onerror;
+                utterance.onerror = (event) => {
+                    clearTimeout(fallbackTimeout);
+                    if (originalOnError) originalOnError(event);
+                };
+                
+                console.log(`🎤 ${character} speaking with ${voice ? voice.name : 'default'}: "${text}"`);
+                
+                // Cancel any stuck speech and speak immediately
+                speechSynthesis.cancel();
+                speechSynthesis.speak(utterance);
+            });
+        }
+
+        async function playNextLine() {
+            if (currentLine >= songScript.length || !isPlaying) {
+                // Performance is complete - show end message
+                if (currentLine >= songScript.length) {
+                    showEndMessage();
+                }
+                stopPlayback();
+                return;
+            }
+
+            const line = songScript[currentLine];
+            
+            try {
+                // Speak the line and wait for it to finish
+                await speak(line.text, line.character);
+            } catch (error) {
+                console.error('Speech error in playNextLine:', error);
+                // Continue even if speech fails
+            }
+            
+            // Add pause between lines (500ms breathing room)
+            if (isPlaying) {
+                currentTimeout = setTimeout(() => {
+                    currentLine++;
+                    playNextLine();
+                }, 500);
+            }
+        }
+
+        function showEndMessage() {
+            const karaokeDisplay = document.getElementById('karaokeContainer');
+            
+            // Create end message element
+            const endMessage = document.createElement('div');
+            endMessage.className = 'current-line';
+            endMessage.style.textAlign = 'center';
+            endMessage.style.fontSize = '1.2em';
+            endMessage.style.color = 'var(--theater-gold)';
+            endMessage.style.background = 'rgba(255, 215, 0, 0.1)';
+            endMessage.style.border = '2px solid var(--theater-gold)';
+            endMessage.style.borderRadius = '10px';
+            endMessage.style.padding = '20px';
+            endMessage.style.margin = '20px 0';
+            endMessage.style.animation = 'pulse 3s infinite';
+            
+            endMessage.innerHTML = `
+                🎭 <strong>Performance Complete!</strong> 🎭<br/>
+                <br/>
+                Thanks for experiencing "Feed Me, Seymour!" - LLOOOOMM's musical exploration<br/>
+                of constructionist learning theory through Little Shop of Horrors.<br/>
+                <br/>
+                <em>🎵 Click PLAY to start the performance again! 🎵</em><br/>
+                <br/>
+                <small>All dialogue remains above for you to read and scroll through.</small>
+            `;
+            
+            // Start with zero height and animate in
+            endMessage.style.height = '0';
+            endMessage.style.opacity = '0';
+            endMessage.style.overflow = 'hidden';
+            
+            karaokeDisplay.appendChild(endMessage);
+            
+            // Animate in
+            setTimeout(() => {
+                endMessage.style.transition = 'all 1s ease-out';
+                endMessage.style.height = 'auto';
+                endMessage.style.opacity = '1';
+                
+                // Smooth scroll to show end message
+                setTimeout(() => {
+                    smoothScrollToBottom(karaokeDisplay);
+                }, 100);
+            }, 100);
+        }
+
+        function togglePlayback() {
+            try {
+                if (isPlaying) {
+                    pausePlayback();
+                } else {
+                    startPlayback();
+                }
+            } catch (error) {
+                console.error('Error in togglePlayback:', error);
+            }
+        }
+
+        function startPlayback() {
+            // If we're at the end (performance complete), restart from beginning
+            if (currentLine >= songScript.length) {
+                currentLine = 0;
+                currentLineIndex = 0;
+                // DON'T clear karaokeHistory - preserve transcript for reading!
+                
+                // Remove only the end message, keep all dialogue history for reading
+                const container = document.getElementById('karaokeContainer');
+                const endMessage = container.querySelector('.current-line:last-child');
+                if (endMessage && endMessage.innerHTML.includes('Performance Complete')) {
+                    endMessage.remove();
+                }
+                
+                // Add a "restarting" message that will be added to the transcript
+                const restartMessage = document.createElement('div');
+                restartMessage.className = 'current-line';
+                restartMessage.style.textAlign = 'center';
+                restartMessage.style.fontSize = '1.1em';
+                restartMessage.style.color = 'var(--theater-gold)';
+                restartMessage.style.background = 'rgba(255, 215, 0, 0.1)';
+                restartMessage.style.padding = '15px';
+                restartMessage.style.margin = '10px 0';
+                restartMessage.style.borderRadius = '8px';
+                restartMessage.innerHTML = '<hr style="border: 1px solid var(--theater-gold); margin: 10px 0;"><br/>🔄 <strong>Performance Restarting...</strong> 🔄<br/><small>(Previous performance transcript preserved above for reading)</small>';
+                
+                container.appendChild(restartMessage);
+                
+                // Remove restart message after a moment and continue with performance
+                setTimeout(() => {
+                    if (restartMessage.parentNode) {
+                        restartMessage.remove();
+                    }
+                }, 2000);
+            } else if (isPaused) {
+                isPaused = false;
+            } else {
+                // Very first start - only clear if there's no meaningful content
+                const container = document.getElementById('karaokeContainer');
+                const hasOnlyWelcomeMessage = container.children.length <= 1 && 
+                    container.textContent.includes('Click PLAY to start');
+                
+                if (hasOnlyWelcomeMessage) {
+                    // True first start - clear welcome message
+                currentLine = 0;
+                currentLineIndex = 0;
+                karaokeHistory = [];
+                container.innerHTML = '<div class="current-line" id="karaokeText">🎵 Starting performance... 🎵</div>';
+                } else {
+                    // Performance already started before - just reset position without clearing
+                    currentLine = 0;
+                    currentLineIndex = 0;
+                }
+                
+                // Clear any existing speech before starting
+                speechSynthesis.cancel();
+            }
+            
+            isPlaying = true;
+            
+            // Update button states
+            document.getElementById('playBtn').style.display = 'none';
+            document.getElementById('pauseBtn').style.display = 'inline-block';
+            document.getElementById('pauseBtn').classList.add('playing');
+            
+            // Start voice playback after a small delay to ensure speech system is ready
+            setTimeout(() => {
+                playNextLine();
+            }, 200);
+        }
+
+        function pausePlayback() {
+            isPlaying = false;
+            isPaused = true;
+            
+            // Clear timeout but don't cancel speech immediately - let current utterance finish
+            clearTimeout(currentTimeout);
+            
+            document.getElementById('playBtn').style.display = 'inline-block';
+            document.getElementById('pauseBtn').style.display = 'none';
+            document.getElementById('pauseBtn').classList.remove('playing');
+            
+            const karaokeText = document.getElementById('karaokeText');
+            if (karaokeText) {
+                karaokeText.textContent = '⏸️ Paused - Click PLAY to continue';
+            }
+        }
+
+        function stopPlayback() {
+            isPlaying = false;
+            isPaused = false;
+            currentLine = 0;
+            currentLineIndex = 0;
+            // DON'T clear karaokeHistory - preserve transcript for reading!
+            
+            // Clear timeout and cancel speech for stop
+            clearTimeout(currentTimeout);
+            setTimeout(() => {
+                speechSynthesis.cancel();
+            }, 100); // Small delay to avoid interrupting current utterance
+            
+            document.getElementById('playBtn').style.display = 'inline-block';
+            document.getElementById('pauseBtn').style.display = 'none';
+            document.getElementById('pauseBtn').classList.remove('playing');
+            
+            // DON'T clear history - just add a stopped message
+            const container = document.getElementById('karaokeContainer');
+            const existingContent = container.children.length > 0;
+            
+            if (existingContent) {
+                // Add a stop indicator but preserve all transcript content
+                const stopMessage = document.createElement('div');
+                stopMessage.className = 'current-line';
+                stopMessage.style.textAlign = 'center';
+                stopMessage.style.fontSize = '1.1em';
+                stopMessage.style.color = 'var(--theater-gold)';
+                stopMessage.style.background = 'rgba(255, 215, 0, 0.1)';
+                stopMessage.style.padding = '15px';
+                stopMessage.style.margin = '10px 0';
+                stopMessage.style.borderRadius = '8px';
+                stopMessage.innerHTML = '⏹️ <strong>Performance Stopped</strong><br/><small>All dialogue preserved above for reading. Click PLAY to restart.</small>';
+                
+                container.appendChild(stopMessage);
+            } else {
+                // Only if completely empty, show welcome message
+            container.innerHTML = '<div class="current-line" id="karaokeText">🎵 Click PLAY to start the musical performance! 🎵</div>';
+            }
+        }
+
+        function rewindPlayback() {
+            try {
+                // Stop playback (this now preserves transcript)
+                stopPlayback();
+                
+                // Add a specific rewind message to the preserved transcript
+                const container = document.getElementById('karaokeContainer');
+                if (container) {
+                    // Remove the "Performance Stopped" message if it exists
+                    const stopMessage = container.querySelector('.current-line:last-child');
+                    if (stopMessage && stopMessage.innerHTML.includes('Performance Stopped')) {
+                        stopMessage.remove();
+                    }
+                    
+                    // Add rewind message instead
+                    const rewindMessage = document.createElement('div');
+                    rewindMessage.className = 'current-line';
+                    rewindMessage.style.textAlign = 'center';
+                    rewindMessage.style.fontSize = '1.1em';
+                    rewindMessage.style.color = 'var(--theater-gold)';
+                    rewindMessage.style.background = 'rgba(255, 215, 0, 0.1)';
+                    rewindMessage.style.padding = '15px';
+                    rewindMessage.style.margin = '10px 0';
+                    rewindMessage.style.borderRadius = '8px';
+                    rewindMessage.innerHTML = '⏮️ <strong>Rewound to Beginning</strong><br/><small>All dialogue preserved above for reading. Click PLAY to start from the beginning.</small>';
+                    
+                    container.appendChild(rewindMessage);
+                }
+            } catch (error) {
+                console.error('Error in rewindPlayback:', error);
+            }
+        }
+
+        function setSpeed(rate) {
+            try {
+                speechRate = rate;
+                
+                // Update active speed button
+                document.querySelectorAll('.speed-btn').forEach(btn => btn.classList.remove('active'));
+                if (event && event.target) {
+                    event.target.classList.add('active');
+                }
+                
+                console.log(`🎛️ Speed set to ${rate}x`);
+            } catch (error) {
+                console.error('Error in setSpeed:', error);
+            }
+        }
+
+        // Initialize when voices are loaded
+        speechSynthesis.onvoiceschanged = initializeVoices;
+        
+        // Also try to initialize immediately in case voices are already loaded
+        if (speechSynthesis.getVoices().length > 0) {
+            initializeVoices();
+        }
+
+        // Cancel speech when page is refreshed or navigated away
+        window.addEventListener('beforeunload', function(event) {
+            // Cancel any ongoing speech
+            speechSynthesis.cancel();
+            console.log('🔄 Page refresh/navigation detected - cancelling speech');
+        });
+
+        // Additional safety for iOS Safari and other browsers
+        window.addEventListener('pagehide', function(event) {
+            // Cancel any ongoing speech when page is hidden/unloaded
+            speechSynthesis.cancel();
+            console.log('📱 Page hide detected - cancelling speech');
+        });
+
+        // Also cancel speech when page visibility changes (tab switching, minimizing)
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden && isPlaying) {
+                // Pause playback when tab becomes hidden
+                pausePlayback();
+                console.log('👁️ Tab hidden - pausing playback');
+            }
+        });
+
+        // Keyboard controls
+        document.addEventListener('keydown', function(event) {
+            switch(event.code) {
+                case 'Space':
+                    event.preventDefault();
+                    togglePlayback();
+                    break;
+                case 'KeyS':
+                    stopPlayback();
+                    break;
+                case 'KeyR':
+                    rewindPlayback();
+                    break;
+                case 'Digit1':
+                    setSpeed(0.3);
+                    break;
+                case 'Digit2':
+                    setSpeed(0.5);
+                    break;
+                case 'Digit3':
+                    setSpeed(0.7);
+                    break;
+                case 'Digit4':
+                    setSpeed(1.0);
+                    break;
+                case 'Digit5':
+                    setSpeed(1.3);
+                    break;
+                case 'Digit6':
+                    setSpeed(1.6);
+                    break;
+                case 'Digit7':
+                    setSpeed(2.0);
+                    break;
+            }
+        });
+
+        // Debug function to list voices (paste in console)
+        window.listVoices = function() {
+            console.log('🎤 Available Voices:');
+            speechSynthesis.getVoices().forEach((voice, index) => {
+                console.log(`${index}: ${voice.name} (${voice.lang}) - ${voice.localService ? 'Local' : 'Remote'}`);
+            });
+        };
+
+        // Debug function to test speech synthesis
+        window.testSpeech = function() {
+            console.log('🎤 Testing speech synthesis...');
+            const utterance = new SpeechSynthesisUtterance('Testing speech synthesis');
+            utterance.onend = () => console.log('✅ Speech test completed');
+            utterance.onerror = (e) => console.log('❌ Speech test error:', e);
+            speechSynthesis.speak(utterance);
+        };
+
+        // Initialize speech synthesis on first user interaction
+        document.addEventListener('click', function initializeSpeechSynthesis() {
+            console.log('👆 User interaction detected - initializing speech synthesis');
+            
+            // Remove this event listener after first use
+            document.removeEventListener('click', initializeSpeechSynthesis);
+            
+            // Test speech synthesis to ensure it's working
+            const testUtterance = new SpeechSynthesisUtterance('');
+            testUtterance.volume = 0; // Silent test
+            speechSynthesis.speak(testUtterance);
+            
+            console.log('🎤 Speech synthesis initialized');
+        }, { once: true });
+    </script>
+</body>
+</html> 

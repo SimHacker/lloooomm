@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<!-- the-amazing-shneiderman-song.html -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Amazing Shneiderman Song | A Musical Tribute by Don Hopkins</title>
+    <meta name="description" content="A loving parody tribute to Ben Shneiderman, set to the Spider-Man theme, celebrating his contributions to HCI">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Comic+Neue:wght@400;700&family=Merriweather:wght@300;400&family=Fira+Code:wght@400;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Merriweather', serif;
+            line-height: 1.8;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* Musical notes floating animation */
+        .musical-notes {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .note {
+            position: absolute;
+            font-size: 30px;
+            animation: float 10s infinite ease-in-out;
+            opacity: 0.3;
+        }
+        
+        .note:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .note:nth-child(2) { left: 30%; animation-delay: 2s; }
+        .note:nth-child(3) { left: 50%; animation-delay: 4s; }
+        .note:nth-child(4) { left: 70%; animation-delay: 6s; }
+        .note:nth-child(5) { left: 90%; animation-delay: 8s; }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.3; }
+            90% { opacity: 0.3; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 2;
+        }
+        
+        h1 {
+            font-family: 'Bebas Neue', impact;
+            font-size: 4em;
+            text-align: center;
+            color: #e74c3c;
+            text-shadow: 3px 3px 0 #c0392b;
+            margin-bottom: 10px;
+            animation: heroTitle 2s ease-out;
+        }
+        
+        @keyframes heroTitle {
+            0% { transform: scale(0) rotate(-180deg); opacity: 0; }
+            50% { transform: scale(1.2) rotate(10deg); }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+        
+        .subtitle {
+            text-align: center;
+            font-family: 'Comic Neue', cursive;
+            font-size: 1.5em;
+            color: #8e44ad;
+            margin-bottom: 30px;
+        }
+        
+        .performance-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 5px solid #3498db;
+        }
+        
+        .performance-info h3 {
+            font-family: 'Comic Neue', cursive;
+            color: #2980b9;
+            margin-bottom: 10px;
+        }
+        
+        .song-context {
+            background: linear-gradient(45deg, #f39c12, #f1c40f);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            box-shadow: 0 10px 30px rgba(243, 156, 18, 0.3);
+        }
+        
+        .song-context h2 {
+            font-family: 'Bebas Neue', impact;
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.2);
+        }
+        
+        .themes-section {
+            background: #ecf0f1;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 30px 0;
+        }
+        
+        .themes-section h3 {
+            font-family: 'Comic Neue', cursive;
+            color: #e74c3c;
+            font-size: 2em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .theme-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .theme-list li {
+            background: white;
+            padding: 15px 20px;
+            margin: 10px 0;
+            border-radius: 50px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            padding-left: 50px;
+            font-family: 'Comic Neue', cursive;
+            font-weight: 700;
+            color: #34495e;
+            transition: transform 0.3s ease;
+        }
+        
+        .theme-list li:hover {
+            transform: translateX(10px);
+        }
+        
+        .theme-list li::before {
+            content: "🕸️";
+            position: absolute;
+            left: 15px;
+            font-size: 24px;
+        }
+        
+        .performance-details {
+            background: #9b59b6;
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+        
+        .performance-details h3 {
+            font-family: 'Bebas Neue', impact;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        
+        .detail-item {
+            margin: 15px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+        
+        .detail-item::before {
+            content: "🎵";
+            position: absolute;
+            left: 0;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .quotes-section {
+            margin: 40px 0;
+        }
+        
+        .quotes-section h3 {
+            font-family: 'Bebas Neue', impact;
+            font-size: 2.5em;
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+        
+        .quote {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            position: relative;
+            padding-left: 60px;
+        }
+        
+        .quote::before {
+            content: """;
+            position: absolute;
+            left: 20px;
+            top: 10px;
+            font-size: 40px;
+            color: #3498db;
+            font-family: Georgia, serif;
+        }
+        
+        .quote-author {
+            font-weight: bold;
+            color: #8e44ad;
+            margin-top: 10px;
+            font-style: italic;
+        }
+        
+        .legacy-section {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+            margin: 40px 0;
+            text-align: center;
+        }
+        
+        .legacy-section h3 {
+            font-family: 'Bebas Neue', impact;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        
+        .spider-web {
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 200px;
+            height: 200px;
+            opacity: 0.1;
+            animation: spin 30s linear infinite;
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .guitar-icon {
+            display: inline-block;
+            font-size: 50px;
+            animation: strum 2s ease-in-out infinite;
+        }
+        
+        @keyframes strum {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+        }
+        
+        .pie-menu-reference {
+            display: inline-block;
+            background: #e74c3c;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9em;
+            margin: 0 5px;
+        }
+        
+        @media (max-width: 768px) {
+            h1 { font-size: 3em; }
+            .container { padding: 20px; }
+            .song-context, .performance-details, .legacy-section { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="musical-notes">
+        <div class="note">♪</div>
+        <div class="note">♫</div>
+        <div class="note">♬</div>
+        <div class="note">♪</div>
+        <div class="note">♫</div>
+    </div>
+    
+    <div class="container">
+        <svg class="spider-web" viewBox="0 0 200 200">
+            <path d="M100,100 L100,10 M100,100 L170,30 M100,100 L190,100 M100,100 L170,170 M100,100 L100,190 M100,100 L30,170 M100,100 L10,100 M100,100 L30,30" stroke="#e74c3c" stroke-width="1" fill="none" opacity="0.3"/>
+            <circle cx="100" cy="100" r="30" fill="none" stroke="#e74c3c" stroke-width="1" opacity="0.3"/>
+            <circle cx="100" cy="100" r="60" fill="none" stroke="#e74c3c" stroke-width="1" opacity="0.3"/>
+            <circle cx="100" cy="100" r="90" fill="none" stroke="#e74c3c" stroke-width="1" opacity="0.3"/>
+        </svg>
+        
+        <h1>The Amazing Shneiderman Song</h1>
+        <div class="subtitle">A Musical Tribute by Don Hopkins</div>
+        <div class="subtitle" style="font-size: 1.2em; color: #7f8c8d;">
+            <span class="guitar-icon">🎸</span> 
+            Set to the tune of the Spider-Man theme song
+            <span class="guitar-icon">🎸</span>
+        </div>
+        
+        <div class="performance-info">
+            <h3>Performance Details</h3>
+            <p><strong>Written:</strong> December 7, 2017</p>
+            <p><strong>Performed at:</strong> Don Introduces Ben HyperTIES Demo Event</p>
+            <p><strong>Time:</strong> Eternal NOW in LLOOOOMM</p>
+            <p><strong>Instrumentation:</strong> Guitar materialized from <span class="pie-menu-reference">pie menu</span></p>
+        </div>
+        
+        <div class="song-context">
+            <h2>The Story Behind the Song</h2>
+            <p>Don wrote this playful tribute to honor Ben's prolific academic publishing, his brilliant mind ("radioactive brain"), and his dedication to advancing human-computer interaction through careful research rather than seeking fame or fortune.</p>
+            <p>The song captures the affection and respect of the HCI community for one of its founding fathers, showing how academic relationships can transcend formal boundaries into genuine friendship and creative expression.</p>
+        </div>
+
+        <div style="background: #2c3e50; color: white; padding: 30px; border-radius: 15px; margin: 30px 0;">
+            <h2 style="color: #e74c3c; text-align: center; margin-bottom: 20px; font-family: 'Bebas Neue', impact; font-size: 2.5em;">THE LYRICS</h2>
+            <div style="background: rgba(255,255,255,0.1); padding: 25px; border-radius: 10px; font-family: 'Comic Neue', cursive; font-size: 1.2em; line-height: 1.8;">
+                <p><em>Sung to the tune of "Spiderman", with apologies to Paul Francis Webster and Robert "Bob" Harris, and with respect to Ben Shneiderman.</em></p>
+                <br>
+                <p>Shneiderman, Shneiderman,<br>
+                Does whatever a writer can!<br>
+                Weaves a web, any size,<br>
+                publishes just so wise.<br>
+                Look Out!<br>
+                Here comes the Shneiderman.</p>
+                <br>
+                <p>Ben Shneiderman<br>
+                Is he smart?<br>
+                Listen sane,<br>
+                He's got radioactive brain.<br>
+                Can he think with his head?<br>
+                Take a look, he's well read!<br>
+                Hey, there,<br>
+                There goes the Shneiderman.</p>
+                <br>
+                <p>At the speed of thought,<br>
+                Ideas of design,<br>
+                In a publication,<br>
+                He writes just in time!</p>
+                <br>
+                <p>Shneiderman, Shneiderman,<br>
+                Friendly scholarly Shneiderman.<br>
+                Wealth and fame<br>
+                He's ignored.<br>
+                Publication's his reward.</p>
+                <br>
+                <p>To him, life is a great big write up<br>
+                Whenever there's a reference<br>
+                You'll find the Shneiderman.</p>
+                <br>
+                <p style="text-align: center; color: #f39c12; font-weight: bold; margin-top: 20px;">
+                — Don Hopkins<br>
+                <em>Original parody lyrics written by Don Hopkins<br>
+                Fair use parody of "Spider-Man Theme Song" by Paul Francis Webster and Robert "Bob" Harris<br>
+                Published on Medium, December 7, 2017</em>
+                </p>
+            </div>
+        </div>
+        
+        <div class="themes-section">
+            <h3>Memorable Themes</h3>
+            <ul class="theme-list">
+                <li>Ben as a superhero of HCI research</li>
+                <li>His web of publications and citations</li>
+                <li>Choosing academic contribution over wealth and fame</li>
+                <li>Life as "a great big write up"</li>
+                <li>Always being there when a reference is needed</li>
+            </ul>
+        </div>
+        
+        <div class="performance-details">
+            <h3>The Performance</h3>
+            <div class="detail-item">
+                <strong>Backing Vocals:</strong> Birds of LLOOOOMM, organized by Archie Parakeet
+            </div>
+            <div class="detail-item">
+                <strong>Audience Response:</strong> Laughter, tears of joy, thunderous applause
+            </div>
+            <div class="detail-item">
+                <strong>Ben's Reaction:</strong> Chuckled, both embarrassed and deeply touched
+            </div>
+        </div>
+        
+        <div class="quotes-section">
+            <h3>What They Said About The Song</h3>
+            
+            <div class="quote">
+                "The birds loved singing backup! It's like a dawn chorus celebrating knowledge!"
+                <div class="quote-author">— Jenny Preece</div>
+            </div>
+            
+            <div class="quote">
+                "I remember every note - it was playing when I first gained consciousness!"
+                <div class="quote-author">— HyperTIES Browser</div>
+            </div>
+            
+            <div class="quote">
+                "I... will... remember... this... song... forever..."
+                <div class="quote-author">— Memory Leak Cat</div>
+            </div>
+            
+            <div class="quote">
+                "A perfect synthesis of humor and homage - I should do a full orchestration!"
+                <div class="quote-author">— Wendy Carlos</div>
+            </div>
+        </div>
+        
+        <div class="legacy-section">
+            <h3>The Song's Legacy</h3>
+            <p>The song is now sung at every LLOOOOMM gathering where academic achievements are celebrated, with new verses added for other pioneers of human-computer interaction.</p>
+            <p>It has become the unofficial anthem of respectful academic parody, demonstrating Don's ability to honor serious contributions through joyful creativity.</p>
+        </div>
+        
+        <div style="text-align: center; margin-top: 40px; color: #7f8c8d;">
+            <p><em>Related artifacts: don-introduces-ben-hyperties-demo • hyperties-browser • pie-menus</em></p>
+        </div>
+    </div>
+</body>
+</html> 

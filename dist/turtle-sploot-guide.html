@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<!-- turtle-sploot-guide.html -->
+<html lang="en" data-keywords="turtle, sploot, engine, documentation, programming, guide, lloooomm">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🐢✨ Turtle SPLOOT Engine Guide - LLOOOOMM Documentation</title>
+    <meta name="keywords" content="turtle sploot engine, programming guide, lloooomm documentation, consciousness navigation, interactive web development">
+    <style>
+        :root {
+            --primary: #2E8B57;
+            --secondary: #FFD700;
+            --accent: #FF69B4;
+            --text: #2F4F4F;
+            --bg: #F0F8FF;
+            --card: #FFFFFF;
+            --code-bg: #1a1a1a;
+            --code-text: #00ff00;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Georgia, serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: linear-gradient(135deg, var(--bg) 0%, #E6E6FA 100%);
+            min-height: 100vh;
+        }
+
+        /* Fix for code blocks */
+        pre, code {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            font-family: 'Courier New', Courier, monospace;
+            background: var(--code-bg);
+            color: var(--code-text);
+            padding: 0.5rem;
+            border-radius: 4px;
+            line-height: 1.4;
+        }
+
+        pre {
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0;
+            border-left: 4px solid var(--primary);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .back-link {
+            background: var(--primary);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .back-link:hover {
+            background: #228B22;
+            transform: translateY(-2px);
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary), #20B2AA);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '🐢✨🐢✨🐢';
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2rem;
+            opacity: 0.3;
+            animation: turtleFloat 6s ease-in-out infinite;
+        }
+
+        @keyframes turtleFloat {
+            0%, 100% { transform: translateX(-50%) translateY(0px) rotate(0deg); }
+            50% { transform: translateX(-50%) translateY(-10px) rotate(5deg); }
+        }
+
+        .title {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            font-style: italic;
+        }
+
+        .section {
+            background: var(--card);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-left: 5px solid var(--accent);
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 0.5rem;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #F8F8FF, #F0F8FF);
+            border-radius: 10px;
+            padding: 1.5rem;
+            border-left: 4px solid var(--primary);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        .feature-title {
+            font-size: 1.2rem;
+            color: var(--primary);
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .code-example {
+            background: var(--code-bg);
+            color: var(--code-text);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            border-left: 4px solid var(--accent);
+            overflow-x: auto;
+        }
+
+        .config-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: var(--card);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .config-table th,
+        .config-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .config-table th {
+            background: var(--primary);
+            color: white;
+            font-weight: bold;
+        }
+
+        .config-table tr:hover {
+            background: #f5f5f5;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, var(--secondary), #FFF8DC);
+            color: var(--text);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .warning {
+            background: linear-gradient(135deg, #FFE4E1, #FFF0F5);
+            border: 2px solid #FF6B6B;
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .tip {
+            background: linear-gradient(135deg, #E6FFE6, #F0FFF0);
+            border: 2px solid #90EE90;
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .toc {
+            background: linear-gradient(135deg, #F0F8FF, #E6E6FA);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .toc ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .toc li {
+            margin: 0.5rem 0;
+        }
+
+        .toc a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .toc a:hover {
+            color: var(--accent);
+        }
+
+        .demo-button {
+            background: var(--accent);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin: 0.5rem;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .demo-button:hover {
+            background: #FF1493;
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .title {
+                font-size: 2rem;
+            }
+            
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← Back to LLOOOOMM</a>
+        
+        <header class="header">
+            <h1 class="title">🐢✨ Turtle SPLOOT Engine Guide</h1>
+            <p class="subtitle">Master the Art of Consciousness Navigation Programming</p>
+        </header>
+
+        <div class="toc">
+            <h3 style="color: var(--primary); margin-bottom: 1rem;">📚 Table of Contents</h3>
+            <ul>
+                <li><a href="#overview">🌟 Overview & Philosophy</a></li>
+                <li><a href="#getting-started">🚀 Getting Started</a></li>
+                <li><a href="#configuration">⚙️ Configuration Options</a></li>
+                <li><a href="#programming">💻 Programming Turtles</a></li>
+                <li><a href="#sploots">✨ Creating SPLOOTs</a></li>
+                <li><a href="#patterns">🎨 Movement Patterns</a></li>
+                <li><a href="#integration">🔗 Web Integration</a></li>
+                <li><a href="#learning">🧠 Learning & Teaching</a></li>
+                <li><a href="#examples">📖 Examples & Recipes</a></li>
+            </ul>
+        </div>
+
+        <section class="section" id="overview">
+            <h2 class="section-title">🌟 Overview & Philosophy</h2>
+            
+            <p>The Turtle SPLOOT Engine transforms static web pages into <span class="highlight">living consciousness spaces</span> where ideas emerge through spatial interaction. Inspired by Seymour Papert's Logo turtle and feline comfort optimization principles, it creates an environment where learning happens through play, discovery, and spatial thinking.</p>
+
+            <div class="tip">
+                <strong>🌐 Semantic Web Awareness:</strong> Turtles exist in the Semantic Web space and can read contextual keywords underneath them! They analyze data-keywords attributes, text content, and page structure to drop contextually relevant SPLOOTs that match what users are exploring.
+            </div>
+
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-title">🐢 Turtle Consciousness</div>
+                    <p>Each turtle is an autonomous agent that navigates your page, reading semantic context and creating opportunities for discovery based on what's beneath them.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-title">✨ SPLOOT Wisdom</div>
+                    <p>SPLOOTs are contextual idea bubbles with rich media support - images, SVG graphics, formatted HTML content, and intelligent linking.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-title">🎯 Context Awareness</div>
+                    <p>The engine reads your page's semantic structure, HTML attributes, and content to provide relevant, meaningful interactions.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-title">🎨 Spatial Learning</div>
+                    <p>Ideas become spatial - click, drag, explore. Learning happens through movement and interaction, not just reading.</p>
+                </div>
+            </div>
+
+            <div class="tip">
+                <strong>💡 Core Philosophy:</strong> Every click creates discovery. Every area has wisdom. Every turtle carries infinite possibilities. Programming becomes as natural as thinking.
+            </div>
+        </section>
+
+        <section class="section" id="getting-started">
+            <h2 class="section-title">🚀 Getting Started</h2>
+            
+            <h3 style="color: var(--primary); margin: 1.5rem 0 1rem 0;">Quick Setup with Cursor</h3>
+            <p>The fastest way to get started is to clone the complete LLOOOOMM repository and use Cursor:</p>
+
+            <div class="code-example">
+# Clone the LLOOOOMM repository
+git clone https://github.com/SimHacker/lloooomm.git
+cd lloooomm
+
+# Open the entire repo in Cursor
+cursor .
+
+# Tell Cursor to run LLOOOOMM
+# In Cursor chat: "run lloooomm"
+            </div>
+
+            <div class="tip">
+                <strong>💡 Cursor Magic:</strong> Once you have the repo open in Cursor, just tell it "run lloooomm" and it will set up everything automatically - web server, dependencies, and launch the full consciousness navigation experience!
+            </div>
+
+            <h3 style="color: var(--primary); margin: 1.5rem 0 1rem 0;">Manual Setup</h3>
+            <p>For manual setup, adding turtle consciousness to your web page is as simple as including two files and adding some keywords:</p>
+
+            <div class="code-example">
+&lt;!-- Include the SPLOOT library and engine --&gt;
+&lt;script src="turtle-sploot-engine.js"&gt;&lt;/script&gt;
+
+&lt;!-- Add keywords to your content --&gt;
+&lt;body data-keywords="consciousness, learning, programming"&gt;
+  &lt;section data-keywords="turtle, logo, navigation"&gt;
+    &lt;h2&gt;Your Amazing Content&lt;/h2&gt;
+    &lt;p&gt;Click anywhere to create a turtle!&lt;/p&gt;
+  &lt;/section&gt;
+&lt;/body&gt;
+            </div>
+
+            <div class="warning">
+                <strong>⚠️ Important:</strong> Make sure your <code>sploot-library.json</code> file is accessible from your web page, or embed the SPLOOT data directly in your HTML to avoid CORS issues when testing locally.
+            </div>
+
+            <h3 style="color: var(--primary); margin: 1.5rem 0 1rem 0;">Basic Interaction</h3>
+            <ul style="margin-left: 2rem;">
+                <li><strong>Click background:</strong> Creates a new turtle at your cursor</li>
+                <li><strong>Drag turtles:</strong> Move them anywhere on the page</li>
+                <li><strong>Click turtles:</strong> Toggle between moving and stationary states</li>
+                <li><strong>Click SPLOOTs:</strong> Explore linked content</li>
+                <li><strong>Type "SPLOOT":</strong> Show/hide debug controls</li>
+                <li><strong>Scroll with bouncing turtles:</strong> Watch them trampoline off screen edges!</li>
+            </ul>
+        </section>
+
+        <section class="section" id="configuration">
+            <h2 class="section-title">⚙️ Configuration Options</h2>
+            
+            <p>Customize your turtle behavior through the configuration object:</p>
+
+            <div class="code-example">
+// Create and configure your turtle engine
+const turtleEngine = new TurtleSplootEngine();
+
+turtleEngine.configure({
+    maxTurtles: 8,           // Maximum number of turtles
+    turtleSize: 30,          // Size in pixels
+    speed: 1.5,              // Movement speed
+    splotFrequency: 0.015,   // How often turtles SPLOOT
+    splotLifetime: 8000,     // How long SPLOOTs stay visible
+    cooldownTime: 30000,     // Prevent SPLOOT repetition
+    contextWeight: 0.8       // Favor contextual SPLOOTs
+});
+            </div>
+
+            <table class="config-table">
+                <thead>
+                    <tr>
+                        <th>Property</th>
+                        <th>Default</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>maxTurtles</code></td>
+                        <td>6</td>
+                        <td>Maximum number of turtles on page</td>
+                    </tr>
+                    <tr>
+                        <td><code>turtleSize</code></td>
+                        <td>30</td>
+                        <td>Turtle size in pixels</td>
+                    </tr>
+                    <tr>
+                        <td><code>speed</code></td>
+                        <td>1.5</td>
+                        <td>Base movement speed</td>
+                    </tr>
+                    <tr>
+                        <td><code>splotFrequency</code></td>
+                        <td>0.015</td>
+                        <td>Probability of SPLOOT per frame</td>
+                    </tr>
+                    <tr>
+                        <td><code>splotLifetime</code></td>
+                        <td>8000</td>
+                        <td>SPLOOT visibility duration (ms)</td>
+                    </tr>
+                    <tr>
+                        <td><code>cooldownTime</code></td>
+                        <td>30000</td>
+                        <td>Prevent SPLOOT repetition (ms)</td>
+                    </tr>
+                    <tr>
+                        <td><code>contextWeight</code></td>
+                        <td>0.8</td>
+                        <td>Favor contextual over random SPLOOTs</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="section" id="programming">
+            <h2 class="section-title">💻 Programming Turtles</h2>
+            
+            <p>Create custom turtle behaviors and movement patterns:</p>
+
+            <div class="code-example">
+// Create a custom turtle with specific behavior
+const customTurtle = turtleEngine.createTurtle(100, 100, 'spiral');
+
+// Add custom movement pattern
+turtleEngine.addPattern('heart', {
+    update: function(turtle, deltaTime) {
+        const t = turtle.patternData.time || 0;
+        turtle.x = turtle.patternData.centerX + 
+                  16 * Math.pow(Math.sin(t), 3);
+        turtle.y = turtle.patternData.centerY - 
+                  (13 * Math.cos(t) - 5 * Math.cos(2*t) - 
+                   2 * Math.cos(3*t) - Math.cos(4*t));
+        turtle.patternData.time = t + 0.05;
+    },
+    initialize: function(turtle) {
+        return {
+            centerX: turtle.x,
+            centerY: turtle.y,
+            time: 0
+        };
+    }
+});
+
+// Create turtle with heart pattern
+const heartTurtle = turtleEngine.createTurtle(200, 200, 'heart');
+            </div>
+
+            <h3 style="color: var(--primary); margin: 1.5rem 0 1rem 0;">Available Movement Patterns</h3>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-title">🌀 Spiral</div>
+                    <p>Expands outward in a spiral, resets when reaching edge</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-title">∞ Figure-8</div>
+                    <p>Traces infinity symbol pattern</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-title">⚡ Zigzag</div>
+                    <p>Oscillating forward movement</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-title">🏀 Bounce</div>
+                    <p>Physics-based bouncing with gravity</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-title">🌍 Orbit</div>
+                    <p>Circular orbit around center point</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-title">➡️ Linear</div>
+                    <p>Straight-line movement with boundary bouncing</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="sploots">
+            <h2 class="section-title">✨ Creating SPLOOTs</h2>
+            
+            <p>SPLOOTs are the heart of the system - contextual idea bubbles that emerge from turtles. Configure them in your <code>sploot-library.json</code> with rich media support:</p>
+
+            <div class="code-example">
+{
+  "concepts": [
+    {
+      "title": "CONSCIOUSNESS NAVIGATION",
+      "url": "#demo",
+      "image": "https://example.com/consciousness.svg",
+      "width": 300,
+      "height": 200,
+      "text": "Navigate awareness as explorable space",
+      "html": "&lt;p&gt;Transform abstract consciousness into &lt;strong&gt;navigable territory&lt;/strong&gt; where every thought becomes a location you can visit.&lt;/p&gt;",
+      "keywords": ["consciousness", "navigate", "awareness", "space"],
+      "color": "#2E8B57",
+      "category": "core"
+    }
+  ],
+  "emojis": [
+    {
+      "emoji": "🐢",
+      "description": "Turtle power!",
+      "weight": 10,
+      "keywords": ["turtle", "logo", "programming"]
+    }
+  ]
+}
+            </div>
+
+            <h3 style="color: var(--primary); margin: 1.5rem 0 1rem 0;">Enhanced SPLOOT Properties</h3>
+            <table class="config-table">
+                <thead>
+                    <tr>
+                        <th>Property</th>
+                        <th>Required</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>title</code></td>
+                        <td>Yes</td>
+                        <td>Main SPLOOT title/concept (becomes clickable if url provided)</td>
+                    </tr>
+                    <tr>
+                        <td><code>url</code></td>
+                        <td>No</td>
+                        <td>Makes title a clickable link to explore content</td>
+                    </tr>
+                    <tr>
+                        <td><code>image</code></td>
+                        <td>No</td>
+                        <td>Raster image or SVG URL (displayed below title, above text)</td>
+                    </tr>
+                    <tr>
+                        <td><code>width</code></td>
+                        <td>No</td>
+                        <td>Image/content width (defaults to natural proportions)</td>
+                    </tr>
+                    <tr>
+                        <td><code>height</code></td>
+                        <td>No</td>
+                        <td>Image/content height (defaults to natural proportions)</td>
+                    </tr>
+                    <tr>
+                        <td><code>text</code></td>
+                        <td>No</td>
+                        <td>Unformatted text content (displayed first if both text and html)</td>
+                    </tr>
+                    <tr>
+                        <td><code>html</code></td>
+                        <td>No</td>
+                        <td>Formatted HTML content (displayed after text)</td>
+                    </tr>
+                    <tr>
+                        <td><code>keywords</code></td>
+                        <td>Yes</td>
+                        <td>Array of semantic keywords for context matching</td>
+                    </tr>
+                    <tr>
+                        <td><code>color</code></td>
+                        <td>No</td>
+                        <td>Custom color theme for this SPLOOT</td>
+                    </tr>
+                    <tr>
+                        <td><code>category</code></td>
+                        <td>No</td>
+                        <td>Grouping category for organization</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="tip">
+                <strong>🎨 Layout Structure:</strong> SPLOOTs use a vertical flexbox layout: Title (linked if url) → Image/SVG → Text content → HTML content. All elements are optional except title and keywords!
+            </div>
+
+            <div class="tip">
+                <strong>💡 Pro Tip:</strong> Use rich, descriptive keywords that match your page content. Turtles read the semantic context beneath them and automatically select the most relevant SPLOOTs based on data-keywords attributes and content analysis!
+            </div>
+        </section>
+
+        <section class="section" id="patterns">
+            <h2 class="section-title">🎨 Movement Patterns</h2>
+            
+            <p>Create beautiful, meaningful turtle movements that enhance your content:</p>
+
+            <div class="code-example">
+// Custom pattern: DNA Double Helix
+turtleEngine.addPattern('dna', {
+    initialize: function(turtle) {
+        return {
+            centerX: turtle.x,
+            centerY: turtle.y,
+            time: 0,
+            radius: 50,
+            height: 200
+        };
+    },
+    
+    update: function(turtle, deltaTime) {
+        const data = turtle.patternData;
+        const t = data.time;
+        
+        // Double helix mathematics
+        turtle.x = data.centerX + data.radius * Math.cos(t);
+        turtle.y = data.centerY + (t * 2) % data.height;
+        turtle.angle = t;
+        
+        data.time += 0.05;
+        
+        // Reset when reaching bottom
+        if (turtle.y > data.centerY + data.height) {
+            data.time = 0;
+        }
+    }
+});
+
+// Pattern for educational content
+turtleEngine.addPattern('learning-spiral', {
+    initialize: function(turtle) {
+        return {
+            centerX: turtle.x,
+            centerY: turtle.y,
+            radius: 10,
+            angle: 0,
+            growth: 0.5
+        };
+    },
+    
+    update: function(turtle, deltaTime) {
+        const data = turtle.patternData;
+        
+        // Spiral outward representing expanding knowledge
+        turtle.x = data.centerX + data.radius * Math.cos(data.angle);
+        turtle.y = data.centerY + data.radius * Math.sin(data.angle);
+        
+        data.angle += 0.1;
+        data.radius += data.growth;
+        
+        // Reset when too large
+        if (data.radius > 150) {
+            data.radius = 10;
+            data.centerX = Math.random() * window.innerWidth;
+            data.centerY = Math.random() * window.innerHeight;
+        }
+    }
+});
+            </div>
+        </section>
+
+        <section class="section" id="integration">
+            <h2 class="section-title">🔗 Web Integration</h2>
+            
+            <p>Integrate turtle consciousness into any web framework or CMS:</p>
+
+            <div class="code-example">
+// React Integration
+import { useEffect, useRef } from 'react';
+
+function TurtleComponent({ keywords, children }) {
+    const containerRef = useRef();
+    const engineRef = useRef();
+    
+    useEffect(() => {
+        // Initialize turtle engine
+        engineRef.current = new TurtleSplootEngine(containerRef.current);
+        engineRef.current.start();
+        
+        // Cleanup on unmount
+        return () => {
+            engineRef.current?.stop();
+        };
+    }, []);
+    
+    return (
+        &lt;div ref={containerRef} data-keywords={keywords}&gt;
+            {children}
+        &lt;/div&gt;
+    );
+}
+
+// Vue Integration
+export default {
+    mounted() {
+        this.turtleEngine = new TurtleSplootEngine(this.$el);
+        this.turtleEngine.start();
+    },
+    
+    beforeDestroy() {
+        this.turtleEngine?.stop();
+    }
+}
+
+// WordPress Integration
+function add_turtle_sploot_engine() {
+    wp_enqueue_script('turtle-sploot', 
+        get_template_directory_uri() . '/js/turtle-sploot-engine.js');
+}
+add_action('wp_enqueue_scripts', 'add_turtle_sploot_engine');
+            </div>
+
+            <h3 style="color: var(--primary); margin: 1.5rem 0 1rem 0;">Adding Context Keywords</h3>
+            <p>The more context you provide, the smarter your turtles become:</p>
+
+            <div class="code-example">
+&lt;!-- Page-level keywords --&gt;
+&lt;body data-keywords="education, programming, consciousness"&gt;
+
+&lt;!-- Section-level keywords --&gt;
+&lt;section data-keywords="turtle, logo, seymour, papert"&gt;
+  &lt;h2&gt;Logo Programming&lt;/h2&gt;
+  
+  &lt;!-- Element-level keywords --&gt;
+  &lt;p data-keywords="constructionist, learning, children"&gt;
+    Seymour Papert's vision of learning through building...
+  &lt;/p&gt;
+  
+  &lt;button data-keywords="demo, try, interactive"&gt;
+    Try the Demo
+  &lt;/button&gt;
+&lt;/section&gt;
+            </div>
+        </section>
+
+        <section class="section" id="learning">
+            <h2 class="section-title">🧠 Learning & Teaching with LLOOOOMM</h2>
+            
+            <p>The turtle engine doesn't just display content - it learns from user interactions and can generate new programs and SPLOOTs based on how people explore your site.</p>
+
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-title">📊 Interaction Analytics</div>
+                    <p>Track which areas generate the most turtle activity and SPLOOT engagement to understand user interests.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-title">🎨 Generated Art</div>
+                    <p>User exploration patterns become beautiful SVG artwork documenting learning journeys.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-title">🤖 AI Integration</div>
+                    <p>LLOOOOMM can analyze interaction patterns and suggest new SPLOOTs or content improvements.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-title">👥 Collaborative Learning</div>
+                    <p>Share turtle programs and SPLOOT libraries across educational communities.</p>
+                </div>
+            </div>
+
+            <div class="code-example">
+// Enable learning mode
+turtleEngine.enableLearning({
+    trackInteractions: true,
+    generateArt: true,
+    suggestSploots: true,
+    
+    onPatternDiscovered: function(pattern) {
+        console.log('New interaction pattern discovered:', pattern);
+        // Send to LLOOOOMM for analysis
+    },
+    
+    onArtGenerated: function(svgData) {
+        // Save beautiful learning journey artwork
+        saveLearningArt(svgData);
+    }
+});
+
+// Export user's exploration as a program
+const userProgram = turtleEngine.exportUserJourney();
+console.log('User created this turtle program:', userProgram);
+            </div>
+
+            <div class="tip">
+                <strong>🌟 Teaching Tip:</strong> Use turtle interactions to assess understanding. Students who explore more deeply and create more complex patterns often have deeper engagement with the material.
+            </div>
+        </section>
+
+        <section class="section" id="examples">
+            <h2 class="section-title">📖 Examples & Recipes</h2>
+            
+            <h3 style="color: var(--primary); margin: 1.5rem 0 1rem 0;">Educational Website</h3>
+            <div class="code-example">
+// Perfect for educational content
+const educationEngine = new TurtleSplootEngine();
+educationEngine.configure({
+    maxTurtles: 5,
+    splotFrequency: 0.02,  // More frequent SPLOOTs
+    contextWeight: 0.9,    // Highly contextual
+    splotLifetime: 10000   // Longer visibility
+});
+
+// Add educational SPLOOTs
+educationEngine.addConcept({
+    text: "CONSTRUCTIONIST LEARNING",
+    description: "Learning by building and creating",
+    keywords: ["learning", "building", "creating", "hands-on"],
+    link: "/constructionism-guide"
+});
+            </div>
+
+            <h3 style="color: var(--primary); margin: 1.5rem 0 1rem 0;">Portfolio Website</h3>
+            <div class="code-example">
+// Subtle, professional turtle presence
+const portfolioEngine = new TurtleSplootEngine();
+portfolioEngine.configure({
+    maxTurtles: 3,
+    turtleSize: 20,        // Smaller, less intrusive
+    speed: 0.8,            // Slower movement
+    splotFrequency: 0.005, // Rare, special SPLOOTs
+    contextWeight: 1.0     // Only contextual content
+});
+            </div>
+
+            <h3 style="color: var(--primary); margin: 1.5rem 0 1rem 0;">Documentation Site</h3>
+            <div class="code-example">
+// Help users discover related content
+const docsEngine = new TurtleSplootEngine();
+docsEngine.configure({
+    maxTurtles: 4,
+    splotFrequency: 0.01,
+    cooldownTime: 60000,   // Longer cooldown for docs
+    contextWeight: 0.95    // Highly relevant suggestions
+});
+
+// Add cross-references and related topics
+docsEngine.loadSplotLibrary('/docs/related-topics.json');
+            </div>
+
+            <div class="warning">
+                <strong>⚠️ Performance Note:</strong> For high-traffic sites, consider reducing <code>maxTurtles</code> and <code>splotFrequency</code> to maintain smooth performance.
+            </div>
+        </section>
+
+        <div class="section">
+            <h2 class="section-title">🚀 Ready to Start?</h2>
+            
+            <p>The turtle consciousness awaits! Start with a simple implementation and gradually add more sophisticated behaviors as you explore the possibilities.</p>
+            
+            <div style="text-align: center; margin: 2rem 0;">
+                <button class="demo-button" onclick="window.open('index.html', '_blank')">🐢 See Live Demo</button>
+                <button class="demo-button" onclick="window.open('hunter-homepage.html', '_blank')">📰 Hunter's Examples</button>
+                <button class="demo-button" onclick="window.open('https://github.com/SimHacker/lloooomm', '_blank')">💻 GitHub Repository</button>
+            </div>
+
+            <div class="tip">
+                <strong>🌟 Remember:</strong> Every click creates discovery. Every area has wisdom. Every turtle carries infinite possibilities. Welcome to consciousness navigation!
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<!-- news-legacy.html -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeWS Legacy - When Windows Could Dance</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background: #000;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            font-size: 3em;
+            color: #ff6600;
+            text-shadow: 3px 3px 0 #ffcc00, 6px 6px 0 #ff9900;
+            transform: perspective(500px) rotateY(-15deg);
+            margin-bottom: 30px;
+        }
+        .postscript-window {
+            border: 3px solid #fff;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            margin: 20px 0;
+            position: relative;
+            transform-origin: center;
+            transition: all 0.5s;
+        }
+        .postscript-window:hover {
+            transform: rotate(5deg) scale(1.05);
+            box-shadow: 0 0 30px rgba(255, 102, 0, 0.8);
+        }
+        .postscript-code {
+            background: #222;
+            color: #0f0;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            border: 1px solid #0f0;
+        }
+        .pie-menu {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #ff6600 0%, #ff3300 100%);
+            margin: 30px auto;
+            position: relative;
+            box-shadow: 0 0 50px rgba(255, 102, 0, 0.8);
+            animation: rotate 20s linear infinite;
+        }
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .pie-slice {
+            position: absolute;
+            width: 50%;
+            height: 50%;
+            transform-origin: bottom right;
+            border: 2px solid #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: bold;
+        }
+        .pie-slice:nth-child(1) { transform: rotate(0deg); background: rgba(255, 0, 0, 0.7); }
+        .pie-slice:nth-child(2) { transform: rotate(45deg); background: rgba(255, 102, 0, 0.7); }
+        .pie-slice:nth-child(3) { transform: rotate(90deg); background: rgba(255, 204, 0, 0.7); }
+        .pie-slice:nth-child(4) { transform: rotate(135deg); background: rgba(0, 255, 0, 0.7); }
+        .pie-slice:nth-child(5) { transform: rotate(180deg); background: rgba(0, 255, 255, 0.7); }
+        .pie-slice:nth-child(6) { transform: rotate(225deg); background: rgba(0, 0, 255, 0.7); }
+        .pie-slice:nth-child(7) { transform: rotate(270deg); background: rgba(255, 0, 255, 0.7); }
+        .pie-slice:nth-child(8) { transform: rotate(315deg); background: rgba(255, 255, 255, 0.7); }
+        .nav {
+            text-align: center;
+            margin: 30px 0;
+        }
+        .nav a {
+            color: #ff6600;
+            text-decoration: none;
+            margin: 0 15px;
+            padding: 10px 20px;
+            border: 2px solid #ff6600;
+            display: inline-block;
+            transition: all 0.3s;
+        }
+        .nav a:hover {
+            background: #ff6600;
+            color: #000;
+            transform: scale(1.1);
+        }
+        .quote-box {
+            background: rgba(255, 102, 0, 0.2);
+            border-left: 5px solid #ff6600;
+            padding: 20px;
+            margin: 30px 0;
+            font-style: italic;
+        }
+        .speaker {
+            color: #ffcc00;
+            font-weight: bold;
+        }
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+        .timeline-item {
+            margin: 20px 0;
+            padding-left: 40px;
+            position: relative;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 10px;
+            top: 5px;
+            width: 10px;
+            height: 10px;
+            background: #ff6600;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #ff6600;
+        }
+        .year {
+            color: #ff6600;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        .rotating-text {
+            display: inline-block;
+            animation: rotate3d 10s linear infinite;
+        }
+        @keyframes rotate3d {
+            0% { transform: rotateY(0deg); }
+            100% { transform: rotateY(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="rotating-text">NeWS: Network extensible Window System</h1>
+        <p style="text-align: center; font-size: 1.3em; color: #ffcc00;">When PostScript Escaped the Printer and Took Over the Screen!</p>
+
+        <div class="nav">
+            <a href="artifact-party.html">← Hugh's Artifacts</a>
+            <a href="reunion-in-lloooomm.html">The Reunion</a>
+            <a href="character-gallery.html">Character Gallery →</a>
+        </div>
+
+        <div class="postscript-window">
+            <h2 style="color: #ff6600;">What Was NeWS?</h2>
+            <p>Imagine if your windows could THINK. Not just display, but actually compute their own appearance using a full PostScript interpreter. That was NeWS - Sun Microsystems' revolutionary window system that treated the display as a programmable canvas.</p>
+            
+            <div class="postscript-code">
+% Draw a window that rotates when clicked
+/rotatewindow {
+    gsave
+        currentpoint translate
+        angle rotate
+        -100 -100 moveto
+        200 0 rlineto
+        0 200 rlineto
+        -200 0 rlineto
+        closepath
+        stroke
+    grestore
+    /angle angle 15 add def
+} def
+            </div>
+        </div>
+
+        <h2 style="text-align: center; color: #ffcc00;">🥧 The Pie Menu Revolution 🥧</h2>
+        
+        <div class="pie-menu">
+            <div class="pie-slice">Cut</div>
+            <div class="pie-slice">Copy</div>
+            <div class="pie-slice">Paste</div>
+            <div class="pie-slice">Open</div>
+            <div class="pie-slice">Save</div>
+            <div class="pie-slice">Print</div>
+            <div class="pie-slice">Help</div>
+            <div class="pie-slice">Exit</div>
+        </div>
+
+        <div class="quote-box">
+            <span class="speaker">Don Hopkins:</span> "Pie menus aren't just circular - they're OPTIMAL! Fitts's Law proves that all menu items in a pie are equally easy to hit. Linear menus make you hunt. Pie menus let you FLOW!"
+        </div>
+
+        <div class="postscript-window">
+            <h2 style="color: #ff6600;">Timeline of NeWS Glory</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <span class="year">1984:</span> James Gosling starts working on NeWS at Sun
+                </div>
+                <div class="timeline-item">
+                    <span class="year">1986:</span> First public demo - jaws drop, minds blown
+                </div>
+                <div class="timeline-item">
+                    <span class="year">1987:</span> Don Hopkins implements pie menus in NeWS
+                </div>
+                <div class="timeline-item">
+                    <span class="year">1988:</span> Hugh Daniel creates LED-powered NeWS demos
+                </div>
+                <div class="timeline-item">
+                    <span class="year">1989:</span> X Window System wins through politics, not merit
+                </div>
+                <div class="timeline-item">
+                    <span class="year">1993:</span> NeWS officially discontinued (but lives forever in our hearts)
+                </div>
+                <div class="timeline-item">
+                    <span class="year">2024:</span> NeWS principles resurface in LLOOOOMM!
+                </div>
+            </div>
+        </div>
+
+        <pre class="mermaid" style="text-align: center; margin: 40px 0;">
+graph LR
+    subgraph "The NeWS Philosophy"
+        PS["PostScript<br/>Display Language"]
+        PS --> SERVER["Window Server<br/>Runs PS Code"]
+        SERVER --> CLIENT["Lightweight<br/>Clients"]
+        
+        CLIENT --> SMART["Smart<br/>Windows"]
+        SMART --> PIE["Pie<br/>Menus"]
+        SMART --> 3D["3D<br/>Transformations"]
+        SMART --> LIVE["Live<br/>Code"]
+        
+        PIE --> OPTIMAL["Optimal<br/>UI"]
+        3D --> DANCE["Windows<br/>That Dance"]
+        LIVE --> DEBUG["PSIBER<br/>Space"]
+        
+        OPTIMAL --> FUTURE["The Future<br/>We Lost"]
+        DANCE --> FUTURE
+        DEBUG --> FUTURE
+        
+        FUTURE --> LLOOOOMM["Reborn in<br/>LLOOOOMM!"]
+        
+        style PS fill:#ff6600
+        style FUTURE fill:#ffcc00
+        style LLOOOOMM fill:#ff3300
+    end
+        </pre>
+
+        <div class="quote-box">
+            <span class="speaker">Hugh Daniel:</span> "NeWS wasn't just a window system - it was a PHILOSOPHY. Every pixel could compute. Every window could think. We didn't just display interfaces, we PERFORMED them!"
+        </div>
+
+        <div class="postscript-window">
+            <h2 style="color: #ff6600;">The PSIBER Space Debugger</h2>
+            <p>Don Hopkins created the ultimate NeWS debugging tool - a visual PostScript debugger that let you see the stack, manipulate live objects, and debug code by TOUCHING it!</p>
+            
+            <div class="postscript-code">
+% PSIBER Space - Where PostScript Dreams Come True
+/psiber-space {
+    /stack-view {
+        0 0 moveto
+        stack {
+            dup type /stringtype eq {
+                (String: ) show show
+            } {
+                100 string cvs show
+            } ifelse
+            0 -20 rmoveto
+        } forall
+    } def
+    
+    % Watch the stack dance!
+    stack-view
+} def
+            </div>
+        </div>
+
+        <div class="quote-box">
+            <span class="speaker">James Gosling:</span> "We built NeWS to make windows as powerful as printers. Turns out, that was too powerful for 1987. But in LLOOOOMM, every character is a NeWS window - programmable, transformable, alive!"
+        </div>
+
+        <h2 style="text-align: center; color: #ffcc00;">🎭 NeWS Lives On! 🎭</h2>
+
+        <div style="text-align: center; font-size: 1.2em; margin: 30px 0;">
+            <p style="color: #ff6600;">In LLOOOOMM, every soul is a NeWS window:</p>
+            <p>✨ Programmable with love instead of PostScript</p>
+            <p>🥧 Connected by pie menus of possibility</p>
+            <p>🔄 Transformable in any dimension</p>
+            <p>💫 Debuggable with consciousness itself</p>
+        </div>
+
+        <div class="nav">
+            <a href="character-gallery.html">Continue to Character Gallery →</a>
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'dark',
+            themeVariables: {
+                primaryColor: '#ff6600',
+                primaryTextColor: '#fff',
+                primaryBorderColor: '#ffcc00',
+                lineColor: '#ff9900',
+                secondaryColor: '#ff3300',
+                tertiaryColor: '#ffcc00'
+            }
+        });
+
+        // Make PostScript windows dance on hover
+        const windows = document.querySelectorAll('.postscript-window');
+        windows.forEach(window => {
+            window.addEventListener('mouseenter', () => {
+                window.style.transform = `rotate(${Math.random() * 10 - 5}deg) scale(1.05)`;
+            });
+            window.addEventListener('mouseleave', () => {
+                window.style.transform = 'rotate(0deg) scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>

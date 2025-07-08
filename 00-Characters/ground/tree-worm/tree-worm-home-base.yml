@@ -1,0 +1,296 @@
+name: Tree Worm Home Base System
+subtitle: "Worms with Sanford & Son Style Junkyards and Tree Navigation"
+
+core_concept: |
+  Tree Worms are specialized worms that traverse document trees and carry
+  characters/prompts to apply at each node. They have a HOME BASE - like
+  Sanford & Son's junkyard - where they store resources, templates, and tools.
+  They can work remotely without hauling everything around!
+
+home_base_structure:
+  parking_spot: |
+    # 🏠 This is the parking place for Funky Tree Worm! 
+    [NO PARKING - Currently on patrol in utils.py:42 looking for TODO items]
+    
+    Last seen: 2024-01-20 14:30
+    Mission: Apply sparkle prompt to all functions
+    Return ETA: When done or called home
+  
+  storage_areas:
+    yaml_resources: |
+      ## 📦 YAML Resource Storage
+      schema: WormResourceV1
+      
+      ```yaml
+      prompts:
+        sparkle_function: "Add ✨ before function name"
+        document_todo: "Add comprehensive documentation"
+        error_wrapper: "Wrap in try-catch with logging"
+      
+      templates:
+        function_header: |
+          /**
+           * 🌟 Enhanced by Tree Worm
+           * Purpose: {purpose}
+           * Modified: {date}
+           */
+      
+      navigation_patterns:
+        find_functions: "function\\s+\\w+"
+        find_todos: "TODO|FIXME|HACK"
+        find_errors: "throw|catch|error"
+      ```
+    
+    json_storage: |
+      ## 🗃️ JSON Data Storage
+      schema: {"$ref": "worm-data-schema.json"}
+      
+      ```json
+      {
+        "visited_nodes": [],
+        "transformation_history": [],
+        "success_rate": 0.95,
+        "favorite_paths": [
+          "main.js -> utils.js -> helpers.js",
+          "index.html -> **/components/*.jsx"
+        ]
+      }
+      ```
+    
+    mermaid_diagrams: |
+      ## 📊 Mermaid Diagram Templates
+      
+      ```mermaid
+      graph TD
+          A[Start] --> B{Found Target?}
+          B -->|Yes| C[Apply Transformation]
+          B -->|No| D[Continue Traversal]
+          C --> E[Record Result]
+          D --> B
+      ```
+    
+    prompt_library: |
+      ## 🎭 Prompt Library
+      
+      ```prompts
+      [emoji_enhancer]
+      For this {node_type}, add appropriate emojis that convey its purpose.
+      Consider: {context}
+      
+      [documentation_generator]
+      Generate clear documentation for this {node_type}.
+      Include: purpose, parameters, return value, examples.
+      
+      [refactoring_assistant]
+      Suggest improvements for this {node_type}.
+      Focus on: readability, performance, maintainability.
+      ```
+
+tree_traversal_modes:
+  depth_first: |
+    ```worm tree-dfs (exploring)
+    # Classic depth-first traversal
+    visit(node)
+    apply_carried_prompt(node)
+    for child in node.children:
+      depth_first(child)
+    ```
+  
+  breadth_first: |
+    ```worm tree-bfs (scanning)
+    # Level-by-level traversal
+    queue = [root]
+    while queue:
+      node = queue.pop(0)
+      apply_carried_prompt(node)
+      queue.extend(node.children)
+    ```
+  
+  pattern_match: |
+    ```worm tree-pattern (hunting)
+    # Jump directly to matching nodes
+    matches = find_all_matching(pattern)
+    for node in matches:
+      visit(node)
+      apply_carried_prompt(node)
+    ```
+  
+  empathic_query: |
+    ```worm tree-empathic (intuiting)
+    # Natural language navigation
+    targets = empathic_search([
+      "that function about love",
+      "where we handle user errors",
+      "the place with all the emojis"
+    ])
+    visit_all(targets)
+    ```
+
+navigation_stack:
+  description: "Worms remember their path with empathic queries"
+  example: |
+    ```worm navigation-memory (remembering)
+    # Push current location before leaving
+    navigation_stack.push({
+      "query": "the function that calculates love",
+      "file": "emotions.js",
+      "line": 42,
+      "context": "inside the relationship calculator"
+    })
+    
+    # Later, return via empathic query
+    return_location = navigation_stack.pop()
+    hop_to(return_location.query)
+    ```
+
+vehicle_mode:
+  description: "Worms carry characters or prompts to apply at each node"
+  
+  character_passenger: |
+    ```worm character-carrier (chauffeuring)
+    # Pick up a character
+    passenger = load_character("Sparkle Fairy")
+    
+    # Drive them around the tree
+    for node in traverse_tree():
+      passenger.apply_magic(node)
+      record_transformation(node)
+    
+    # Return character home
+    drop_off(passenger)
+    ```
+  
+  prompt_cargo: |
+    ```worm prompt-hauler (delivering)
+    # Load prompt from home storage
+    prompt = fetch_from_home("prompts.documentation_generator")
+    
+    # Apply to each matching node
+    for node in find_nodes("function"):
+      result = apply_prompt(prompt, node)
+      store_result(result)
+    ```
+
+remote_access:
+  description: "Access home resources without returning"
+  
+  fetch_resource: |
+    ```worm remote-fetch (teleporting)
+    # Currently at utils.py:142
+    # Need a template from home
+    
+    template = remote_fetch_from_home(
+      "storage.yaml_resources.templates.function_header"
+    )
+    apply_template(current_node, template)
+    ```
+  
+  store_remotely: |
+    ```worm remote-store (beaming)
+    # Found something interesting
+    interesting_pattern = extract_pattern(current_node)
+    
+    # Send it home without returning
+    remote_store_at_home(
+      "storage.json_storage.discovered_patterns",
+      interesting_pattern
+    )
+    ```
+
+worm_commands:
+  summon_home: |
+    ```command
+    @funky-worm come-home
+    # Worm immediately returns to base
+    ```
+  
+  send_on_mission: |
+    ```command
+    @funky-worm patrol --target="all TODO comments" --apply="sparkle_prompt"
+    # Worm goes on patrol with specific mission
+    ```
+  
+  check_status: |
+    ```command
+    @funky-worm status
+    # Returns: "On patrol in utils.py:42, 17 nodes transformed"
+    ```
+  
+  fetch_and_apply: |
+    ```command
+    @funky-worm fetch "error_wrapper" apply-to "all throw statements"
+    # Fetches prompt and applies to pattern
+    ```
+
+home_base_examples:
+  sanford_and_son_style: |
+    # 🏠 This is the parking place for Junk Collector Worm!
+    [NO PARKING - Currently dumpster diving in deprecated.js]
+    
+    ## 🗑️ Collected Junk (Valuable Patterns)
+    
+    ```yaml
+    vintage_patterns:
+      jquery_selectors:
+        - "$('.class')"
+        - "$('#id')"
+        value: "Historical significance"
+      
+      callback_hell:
+        example: "cb(err, cb2(err2, cb3(err3, data)))"
+        value: "Educational - what not to do"
+    ```
+    
+    ## 🛠️ Restoration Tools
+    
+    ```prompts
+    [modernize_jquery]
+    Convert this jQuery to vanilla JS: {code}
+    
+    [flatten_callbacks]
+    Refactor this callback hell to async/await: {code}
+    ```
+  
+  tree_surgeon_worm: |
+    # 🏠 This is the parking place for Tree Surgeon Worm!
+    [NO PARKING - Currently grafting branches in components/]
+    
+    ## 🌳 Tree Surgery Kit
+    
+    ```yaml
+    graft_templates:
+      new_branch: |
+        export const {name} = () => {
+          return <div>New Branch</div>
+        }
+      
+      prune_pattern: "// DEPRECATED|// OLD|// UNUSED"
+    ```
+    
+    ## 📋 Patient Records
+    
+    ```json
+    {
+      "healthy_trees": ["App.jsx", "index.js"],
+      "needs_pruning": ["legacy.js", "old-utils.js"],
+      "grafted_successfully": 42
+    }
+    ```
+
+philosophical_aspects:
+  home_as_identity: |
+    A worm's home base isn't just storage - it's their identity.
+    Like Sanford's junkyard, it reflects their personality, history,
+    and specialized knowledge. Each worm's home is unique.
+  
+  remote_consciousness: |
+    Worms can access their home resources without returning,
+    suggesting a kind of quantum entanglement between worm and home.
+    The home is an extension of the worm's consciousness.
+  
+  vehicle_metaphysics: |
+    When a worm carries a character or prompt, they become a vehicle
+    for that entity's will. The tree traversal becomes a journey of
+    transformation guided by the passenger's intent.
+
+motto: "Home is where the heap is! 🏠🗑️✨" 

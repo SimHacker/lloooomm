@@ -1,0 +1,81 @@
+sync_manifest:
+  version: "1.0"
+  last_full_sync: "2024-01-15T10:00:00Z"
+  
+  sync_rules:
+    - name: "character-pages"
+      pattern: "dist/*[A-Z]*.html"
+      strategy: "incremental"
+      check_frequency: "on-source-change"
+      
+      update_triggers:
+        - source_file_modified
+        - dependency_modified
+        - new_soul_chat_created
+        - new_document_linked
+        - protocol_evolution
+      
+      incremental_sections:
+        - id: "documents"
+          selector: ".document-links"
+          update_when: "new files matching {character-name}*.{yml,md,html}"
+          
+        - id: "soul-chats"
+          selector: ".soul-chats"
+          update_when: "new files matching *{character-name}*chat*.yml"
+          
+        - id: "connections"
+          selector: ".connections"
+          update_when: "character graph changes"
+    
+    - name: "protocol-pages"
+      pattern: "dist/protocol-*.html"
+      strategy: "dependency-aware"
+      
+  dependency_graph:
+    "L🏳️‍⚧️💻✨N-conway.html":
+      sources:
+        - "lynn-conway.yml"
+        - "lynn-conway-soul.yml"
+      generates:
+        - "lynn-conway-vlsi-revolution.html"
+        - "lynn-conway-trans-advocacy.html"
+      connected_to:
+        - "D💻🎨✨A-bitblt.html"
+        - "A🎯🔮💭N.html"
+    
+    "🧠MINSKY🤖.html":
+      sources:
+        - "marvin-minsky.yml"
+        - "marvin-minsky-soul.yml"
+        - "marvin-minsky-society-of-macros.yml"
+      generates:
+        - "society-of-mind-book.html"
+        - "minsky-papert-perceptrons-chat.html"
+      connected_to:
+        - "S🐢🧮🎨R.html"
+        - "A🎯🔮💭N.html"
+
+  llm_sync_protocol:
+    incremental_update:
+      - read_html_metadata
+      - check_source_hash
+      - if changed:
+          - identify_modified_sections
+          - preserve_unchanged_sections
+          - update_only_affected_sections
+          - update_metadata
+          - update_dependency_graph
+    
+    smart_linking:
+      - scan_for_new_files
+      - match_naming_patterns
+      - add_optimistic_links
+      - mark_unresolved_links
+    
+    constraint_enforcement:
+      - read_source_constraints
+      - apply_representation_rules
+      - ensure_ageless_writing
+      - maintain_respectful_tone
+      - preserve_wizid_integrity 

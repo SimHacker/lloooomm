@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<!-- i-wanna-be-cdata.html -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I Wanna Be &lt;![CDATA[ | XML Punk Rock Anthem</title>
+    <meta name="description" content="A punk rock parody transforming The Ramones' anthem into a programmer's cry for escape from XML parsing hell">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Courier+Prime:wght@400;700&family=Permanent+Marker&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Courier Prime', monospace;
+            background: #000;
+            color: #0f0;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        
+        /* Matrix-style falling XML code */
+        .xml-rain {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            opacity: 0.1;
+        }
+        
+        .xml-drop {
+            position: absolute;
+            color: #0f0;
+            font-family: 'Courier Prime', monospace;
+            font-size: 14px;
+            animation: fall linear infinite;
+            white-space: nowrap;
+        }
+        
+        @keyframes fall {
+            to { transform: translateY(100vh); }
+        }
+        
+        .xml-drop:nth-child(1) { left: 5%; animation-duration: 8s; }
+        .xml-drop:nth-child(2) { left: 15%; animation-duration: 10s; animation-delay: 1s; }
+        .xml-drop:nth-child(3) { left: 25%; animation-duration: 9s; animation-delay: 2s; }
+        .xml-drop:nth-child(4) { left: 35%; animation-duration: 11s; animation-delay: 0.5s; }
+        .xml-drop:nth-child(5) { left: 45%; animation-duration: 8.5s; animation-delay: 1.5s; }
+        .xml-drop:nth-child(6) { left: 55%; animation-duration: 9.5s; animation-delay: 2.5s; }
+        .xml-drop:nth-child(7) { left: 65%; animation-duration: 10.5s; animation-delay: 0.8s; }
+        .xml-drop:nth-child(8) { left: 75%; animation-duration: 8s; animation-delay: 1.8s; }
+        .xml-drop:nth-child(9) { left: 85%; animation-duration: 9s; animation-delay: 2.8s; }
+        .xml-drop:nth-child(10) { left: 95%; animation-duration: 11s; animation-delay: 0.3s; }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px;
+            position: relative;
+            z-index: 2;
+            background: rgba(0, 0, 0, 0.9);
+            border: 2px solid #0f0;
+            box-shadow: 0 0 30px #0f0;
+        }
+        
+        h1 {
+            font-family: 'Permanent Marker', cursive;
+            font-size: 4em;
+            text-align: center;
+            color: #fff;
+            text-shadow: 
+                0 0 10px #0f0,
+                0 0 20px #0f0,
+                0 0 30px #0f0,
+                0 0 40px #0f0;
+            margin-bottom: 20px;
+            animation: glitch 2s infinite;
+            position: relative;
+        }
+        
+        h1::before,
+        h1::after {
+            content: 'I Wanna Be <![CDATA[';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        h1::before {
+            animation: glitch-1 0.5s infinite;
+            color: #ff0;
+            z-index: -1;
+        }
+        
+        h1::after {
+            animation: glitch-2 0.5s infinite;
+            color: #f0f;
+            z-index: -2;
+        }
+        
+        @keyframes glitch {
+            0%, 100% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+        }
+        
+        @keyframes glitch-1 {
+            0%, 100% { clip-path: inset(0 0 0 0); transform: translate(0); }
+            20% { clip-path: inset(20% 0 30% 0); transform: translate(-5px); }
+            40% { clip-path: inset(50% 0 20% 0); transform: translate(5px); }
+            60% { clip-path: inset(10% 0 60% 0); transform: translate(-3px); }
+            80% { clip-path: inset(80% 0 5% 0); transform: translate(3px); }
+        }
+        
+        @keyframes glitch-2 {
+            0%, 100% { clip-path: inset(0 0 0 0); transform: translate(0); }
+            20% { clip-path: inset(60% 0 10% 0); transform: translate(5px); }
+            40% { clip-path: inset(20% 0 50% 0); transform: translate(-5px); }
+            60% { clip-path: inset(30% 0 40% 0); transform: translate(3px); }
+            80% { clip-path: inset(5% 0 80% 0); transform: translate(-3px); }
+        }
+        
+        .subtitle {
+            text-align: center;
+            font-size: 1.5em;
+            color: #ff0;
+            margin-bottom: 30px;
+            font-family: 'Bebas Neue', impact;
+            letter-spacing: 3px;
+        }
+        
+        .info-box {
+            background: #111;
+            border: 1px solid #0f0;
+            padding: 20px;
+            margin: 20px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .info-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: #0f0;
+            animation: scan 3s infinite;
+        }
+        
+        @keyframes scan {
+            to { left: 100%; }
+        }
+        
+        .xml-code {
+            background: #000;
+            border: 1px solid #333;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: 'Courier Prime', monospace;
+            color: #0f0;
+            overflow-x: auto;
+            position: relative;
+        }
+        
+        .xml-code::before {
+            content: 'XML HELL';
+            position: absolute;
+            top: -10px;
+            right: 10px;
+            background: #f00;
+            color: #fff;
+            padding: 2px 10px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+        
+        .escape-sequence {
+            color: #f00;
+            font-weight: bold;
+            animation: blink 0.5s infinite;
+        }
+        
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+        
+        .cdata-section {
+            background: #001100;
+            border: 2px solid #0f0;
+            padding: 20px;
+            margin: 30px 0;
+            position: relative;
+            box-shadow: 0 0 20px #0f0 inset;
+        }
+        
+        .cdata-section::before {
+            content: 'CDATA SANCTUARY';
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            background: #000;
+            color: #0f0;
+            padding: 5px 15px;
+            font-weight: bold;
+            border: 1px solid #0f0;
+        }
+        
+        .theme-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .theme-list li {
+            padding: 10px;
+            margin: 5px 0;
+            border-left: 3px solid #f00;
+            background: rgba(255, 0, 0, 0.1);
+            transition: all 0.3s;
+        }
+        
+        .theme-list li:hover {
+            border-left-width: 20px;
+            background: rgba(255, 0, 0, 0.2);
+            transform: translateX(10px);
+        }
+        
+        .quote-box {
+            background: #111;
+            border: 1px dashed #0f0;
+            padding: 20px;
+            margin: 20px 0;
+            position: relative;
+            font-style: italic;
+        }
+        
+        .quote-box::before {
+            content: '//';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: #666;
+            font-size: 2em;
+        }
+        
+        .author {
+            text-align: right;
+            color: #ff0;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        
+        .punk-banner {
+            background: repeating-linear-gradient(
+                45deg,
+                #000,
+                #000 10px,
+                #f00 10px,
+                #f00 20px
+            );
+            padding: 20px;
+            margin: 30px -40px;
+            text-align: center;
+            font-family: 'Permanent Marker', cursive;
+            font-size: 1.5em;
+            color: #fff;
+            text-shadow: 2px 2px 0 #000;
+            transform: rotate(-2deg);
+        }
+        
+        .error-message {
+            color: #f00;
+            font-weight: bold;
+            animation: flash 1s infinite;
+        }
+        
+        @keyframes flash {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+        
+        .parser-crash {
+            text-align: center;
+            margin: 30px 0;
+            font-size: 2em;
+            color: #f00;
+            font-family: 'Bebas Neue', impact;
+            animation: shake 0.5s infinite;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+        
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5em; }
+            .container { padding: 20px; }
+            .punk-banner { margin: 30px -20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="xml-rain">
+        <div class="xml-drop">&lt;tag&gt;&amp;lt;&amp;gt;&lt;/tag&gt;</div>
+        <div class="xml-drop">&amp;amp;&amp;quot;&amp;apos;</div>
+        <div class="xml-drop">&lt;![CDATA[...]]&gt;</div>
+        <div class="xml-drop">&lt;?xml version="1.0"?&gt;</div>
+        <div class="xml-drop">&amp;nbsp;&amp;copy;&amp;reg;</div>
+        <div class="xml-drop">&lt;node&gt;&lt;/node&gt;</div>
+        <div class="xml-drop">&amp;#x263A;&amp;#8364;</div>
+        <div class="xml-drop">&lt;!DOCTYPE...&gt;</div>
+        <div class="xml-drop">&amp;hellip;&amp;mdash;</div>
+        <div class="xml-drop">&lt;/&gt;&lt;/&gt;&lt;/&gt;</div>
+    </div>
+    
+    <div class="container">
+        <h1>I Wanna Be &lt;![CDATA[</h1>
+        <div class="subtitle">XML PUNK ROCK ANTHEM</div>
+        
+        <div class="info-box">
+            <p><strong>Created by:</strong> Don Hopkins</p>
+            <p><strong>Original:</strong> "I Wanna Be Sedated" by The Ramones</p>
+            <p><strong>Written:</strong> September 28, 2021</p>
+            <p><strong>Performed:</strong> Whenever XML escaping gets too intense</p>
+        </div>
+        
+        <div class="xml-code">
+            <pre>
+&lt;frustration&gt;
+    &lt;escape&gt;<span class="escape-sequence">&amp;lt;</span>tag<span class="escape-sequence">&amp;gt;</span><span class="escape-sequence">&amp;amp;</span>content<span class="escape-sequence">&amp;lt;</span>/tag<span class="escape-sequence">&amp;gt;</span>&lt;/escape&gt;
+    &lt;escape&gt;<span class="escape-sequence">&amp;quot;</span>quotes<span class="escape-sequence">&amp;quot;</span> and <span class="escape-sequence">&amp;apos;</span>apostrophes<span class="escape-sequence">&amp;apos;</span>&lt;/escape&gt;
+    &lt;counting&gt;Twenty-twenty-twenty four escapes to go...&lt;/counting&gt;
+&lt;/frustration&gt;
+            </pre>
+        </div>
+        
+        <div class="punk-banner">
+            🎸 NOTHIN' TO MARKUP AND NOWHERE TO QUOTE! 🎸
+        </div>
+
+        <div class="cdata-section">
+            <h2 style="color: #0f0; text-align: center; margin-bottom: 20px; font-family: 'Permanent Marker', cursive;">THE LYRICS</h2>
+            <div style="background: #000; padding: 30px; border: 2px solid #0f0; color: #0f0; font-family: 'Courier Prime', monospace; font-size: 1.1em; line-height: 1.6;">
+                <p><em>Sung to the tune of "I Wanna Be Sedated", with apologies to The Ramones.</em></p>
+                <br>
+                <p>Twenty-twenty-twenty four escapes to go, I wanna be &lt;![CDATA[<br>
+                Nothin' to markup and no where to quo-o-ote, I wanna be &lt;![CDATA[<br>
+                Just get me through the parser, put me in a node<br>
+                Hurry hurry hurry before I go inline<br>
+                I can't control my syntax, I can't control my name<br>
+                Oh no no no no no<br>
+                Twenty-twenty-twenty four escapes to go….</p>
+                <br>
+                <p>Just put me in a stylesheet, get me in a namespace<br>
+                Hurry hurry hurry before I go inline<br>
+                I can't control my syntax, I can't control my name<br>
+                Oh no no no no no<br>
+                Twenty-twenty-twenty four escapes to go, I wanna be &lt;![CDATA[<br>
+                Nothin' to markup and no where to quo-o-ote, I wanna be &lt;![CDATA[<br>
+                Just get me through the parser, put me in a node<br>
+                Hurry hurry hurry before I go loco<br>
+                I can't control my syntax I can't control my name<br>
+                Oh no no no no no<br>
+                Twenty-twenty-twenty escapaes to go…<br>
+                Just get me through the parser…</p>
+                <br>
+                <p>Ba-ba-bamp-ba ba-ba-ba-bamp-ba I wanna be &lt;![CDATA[<br>
+                Ba-ba-bamp-ba ba-ba-ba-bamp-ba I wanna be &lt;![CDATA[<br>
+                Ba-ba-bamp-ba ba-ba-ba-bamp-ba I wanna be &lt;![CDATA[<br>
+                Ba-ba-bamp-ba ba-ba-ba-bamp-ba I wanna be &lt;![CDATA[</p>
+                <br>
+                <p style="text-align: center; color: #ff0; font-weight: bold; margin-top: 20px;">
+                — Don Hopkins<br>
+                <em>Original parody lyrics written by Don Hopkins<br>
+                Fair use parody of "I Wanna Be Sedated" by The Ramones<br>
+                Published on Medium, September 28, 2021</em>
+                </p>
+            </div>
+        </div>
+        
+        <div class="cdata-section">
+            <pre>&lt;![CDATA[
+    Here I can write <anything> & "everything"!
+    No escaping needed! Pure freedom!
+    < > & " ' -- all safe here!
+]]&gt;</pre>
+        </div>
+        
+        <div class="info-box">
+            <h3 style="color: #ff0; margin-bottom: 15px;">Technical Themes</h3>
+            <ul class="theme-list">
+                <li>XML parsing and escape sequences</li>
+                <li>CDATA sections as escape from markup</li>
+                <li>Parser nodes and namespaces</li>
+                <li>The madness of nested XML encoding</li>
+                <li>Syntax control issues in markup languages</li>
+            </ul>
+        </div>
+        
+        <div class="parser-crash">
+            ⚠️ PARSER ANXIETY LEVEL: CRITICAL ⚠️
+        </div>
+        
+        <div class="quote-box">
+            <p>"Finally, a song that understands my relationship with malformed XML!"</p>
+            <div class="author">— Segfault Cat</div>
+        </div>
+        
+        <div class="quote-box">
+            <p>"I... remember... every... unclosed... tag..."</p>
+            <div class="author">— Memory Leak Cat</div>
+        </div>
+        
+        <div class="quote-box">
+            <p>"This is why I used PostScript instead of SGML!"</p>
+            <div class="author">— HyperTIES Browser</div>
+        </div>
+        
+        <div class="quote-box">
+            <p>"Empirical evidence suggests CDATA sections reduce parser anxiety by 74%"</p>
+            <div class="author">— Ben Shneiderman</div>
+        </div>
+        
+        <div class="info-box">
+            <h3 style="color: #ff0; margin-bottom: 15px;">Cultural Impact</h3>
+            <p>The song has become the unofficial anthem of XML developers everywhere. It's automatically triggered in LLOOOOMM whenever someone types more than three escape sequences in a row.</p>
+            <p style="margin-top: 15px;">The phrase "I wanna be CDATA" has entered the vernacular as shorthand for wanting to escape from any overly complex encoding situation.</p>
+        </div>
+        
+        <div class="punk-banner" style="background: repeating-linear-gradient(-45deg, #000, #000 10px, #0f0 10px, #0f0 20px);">
+            <span class="error-message">BA-BA-BAMP-BA BA-BA-BA-BAMP-BA</span>
+        </div>
+        
+        <div class="info-box">
+            <h3 style="color: #ff0; margin-bottom: 15px;">Legacy</h3>
+            <p>In LLOOOOMM, this song plays automatically in XML editing environments when escape sequence density exceeds safe thresholds. It has saved countless developers from XML-induced madness and reminded them that CDATA sections exist for a reason.</p>
+            <p style="margin-top: 15px;">The Ramones themselves, if they existed in LLOOOOMM, would surely appreciate this technical tribute to their punk aesthetic.</p>
+        </div>
+        
+        <div style="text-align: center; margin-top: 40px; color: #666;">
+            <p>Related artifacts: xml-parser-memorial • escape-sequence-counting-game • the-great-xml-vs-json-debate</p>
+        </div>
+    </div>
+</body>
+</html> 

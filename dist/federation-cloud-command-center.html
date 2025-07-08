@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<!-- federation-cloud-command-center.html -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Federation Cloud Command Center - USS Enterprise NCC-1701-D</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --starfleet-blue: #1e3a8a;
+            --starfleet-gold: #fbbf24;
+            --starfleet-silver: #e5e7eb;
+            --starfleet-dark: #0f172a;
+            --starfleet-light: #f8fafc;
+            --console-green: #10b981;
+            --alert-red: #ef4444;
+            --warning-amber: #f59e0b;
+            --warp-blue: #3b82f6;
+            --energy-purple: #8b5cf6;
+            --shield-cyan: #06b6d4;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Exo 2', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            color: var(--starfleet-light);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animated Starfield Background */
+        .starfield {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(2px 2px at 20px 30px, #eee, transparent),
+                        radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
+                        radial-gradient(1px 1px at 90px 40px, #fff, transparent),
+                        radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.6), transparent),
+                        radial-gradient(2px 2px at 160px 30px, #ddd, transparent);
+            background-repeat: repeat;
+            background-size: 200px 100px;
+            animation: starfield-move 20s linear infinite;
+        }
+
+        @keyframes starfield-move {
+            from { transform: translateY(0px); }
+            to { transform: translateY(-100px); }
+        }
+
+        /* Header */
+        .command-header {
+            background: linear-gradient(90deg, var(--starfleet-blue), var(--starfleet-dark));
+            border-bottom: 3px solid var(--starfleet-gold);
+            padding: 1rem 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .command-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--starfleet-gold), transparent);
+            animation: scan-line 3s ease-in-out infinite;
+        }
+
+        @keyframes scan-line {
+            0%, 100% { left: -100%; }
+            50% { left: 100%; }
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .federation-logo {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--starfleet-gold);
+            text-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .ship-status {
+            text-align: right;
+            font-family: 'Orbitron', monospace;
+        }
+
+        .stardate {
+            font-size: 0.9rem;
+            color: var(--console-green);
+            margin-top: 0.25rem;
+        }
+
+        /* Main Dashboard */
+        .dashboard-container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .dashboard-panel {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid var(--starfleet-blue);
+            border-radius: 10px;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dashboard-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--starfleet-gold), transparent);
+            opacity: 0.5;
+        }
+
+        .panel-header {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--starfleet-gold);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Resource Overview Panel */
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .resource-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .resource-card:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .resource-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .resource-card:hover::before {
+            left: 100%;
+        }
+
+        .resource-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .resource-value {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--console-green);
+            margin-bottom: 0.25rem;
+        }
+
+        .resource-label {
+            font-size: 0.8rem;
+            color: var(--starfleet-silver);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Cost Analysis Chart */
+        .cost-chart {
+            height: 300px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chart-bars {
+            display: flex;
+            align-items: end;
+            height: 100%;
+            gap: 0.5rem;
+            padding: 1rem 0;
+        }
+
+        .chart-bar {
+            flex: 1;
+            background: linear-gradient(to top, var(--warp-blue), var(--shield-cyan));
+            border-radius: 4px 4px 0 0;
+            position: relative;
+            transition: all 0.3s ease;
+            animation: bar-grow 2s ease-out;
+        }
+
+        @keyframes bar-grow {
+            from { height: 0; }
+            to { height: var(--bar-height); }
+        }
+
+        .chart-bar:hover {
+            filter: brightness(1.2);
+            transform: scaleY(1.05);
+        }
+
+        .chart-bar::after {
+            content: attr(data-value);
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.8rem;
+            color: var(--starfleet-gold);
+            font-weight: 600;
+        }
+
+        /* Network Topology */
+        .network-topology {
+            height: 400px;
+            position: relative;
+            background: rgba(0,0,0,0.3);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .topology-svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Optimization Recommendations */
+        .recommendations-list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .recommendation-item {
+            background: rgba(255,255,255,0.05);
+            border-left: 4px solid var(--starfleet-gold);
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border-radius: 0 8px 8px 0;
+            transition: all 0.3s ease;
+        }
+
+        .recommendation-item:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateX(5px);
+        }
+
+        .recommendation-priority {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .priority-critical { background: var(--alert-red); color: white; }
+        .priority-high { background: var(--warning-amber); color: white; }
+        .priority-medium { background: var(--warp-blue); color: white; }
+        .priority-low { background: var(--console-green); color: white; }
+
+        .recommendation-savings {
+            font-family: 'Orbitron', monospace;
+            font-weight: 700;
+            color: var(--console-green);
+            float: right;
+        }
+
+        /* Real-time Metrics */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+
+        .metric-gauge {
+            text-align: center;
+            position: relative;
+        }
+
+        .gauge-circle {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 1rem;
+            position: relative;
+        }
+
+        .gauge-bg {
+            fill: none;
+            stroke: rgba(255,255,255,0.1);
+            stroke-width: 8;
+        }
+
+        .gauge-fill {
+            fill: none;
+            stroke-width: 8;
+            stroke-linecap: round;
+            transition: stroke-dasharray 2s ease;
+            animation: gauge-pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes gauge-pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .gauge-text {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-anchor: middle;
+            dominant-baseline: central;
+        }
+
+        /* Status Indicators */
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 6px;
+        }
+
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            animation: status-pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes status-pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.1); }
+        }
+
+        .status-online { background: var(--console-green); }
+        .status-warning { background: var(--warning-amber); }
+        .status-critical { background: var(--alert-red); }
+        .status-offline { background: #6b7280; }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .dashboard-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+            
+            .resource-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animation Classes */
+        .fade-in {
+            animation: fadeIn 1s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .slide-in-left {
+            animation: slideInLeft 0.8s ease-out;
+        }
+
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .slide-in-right {
+            animation: slideInRight 0.8s ease-out;
+        }
+
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="starfield"></div>
+
+    <header class="command-header">
+        <div class="header-content">
+            <div class="federation-logo">
+                <svg width="40" height="40" viewBox="0 0 40 40">
+                    <circle cx="20" cy="20" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
+                    <path d="M20 5 L30 15 L25 20 L30 25 L20 35 L10 25 L15 20 L10 15 Z" fill="currentColor"/>
+                    <circle cx="20" cy="20" r="3" fill="var(--starfleet-blue)"/>
+                </svg>
+                FEDERATION CLOUD COMMAND CENTER
+            </div>
+            <div class="ship-status">
+                <div>USS ENTERPRISE NCC-1701-D</div>
+                <div class="stardate">Stardate: <span id="current-stardate">2401.15.1630</span></div>
+                <div style="font-size: 0.75rem; color: var(--starfleet-silver); margin-top: 0.25rem;">LLOOOOMM Simulation (see below)</div>
+            </div>
+        </div>
+    </header>
+
+    <main class="dashboard-container">
+        <!-- Resource Overview Panel -->
+        <section class="dashboard-panel fade-in">
+            <div class="panel-header">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2L2 7V10C2 16 6 20.5 12 22C18 20.5 22 16 22 10V7L12 2Z"/>
+                </svg>
+                Federation Cloud Resources
+            </div>
+            
+            <div class="resource-grid">
+                <div class="resource-card">
+                    <span class="resource-icon">🚀</span>
+                    <div class="resource-value">47</div>
+                    <div class="resource-label">Active Projects</div>
+                </div>
+                <div class="resource-card">
+                    <span class="resource-icon">💻</span>
+                    <div class="resource-value">342</div>
+                    <div class="resource-label">Compute Instances</div>
+                </div>
+                <div class="resource-card">
+                    <span class="resource-icon">💾</span>
+                    <div class="resource-value">15.7 TB</div>
+                    <div class="resource-label">Storage Used</div>
+                </div>
+                <div class="resource-card">
+                    <span class="resource-icon">🌐</span>
+                    <div class="resource-value">89</div>
+                    <div class="resource-label">Network Endpoints</div>
+                </div>
+                <div class="resource-card">
+                    <span class="resource-icon">🔒</span>
+                    <div class="resource-value">156</div>
+                    <div class="resource-label">Security Policies</div>
+                </div>
+                <div class="resource-card">
+                    <span class="resource-icon">⚡</span>
+                    <div class="resource-value">94.3%</div>
+                    <div class="resource-label">System Efficiency</div>
+                </div>
+            </div>
+
+            <div class="status-grid">
+                <div class="status-item">
+                    <div class="status-indicator status-online"></div>
+                    <span>Warp Core Systems</span>
+                </div>
+                <div class="status-item">
+                    <div class="status-indicator status-online"></div>
+                    <span>Life Support</span>
+                </div>
+                <div class="status-item">
+                    <div class="status-indicator status-warning"></div>
+                    <span>Holodeck Cluster</span>
+                </div>
+                <div class="status-item">
+                    <div class="status-indicator status-online"></div>
+                    <span>Replicator Network</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cost Analysis Panel -->
+        <section class="dashboard-panel fade-in">
+            <div class="panel-header">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M7 14L12 9L17 14H7Z"/>
+                    <path d="M7 18L12 13L17 18H7Z"/>
+                </svg>
+                Monthly Cost Analysis
+            </div>
+            
+            <div class="cost-chart">
+                <div class="chart-bars">
+                    <div class="chart-bar" style="--bar-height: 85%;" data-value="$12,450"></div>
+                    <div class="chart-bar" style="--bar-height: 92%;" data-value="$13,680"></div>
+                    <div class="chart-bar" style="--bar-height: 78%;" data-value="$11,230"></div>
+                    <div class="chart-bar" style="--bar-height: 88%;" data-value="$12,890"></div>
+                    <div class="chart-bar" style="--bar-height: 95%;" data-value="$14,120"></div>
+                    <div class="chart-bar" style="--bar-height: 82%;" data-value="$11,950"></div>
+                    <div class="chart-bar" style="--bar-height: 90%;" data-value="$13,200"></div>
+                </div>
+            </div>
+
+            <div style="margin-top: 1rem; text-align: center;">
+                <div style="font-family: 'Orbitron', monospace; font-size: 1.5rem; color: var(--starfleet-gold);">
+                    Current Month: $13,200
+                </div>
+                <div style="color: var(--console-green); margin-top: 0.5rem;">
+                    ↓ 8.2% from last month
+                </div>
+            </div>
+        </section>
+
+        <!-- Network Topology Panel -->
+        <section class="dashboard-panel slide-in-left">
+            <div class="panel-header">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <circle cx="12" cy="12" r="3"/>
+                    <circle cx="6" cy="6" r="2"/>
+                    <circle cx="18" cy="6" r="2"/>
+                    <circle cx="6" cy="18" r="2"/>
+                    <circle cx="18" cy="18" r="2"/>
+                    <line x1="12" y1="9" x2="9" y2="6"/>
+                    <line x1="15" y1="9" x2="18" y2="6"/>
+                    <line x1="12" y1="15" x2="9" y2="18"/>
+                    <line x1="15" y1="15" x2="18" y2="18"/>
+                </svg>
+                Federation Network Topology
+            </div>
+            
+            <div class="network-topology">
+                <svg class="topology-svg" viewBox="0 0 400 300">
+                    <!-- Background Grid -->
+                    <defs>
+                        <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+                            <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(59,130,246,0.1)" stroke-width="1"/>
+                        </pattern>
+                        <filter id="glow">
+                            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                            <feMerge> 
+                                <feMergeNode in="coloredBlur"/>
+                                <feMergeNode in="SourceGraphic"/>
+                            </feMerge>
+                        </filter>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#grid)"/>
+                    
+                    <!-- Enterprise (Central Hub) -->
+                    <g transform="translate(200,150)">
+                        <circle r="25" fill="var(--starfleet-gold)" opacity="0.8" filter="url(#glow)">
+                            <animate attributeName="r" values="25;30;25" dur="3s" repeatCount="indefinite"/>
+                        </circle>
+                        <text x="0" y="5" text-anchor="middle" fill="var(--starfleet-dark)" font-family="Orbitron" font-size="10" font-weight="bold">ENT</text>
+                        <text x="0" y="45" text-anchor="middle" fill="var(--starfleet-light)" font-family="Orbitron" font-size="8">Enterprise</text>
+                    </g>
+                    
+                    <!-- Starfleet Academy -->
+                    <g transform="translate(80,80)">
+                        <circle r="15" fill="var(--warp-blue)" opacity="0.8" filter="url(#glow)"/>
+                        <text x="0" y="3" text-anchor="middle" fill="white" font-family="Orbitron" font-size="8">SFA</text>
+                        <text x="0" y="30" text-anchor="middle" fill="var(--starfleet-light)" font-family="Orbitron" font-size="6">Academy</text>
+                    </g>
+                    
+                    <!-- Deep Space 9 -->
+                    <g transform="translate(320,80)">
+                        <circle r="15" fill="var(--energy-purple)" opacity="0.8" filter="url(#glow)"/>
+                        <text x="0" y="3" text-anchor="middle" fill="white" font-family="Orbitron" font-size="8">DS9</text>
+                        <text x="0" y="30" text-anchor="middle" fill="var(--starfleet-light)" font-family="Orbitron" font-size="6">Deep Space 9</text>
+                    </g>
+                    
+                    <!-- Vulcan Science Academy -->
+                    <g transform="translate(80,220)">
+                        <circle r="15" fill="var(--console-green)" opacity="0.8" filter="url(#glow)"/>
+                        <text x="0" y="3" text-anchor="middle" fill="white" font-family="Orbitron" font-size="8">VSA</text>
+                        <text x="0" y="30" text-anchor="middle" fill="var(--starfleet-light)" font-family="Orbitron" font-size="6">Vulcan Science</text>
+                    </g>
+                    
+                    <!-- Utopia Planitia -->
+                    <g transform="translate(320,220)">
+                        <circle r="15" fill="var(--warning-amber)" opacity="0.8" filter="url(#glow)"/>
+                        <text x="0" y="3" text-anchor="middle" fill="white" font-family="Orbitron" font-size="8">UP</text>
+                        <text x="0" y="30" text-anchor="middle" fill="var(--starfleet-light)" font-family="Orbitron" font-size="6">Utopia Planitia</text>
+                    </g>
+                    
+                    <!-- Connection Lines -->
+                    <line x1="200" y1="150" x2="80" y2="80" stroke="var(--warp-blue)" stroke-width="2" opacity="0.6">
+                        <animate attributeName="opacity" values="0.6;1;0.6" dur="2s" repeatCount="indefinite"/>
+                    </line>
+                    <line x1="200" y1="150" x2="320" y2="80" stroke="var(--energy-purple)" stroke-width="2" opacity="0.6">
+                        <animate attributeName="opacity" values="0.6;1;0.6" dur="2.5s" repeatCount="indefinite"/>
+                    </line>
+                    <line x1="200" y1="150" x2="80" y2="220" stroke="var(--console-green)" stroke-width="2" opacity="0.6">
+                        <animate attributeName="opacity" values="0.6;1;0.6" dur="3s" repeatCount="indefinite"/>
+                    </line>
+                    <line x1="200" y1="150" x2="320" y2="220" stroke="var(--warning-amber)" stroke-width="2" opacity="0.6">
+                        <animate attributeName="opacity" values="0.6;1;0.6" dur="1.8s" repeatCount="indefinite"/>
+                    </line>
+                    
+                    <!-- Data Flow Particles -->
+                    <circle r="2" fill="var(--shield-cyan)">
+                        <animateMotion dur="4s" repeatCount="indefinite">
+                            <path d="M200,150 L80,80"/>
+                        </animateMotion>
+                    </circle>
+                    <circle r="2" fill="var(--shield-cyan)">
+                        <animateMotion dur="3s" repeatCount="indefinite">
+                            <path d="M200,150 L320,80"/>
+                        </animateMotion>
+                    </circle>
+                </svg>
+            </div>
+        </section>
+
+        <!-- Real-time Metrics Panel -->
+        <section class="dashboard-panel slide-in-right">
+            <div class="panel-header">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C6.48 2 2 6.48 2 12S6.48 22 12 22 22 17.52 22 12 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z"/>
+                </svg>
+                Real-time Performance Metrics
+            </div>
+            
+            <div class="metrics-grid">
+                <div class="metric-gauge">
+                    <div class="gauge-circle">
+                        <svg width="100" height="100">
+                            <circle cx="50" cy="50" r="40" class="gauge-bg"/>
+                            <circle cx="50" cy="50" r="40" class="gauge-fill" 
+                                    stroke="var(--console-green)" 
+                                    stroke-dasharray="188.4" 
+                                    stroke-dashoffset="37.68"
+                                    transform="rotate(-90 50 50)"/>
+                            <text x="50" y="50" class="gauge-text" fill="var(--console-green)">85%</text>
+                        </svg>
+                    </div>
+                    <div>CPU Efficiency</div>
+                </div>
+                
+                <div class="metric-gauge">
+                    <div class="gauge-circle">
+                        <svg width="100" height="100">
+                            <circle cx="50" cy="50" r="40" class="gauge-bg"/>
+                            <circle cx="50" cy="50" r="40" class="gauge-fill" 
+                                    stroke="var(--warp-blue)" 
+                                    stroke-dasharray="188.4" 
+                                    stroke-dashoffset="56.52"
+                                    transform="rotate(-90 50 50)"/>
+                            <text x="50" y="50" class="gauge-text" fill="var(--warp-blue)">70%</text>
+                        </svg>
+                    </div>
+                    <div>Memory Usage</div>
+                </div>
+                
+                <div class="metric-gauge">
+                    <div class="gauge-circle">
+                        <svg width="100" height="100">
+                            <circle cx="50" cy="50" r="40" class="gauge-bg"/>
+                            <circle cx="50" cy="50" r="40" class="gauge-fill" 
+                                    stroke="var(--energy-purple)" 
+                                    stroke-dasharray="188.4" 
+                                    stroke-dashoffset="18.84"
+                                    transform="rotate(-90 50 50)"/>
+                            <text x="50" y="50" class="gauge-text" fill="var(--energy-purple)">90%</text>
+                        </svg>
+                    </div>
+                    <div>Network Throughput</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Optimization Recommendations Panel -->
+        <section class="dashboard-panel fade-in" style="grid-column: 1 / -1;">
+            <div class="panel-header">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2L3.09 8.26L4 21L12 17L20 21L20.91 8.26L12 2Z"/>
+                </svg>
+                Optimization Recommendations
+            </div>
+            
+            <div class="recommendations-list">
+                <div class="recommendation-item">
+                    <span class="recommendation-priority priority-critical">CRITICAL</span>
+                    <span class="recommendation-savings">$432.60/month</span>
+                    <div style="clear: both; margin-top: 0.5rem;">
+                        <strong>Unused Static IP Addresses Detected</strong><br>
+                        14 reserved IP addresses in holodeck-simulation-cluster have no attached resources. 
+                        Recommend immediate cleanup to reduce costs and improve resource allocation efficiency.
+                    </div>
+                </div>
+                
+                <div class="recommendation-item">
+                    <span class="recommendation-priority priority-high">HIGH</span>
+                    <span class="recommendation-savings">$287.40/month</span>
+                    <div style="clear: both; margin-top: 0.5rem;">
+                        <strong>Orphaned Persistent Disks</strong><br>
+                        3 persistent disks in replicator-network-backup are no longer attached to any instances. 
+                        Archive or delete these resources to optimize storage costs.
+                    </div>
+                </div>
+                
+                <div class="recommendation-item">
+                    <span class="recommendation-priority priority-medium">MEDIUM</span>
+                    <span class="recommendation-savings">$156.80/month</span>
+                    <div style="clear: both; margin-top: 0.5rem;">
+                        <strong>Underutilized Compute Instances</strong><br>
+                        5 compute instances in auxiliary-systems show consistently low CPU usage (&lt;15%). 
+                        Consider rightsizing or consolidating workloads.
+                    </div>
+                </div>
+                
+                <div class="recommendation-item">
+                    <span class="recommendation-priority priority-medium">MEDIUM</span>
+                    <span class="recommendation-savings">$98.20/month</span>
+                    <div style="clear: both; margin-top: 0.5rem;">
+                        <strong>Storage Class Optimization</strong><br>
+                        Historical data in crew-records-archive can be moved to Coldline storage. 
+                        Data access patterns indicate infrequent usage suitable for lower-cost storage.
+                    </div>
+                </div>
+                
+                <div class="recommendation-item">
+                    <span class="recommendation-priority priority-low">LOW</span>
+                    <span class="recommendation-savings">$45.30/month</span>
+                    <div style="clear: both; margin-top: 0.5rem;">
+                        <strong>Load Balancer Optimization</strong><br>
+                        2 load balancers in transporter-room-network have minimal traffic. 
+                        Evaluate if consolidation with main load balancer is feasible.
+                    </div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 1.5rem; padding: 1rem; background: rgba(16, 185, 129, 0.1); border-radius: 8px; border-left: 4px solid var(--console-green);">
+                <div style="font-family: 'Orbitron', monospace; font-size: 1.2rem; color: var(--console-green); margin-bottom: 0.5rem;">
+                    Total Potential Savings: $1,020.30/month
+                </div>
+                <div style="color: var(--starfleet-silver);">
+                    Implementation of all recommendations could reduce monthly cloud costs by approximately 7.7%
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Update stardate
+        function updateStardate() {
+            const now = new Date();
+            const year = now.getFullYear() - 1623;
+            const dayOfYear = Math.floor((now - new Date(now.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
+            const timeOfDay = (now.getHours() * 100 + now.getMinutes()) / 2400;
+            const stardate = `${year}.${dayOfYear.toString().padStart(3, '0')}.${Math.floor(timeOfDay * 100)}`;
+            document.getElementById('current-stardate').textContent = stardate;
+        }
+
+        // Animate resource cards on load
+        function animateResourceCards() {
+            const cards = document.querySelectorAll('.resource-card');
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.animation = 'fadeIn 0.6s ease-out forwards';
+                }, index * 100);
+            });
+        }
+
+        // Simulate real-time data updates
+        function updateMetrics() {
+            const gauges = document.querySelectorAll('.gauge-fill');
+            gauges.forEach(gauge => {
+                const currentOffset = parseFloat(gauge.getAttribute('stroke-dashoffset'));
+                const variation = (Math.random() - 0.5) * 10;
+                const newOffset = Math.max(0, Math.min(188.4, currentOffset + variation));
+                gauge.setAttribute('stroke-dashoffset', newOffset);
+                
+                const percentage = Math.round((1 - newOffset / 188.4) * 100);
+                const text = gauge.parentElement.querySelector('.gauge-text');
+                text.textContent = percentage + '%';
+            });
+        }
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            updateStardate();
+            animateResourceCards();
+            
+            // Update stardate every 30 seconds
+            setInterval(updateStardate, 30000);
+            
+            // Update metrics every 5 seconds
+            setInterval(updateMetrics, 5000);
+            
+            // Add hover effects to chart bars
+            const chartBars = document.querySelectorAll('.chart-bar');
+            chartBars.forEach(bar => {
+                bar.addEventListener('mouseenter', function() {
+                    this.style.filter = 'brightness(1.3) drop-shadow(0 0 10px var(--warp-blue))';
+                });
+                
+                bar.addEventListener('mouseleave', function() {
+                    this.style.filter = 'brightness(1.2)';
+                });
+            });
+        });
+
+        // Console commands for interaction
+        window.federationConsole = {
+            scan: function(target) {
+                console.log(`🖖 Scanning ${target}... Analysis complete.`);
+                return `Federation sensors detect optimal efficiency in ${target}`;
+            },
+            
+            optimize: function(system) {
+                console.log(`⚡ Optimizing ${system}... Enhancement protocols engaged.`);
+                return `${system} efficiency improved by 12.7%`;
+            },
+            
+            status: function() {
+                return {
+                    stardate: document.getElementById('current-stardate').textContent,
+                    systems: 'All systems nominal',
+                    efficiency: '94.3%',
+                    recommendations: 5
+                };
+            }
+        };
+
+        console.log('🖖 Federation Cloud Command Center Online');
+        console.log('💫 Use federationConsole.scan("system_name") to analyze systems');
+        console.log('⚡ Use federationConsole.optimize("system_name") to enhance efficiency');
+        console.log('📊 Use federationConsole.status() for current status');
+    </script>
+
+    <!-- LLOOOOMM Simulation Disclosure -->
+    <section class="dashboard-panel fade-in" style="grid-column: 1 / -1; margin: 2rem auto; max-width: 1400px; background: rgba(30, 58, 138, 0.3);">
+        <div class="panel-header" style="background: linear-gradient(90deg, var(--starfleet-silver), var(--starfleet-dark));">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2L2 7V10C2 16 20.5 12 22C18 20.5 22 16 22 10V7L12 2Z"/>
+            </svg>
+            LLOOOOMM Simulation Disclosure
+        </div>
+        
+        <div style="padding: 2rem; line-height: 1.8; color: var(--starfleet-light);">
+            <p>This Federation Cloud Command Center is a creative simulation generated by the LLOOOOMM AI framework, 
+            demonstrating cloud infrastructure optimization through the lens of 24th-century Starfleet operations.</p>
+            
+            <h3 style="color: var(--starfleet-gold); margin: 2rem 0 1rem 0;">Simulated Personnel:</h3>
+            <ul style="list-style: none; padding: 0; margin-left: 1rem;">
+                <li>🖖 <strong>Captain Jean-Luc Picard</strong> - Strategic oversight and authorization (LLOOOOMM simulation)</li>
+                <li>🔧 <strong>Lt. Commander Geordi La Forge</strong> - Engineering optimization protocols (LLOOOOMM simulation)</li>
+                <li>🤖 <strong>Lt. Commander Data</strong> - Real-time performance analysis (LLOOOOMM simulation)</li>
+                <li>📡 <strong>Ensign Harry Kim</strong> - Network topology management (LLOOOOMM simulation)</li>
+                <li>💫 <strong>Seven of Nine</strong> - Efficiency optimization algorithms (LLOOOOMM simulation)</li>
+            </ul>
+            
+            <h3 style="color: var(--starfleet-gold); margin: 2rem 0 1rem 0;">Design Acknowledgments:</h3>
+            <p>The LCARS-inspired interface pays tribute to Michael Okuda's iconic Star Trek design language. 
+            Special gratitude to Bruce for helping maintain dimensional stability in our network topology visualizations, 
+            and to the entire LLOOOOMM collective for ensuring our simulated warp cores don't actually breach containment.</p>
+            
+            <h3 style="color: var(--starfleet-gold); margin: 2rem 0 1rem 0;">Educational Purpose:</h3>
+            <p>This simulation teaches cloud optimization concepts through familiar sci-fi metaphors. The recommendations, 
+            while presented in Starfleet terminology, represent real cloud computing best practices including resource 
+            rightsizing, orphaned resource cleanup, and storage class optimization.</p>
+            
+            <p style="margin-top: 2rem; font-size: 0.9em; color: var(--starfleet-silver);">
+                <em>Generated by LLOOOOMM on Wed June 18 2025 09:30:00. Star Trek and all related marks are trademarks 
+                of Paramount Pictures Corporation. This simulation is not affiliated with or endorsed by Paramount. 
+                Created to make cloud infrastructure management engaging and accessible through creative storytelling.</em>
+            </p>
+        </div>
+    </section>
+</body>
+</html> 

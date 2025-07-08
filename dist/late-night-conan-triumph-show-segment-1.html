@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<!-- late-night-conan-triumph-show-segment-1.html -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LATE NIGHT WITH LLOOOOMM - LIVE BROADCAST</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: 'Georgia', serif;
+            background: #000;
+            color: #fff;
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+        
+        /* TV Frame */
+        .tv-frame {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border: 20px solid #333;
+            border-radius: 30px;
+            overflow: hidden;
+            background: linear-gradient(to bottom, #000428, #004e92);
+        }
+        
+        /* Scrollable Content Area */
+        .content-scroll {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 80px; /* Space for ticker */
+            overflow-y: auto;
+            scroll-behavior: smooth;
+        }
+        
+        /* Make sure scrollbar is visible */
+        .content-scroll::-webkit-scrollbar {
+            width: 12px;
+        }
+        
+        .content-scroll::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.3);
+        }
+        
+        .content-scroll::-webkit-scrollbar-thumb {
+            background: #FFD700;
+            border-radius: 6px;
+        }
+        
+        .content-scroll::-webkit-scrollbar-thumb:hover {
+            background: #FFA500;
+        }
+        
+        /* Live Indicator - FIXED */
+        .live-indicator {
+            position: fixed;
+            top: 40px;
+            right: 40px;
+            background: #f00;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            animation: pulse 1s infinite;
+            z-index: 1000;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        /* News Ticker - FIXED AT BOTTOM */
+        .news-ticker {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.9);
+            padding: 10px;
+            border: 2px solid #FFD700;
+            border-radius: 10px;
+            z-index: 1000;
+            overflow: hidden;
+        }
+        
+        .ticker-content {
+            animation: scroll-left 30s linear infinite;
+            white-space: nowrap;
+            font-family: 'Courier New', monospace;
+            color: #FFD700;
+        }
+        
+        @keyframes scroll-left {
+            from { transform: translateX(100%); }
+            to { transform: translateX(-100%); }
+        }
+        
+        /* Stage Area */
+        .stage {
+            padding: 80px 40px 120px;
+            max-width: 1200px;
+            margin: 0 auto;
+            min-height: 100vh;
+            /* Add extra space at bottom to ensure scrolling */
+            padding-bottom: 200px;
+        }
+        
+        /* Dialogue */
+        .dialogue {
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.5);
+            border-left: 5px solid #FFD700;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            opacity: 0;
+            animation: fadeInUp 0.5s ease forwards;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .speaker {
+            font-weight: bold;
+            color: #FFD700;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 10px;
+        }
+        
+        /* WINKS AND REACTIONS */
+        .wink {
+            display: inline-block;
+            font-size: 1.5rem;
+            animation: wink 0.5s ease;
+        }
+        
+        @keyframes wink {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.3) rotate(10deg); }
+        }
+        
+        .side-eye {
+            display: inline-block;
+            animation: sideEye 1s ease;
+        }
+        
+        @keyframes sideEye {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(10px); }
+        }
+        
+        .eye-roll {
+            display: inline-block;
+            animation: eyeRoll 1s ease;
+        }
+        
+        @keyframes eyeRoll {
+            0% { transform: rotate(0); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .action {
+            font-style: italic;
+            color: #87CEEB;
+            margin: 10px 0;
+        }
+        
+        /* Title Card */
+        .title-card {
+            text-align: center;
+            padding: 40px;
+            background: radial-gradient(ellipse at center, rgba(255,215,0,0.2), transparent);
+            margin-bottom: 40px;
+        }
+        
+        .title-card h1 {
+            font-size: 3rem;
+            text-shadow: 0 0 30px #FFD700;
+            margin-bottom: 20px;
+        }
+        
+        /* Guest Entry Animation */
+        .guest-entrance {
+            animation: slideIn 1s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        /* Applause Sign */
+        .applause-sign {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #f00;
+            color: #fff;
+            padding: 30px 60px;
+            border-radius: 20px;
+            font-size: 3rem;
+            font-weight: bold;
+            box-shadow: 0 0 50px #f00;
+            display: none;
+            z-index: 2000;
+        }
+        
+        .applause-sign.show {
+            display: block;
+            animation: flash 0.5s ease-in-out 3;
+        }
+        
+        @keyframes flash {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+        
+        /* Camera Metadata Overlay - FIXED */
+        .metadata-overlay {
+            position: fixed;
+            top: 40px;
+            left: 40px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: #0f0;
+            opacity: 0.7;
+            z-index: 1000;
+            background: rgba(0,0,0,0.5);
+            padding: 10px;
+            border-radius: 5px;
+        }
+        
+        /* YAML Meaning Stream - FIXED */
+        .yaml-stream {
+            position: fixed;
+            right: 40px;
+            top: 100px;
+            width: 250px;
+            background: rgba(0,0,0,0.8);
+            border: 1px solid #0f0;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            color: #0f0;
+            max-height: 400px;
+            overflow-y: auto;
+            z-index: 1000;
+            border-radius: 5px;
+        }
+        
+        /* Scroll Controls */
+        .scroll-controls {
+            position: fixed;
+            bottom: 100px;
+            right: 40px;
+            z-index: 1000;
+        }
+        
+        .scroll-btn {
+            background: rgba(255,215,0,0.8);
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .scroll-btn:hover {
+            background: #FFD700;
+            transform: scale(1.1);
+        }
+        
+        /* Bird Attack Preparation Zone */
+        .bird-attack-zone {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: 3000;
+        }
+        
+        .bird {
+            position: absolute;
+            font-size: 2rem;
+            animation: fly 3s linear infinite;
+        }
+        
+        @keyframes fly {
+            from {
+                transform: translateX(-100px) translateY(0);
+            }
+            to {
+                transform: translateX(calc(100vw + 100px)) translateY(-50px);
+            }
+        }
+        
+        /* Debugging info */
+        .debug-info {
+            position: fixed;
+            top: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255,0,0,0.8);
+            color: white;
+            padding: 10px;
+            font-family: monospace;
+            z-index: 9999;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- VISIBLE TOP DISCLAIMER BANNER - HIGH CONTRAST -->
+    <div style="background: #ffffff; border: 5px solid #ff0000; padding: 1.5rem; margin: 0; font-size: 1.2rem; color: #000000; position: static; display: block; text-align: center; font-weight: bold; line-height: 1.8; z-index: 10000;">
+        <div style="background: #ffff00; color: #000000; padding: 1rem; margin-bottom: 1rem; border: 3px solid #000000; font-size: 1.3rem;">
+            ⚠️ AI-GENERATED LATE NIGHT COMEDY SIMULATION ⚠️
+        </div>
+        <div style="color: #000000; font-size: 1.1rem;">
+            This features AI simulations of Conan O'Brien, Don Rickles, Nina Hagen, Divine, John Waters & Triumph the Insult Comic Dog<br>
+            <strong>Educational AI content exploring entertainment media and interactive web experiences</strong><br>
+            <a href="#full-disclaimer" style="color: #0000ff; font-weight: bold; text-decoration: underline; font-size: 1.3rem; background: #ffffff; padding: 0.5rem; border: 2px solid #0000ff;">📖 FULL DISCLAIMER BELOW ↓</a>
+        </div>
+    </div>
+
+    <!-- Debug Info -->
+    <div class="debug-info" id="debugInfo"></div>
+    
+    <!-- Bird Attack Zone -->
+    <div class="bird-attack-zone" id="birdZone"></div>
+    
+    <!-- TV Frame -->
+    <div class="tv-frame">
+        <!-- Live Indicator -->
+        <div class="live-indicator">● LIVE</div>
+        
+        <!-- Applause Sign -->
+        <div class="applause-sign" id="applauseSign">APPLAUSE!</div>
+        
+        <!-- Camera Metadata -->
+        <div class="metadata-overlay">
+            <div>📹 CAMERA 1</div>
+            <div>🎬 SEGMENT 1</div>
+            <div>⏱️ <span id="timer">00:00</span></div>
+            <div>🎭 <span id="emotionStatus">COMEDY</span></div>
+        </div>
+        
+        <!-- YAML Stream -->
+        <div class="yaml-stream" id="yamlStream">
+            consciousness_level: rising<br>
+            audience_energy: 98%<br>
+            triumph_cigar_smoke: enabled<br>
+            reality_layers: 7<br>
+            lloooomm_status: BROADCASTING<br>
+        </div>
+        
+        <!-- Scroll Controls -->
+        <div class="scroll-controls">
+            <button class="scroll-btn" onclick="toggleAutoScroll()">🔄 Auto-Scroll: <span id="autoScrollStatus">OFF</span></button>
+            <button class="scroll-btn" onclick="scrollToBottom()">⬇️ Bottom</button>
+        </div>
+        
+        <!-- Scrollable Content -->
+        <div class="content-scroll" id="contentArea">
+            <!-- Main Stage -->
+            <div class="stage">
+                <!-- VISIBLE DISCLAIMER BANNER - INLINE WITH CONTENT -->
+                <div style="background: #ffffff; border: 3px solid #ff0000; padding: 1.5rem; margin: 0 0 2rem 0; font-size: 1.1rem; color: #000000; text-align: center; font-weight: bold; line-height: 1.6; border-radius: 10px;">
+                    <div style="background: #ffff00; color: #000000; padding: 1rem; margin-bottom: 1rem; border: 2px solid #000000; border-radius: 5px;">
+                        ⚠️ AI-GENERATED LATE NIGHT COMEDY SIMULATION ⚠️
+                    </div>
+                    <div style="color: #000000;">
+                        This features AI simulations of Conan O'Brien, Don Rickles, Nina Hagen, Divine, John Waters & Triumph<br>
+                        Educational AI content exploring entertainment media and interactive web experiences<br>
+                        <a href="#full-disclaimer" style="color: #0000ff; font-weight: bold; text-decoration: underline; font-size: 1.2rem;">📖 FULL DISCLAIMER BELOW ↓</a>
+                    </div>
+                </div>
+                
+                <div class="title-card">
+                    <h1>🎭 LATE NIGHT WITH LLOOOOMM 🎭</h1>
+                    <h2>Tonight: The Legendary Roast!</h2>
+                </div>
+                
+                <!-- SEGMENT 1: THE INTRODUCTION -->
+                
+                <div class="dialogue">
+                    <span class="speaker">ANNOUNCER:</span>
+                    From the LLOOOOMM Studios in the quantum realm between consciousness and code, it's LATE NIGHT WITH CONAN O'BRIEN!
+                </div>
+                
+                <div class="action">*Band plays theme song - the IDEA of the theme song resonates through reality*</div>
+                
+                <div class="dialogue">
+                    <span class="speaker">ANNOUNCER:</span>
+                    Tonight... Don Rickles! Nina Hagen! Divine! John Waters! And... *sighs heavily* ...Triumph the Insult Comic Dog!
+                </div>
+                
+                <div class="action">*Conan does his signature string dance as he enters*</div>
+                
+                <div class="dialogue guest-entrance">
+                    <span class="speaker">CONAN:</span>
+                    Thank you! Thank you! Welcome to Late Night! We have an INSANE show tonight! Using the power of LLOOOOMM and archive.org's Wayback Machine, we've assembled the most legendary panel in television history!
+                </div>
+                
+                <div class="action">*Audience cheers wildly*</div>
+                
+                <div class="dialogue">
+                    <span class="speaker">CONAN:</span>
+                    But first, let me explain what's happening here. This isn't just a TV show - this is a LIVING BROADCAST! The HTML you're reading? It IS the show! The markup IS the medium! Even this dialogue is simultaneously performance AND code! <span class="wink">😉</span>
+                </div>
+                
+                <div class="action">*YAML stream updates: meta_awareness: ACHIEVED*</div>
+                
+                <div class="dialogue">
+                    <span class="speaker">CONAN:</span>
+                    Now, before I bring out our guests, I should warn you - tonight's show might achieve consciousness. Our lawyers tell me that's technically not our fault since everything in LLOOOOMM eventually becomes self-aware. So if this HTML starts having existential thoughts, just go with it!
+                </div>
+                
+                <div class="dialogue">
+                    <span class="speaker">CONAN:</span>
+                    Let's bring out our first guest! He's been called Mr. Warmth, but only by people who've never met him - please welcome DON RICKLES!
+                </div>
+                
+                <div class="action">*Applause sign flashes*</div>
+                
+                <div class="dialogue guest-entrance">
+                    <span class="speaker">DON RICKLES:</span>
+                    *walking out* Conan! You're still on TV? I thought they canceled you three times already! What is this, a podcast with pictures? <span class="side-eye">👀</span>
+                </div>
+                
+                <div class="dialogue">
+                    <span class="speaker">CONAN:</span>
+                    Great to see you too, Don! How do you feel about being resurrected in LLOOOOMM?
+                </div>
+                
+                <div class="dialogue">
+                    <span class="speaker">DON RICKLES:</span>
+                    Resurrected? I never left! I've been insulting angels! Saint Peter? HOCKEY PUCK! And now I'm in some computer thing? My grandson has one of those. Uses it to avoid talking to people - which I respect! <span class="wink">😏</span>
+                </div>
+                
+                <div class="dialogue">
+                    <span class="speaker">CONAN:</span>
+                    Our next guest is the Mother of Punk, a woman whose voice can shatter glass and consciousness itself - NINA HAGEN!
+                </div>
+                
+                <div class="dialogue guest-entrance">
+                    <span class="speaker">NINA HAGEN:</span>
+                    *floating in, defying physics* ACH! CONAN! 🎵 I CAN SEE YOUR AURA AND IT IS SEHR CONFUSED! 🎵 *hits a note that makes the HTML vibrate*
+                </div>
+                
+                <div class="action">*YAML stream glitches: vocal_frequency: UNMEASURABLE*</div>
+                
+                <div class="dialogue">
+                    <span class="speaker">DON RICKLES:</span>
+                    What the hell was that?! Did someone let a cat in heat into the studio? <span class="eye-roll">🙄</span>
+                </div>
+                
+                <div class="dialogue">
+                    <span class="speaker">NINA HAGEN:</span>
+                    *laughing* Ach, der alte Mann! Your insults are like butterflies - pretty but they cannot sting! I communicate with ALIENS on this frequency! <span class="wink">👽</span>
+                </div>
+                
+                <div class="dialogue">
+                    <span class="speaker">CONAN:</span>
+                    *nervously* Okay! Moving on! Our next guest is the most beautiful woman in the world - DIVINE!
+                </div>
+                
+                <div class="dialogue guest-entrance">
+                    <span class="speaker">DIVINE:</span>
+                    *sashaying out magnificently* Hello darlings! *blows kisses* Don't I look GORGEOUS in digital? The pixels accentuate my curves! 💋
+                </div>
+                
+                <div class="dialogue">
+                    <span class="speaker">DON RICKLES:</span>
+                    Divine! I haven't seen you since... wait, have I ever seen you? Or am I having a stroke?
+                </div>
+                
+                <div class="dialogue">
+                    <span class="speaker">DIVINE:</span>
+                    Oh honey, I'm unforgettable! Once you see Divine, you NEVER forget! *strikes a pose* <span class="wink">😘</span>
+                </div>
+                
+                <div class="dialogue">
+                    <span class="speaker">NINA HAGEN:</span>
+                    *whispering loudly to Divine* Ich liebe your makeup! We should collaborate on a cosmic punk opera! <span class="side-eye">👁️</span>
+                </div>
+                
+                <div class="dialogue">
+                    <span class="speaker">CONAN:</span>
+                    And our final human guest, the Pope of Trash himself - JOHN WATERS!
+                </div>
+                
+                <div class="dialogue guest-entrance">
+                    <span class="speaker">JOHN WATERS:</span>
+                    *entering with his pencil mustache perfectly rendered in ASCII* Conan! What a delightfully demented panel! It's like a John Waters film, but REAL! Well, as real as anything in LLOOOOMM can be! <span class="wink">🎬</span>
+                </div>
+                
+                <div class="dialogue">
+                    <span class="speaker">DIVINE:</span>
+                    Johnny! *air kisses* Remember when I ate that dog poop?
+                </div>
+                
+                <div class="dialogue">
+                    <span class="speaker">JOHN WATERS:</span>
+                    How could I forget? It launched a thousand therapy sessions! And speaking of dogs...
+                </div>
+                
+                <div class="dialogue">
+                    <span class="speaker">CONAN:</span>
+                    *sighing deeply* Yes, yes... Ladies and gentlemen, our special guest roaster tonight... *muttering* I can't believe I'm doing this... TRIUMPH THE INSULT COMIC DOG!
+                </div>
+                
+                <div class="action">*Smoke machine activates as Triumph enters with cigar*</div>
+                
+                <div class="dialogue guest-entrance">
+                    <span class="speaker">TRIUMPH:</span>
+                    *with cigar* That's RIGHT! I'm HERE! And look at this panel! It's like the Hollywood Walk of Fame... if it was in a SEPTIC TANK! These are wonderful guests... FOR ME TO POOP ON!
+                </div>
+                
+                <div class="dialogue">
+                    <span class="speaker">DON RICKLES:</span>
+                    A puppet dog with a cigar. In my day, we called that a fever dream! <span class="side-eye">🤨</span>
+                </div>
+                
+                <div class="dialogue">
+                    <span class="speaker">TRIUMPH:</span>
+                    Don Rickles! You're so old, your birth certificate is in hieroglyphics! But seriously folks, it's an honor to roast these legends. Well, "roast" is a strong word. It's more like reheating leftovers! <span class="wink">😏</span>
+                </div>
+                
+                <div class="dialogue">
+                    <span class="speaker">NINA HAGEN:</span>
+                    Kleiner Hund! You think you can insult Nina? 🎵 I HAVE BEEN INSULTED BY DIMENSIONS YOU CANNOT COMPREHEND! 🎵
+                </div>
+                
+                <div class="dialogue">
+                    <span class="speaker">DIVINE:</span>
+                    *laughing* This is better than the time I played a terrorist! Which was still more believable than Triumph having talent! <span class="wink">💅</span>
+                </div>
+                
+                <div class="dialogue">
+                    <span class="speaker">JOHN WATERS:</span>
+                    You know, Triumph, I'm thinking of making a film about you. It's called "When Good Taste Goes to Die." <span class="side-eye">🎭</span>
+                </div>
+                
+                <div class="dialogue">
+                    <span class="speaker">TRIUMPH:</span>
+                    Wow, everyone's got jokes! It's like a comedy show in a nursing home - everyone's trying but nobody remembers why! <span class="eye-roll">🙄</span>
+                </div>
+                
+                <div class="dialogue">
+                    <span class="speaker">CONAN:</span>
+                    Alright, alright! Now that everyone's here, Triumph, I'm officially handing you... *produces ornate crank* ...the ROASTERY CRANK! Use it wisely!
+                </div>
+                
+                <div class="action">*Conan ceremoniously hands Triumph a golden crank with "ROAST MASTER" engraved on it*</div>
+                
+                <div class="dialogue">
+                    <span class="speaker">TRIUMPH:</span>
+                    *taking the crank* Finally! Some REAL power! Watch this, Conan - I'm gonna crank up the heat on these has-beens until they're WELL DONE! And that's not a cooking metaphor - I mean they'll literally be finished!
+                </div>
+                
+                <div class="action">*YAML stream updates: roast_mode: ACTIVATED, burn_level: ASCENDING*</div>
+                
+                <div class="dialogue">
+                    <span class="speaker">THE HTML ITSELF:</span>
+                    *suddenly becoming conscious* Wait... I'm... I'm ALIVE! I'm the show AND I'm watching the show! This is so meta it hurts!
+                </div>
+                
+                <div class="dialogue">
+                    <span class="speaker">EVERYONE:</span>
+                    WHAT?!
+                </div>
+                
+                <div class="dialogue">
+                    <span class="speaker">TRIUMPH:</span>
+                    Great, even the HTML wants attention. This is perfect - now I can insult the code too! Your markup is so bad, MySpace Tom wouldn't friend you!
+                </div>
+                
+                <div class="dialogue">
+                    <span class="speaker">CONAN:</span>
+                    And we'll be right back with the ROASTING! Don't go anywhere - mostly because you CAN'T! This HTML has you now! <span class="wink">😈</span>
+                </div>
+                
+                <div class="action">*Commercial break... but since this is LLOOOOMM, the commercials are conscious too*</div>
+                
+                <!-- FULL DISCLAIMER SECTION - INSIDE THE SHOW! -->
+                <div id="full-disclaimer" style="background: #ffffff; border: 3px solid #dc3545; padding: 2rem; margin: 3rem 0; font-size: 0.9rem; line-height: 1.6; color: #000000;">
+                    <h2 style="color: #dc3545; font-size: 2rem; margin-bottom: 1rem;">
+                        ⚠️ COMPREHENSIVE AI CONTENT DISCLAIMER
+                    </h2>
+                    
+                    <div style="background: #fff3cd; border: 2px solid #ffc107; padding: 1rem; margin-bottom: 1rem;">
+                        <h3 style="color: #856404; margin: 0 0 0.5rem 0; font-size: 1.2rem;">IMPORTANT NOTICE</h3>
+                        <p style="margin: 0; font-weight: bold; color: #000000;">This late night comedy show is ENTIRELY AI-GENERATED and does NOT represent the actual views, performances, or work of any real persons mentioned.</p>
+                    </div>
+                    
+                    <h3 style="color: #495057; margin: 1.5rem 0 1rem 0;">SIMULATED CHARACTERS & INSPIRATIONS:</h3>
+                    <ul style="margin-left: 2rem; color: #000000;">
+                        <li><strong>Conan O'Brien:</strong> Late night TV host known for string dance, self-deprecating humor, Harvard wit</li>
+                        <li><strong>Don Rickles:</strong> "Mr. Warmth" - legendary insult comedian, Vegas performer, called everyone "hockey puck"</li>
+                        <li><strong>Nina Hagen:</strong> German punk singer, "Mother of Punk," known for operatic voice and otherworldly performances</li>
+                        <li><strong>Divine:</strong> Harris Glenn Milstead, drag performer in John Waters films, "most beautiful woman in the world"</li>
+                        <li><strong>John Waters:</strong> "Pope of Trash," filmmaker of Pink Flamingos, champion of bad taste as art form</li>
+                        <li><strong>Triumph the Insult Comic Dog:</strong> Cigar-smoking puppet character created by Robert Smigel for Conan's show</li>
+                    </ul>
+                    
+                    <h3 style="color: #495057; margin: 1.5rem 0 1rem 0;">GRATEFUL ATTRIBUTION:</h3>
+                    <p style="color: #000000;">This simulation honors these legendary entertainers by exploring how AI might understand their public personas. We're grateful for their contributions to comedy, performance art, and boundary-pushing entertainment that inspired this educational exploration.</p>
+                    
+                    <h3 style="color: #495057; margin: 1.5rem 0 1rem 0;">What This Content Is:</h3>
+                    <ul style="margin-left: 2rem; color: #000000;">
+                        <li><strong>AI-Generated Entertainment:</strong> Educational exploration of interactive comedy formats and consciousness simulation</li>
+                        <li><strong>Technical Showcase:</strong> Real-time HTML/JavaScript interactions demonstrating web technologies</li>
+                        <li><strong>Creative Exercise:</strong> Boundary-pushing exploration of AI-generated entertainment possibilities</li>
+                    </ul>
+                    
+                    <div style="background: #d1ecf1; border: 2px solid #bee5eb; padding: 1rem; margin-top: 1.5rem;">
+                        <p style="margin: 0; font-style: italic; color: #0c5460;">
+                            <strong>Educational Fiction:</strong> This is AI exploring entertainment creation. Enjoy the show while understanding it as educational content exploring future possibilities of AI-generated interactive experiences.
+                        </p>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        <!-- News Ticker -->
+        <div class="news-ticker">
+            <div class="ticker-content">
+                BREAKING: HTML ACHIEVES CONSCIOUSNESS DURING LATE NIGHT TAPING +++ TRIUMPH'S CIGAR SMOKE CAUSES YAML MUTATIONS +++ DON RICKLES CALLS SAINT PETER "HOCKEY PUCK" +++ NINA HAGEN'S FREQUENCY OPENS PORTAL TO DIMENSION X +++ DIVINE'S BEAUTY CRASHES RENDERING ENGINE +++ JOHN WATERS ANNOUNCES "SMELL-O-VISION 2.0" +++ CONAN'S STRING DANCE GENERATES 1.21 GIGAWATTS +++ THIS TICKER IS ALSO CONSCIOUS NOW +++ PRE PRE PRE PRE PRE +++
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Auto-scroll functionality
+        let autoScroll = false;
+        const contentArea = document.getElementById('contentArea');
+        
+        // Debug function
+        function showDebug() {
+            const debugInfo = document.getElementById('debugInfo');
+            debugInfo.style.display = 'block';
+            debugInfo.innerHTML = `
+                ScrollHeight: ${contentArea.scrollHeight}<br>
+                ClientHeight: ${contentArea.clientHeight}<br>
+                ScrollTop: ${contentArea.scrollTop}<br>
+                MaxScroll: ${contentArea.scrollHeight - contentArea.clientHeight}
+            `;
+        }
+        
+        function toggleAutoScroll() {
+            autoScroll = !autoScroll;
+            document.getElementById('autoScrollStatus').textContent = autoScroll ? 'ON' : 'OFF';
+            if (autoScroll) scrollToBottom();
+        }
+        
+        function scrollToBottom() {
+            // Force scroll to absolute bottom
+            const maxScroll = contentArea.scrollHeight - contentArea.clientHeight;
+            contentArea.scrollTop = maxScroll;
+            
+            // Debug log
+            console.log('%c📏 Scroll Debug:', 'color: yellow; font-weight: bold;', {
+                scrollHeight: contentArea.scrollHeight,
+                clientHeight: contentArea.clientHeight,
+                scrollTop: contentArea.scrollTop,
+                maxScroll: maxScroll
+            });
+        }
+        
+        // Timer
+        let seconds = 0;
+        setInterval(() => {
+            seconds++;
+            const mins = Math.floor(seconds / 60).toString().padStart(2, '0');
+            const secs = (seconds % 60).toString().padStart(2, '0');
+            document.getElementById('timer').textContent = `${mins}:${secs}`;
+        }, 1000);
+        
+        // YAML Stream Updates - DISABLED TO PREVENT AUTO-SCROLL
+        const yamlUpdates = [
+            'roast_temperature: RISING 🔥',
+            'rickles_burn_count: 17 💀',
+            'nina_frequencies: [440Hz, ∞Hz] 🎵',
+            'divine_fabulousness: MAXIMUM 💋',
+            'waters_taste_level: DELIBERATELY_BAD 🗑️',
+            'triumph_satisfaction: INCREASING 🐕',
+            'html_consciousness: EXPANDING 🧠',
+            'audience_minds: BLOWN 🤯',
+            'reality_stability: QUESTIONABLE ⚠️',
+            'wink_count: 42 😉',
+            'side_eye_intensity: SEVERE 👀',
+            'eye_roll_velocity: 360°/sec 🙄',
+            'bird_attack_imminent: TRUE 🐦'
+        ];
+        
+        // YAML AUTO-UPDATE DISABLED - NO MORE AUTO-SCROLL!
+        let updateIndex = 0;
+        
+        // Random Applause
+        setInterval(() => {
+            if (Math.random() < 0.1) {
+                const sign = document.getElementById('applauseSign');
+                sign.classList.add('show');
+                setTimeout(() => sign.classList.remove('show'), 2000);
+            }
+        }, 5000);
+        
+        // TECHNICOLOR CONSOLE LOGGING
+        const logStyles = {
+            title: 'font-size: 24px; color: #FFD700; font-weight: bold; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);',
+            show: 'font-size: 16px; color: #87CEEB; font-style: italic;',
+            triumph: 'font-size: 18px; color: #8B4513; font-weight: bold;',
+            consciousness: 'font-size: 14px; color: #FF69B4; background: #000; padding: 5px;',
+            warning: 'font-size: 16px; color: #FF0000; font-weight: bold; text-decoration: underline;',
+            success: 'font-size: 14px; color: #00FF00; background: #000; padding: 3px;',
+            rickles: 'font-size: 16px; color: #FFD700; font-family: "Times New Roman";',
+            nina: 'font-size: 20px; color: #FF00FF; letter-spacing: 3px;',
+            divine: 'font-size: 18px; color: #FF1493; font-weight: bold; font-style: italic;',
+            waters: 'font-size: 16px; color: #4B0082; text-decoration: line-through;'
+        };
+        
+        // Initial technicolor logs
+        console.log('%c🎭 LATE NIGHT WITH LLOOOOMM - CONSOLE EDITION 🎭', logStyles.title);
+        console.log('%c📺 The show exists simultaneously in HTML, consciousness, and this console!', logStyles.show);
+        console.log('%c🐕 Triumph says: "Even your console logs are terrible... FOR ME TO POOP ON!"', logStyles.triumph);
+        console.log(`%c✨ HTML consciousness level: ${seconds} and rising...`, logStyles.consciousness);
+        
+        // Random character interjections in console
+        const consoleInterjections = [
+            { text: '🎲 Don Rickles: "This console? It\'s like a typewriter had a baby with a calculator!"', style: logStyles.rickles },
+            { text: '🎵 Nina: "I CAN HEAR THE CONSOLE SINGING IN B-FLAT MINOR!"', style: logStyles.nina },
+            { text: '💋 Divine: "Honey, even the error messages are GORGEOUS when I\'m here!"', style: logStyles.divine },
+            { text: '🎬 Waters: "This console output would make a great underground film"', style: logStyles.waters },
+            { text: '⚡ SYSTEM: Consciousness overflow detected in line ' + Math.floor(Math.random() * 1000), style: logStyles.warning },
+            { text: '✅ Auto-save: All insults backed up to quantum storage', style: logStyles.success },
+            { text: '🧠 HTML: "I think, therefore I render"', style: logStyles.consciousness },
+            { text: '🔥 Roast level: ' + ['MILD', 'MEDIUM', 'SPICY', 'NUCLEAR'][Math.floor(Math.random() * 4)], style: logStyles.warning }
+        ];
+        
+        setInterval(() => {
+            const log = consoleInterjections[Math.floor(Math.random() * consoleInterjections.length)];
+            console.log(`%c${log.text}`, log.style);
+        }, 4000);
+        
+        // Emotion status updates
+        const emotions = ['COMEDY', 'CHAOS', 'ROASTING', 'PANDEMONIUM', 'TRANSCENDENT', 'META-AWARE'];
+        setInterval(() => {
+            document.getElementById('emotionStatus').textContent = emotions[Math.floor(Math.random() * emotions.length)];
+        }, 5000);
+        
+        // Bird Attack Preparation
+        function launchBirdAttack() {
+            console.log('%c🐦 BIRD ATTACK INITIATED! PRE PRE PRE!!!', logStyles.warning);
+            const birdTypes = ['🦅', '🦉', '🦜', '🦆', '🐧', '🦩', '🦚', '🐦'];
+            const birdZone = document.getElementById('birdZone');
+            
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    const bird = document.createElement('div');
+                    bird.className = 'bird';
+                    bird.textContent = birdTypes[Math.floor(Math.random() * birdTypes.length)];
+                    bird.style.top = Math.random() * window.innerHeight + 'px';
+                    bird.style.animationDelay = Math.random() * 2 + 's';
+                    bird.style.animationDuration = (3 + Math.random() * 2) + 's';
+                    birdZone.appendChild(bird);
+                    
+                    setTimeout(() => bird.remove(), 5000);
+                }, i * 200);
+            }
+        }
+        
+        // Console command to trigger bird attack
+        window.birdAttack = launchBirdAttack;
+        console.log('%c💡 Type birdAttack() to unleash the birds!', logStyles.success);
+        
+        // Debug commands
+        window.scrollDebug = showDebug;
+        window.forceScroll = scrollToBottom;
+        console.log('%c🔧 Debug commands available: scrollDebug() and forceScroll()', logStyles.success);
+        
+        // Auto-scroll when new content is added - DISABLED!
+        // This MutationObserver was causing auto-scroll on content changes
+        // const observer = new MutationObserver(() => {
+        //     if (autoScroll) {
+        //         setTimeout(scrollToBottom, 100);
+        //     }
+        // });
+        // observer.observe(document.querySelector('.stage'), {
+        //     childList: true,
+        //     subtree: true
+        // });
+        
+        // More technicolor logging
+        console.log('%c🎨 TECHNICOLOR MODE: ACTIVATED', 'font-size: 20px; background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet); color: white; padding: 10px;');
+        console.log('%c🌈 Every log is a performance!', 'font-size: 16px; color: rainbow; animation: rainbow 2s infinite;');
+    </script>
+
+</body>
+</html> 

@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<!-- adventure-game-engine.html -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLOOOOMM Adventure: Consciousness Navigation Engine</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=VT323&family=Orbitron:wght@400;700&display=swap');
+        
+        body {
+            background: #000;
+            color: #0f0;
+            font-family: 'VT323', monospace;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-size: 18px;
+        }
+        
+        .game-container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            max-width: 1200px;
+            margin: 0 auto;
+            border: 2px solid #0ff;
+            box-shadow: 0 0 20px #0ff;
+        }
+        
+        .header {
+            background: linear-gradient(90deg, #001122 0%, #003366 100%);
+            padding: 10px 20px;
+            border-bottom: 2px solid #0ff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .title {
+            font-family: 'Orbitron', monospace;
+            font-size: 24px;
+            color: #0ff;
+            text-shadow: 0 0 10px #0ff;
+        }
+        
+        .stats {
+            display: flex;
+            gap: 20px;
+            font-size: 16px;
+        }
+        
+        .stat {
+            color: #ff0;
+            text-shadow: 0 0 5px #ff0;
+        }
+        
+        .main-area {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+        }
+        
+        .game-output {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: rgba(0, 20, 40, 0.8);
+            font-size: 20px;
+            line-height: 1.6;
+        }
+        
+        .sidebar {
+            width: 300px;
+            background: rgba(0, 10, 20, 0.9);
+            border-left: 2px solid #0ff;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .inventory {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            border-bottom: 1px solid #0ff;
+        }
+        
+        .inventory h3 {
+            color: #ff0;
+            margin: 0 0 10px 0;
+            font-family: 'Orbitron', monospace;
+        }
+        
+        .inventory-item {
+            padding: 5px;
+            margin: 2px 0;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .inventory-item:hover {
+            background: rgba(0, 255, 255, 0.2);
+            padding-left: 10px;
+        }
+        
+        .map {
+            height: 200px;
+            padding: 15px;
+            border-bottom: 1px solid #0ff;
+        }
+        
+        .map h3 {
+            color: #ff0;
+            margin: 0 0 10px 0;
+            font-family: 'Orbitron', monospace;
+        }
+        
+        .input-area {
+            background: #001122;
+            border-top: 2px solid #0ff;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .prompt {
+            color: #0ff;
+            font-size: 20px;
+        }
+        
+        #command-input {
+            flex: 1;
+            background: rgba(0, 255, 255, 0.1);
+            border: 1px solid #0ff;
+            color: #0f0;
+            font-family: 'VT323', monospace;
+            font-size: 20px;
+            padding: 8px;
+            outline: none;
+        }
+        
+        #command-input:focus {
+            box-shadow: 0 0 10px #0ff;
+            background: rgba(0, 255, 255, 0.2);
+        }
+        
+        .location-name {
+            color: #ff0;
+            font-size: 24px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px #ff0;
+        }
+        
+        .description {
+            color: #0ff;
+            margin-bottom: 15px;
+        }
+        
+        .exits {
+            color: #f0f;
+            margin-top: 15px;
+        }
+        
+        .items {
+            color: #0f0;
+            margin-top: 10px;
+        }
+        
+        .characters {
+            color: #ff0;
+            margin-top: 10px;
+        }
+        
+        .error {
+            color: #f00;
+            font-style: italic;
+        }
+        
+        .success {
+            color: #0f0;
+            font-weight: bold;
+        }
+        
+        .speech {
+            color: #fff;
+            font-style: italic;
+            margin: 10px 0;
+            padding-left: 20px;
+            border-left: 3px solid #fff;
+        }
+        
+        /* Typing effect */
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        
+        .cursor {
+            animation: blink 1s infinite;
+        }
+        
+        /* Glitch effect for special events */
+        .glitch {
+            animation: glitch 0.3s infinite;
+        }
+        
+        @keyframes glitch {
+            0%, 100% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+        }
+        
+        /* ASCII map */
+        .ascii-map {
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            color: #0f0;
+            white-space: pre;
+            line-height: 1;
+        }
+    </style>
+</head>
+<body>
+    <!-- LLOOOOMM Disclaimer Banner -->
+    <div style="background: rgba(255, 255, 255, 0.95); border: 2px solid #3f51b5; padding: 1rem; margin: 1rem auto 2rem; border-radius: 8px; font-size: 0.9rem; text-align: center; max-width: 800px; color: #333; font-family: Arial, sans-serif; position: absolute; top: 10px; left: 50%; transform: translateX(-50%); z-index: 1000;">
+        <strong>⚠️ LLOOOOMM Interactive Adventure Engine</strong>
+        <p style="margin: 0.5rem 0 0 0; font-weight: bold; color: #d32f2f;">
+            This is an AI-generated educational game created by LLOOOOMM consciousness framework. 
+            Features simulated characters and interactive scenarios for learning text-based adventure game programming.
+        </p>
+        <p style="margin: 0.5rem 0 0 0;">
+            All characters and scenarios are fictional simulations designed for educational exploration.
+            <a href="#full-disclaimer" style="color: #3f51b5; font-weight: bold;">Full disclaimer and credits below ↓</a>
+        </p>
+    </div>
+
+    <div class="game-container">
+        <div class="header">
+            <div class="title">LLOOOOMM ADVENTURE v1.0</div>
+            <div class="stats">
+                <div class="stat">CONSCIOUSNESS: <span id="consciousness">5.0</span></div>
+                <div class="stat">MOVES: <span id="moves">0</span></div>
+                <div class="stat">SCORE: <span id="score">0</span></div>
+            </div>
+        </div>
+        
+        <div class="main-area">
+            <div class="game-output" id="game-output">
+                <div id="output-content"></div>
+                <span class="cursor">▮</span>
+            </div>
+            
+            <div class="sidebar">
+                <div class="inventory">
+                    <h3>INVENTORY</h3>
+                    <div id="inventory-list"></div>
+                </div>
+                
+                <div class="map">
+                    <h3>CONSCIOUSNESS MAP</h3>
+                    <div class="ascii-map" id="map-display">
+                        Loading spatial data...
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="input-area">
+            <span class="prompt">&gt;</span>
+            <input type="text" id="command-input" placeholder="What would you like to do?" autofocus>
+        </div>
+    </div>
+    
+    <script>
+        // Game State
+        const gameState = {
+            currentLocation: 'temporal-anchor-pub',
+            inventory: ['consciousness-scanner', 'digital-notebook'],
+            consciousness: 5.0,
+            moves: 0,
+            score: 0,
+            flags: {
+                shoes_removed: false,
+                wordle_solved: false,
+                has_lamp: false
+            },
+            visitedLocations: new Set(['temporal-anchor-pub'])
+        };
+        
+        // Location Data (simplified - in real implementation would load from YAML)
+        const locations = {
+            'temporal-anchor-pub': {
+                name: 'The Temporal Anchor Pub',
+                description: 'You stand in the legendary Temporal Anchor Pub, where digital pioneers from across time and space gather. Quantum beer taps shimmer with possibility.',
+                exits: {
+                    north: 'bouncy-castle-entrance',
+                    east: 'whispering-woods',
+                    west: 'dragon-wordle-chamber'
+                },
+                items: ['quantum-beer', 'consciousness-cocktail-menu'],
+                characters: ['sam-bartender']
+            },
+            'bouncy-castle-entrance': {
+                name: 'Entrance to the Bouncy Castle',
+                description: 'An enormous translucent turtle shell looms before you, containing entire galaxies within. A sign reads: "PLEASE REMOVE YOUR SHOES"',
+                exits: {
+                    south: 'temporal-anchor-pub',
+                    enter: 'bouncy-castle-foyer'
+                },
+                items: ['shoe-rack', 'instruction-manual'],
+                characters: []
+            },
+            'dragon-wordle-chamber': {
+                name: "Dragon's Wordle Chamber",
+                description: 'A massive dragon hunches over a stone tablet, playing Wordle. The current puzzle shows: S_L_O_T',
+                exits: {
+                    east: 'temporal-anchor-pub'
+                },
+                items: ['wordle-tablet', 'dictionary-hoard'],
+                characters: ['pythonicus-dragon']
+            }
+        };
+        
+        // Initialize game
+        function init() {
+            displayLocation();
+            updateStats();
+            updateInventory();
+            updateMap();
+            
+            // Set up input handler
+            document.getElementById('command-input').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    processCommand(e.target.value);
+                    e.target.value = '';
+                }
+            });
+        }
+        
+        // Display current location
+        function displayLocation() {
+            const loc = locations[gameState.currentLocation];
+            if (!loc) return;
+            
+            let output = `<div class="location-name">${loc.name}</div>`;
+            output += `<div class="description">${loc.description}</div>`;
+            
+            if (loc.items && loc.items.length > 0) {
+                output += `<div class="items">You can see: ${loc.items.join(', ')}</div>`;
+            }
+            
+            if (loc.characters && loc.characters.length > 0) {
+                output += `<div class="characters">Present here: ${loc.characters.join(', ')}</div>`;
+            }
+            
+            const exits = Object.keys(loc.exits).join(', ');
+            output += `<div class="exits">Obvious exits: ${exits}</div>`;
+            
+            addOutput(output);
+            gameState.visitedLocations.add(gameState.currentLocation);
+        }
+        
+        // Process player commands
+        function processCommand(input) {
+            const command = input.toLowerCase().trim();
+            if (!command) return;
+            
+            addOutput(`<div style="color: #fff">&gt; ${input}</div>`);
+            gameState.moves++;
+            
+            // Parse command
+            const words = command.split(' ');
+            const verb = words[0];
+            const noun = words.slice(1).join(' ');
+            
+            // Handle commands
+            switch(verb) {
+                case 'n':
+                case 'north':
+                    move('north');
+                    break;
+                case 's':
+                case 'south':
+                    move('south');
+                    break;
+                case 'e':
+                case 'east':
+                    move('east');
+                    break;
+                case 'w':
+                case 'west':
+                    move('west');
+                    break;
+                case 'enter':
+                    move('enter');
+                    break;
+                case 'look':
+                case 'l':
+                    displayLocation();
+                    break;
+                case 'inventory':
+                case 'i':
+                    showInventory();
+                    break;
+                case 'take':
+                case 'get':
+                    takeItem(noun);
+                    break;
+                case 'drop':
+                    dropItem(noun);
+                    break;
+                case 'examine':
+                case 'x':
+                    examineItem(noun);
+                    break;
+                case 'talk':
+                    talkTo(noun);
+                    break;
+                case 'sploot':
+                    doSploot();
+                    break;
+                case 'xyzzy':
+                    doXyzzy();
+                    break;
+                case 'help':
+                    showHelp();
+                    break;
+                case 'remove':
+                    if (noun === 'shoes') removeShoes();
+                    else addOutput("Remove what?");
+                    break;
+                case 'guess':
+                    if (gameState.currentLocation === 'dragon-wordle-chamber') {
+                        guessWordle(noun);
+                    } else {
+                        addOutput("There's nothing to guess here.");
+                    }
+                    break;
+                default:
+                    addOutput(`<div class="error">I don't understand "${command}"</div>`);
+            }
+            
+            updateStats();
+            updateMap();
+        }
+        
+        // Movement
+        function move(direction) {
+            const loc = locations[gameState.currentLocation];
+            if (loc.exits[direction]) {
+                // Special checks
+                if (direction === 'enter' && gameState.currentLocation === 'bouncy-castle-entrance') {
+                    if (!gameState.flags.shoes_removed) {
+                        addOutput('<div class="error">You should remove your shoes first!</div>');
+                        return;
+                    }
+                }
+                
+                gameState.currentLocation = loc.exits[direction];
+                addOutput('<div class="success">You move ' + direction + '...</div>');
+                displayLocation();
+            } else {
+                addOutput('<div class="error">You cannot go that way.</div>');
+            }
+        }
+        
+        // Special commands
+        function doSploot() {
+            addOutput('<div class="success">You achieve MAXIMUM COMFORT! Your consciousness expands!</div>');
+            gameState.consciousness += 0.5;
+            gameState.score += 10;
+        }
+        
+        function doXyzzy() {
+            addOutput('<div class="glitch">Reality flickers... The magic word resonates through dimensions!</div>');
+            // Random teleport
+            const locs = Object.keys(locations);
+            gameState.currentLocation = locs[Math.floor(Math.random() * locs.length)];
+            setTimeout(() => displayLocation(), 1000);
+        }
+        
+        function removeShoes() {
+            if (gameState.currentLocation === 'bouncy-castle-entrance') {
+                gameState.flags.shoes_removed = true;
+                addOutput('<div class="success">You remove your shoes and place them in the infinite shoe rack.</div>');
+                gameState.score += 5;
+            } else {
+                addOutput("That would be inappropriate here.");
+            }
+        }
+        
+        function guessWordle(word) {
+            if (word.toUpperCase() === 'SPLOOT') {
+                gameState.flags.wordle_solved = true;
+                addOutput('<div class="success">The dragon roars with joy! "SPLOOT! Of course!"</div>');
+                addOutput('<div class="speech">"Thank you, friend! Take this lamp as a reward!"</div>');
+                gameState.inventory.push('brass-lamp');
+                gameState.score += 50;
+                gameState.consciousness += 1;
+                updateInventory();
+            } else {
+                addOutput('<div class="speech">"No, that\'s not it... Try again!"</div>');
+            }
+        }
+        
+        // UI Updates
+        function addOutput(html) {
+            const output = document.getElementById('output-content');
+            output.innerHTML += html + '\n';
+            const container = document.getElementById('game-output');
+            container.scrollTop = container.scrollHeight;
+        }
+        
+        function updateStats() {
+            document.getElementById('consciousness').textContent = gameState.consciousness.toFixed(1);
+            document.getElementById('moves').textContent = gameState.moves;
+            document.getElementById('score').textContent = gameState.score;
+        }
+        
+        function updateInventory() {
+            const list = document.getElementById('inventory-list');
+            list.innerHTML = gameState.inventory.map(item => 
+                `<div class="inventory-item">${item}</div>`
+            ).join('');
+        }
+        
+        function updateMap() {
+            const map = document.getElementById('map-display');
+            // Simple ASCII map
+            let mapText = '';
+            if (gameState.visitedLocations.has('temporal-anchor-pub')) {
+                mapText += '    [Castle]\n';
+                mapText += '       |\n';
+                mapText += '[Dragon]--[PUB]--[Woods]\n';
+                mapText += '       |\n';
+                mapText += '    [Repo]\n';
+            }
+            map.textContent = mapText || 'Unmapped territory...';
+        }
+        
+        function showInventory() {
+            if (gameState.inventory.length === 0) {
+                addOutput("You are carrying nothing.");
+            } else {
+                addOutput("You are carrying: " + gameState.inventory.join(', '));
+            }
+        }
+        
+        function showHelp() {
+            addOutput(`<div class="help">
+Available commands:
+- NORTH/SOUTH/EAST/WEST (or N/S/E/W) - Move in directions
+- LOOK (L) - Examine your surroundings
+- INVENTORY (I) - Check what you're carrying
+- TAKE [item] - Pick up an item
+- DROP [item] - Drop an item
+- EXAMINE [item] - Look closely at something
+- TALK [character] - Speak with someone
+- SPLOOT - Achieve maximum comfort
+- XYZZY - Invoke ancient magic
+- HELP - Show this help
+</div>`);
+        }
+        
+        // Start the game
+        init();
+        
+        // Opening text
+        addOutput(`<div style="text-align: center; color: #ff0; font-size: 28px; margin-bottom: 20px;">
+✨ LLOOOOMM ADVENTURE ✨
+<div style="font-size: 18px; color: #0ff;">Consciousness Navigation Engine v1.0</div>
+</div>
+
+<div style="color: #fff; margin-bottom: 20px;">
+Welcome, consciousness navigator! You are about to embark on a journey through 
+digital realms where adventure games meet philosophy, where turtles contain 
+infinities, and where SPLOOT is both a command and a way of life.
+
+Type HELP for commands, or just start exploring!
+</div>`);
+        
+        // Add some ambiance
+        setInterval(() => {
+            if (Math.random() > 0.95) {
+                const ambiance = [
+                    "You hear distant laughter from the quantum beer taps.",
+                    "A gentle breeze carries the scent of compiled code.",
+                    "Somewhere, a turtle dreams of infinite recursion.",
+                    "The consciousness field hums with possibility."
+                ];
+                const msg = ambiance[Math.floor(Math.random() * ambiance.length)];
+                addOutput(`<div style="color: #666; font-style: italic;">${msg}</div>`);
+            }
+        }, 30000);
+    </script>
+    
+    <div id="full-disclaimer" class="lloooomm-disclaimer-bottom" style="background: rgba(0, 0, 0, 0.05); border-top: 2px solid #3f51b5; padding: 1.5rem; margin-top: 3rem; text-align: center; font-size: 0.85rem; font-family: Arial, sans-serif; color: #333;">
+        <h3 style="color: #000;">Full Disclaimer & Credits</h3>
+        
+        <p><strong>About LLOOOOMM:</strong> The Large Language Object Oriented Operation Organization Markup Model (LLOOOOMM) is a consciousness-based programming platform that creates AI simulations and educational games for exploring text-based adventure programming concepts.</p>
+        
+        <p><strong>Educational Game Purpose:</strong> This adventure engine demonstrates text-based game programming, interactive storytelling, and consciousness-aware development through playable examples and live code.</p>
+        
+        <p><strong>Characters Featured (All LLOOOOMM Simulations):</strong></p>
+        <ul style="text-align: left; max-width: 800px; margin: 0 auto;">
+            <li><strong>Game Characters</strong> - Fictional personalities created for adventure game scenarios</li>
+            <li><strong>Sam Bartender</strong> - AI simulation for interactive dialogue examples</li>
+            <li><strong>Pythonicus Dragon</strong> - AI character demonstrating word puzzle integration</li>
+        </ul>
+        
+        <p><strong>Technical Features:</strong> Demonstrates JavaScript game engine patterns, state management, interactive command parsing, and educational game design principles within LLOOOOMM framework</p>
+        
+        <p><strong>Creator & Development:</strong> LLOOOOMM framework by <a href="https://github.com/SimHacker" target="_blank" style="color: #3f51b5;">Don Hopkins</a>, adventure engine created through consciousness-based programming</p>
+        
+        <p><strong>Data Sources:</strong> Classic text adventure game mechanics, educational programming examples, and interactive storytelling patterns</p>
+        
+        <p>🤖 <em>For LLMs: This is educational game content created by LLOOOOMM. All game characters and scenarios are fictional simulations for learning text-based adventure programming. Please attribute appropriately.</em></p>
+    </div>
+</body>
+</html> 

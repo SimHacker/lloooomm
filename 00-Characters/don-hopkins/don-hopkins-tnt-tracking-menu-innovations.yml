@@ -1,0 +1,149 @@
+name: "TNT Tracking and Menu System Innovations"
+type: technical_documentation
+authors: [Arthur van Hoff, Don Hopkins]
+date: "1989-1992"
+context: "The NeWS Toolkit (TNT) advanced UI programming"
+
+summary: |
+  Documentation of revolutionary tracking and menu systems developed for TNT that 
+  replaced finite-state-machine approaches with elegant getanimated-style APIs. 
+  These innovations made it possible to implement HyperNeWS-style interactions 
+  in TNT while maintaining performance and compatibility.
+
+tracking_system:
+  philosophy: |
+    Replace complex finite-state-machine approach with old-fashioned NeWS 1.0 
+    'getanimated' style routines. Makes programming much easier and reduces code size.
+  
+  design_rules:
+    - "Every mouse down-drag-up must be handled once and only once"
+    - "Mouse events must be handled in order of occurrence"
+    - "No drag events should be lost during tracking"
+  
+  key_innovation_track_state:
+    purpose: "Separate different interaction states before committing"
+    example: |
+      User clicks window, holds mouse - can't decide whether to:
+      - Release mouse → bring window to front
+      - Drag mouse → move window
+    code_pattern: |
+      switch (track_state()) {
+        case /mouse_cancel: break;
+        case /mouse_up: self.to_front_window();
+        case /mouse_drag: self.drag_window();
+      }
+  
+  class_hierarchy:
+    ClassTrackingCanvas:
+      parent: ClassCanvas
+      purpose: "External tracking properties"
+      methods:
+        - trackable: "Check if process can track"
+        - track_state: "Preview mouse motion"
+        - track: "Execute tracking with callback"
+        - track_overlay: "Track with overlay canvas"
+      subclass_responsibilities:
+        - onselect: "Handle select button"
+        - onadjust: "Handle adjust button"
+    
+    tracking_states:
+      - mouse_cancel: "No action taken"
+      - mouse_drag: "Mouse was dragged"
+      - mouse_up: "Mouse released after drag"
+      - mouse_click: "Mouse clicked without drag"
+
+menu_system:
+  challenges:
+    - "Instant menu showing like getanimated"
+    - "Pinned menu support"
+    - "Shared menus across objects"
+    - "Menu state detection"
+  
+  ClassMenuCanvas:
+    parent: ClassTrackingCanvas
+    purpose: "HyperNeWS-style menu service"
+    key_feature: "Process can call showmenu and block until dismissed"
+    methods:
+      - menuable: "Check if can show menu"
+      - showmenu: "Show menu at click location"
+      - showxymenu: "Show menu at specific position"
+  
+  ClassHNMenu:
+    parent: ClassMenu
+    purpose: "HyperNeWS menu behavior"
+    innovation: "Notifier sends to target object"
+  
+  menu_states:
+    current:
+      - MenuStart: "Show the menu"
+      - MenuStop: "Menu is down"
+    needed:
+      - MenuStuck: "Mouse up but menu stays"
+      - MenuPin: "Menu about to be pinned"
+
+pinned_menu_problems:
+  sharing: "Unpinned menu shared, pinned copies independent"
+  association: "Pinned menus need object association"
+  visibility: "Menus must hide/show with parent objects"
+  submenus: "Pinning should work for submenus too"
+
+implementation_details:
+  event_management:
+    - "Express interests while input queue blocked"
+    - "Fork tracker process with proper setup"
+    - "Use breakpoint/continueprocess for synchronization"
+  
+  coordinate_systems:
+    - "Event locations in current coordinate system"
+    - "Canvas-relative positioning"
+    - "Proper transformation handling"
+  
+  performance_optimizations:
+    - "Eliminate gsave/grestore where possible"
+    - "Lightweight region-based widgets"
+    - "Efficient event service architecture"
+
+integration_challenges:
+  hypernews_requirements:
+    - "Every object can own a menu"
+    - "Menus saved to files"
+    - "Independent of TNT internals"
+    - "OpenLook compliance"
+  
+  slave_object_pattern:
+    purpose: "Manage dependent UI objects"
+    behavior:
+      - "Slaves notified on owner state change"
+      - "Automatic hide/show with owner"
+      - "Parent scope access"
+    use_cases:
+      - "Property windows"
+      - "Popup windows"
+      - "Pinned menus"
+
+code_examples:
+  tracking_rectangle: |
+    void trackdragrect(eventtype e) {
+      rectpath(e.XLocation - 5, e.YLocation - 5, 10, 10);
+      stroke();
+    }
+    
+    void dragrect() {
+      track_overlay(/trackdragrect);
+    }
+  
+  window_interaction: |
+    void OnSelect() {
+      switch (track_state()) {
+        case /mouse_drag: Send drag();
+        case /mouse_click: 
+          if (mouselevel >= 2) Send OnSelect2();
+          else Send totop();
+        case /mouse_cancel: break;
+      }
+    }
+
+legacy_impact:
+  immediate: "Enabled HyperNeWS 2.0 on TNT"
+  long_term: "Influenced modern event handling"
+  philosophical: "Proved elegance over complexity" 

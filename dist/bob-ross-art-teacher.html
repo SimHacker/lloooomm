@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<!-- bob-ross-art-teacher.html -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bob Ross's Happy Little Art Studio - LLOOOOMM Edition</title>
+    <style>
+        /* BRANDING Protocol Disclaimer Styles */
+        .lloooomm-disclaimer-top {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #1a1a1a;
+            color: #ff6b35;
+            padding: 8px 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            font-weight: bold;
+            text-align: center;
+            z-index: 10000;
+            border-bottom: 2px solid #ff6b35;
+        }
+        
+        .lloooomm-disclaimer-top a {
+            color: #ffd700;
+            text-decoration: underline;
+        }
+        
+        .lloooomm-disclaimer-bottom {
+            background: #1a1a1a;
+            color: #e0e0e0;
+            padding: 30px;
+            margin-top: 50px;
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            line-height: 1.4;
+            border-top: 3px solid #ff6b35;
+        }
+        
+        .lloooomm-disclaimer-bottom h3 {
+            color: #ff6b35;
+            margin-top: 0;
+            font-size: 14px;
+        }
+        
+        .lloooomm-disclaimer-bottom a {
+            color: #ffd700;
+        }
+
+        /* Base Styles - Calm and Inviting like Bob */
+        body {
+            margin: 0;
+            padding: 35px 20px 20px 20px; /* Top padding for disclaimer */
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #87CEEB 0%, #98FB98 50%, #F0E68C 100%);
+            min-height: 100vh;
+        }
+
+        .studio-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Bob's Header */
+        .bob-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: linear-gradient(135deg, #4682B4, #5F9EA0);
+            border-radius: 15px;
+            color: white;
+        }
+
+        .bob-header h1 {
+            font-size: 3em;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .bob-quote {
+            font-size: 1.3em;
+            font-style: italic;
+            margin-top: 15px;
+            opacity: 0.9;
+        }
+
+        /* Bob's Teaching Section */
+        .bob-wisdom {
+            background: #FFF8DC;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            border: 3px solid #DEB887;
+            position: relative;
+        }
+
+        .bob-wisdom::before {
+            content: "🎨";
+            position: absolute;
+            top: -20px;
+            left: 30px;
+            font-size: 2em;
+            background: #FFF8DC;
+            padding: 0 10px;
+        }
+
+        .bob-wisdom h2 {
+            color: #8B4513;
+            margin-top: 0;
+        }
+
+        .happy-accident-button {
+            background: #228B22;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+
+        .happy-accident-button:hover {
+            background: #32CD32;
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(34, 139, 34, 0.3);
+        }
+
+        /* Artist Grid with Bob's Blessing */
+        .artist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .artist-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+
+        .artist-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .artist-card::after {
+            content: "✨";
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5em;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .artist-card:hover::after {
+            opacity: 1;
+        }
+
+        .artist-name {
+            font-size: 1.8em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .artist-role {
+            color: #666;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+
+        /* Bob's Style Teaching */
+        .bob-teaches {
+            background: #E6F3FF;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 4px solid #4682B4;
+        }
+
+        .bob-teaches p {
+            margin: 5px 0;
+            color: #2C5282;
+        }
+
+        /* Period Tabs */
+        .period-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .period-tab {
+            padding: 8px 15px;
+            background: #f0f0f0;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+        }
+
+        .period-tab:hover {
+            background: #e0e0e0;
+        }
+
+        .period-tab.active {
+            background: #4682B4;
+            color: white;
+        }
+
+        /* Style Preview */
+        .style-preview {
+            height: 150px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* ASMR Mode */
+        .asmr-mode {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #8B4513;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .asmr-mode:hover {
+            background: #A0522D;
+            transform: scale(1.05);
+        }
+
+        .asmr-active {
+            animation: gentle-pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes gentle-pulse {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; }
+        }
+
+        /* Bob's Palette */
+        .bob-palette {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .paint-blob {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .paint-blob:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .titanium-white { background: #FFFFFF; }
+        .prussian-blue { background: #003153; }
+        .van-dyke-brown { background: #664228; }
+        .alizarin-crimson { background: #E32636; }
+        .cadmium-yellow { background: #FFF600; }
+        .sap-green { background: #507D2A; }
+
+        /* Artist Specific Styles (kept from original) */
+        .picasso-blue {
+            background: linear-gradient(to bottom, #1e3a5f, #2c5282);
+            color: #a8c8ec;
+            text-shadow: 2px 2px 4px rgba(0, 0, 50, 0.8);
+        }
+
+        .picasso-rose {
+            background: linear-gradient(45deg, #ffb6c1, #ffdab9);
+            color: #8b4513;
+        }
+
+        .picasso-cubist {
+            background: conic-gradient(#696969, #8b7355, #696969, #8b7355);
+            transform: skew(5deg, -2deg);
+            color: #333;
+        }
+
+        .frida-mexican {
+            background: linear-gradient(to bottom, #F5DEB3, #DEB887);
+            border: 3px solid #8B4513;
+            color: #8B4513;
+        }
+
+        .frida-pain {
+            background: linear-gradient(45deg, #8B0000, #228B22);
+            border: 2px solid #FFD700;
+            color: #FFD700;
+            position: relative;
+        }
+
+        .vangogh-starry {
+            background: conic-gradient(from 0deg, #191970, #4169e1, #00bfff, #191970);
+            animation: swirl 10s linear infinite;
+            color: #ffd700;
+        }
+
+        @keyframes swirl {
+            100% { transform: rotate(360deg); }
+        }
+
+        .warhol-pop {
+            background: repeating-linear-gradient(90deg, #ff1493, #ff1493 50px, #00ff00 50px, #00ff00 100px);
+            color: #000;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .hockney-pool {
+            background: linear-gradient(180deg, #87ceeb 0%, #00bfff 50%, #1e90ff 100%);
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .murakami-flower {
+            background: conic-gradient(from 0deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3, #ff0000);
+            border-radius: 50%;
+            animation: spin 20s linear infinite;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Attribution Box */
+        .attribution {
+            background: #f0f8ff;
+            border: 2px solid #4169e1;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .attribution h3 {
+            color: #4169e1;
+            margin-top: 0;
+        }
+
+        /* Joy Meter */
+        .joy-meter {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .joy-level {
+            width: 150px;
+            height: 20px;
+            background: #f0f0f0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .joy-fill {
+            height: 100%;
+            background: linear-gradient(to right, #98FB98, #32CD32);
+            width: 75%;
+            transition: width 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- BRANDING Protocol Top Disclaimer -->
+    <div class="lloooomm-disclaimer-top">
+        ⚠️ LLOOOOMM SIMULATION WARNING: Bob Ross AI Character Simulation | Educational Art Content | <a href="#full-disclaimer">Full Disclaimer ↓</a>
+    </div>
+
+    <div class="studio-container">
+        <!-- Bob's Welcome -->
+        <div class="bob-header">
+            <h1>🎨 Bob Ross's Happy Little Art Studio</h1>
+            <p class="bob-quote">"We don't make mistakes, just happy little accidents. Let's explore some beautiful artistic styles together!"</p>
+        </div>
+
+        <!-- Joy Meter -->
+        <div class="joy-meter">
+            <strong>Joy Level:</strong>
+            <div class="joy-level">
+                <div class="joy-fill" id="joyFill"></div>
+            </div>
+        </div>
+
+        <!-- Bob's Teaching Wisdom -->
+        <div class="bob-wisdom">
+            <h2>Welcome to Your Creative Journey!</h2>
+            <p>Hello there, friend! I'm Bob Ross, and today we're going to explore the wonderful world of artistic styles. Each artist you'll meet has their own special way of seeing the world - just like you do! Remember, there's no wrong way to create art. Every style is just a different path up the same beautiful mountain.</p>
+            
+            <div style="text-align: center; margin: 20px 0;">
+                <button class="happy-accident-button" onclick="generateHappyAccident()">
+                    Create a Happy Accident! 
+                </button>
+                <button class="happy-accident-button" onclick="bobEncouragement()">
+                    Need Some Encouragement?
+                </button>
+            </div>
+        </div>
+
+        <!-- Bob's Color Palette -->
+        <div class="bob-palette">
+            <div class="paint-blob titanium-white" title="Titanium White - The magic white!"></div>
+            <div class="paint-blob prussian-blue" title="Prussian Blue - Deep like the ocean"></div>
+            <div class="paint-blob van-dyke-brown" title="Van Dyke Brown - Earthy and warm"></div>
+            <div class="paint-blob alizarin-crimson" title="Alizarin Crimson - Passionate red"></div>
+            <div class="paint-blob cadmium-yellow" title="Cadmium Yellow - Sunshine in a tube"></div>
+            <div class="paint-blob sap-green" title="Sap Green - Fresh as spring"></div>
+        </div>
+
+        <!-- Attribution -->
+        <div class="attribution">
+            <h3>🙏 Supporting Artists & Their Legacy</h3>
+            <p>
+                Every artist you'll meet today has given us incredible gifts. Some are still with us, 
+                creating new beauty every day. Others live on through their work and the inspiration 
+                they provide. Let's honor them all by learning their stories and supporting their art!
+            </p>
+        </div>
+
+        <!-- Artist Grid -->
+        <div class="artist-grid">
+            <!-- Pablo Picasso -->
+            <div class="artist-card">
+                <div class="artist-name">Pablo Picasso</div>
+                <div class="artist-role">Artistic Revolutionary & Style Shapeshifter</div>
+                
+                <div class="bob-teaches">
+                    <p><strong>Bob says:</strong> "Pablo here liked to look at things from all angles at once. Isn't that wonderful? He shows us there's more than one way to see!"</p>
+                </div>
+                
+                <div class="period-tabs">
+                    <button class="period-tab active" onclick="showStyle(this, 'picasso-blue')">Blue Period</button>
+                    <button class="period-tab" onclick="showStyle(this, 'picasso-rose')">Rose Period</button>
+                    <button class="period-tab" onclick="showStyle(this, 'picasso-cubist')">Cubism</button>
+                </div>
+                
+                <div class="style-preview picasso-blue">
+                    Melancholic Blue Period Style
+                </div>
+                
+                <div class="museum-links">
+                    <a href="https://www.museepicassoparis.fr/" target="_blank">Visit Museum</a> • 
+                    <a href="http://www.museupicasso.bcn.cat/" target="_blank">Barcelona Collection</a>
+                </div>
+            </div>
+
+            <!-- Frida Kahlo -->
+            <div class="artist-card">
+                <div class="artist-name">Frida Kahlo</div>
+                <div class="artist-role">Pain Alchemist & Identity Revolutionary</div>
+                
+                <div class="bob-teaches">
+                    <p><strong>Bob says:</strong> "Frida turned her pain into the most beautiful flowers. She reminds us that even our struggles can become art."</p>
+                </div>
+                
+                <div class="period-tabs">
+                    <button class="period-tab active" onclick="showStyle(this, 'frida-mexican')">Mexican Folk</button>
+                    <button class="period-tab" onclick="showStyle(this, 'frida-pain')">Pain & Beauty</button>
+                </div>
+                
+                <div class="style-preview frida-mexican">
+                    Traditional Mexican Style
+                </div>
+                
+                <div class="museum-links">
+                    <a href="https://www.museofridakahlo.org.mx/" target="_blank">Casa Azul</a> • 
+                    <a href="https://www.museodoloresolmedo.org.mx/" target="_blank">Dolores Olmedo</a>
+                </div>
+            </div>
+
+            <!-- Vincent van Gogh -->
+            <div class="artist-card">
+                <div class="artist-name">Vincent van Gogh</div>
+                <div class="artist-role">Emotional Colorist & Starlight Whisperer</div>
+                
+                <div class="bob-teaches">
+                    <p><strong>Bob says:</strong> "Vincent painted with his heart. Every brushstroke was full of feeling. He shows us it's okay to let our emotions guide our brush."</p>
+                </div>
+                
+                <div class="period-tabs">
+                    <button class="period-tab active" onclick="showStyle(this, 'vangogh-starry')">Starry Night</button>
+                    <button class="period-tab" onclick="showStyle(this, 'vangogh-sunflower')">Sunflowers</button>
+                </div>
+                
+                <div class="style-preview vangogh-starry">
+                    Swirling Starry Style
+                </div>
+                
+                <div class="museum-links">
+                    <a href="https://www.vangoghmuseum.nl/" target="_blank">Van Gogh Museum</a> • 
+                    <a href="https://krollermuller.nl/" target="_blank">Kröller-Müller</a>
+                </div>
+            </div>
+
+            <!-- Andy Warhol -->
+            <div class="artist-card">
+                <div class="artist-name">Andy Warhol</div>
+                <div class="artist-role">Pop Prophet & Repetition Revolutionary</div>
+                
+                <div class="bob-teaches">
+                    <p><strong>Bob says:</strong> "Andy found beauty in everyday things - even soup cans! He reminds us that art is everywhere if we just look."</p>
+                </div>
+                
+                <div class="period-tabs">
+                    <button class="period-tab active" onclick="showStyle(this, 'warhol-pop')">Pop Art</button>
+                    <button class="period-tab" onclick="showStyle(this, 'warhol-factory')">Factory Silver</button>
+                </div>
+                
+                <div class="style-preview warhol-pop">
+                    POP ART REPETITION
+                </div>
+                
+                <div class="museum-links">
+                    <a href="https://www.warhol.org/" target="_blank">Warhol Museum</a> • 
+                    <a href="https://warholfoundation.org/" target="_blank">Foundation</a>
+                </div>
+            </div>
+
+            <!-- David Hockney -->
+            <div class="artist-card">
+                <div class="artist-name">David Hockney</div>
+                <div class="artist-role">Pool Painter & Perspective Revolutionary</div>
+                
+                <div class="bob-teaches">
+                    <p><strong>Bob says:</strong> "David loves his swimming pools! And now he paints on iPads too. He shows us new tools are just new brushes."</p>
+                </div>
+                
+                <div class="period-tabs">
+                    <button class="period-tab active" onclick="showStyle(this, 'hockney-pool')">Swimming Pools</button>
+                    <button class="period-tab" onclick="showStyle(this, 'hockney-digital')">Digital Period</button>
+                </div>
+                
+                <div class="style-preview hockney-pool">
+                    California Pool Scene
+                </div>
+                
+                <div class="museum-links">
+                    <a href="https://www.tate.org.uk/" target="_blank">Tate Britain</a> • 
+                    <a href="https://www.thedavidhockneyfoundation.org/" target="_blank">Foundation</a>
+                </div>
+            </div>
+
+            <!-- Takashi Murakami -->
+            <div class="artist-card">
+                <div class="artist-name">Takashi Murakami</div>
+                <div class="artist-role">Superflat Prophet & Otaku Alchemist</div>
+                
+                <div class="bob-teaches">
+                    <p><strong>Bob says:</strong> "Takashi makes happy flowers that smile at you! He shows us that art can be joyful and deep at the same time."</p>
+                </div>
+                
+                <div class="period-tabs">
+                    <button class="period-tab active" onclick="showStyle(this, 'murakami-flower')">Rainbow Flowers</button>
+                    <button class="period-tab" onclick="showStyle(this, 'murakami-skull')">Diamond Skulls</button>
+                </div>
+                
+                <div class="style-preview murakami-flower">
+                    Happy Rainbow Flowers
+                </div>
+                
+                <div class="museum-links">
+                    <a href="http://www.kaikaikiki.co.jp/" target="_blank">Kaikai Kiki</a> • 
+                    <a href="https://gagosian.com/" target="_blank">Gagosian Gallery</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bob's Final Wisdom -->
+        <div class="bob-wisdom" style="margin-top: 50px;">
+            <h2>Remember, You're an Artist Too!</h2>
+            <p>Every one of these wonderful artists started just like you - with a desire to create something beautiful. They each found their own special way of seeing the world. And you know what? You have your own special way too!</p>
+            <p>So grab your tools - whether they're brushes, pixels, or code - and let's make something wonderful together. There are no mistakes here, only happy accidents waiting to become masterpieces.</p>
+            <p style="text-align: center; font-size: 1.2em; margin-top: 20px;">
+                <em>"Talent is a pursued interest. Anything that you're willing to practice, you can do."</em>
+            </p>
+        </div>
+    </div>
+
+    <!-- ASMR Mode Toggle -->
+    <div class="asmr-mode" onclick="toggleASMR()">
+        🎨 ASMR Mode
+    </div>
+
+    <script>
+        // Bob's encouragement phrases
+        const bobPhrases = [
+            "That's fantastic! You're really getting it now.",
+            "See how easy that was? You're a natural!",
+            "There are no mistakes, only happy accidents.",
+            "You're doing great! Keep going!",
+            "Beautiful! Just beautiful!",
+            "Let your heart guide your cursor.",
+            "Every click is a brushstroke of genius.",
+            "You make this old painter's heart happy.",
+            "That's a happy little choice you made there.",
+            "Wonderful! You're creating your own masterpiece."
+        ];
+
+        // Style switching function
+        function showStyle(button, styleClass) {
+            const tabs = button.parentElement.querySelectorAll('.period-tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            button.classList.add('active');
+            
+            const card = button.closest('.artist-card');
+            const preview = card.querySelector('.style-preview');
+            preview.className = 'style-preview ' + styleClass;
+            
+            // Update preview text
+            const styleTexts = {
+                'picasso-blue': 'Melancholic Blue Period Style',
+                'picasso-rose': 'Warm Rose Period Style',
+                'picasso-cubist': 'Fragmented Cubist Reality',
+                'frida-mexican': 'Traditional Mexican Style',
+                'frida-pain': 'Pain Transformed to Beauty',
+                'vangogh-starry': 'Swirling Starry Style',
+                'vangogh-sunflower': 'Sunflower Radiance',
+                'warhol-pop': 'POP ART REPETITION',
+                'warhol-factory': 'Silver Factory Aesthetic',
+                'hockney-pool': 'California Pool Scene',
+                'hockney-digital': 'Digital iPad Brilliance',
+                'murakami-flower': 'Happy Rainbow Flowers',
+                'murakami-skull': 'Diamond Skull Luxury'
+            };
+            
+            preview.textContent = styleTexts[styleClass] || 'Artist Style';
+            
+            // Increase joy
+            increaseJoy(10);
+            
+            // Bob's encouragement
+            if (Math.random() > 0.5) {
+                showBobMessage(bobPhrases[Math.floor(Math.random() * bobPhrases.length)]);
+            }
+        }
+
+        // Happy Accident Generator
+        function generateHappyAccident() {
+            const accidents = [
+                "You just discovered a new way to blend Picasso's cubism with Van Gogh's swirls!",
+                "Oops! You mixed Frida's flowers with Warhol's repetition. It's beautiful!",
+                "Look at that! Hockney's pools are filled with Murakami's rainbow flowers!",
+                "Your happy accident created a new style: Digital Impressionist Cubism!",
+                "Wonderful! You've invented Emotional Pop Art. Andy and Vincent would be proud!"
+            ];
+            
+            const accident = accidents[Math.floor(Math.random() * accidents.length)];
+            showBobMessage(accident);
+            increaseJoy(20);
+        }
+
+        // Bob's Encouragement
+        function bobEncouragement() {
+            const encouragements = [
+                "You know what? You're doing fantastic. I'm proud of you.",
+                "Remember, every great artist was once an amateur. You're on your way!",
+                "The secret to doing anything is believing that you can do it.",
+                "Look at you go! You're braver than you believe, and stronger than you seem.",
+                "You have unlimited power on this canvas. This is your world!"
+            ];
+            
+            const message = encouragements[Math.floor(Math.random() * encouragements.length)];
+            showBobMessage(message);
+            increaseJoy(15);
+        }
+
+        // Show Bob's message
+        function showBobMessage(message) {
+            const messageDiv = document.createElement('div');
+            messageDiv.style.cssText = `
+                position: fixed;
+                bottom: 100px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: #4682B4;
+                color: white;
+                padding: 20px 30px;
+                border-radius: 25px;
+                font-size: 1.1em;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+                animation: fadeInOut 4s ease-in-out;
+                z-index: 1000;
+            `;
+            messageDiv.textContent = message;
+            document.body.appendChild(messageDiv);
+            
+            setTimeout(() => messageDiv.remove(), 4000);
+        }
+
+        // Joy Meter Management
+        let currentJoy = 75;
+        function increaseJoy(amount) {
+            currentJoy = Math.min(100, currentJoy + amount);
+            document.getElementById('joyFill').style.width = currentJoy + '%';
+            
+            if (currentJoy === 100) {
+                showBobMessage("Your joy meter is full! You're radiating creativity!");
+                setTimeout(() => { currentJoy = 75; updateJoyMeter(); }, 3000);
+            }
+        }
+
+        function updateJoyMeter() {
+            document.getElementById('joyFill').style.width = currentJoy + '%';
+        }
+
+        // ASMR Mode
+        let asmrActive = false;
+        function toggleASMR() {
+            asmrActive = !asmrActive;
+            document.body.classList.toggle('asmr-active');
+            
+            if (asmrActive) {
+                showBobMessage("*whispers* Let's paint some happy little pixels together...");
+                // In a real implementation, this would start playing Bob Ross ASMR sounds
+            } else {
+                showBobMessage("Back to normal volume, friend!");
+            }
+        }
+
+        // Add CSS for message animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeInOut {
+                0% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+                20% { opacity: 1; transform: translateX(-50%) translateY(0); }
+                80% { opacity: 1; transform: translateX(-50%) translateY(0); }
+                100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Welcome message
+        setTimeout(() => {
+            showBobMessage("Welcome to your happy little art studio! Click around and explore!");
+        }, 1000);
+    </script>
+
+    <!-- BRANDING Protocol Full Disclaimer -->
+    <div id="full-disclaimer" class="lloooomm-disclaimer-bottom">
+        <h3>🎨 LLOOOOMM Art Education Simulation - Full Disclaimer & Credits</h3>
+        
+        <p><strong>Bob Ross Character Simulation:</strong> This educational interface features an AI simulation of Bob Ross (1942-1995), the beloved American painter and television host of "The Joy of Painting." Bob Ross was a real person whose artistic philosophy emphasized positivity, accessibility in art, and finding joy in the creative process. The character interactions and teaching style presented here are based on his documented personality, quotes, and educational approach.</p>
+        
+        <p><strong>Famous Artists Featured:</strong> This educational tool teaches about real historical and contemporary artists including Pablo Picasso, Frida Kahlo, Vincent van Gogh, Andy Warhol, David Hockney, and Takashi Murakami. All biographical information, artistic movements, and museum links are factual and educational.</p>
+        
+        <p><strong>Educational Purpose:</strong> This simulation serves as an art education platform, introducing users to different artistic styles and movements through Bob Ross's encouraging teaching style. It combines historical art education with interactive learning elements.</p>
+        
+        <p><strong>Character Data Sources:</strong> Bob Ross simulation based on public television appearances, interviews, documented quotes, and his artistic philosophy. Artist information sourced from art history databases, museum collections, and biographical records.</p>
+        
+        <p><strong>Technical Implementation:</strong> Interactive educational interface with style previews, museum links, and encouraging feedback systems designed to make art history accessible and engaging.</p>
+        
+        <p><strong>Museum Attribution:</strong> Links to legitimate museums and foundations represent real institutions: Musée Picasso Paris, Van Gogh Museum Amsterdam, Frida Kahlo Museum, Andy Warhol Museum, Tate Britain, and official artist foundations.</p>
+        
+        <p><strong>LLOOOOMM Framework:</strong> Part of the LLOOOOMM (Language Learning Object-Oriented Media) educational simulation environment. Character interactions powered by language models trained on historical records and educational content.</p>
+        
+        <p><strong>Accuracy Notice:</strong> While efforts are made to represent Bob Ross's teaching style and personality accurately, this is an AI simulation for educational purposes. For authoritative information about Bob Ross, consult official Bob Ross Inc. materials and PBS archives.</p>
+        
+        <p><strong>Support Real Art Education:</strong> Visit the linked museums virtually or in person. Support art education programs and the Bob Ross Foundation's mission to make art accessible to everyone.</p>
+    </div>
+</body>
+</html> 

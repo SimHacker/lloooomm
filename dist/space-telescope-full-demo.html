@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<!-- space-telescope-full-demo.html -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HyperTIES Space Telescope Demo - Full Interactive Experience | LLOOOOMM</title>
+    <meta name="description" content="Complete interactive HyperTIES Space Telescope demo with PostScript-style applets, pie menus, and multi-page navigation">
+    <meta name="keywords" content="HyperTIES, Space Telescope, interactive demo, PostScript applets, pie menus, hypertext history, LLOOOOMM">
+    <meta name="author" content="LLOOOOMM Project">
+    
+    <!-- LLOOOOMM Integration -->
+    <link rel="canonical" href="https://lloooomm.com/characters/hyperties/demos/space-telescope/space-telescope-full-demo.html">
+    
+    <style>
+        body {
+            font-family: Times, serif;
+            background: #d0d0d0;
+            margin: 0;
+            padding: 0;
+            overflow-x: auto;
+        }
+        
+        .hyperties-container {
+            width: 800px;
+            margin: 20px auto;
+            background: #f0f0f0;
+            border: 3px solid #000;
+            box-shadow: 8px 8px 16px rgba(0,0,0,0.4);
+        }
+        
+        .window-frame {
+            background: linear-gradient(to bottom, #ffffff 0%, #e0e0e0 100%);
+            border-bottom: 2px solid #000;
+            padding: 4px 8px;
+            font-family: Chicago, Helvetica, sans-serif;
+            font-size: 13px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .window-controls {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .window-button {
+            width: 12px;
+            height: 12px;
+            border: 1px solid #000;
+            background: #fff;
+            cursor: pointer;
+        }
+        
+        .main-content {
+            background: white;
+            min-height: 600px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .page {
+            padding: 30px;
+            display: none;
+            animation: fadeIn 0.3s ease-in;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        h1 {
+            font-size: 28px;
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px double #000;
+        }
+        
+        .definition-box {
+            background: #ffffcc;
+            border: 2px solid #666;
+            padding: 15px;
+            margin: 20px 0;
+            font-style: italic;
+            box-shadow: 3px 3px 6px rgba(0,0,0,0.2);
+        }
+        
+        .hyperlink {
+            color: #0000ff;
+            text-decoration: underline;
+            cursor: pointer;
+            font-weight: bold;
+            padding: 2px 6px;
+            margin: 0 2px;
+            background: #e0e0ff;
+            border: 1px solid #0000ff;
+            display: inline-block;
+            transition: all 0.1s;
+        }
+        
+        .hyperlink:hover {
+            background: #0000ff;
+            color: white;
+            transform: translate(-1px, -1px);
+            box-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .telescope-interactive {
+            position: relative;
+            width: 700px;
+            height: 500px;
+            margin: 30px auto;
+            background: #f8f8ff;
+            border: 2px solid #333;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
+        }
+        
+        .popup-target {
+            position: absolute;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .popup-target:hover .target-area {
+            stroke-width: 3;
+            filter: drop-shadow(0 0 8px rgba(0,0,255,0.6));
+        }
+        
+        .popup-info {
+            position: absolute;
+            background: #ffffee;
+            border: 2px solid #000;
+            padding: 10px;
+            box-shadow: 4px 4px 8px rgba(0,0,0,0.3);
+            display: none;
+            z-index: 1000;
+            max-width: 250px;
+            font-size: 14px;
+        }
+        
+        .popup-info.active {
+            display: block;
+            animation: popIn 0.2s ease-out;
+        }
+        
+        @keyframes popIn {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        
+        .popup-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #0000aa;
+        }
+        
+        .navigation-panel {
+            background: #e0e0e0;
+            border-top: 2px solid #000;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .nav-button {
+            padding: 5px 12px;
+            background: #fff;
+            border: 2px solid #666;
+            cursor: pointer;
+            font-family: Helvetica, sans-serif;
+            font-size: 12px;
+            font-weight: bold;
+            transition: all 0.1s;
+        }
+        
+        .nav-button:hover {
+            background: #333;
+            color: white;
+            transform: translate(-1px, -1px);
+            box-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .pie-menu {
+            position: fixed;
+            width: 200px;
+            height: 200px;
+            display: none;
+            z-index: 2000;
+        }
+        
+        .pie-menu.active {
+            display: block;
+        }
+        
+        .pie-slice {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            transition: all 0.1s;
+        }
+        
+        .pie-slice:hover {
+            transform: scale(1.1);
+            z-index: 10;
+        }
+        
+        .instrument-diagram {
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .status-bar {
+            background: #000;
+            color: #0f0;
+            font-family: monospace;
+            font-size: 12px;
+            padding: 5px 10px;
+            border-top: 1px solid #666;
+        }
+        
+        .blink {
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        
+        .article-content {
+            line-height: 1.6;
+            text-align: justify;
+        }
+        
+        .article-content p {
+            margin: 15px 0;
+        }
+        
+        .inline-link {
+            color: #0000ff;
+            text-decoration: underline;
+            cursor: pointer;
+            background: #f0f0ff;
+            padding: 0 3px;
+        }
+        
+        .inline-link:hover {
+            background: #0000ff;
+            color: white;
+        }
+        
+        .image-caption {
+            text-align: center;
+            font-style: italic;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        
+        .breadcrumb {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .breadcrumb a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="hyperties-container">
+        <div class="window-frame">
+            <div>HyperTIES Browser - The Space Telescope Scientific Information Retrieval System</div>
+            <div class="window-controls">
+                <div class="window-button" style="background: #ff0000;"></div>
+                <div class="window-button" style="background: #ffff00;"></div>
+                <div class="window-button" style="background: #00ff00;"></div>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <!-- Main Space Telescope Page -->
+            <div id="main-page" class="page active">
+                <div class="breadcrumb">
+                    <a href="#" onclick="showPage('index')">Index</a> &gt; Space Telescope
+                </div>
+                
+                <h1>The Hubble Space Telescope</h1>
+                
+                <div class="definition-box">
+                    <strong>Definition:</strong> The Hubble Space Telescope (HST) is a space-based observatory 
+                    launched into low Earth orbit in 1990. Operating above the distortion of Earth's atmosphere, 
+                    it captures extraordinarily sharp images of celestial objects.
+                </div>
+                
+                <div class="article-content">
+                    <p>
+                        The Space Telescope represents humanity's most ambitious attempt to place a large 
+                        optical telescope above Earth's atmosphere. Free from atmospheric turbulence and 
+                        absorption, it provides unprecedented resolution and sensitivity across the 
+                        electromagnetic spectrum from ultraviolet through visible to near-infrared wavelengths.
+                    </p>
+                    
+                    <div class="telescope-interactive">
+                        <svg viewBox="0 0 700 500" style="width: 100%; height: 100%;">
+                            <!-- Background stars -->
+                            <rect width="700" height="500" fill="#000033"/>
+                            <circle cx="50" cy="50" r="1" fill="white" opacity="0.8"/>
+                            <circle cx="150" cy="80" r="1.5" fill="white" opacity="0.9"/>
+                            <circle cx="250" cy="40" r="1" fill="white" opacity="0.7"/>
+                            <circle cx="450" cy="90" r="1" fill="white" opacity="0.8"/>
+                            <circle cx="550" cy="60" r="1.5" fill="white" opacity="0.9"/>
+                            <circle cx="650" cy="100" r="1" fill="white" opacity="0.7"/>
+                            
+                            <!-- Main telescope body -->
+                            <g id="telescope-body">
+                                <!-- Telescope tube -->
+                                <rect x="200" y="200" width="300" height="100" fill="#e0e0e0" stroke="#333" stroke-width="2"/>
+                                <rect x="180" y="210" width="20" height="80" fill="#c0c0c0" stroke="#333" stroke-width="2"/>
+                                <polygon points="500,250 550,230 550,270" fill="#a0a0a0" stroke="#333" stroke-width="2"/>
+                                
+                                <!-- Solar panels -->
+                                <rect x="250" y="120" width="200" height="70" fill="#4466ff" stroke="#333" stroke-width="2"/>
+                                <rect x="250" y="310" width="200" height="70" fill="#4466ff" stroke="#333" stroke-width="2"/>
+                                <line x1="250" y1="155" x2="450" y2="155" stroke="#333" stroke-width="1"/>
+                                <line x1="350" y1="120" x2="350" y2="190" stroke="#333" stroke-width="1"/>
+                                <line x1="250" y1="345" x2="450" y2="345" stroke="#333" stroke-width="1"/>
+                                <line x1="350" y1="310" x2="350" y2="380" stroke="#333" stroke-width="1"/>
+                                
+                                <!-- Aperture door -->
+                                <circle cx="180" cy="250" r="35" fill="#666" stroke="#333" stroke-width="2"/>
+                                <circle cx="180" cy="250" r="25" fill="#000" stroke="#333" stroke-width="1"/>
+                                
+                                <!-- High gain antennas -->
+                                <ellipse cx="300" cy="200" rx="15" ry="8" fill="#999" stroke="#333" stroke-width="1"/>
+                                <ellipse cx="400" cy="300" rx="15" ry="8" fill="#999" stroke="#333" stroke-width="1"/>
+                            </g>
+                            
+                            <!-- Title -->
+                            <text x="350" y="50" text-anchor="middle" font-family="Helvetica" font-size="24" fill="white" font-weight="bold">
+                                Hubble Space Telescope
+                            </text>
+                            <text x="350" y="75" text-anchor="middle" font-family="Helvetica" font-size="14" fill="#cccccc">
+                                Click on components to explore
+                            </text>
+                        </svg>
+                        
+                        <!-- Interactive popup targets -->
+                        <div class="popup-target" style="left: 210px; top: 210px; width: 80px; height: 80px;" 
+                             onclick="showPopup(event, 'wfpc')">
+                            <svg width="80" height="80" style="position: absolute; top: 0; left: 0;">
+                                <rect class="target-area" x="2" y="2" width="76" height="76" 
+                                      fill="transparent" stroke="#00ff00" stroke-width="2" stroke-dasharray="5,5"/>
+                            </svg>
+                        </div>
+                        
+                        <div class="popup-target" style="left: 300px; top: 210px; width: 80px; height: 80px;" 
+                             onclick="showPopup(event, 'foc')">
+                            <svg width="80" height="80" style="position: absolute; top: 0; left: 0;">
+                                <rect class="target-area" x="2" y="2" width="76" height="76" 
+                                      fill="transparent" stroke="#00ff00" stroke-width="2" stroke-dasharray="5,5"/>
+                            </svg>
+                        </div>
+                        
+                        <div class="popup-target" style="left: 390px; top: 210px; width: 80px; height: 80px;" 
+                             onclick="showPopup(event, 'fos')">
+                            <svg width="80" height="80" style="position: absolute; top: 0; left: 0;">
+                                <rect class="target-area" x="2" y="2" width="76" height="76" 
+                                      fill="transparent" stroke="#00ff00" stroke-width="2" stroke-dasharray="5,5"/>
+                            </svg>
+                        </div>
+                        
+                        <div class="popup-target" style="left: 260px; top: 130px; width: 180px; height: 50px;" 
+                             onclick="showPopup(event, 'solar')">
+                            <svg width="180" height="50" style="position: absolute; top: 0; left: 0;">
+                                <rect class="target-area" x="2" y="2" width="176" height="46" 
+                                      fill="transparent" stroke="#ffff00" stroke-width="2" stroke-dasharray="5,5"/>
+                            </svg>
+                        </div>
+                        
+                        <div class="popup-target" style="left: 145px; top: 215px; width: 70px; height: 70px;" 
+                             onclick="showPopup(event, 'aperture')">
+                            <svg width="70" height="70" style="position: absolute; top: 0; left: 0;">
+                                <circle class="target-area" cx="35" cy="35" r="33" 
+                                        fill="transparent" stroke="#ff00ff" stroke-width="2" stroke-dasharray="5,5"/>
+                            </svg>
+                        </div>
+                    </div>
+                    
+                    <p>
+                        The telescope carries five main scientific instruments, each designed for specific 
+                        observational capabilities:
+                    </p>
+                    
+                    <ul>
+                        <li><span class="inline-link" onclick="showPage('wfpc')">Wide Field/Planetary Camera (WFPC)</span> - Primary imaging instrument</li>
+                        <li><span class="inline-link" onclick="showPage('foc')">Faint Object Camera (FOC)</span> - High resolution imaging of dim objects</li>
+                        <li><span class="inline-link" onclick="showPage('fos')">Faint Object Spectrograph (FOS)</span> - Spectral analysis of faint sources</li>
+                        <li><span class="inline-link" onclick="showPage('hrs')">High Resolution Spectrograph (HRS)</span> - Detailed spectroscopy</li>
+                        <li><span class="inline-link" onclick="showPage('hsp')">High Speed Photometer (HSP)</span> - Rapid photometric measurements</li>
+                    </ul>
+                    
+                    <p>
+                        Additional resources:
+                    </p>
+                    
+                    <div style="margin: 20px 0;">
+                        <span class="hyperlink" onclick="showPage('orbital')">Orbital Characteristics</span>
+                        <span class="hyperlink" onclick="showPage('participants')">Project Participants</span>
+                        <span class="hyperlink" onclick="showPage('science')">Scientific Objectives</span>
+                        <span class="hyperlink" onclick="showPage('optics')">Optical Design</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- WFPC Page -->
+            <div id="wfpc-page" class="page">
+                <div class="breadcrumb">
+                    <a href="#" onclick="showPage('index')">Index</a> &gt; 
+                    <a href="#" onclick="showPage('main')">Space Telescope</a> &gt; 
+                    WFPC
+                </div>
+                
+                <h1>Wide Field/Planetary Camera</h1>
+                
+                <div class="definition-box">
+                    The WFPC is the primary imaging instrument aboard the Hubble Space Telescope, 
+                    capable of capturing both wide-field views of deep space and high-resolution 
+                    images of planets within our solar system.
+                </div>
+                
+                <div class="article-content">
+                    <p>
+                        The Wide Field/Planetary Camera represents a revolutionary advance in space-based 
+                        imaging technology. It consists of two separate camera systems sharing the same 
+                        optical assembly:
+                    </p>
+                    
+                    <div class="instrument-diagram">
+                        <svg viewBox="0 0 400 300" style="width: 400px; height: 300px; border: 1px solid #ccc;">
+                            <rect width="400" height="300" fill="#f0f0f0"/>
+                            
+                            <!-- WFPC diagram -->
+                            <rect x="50" y="50" width="300" height="200" fill="#ddd" stroke="#333" stroke-width="2"/>
+                            <rect x="80" y="80" width="100" height="100" fill="#999" stroke="#333" stroke-width="2"/>
+                            <rect x="220" y="80" width="100" height="100" fill="#999" stroke="#333" stroke-width="2"/>
+                            
+                            <text x="130" y="130" text-anchor="middle" font-size="12" font-weight="bold">WF CCD</text>
+                            <text x="270" y="130" text-anchor="middle" font-size="12" font-weight="bold">PC CCD</text>
+                            
+                            <text x="200" y="30" text-anchor="middle" font-size="16" font-weight="bold">
+                                WFPC Focal Plane Layout
+                            </text>
+                        </svg>
+                    </div>
+                    
+                    <ul>
+                        <li><strong>Wide Field Mode:</strong> Provides a larger field of view for surveying extended objects</li>
+                        <li><strong>Planetary Mode:</strong> Offers higher spatial resolution for detailed planetary observations</li>
+                    </ul>
+                    
+                    <p>
+                        The instrument uses advanced CCD (Charge-Coupled Device) detectors cooled to 
+                        -88°C to minimize electronic noise. Each pixel captures photons across a broad 
+                        range of wavelengths from ultraviolet through visible to near-infrared.
+                    </p>
+                    
+                    <div style="margin: 20px 0;">
+                        <span class="hyperlink" onclick="showPage('main')">Return to Telescope</span>
+                        <span class="hyperlink" onclick="showPage('foc')">Faint Object Camera</span>
+                        <span class="hyperlink" onclick="showPage('ccd-tech')">CCD Technology</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Participants Page -->
+            <div id="participants-page" class="page">
+                <div class="breadcrumb">
+                    <a href="#" onclick="showPage('index')">Index</a> &gt; 
+                    <a href="#" onclick="showPage('main')">Space Telescope</a> &gt; 
+                    Project Participants
+                </div>
+                
+                <h1>Space Telescope Project Participants</h1>
+                
+                <div class="article-content">
+                    <p>
+                        The Hubble Space Telescope represents an unprecedented collaboration between 
+                        NASA, the European Space Agency (ESA), and numerous academic and industrial partners.
+                    </p>
+                    
+                    <h2>Principal Institutions</h2>
+                    
+                    <ul>
+                        <li><span class="inline-link" onclick="showPage('goddard')">Goddard Space Flight Center</span> - Overall project management</li>
+                        <li><span class="inline-link" onclick="showPage('stsci')">Space Telescope Science Institute</span> - Science operations</li>
+                        <li><span class="inline-link" onclick="showPage('marshall')">Marshall Space Flight Center</span> - Optical system development</li>
+                        <li><span class="inline-link" onclick="showPage('perkin-elmer')">Perkin-Elmer Corporation</span> - Primary mirror fabrication</li>
+                    </ul>
+                    
+                    <h2>Science Instrument Teams</h2>
+                    
+                    <p>Each instrument has dedicated teams of scientists and engineers:</p>
+                    
+                    <ul>
+                        <li><strong>WFPC Team:</strong> Led by <span class="inline-link" onclick="alert('James Westphal - Caltech')">James Westphal</span> at Caltech</li>
+                        <li><strong>FOC Team:</strong> European consortium led by ESA</li>
+                        <li><strong>FOS Team:</strong> University of California, San Diego</li>
+                        <li><strong>HRS Team:</strong> Goddard Space Flight Center</li>
+                        <li><strong>HSP Team:</strong> University of Wisconsin</li>
+                    </ul>
+                    
+                    <div style="margin: 20px 0;">
+                        <span class="hyperlink" onclick="showPage('main')">Return to Telescope</span>
+                        <span class="hyperlink" onclick="showPage('timeline')">Project Timeline</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="navigation-panel">
+            <div class="nav-buttons">
+                <button class="nav-button" onclick="goBack()">← Back</button>
+                <button class="nav-button" onclick="showPage('index')">Index</button>
+                <button class="nav-button" onclick="showPage('main')">Home</button>
+                <button class="nav-button" onclick="showHelp()">Help</button>
+            </div>
+            <div style="font-size: 12px;">
+                Page: <span id="page-indicator">Space Telescope</span> | 
+                <span class="blink">●</span> Connected
+            </div>
+        </div>
+        
+        <div class="status-bar">
+            HyperTIES v2.3 | Memory: 512K | Articles: 2,847 | Links: 15,923 | 
+            <span id="status-message">Ready</span>
+        </div>
+    </div>
+    
+    <!-- Popup information boxes -->
+    <div id="popup-info" class="popup-info">
+        <div class="popup-title" id="popup-title"></div>
+        <div id="popup-content"></div>
+    </div>
+    
+    <!-- Pie Menu -->
+    <div id="pie-menu" class="pie-menu">
+        <svg viewBox="0 0 200 200" style="width: 100%; height: 100%;">
+            <!-- Pie slices -->
+            <path d="M 100,100 L 100,0 A 100,100 0 0,1 200,100 z" fill="#ffcccc" stroke="#333" stroke-width="2" 
+                  onclick="pieMenuAction('back')" style="cursor: pointer;"/>
+            <path d="M 100,100 L 200,100 A 100,100 0 0,1 100,200 z" fill="#ccffcc" stroke="#333" stroke-width="2" 
+                  onclick="pieMenuAction('next')" style="cursor: pointer;"/>
+            <path d="M 100,100 L 100,200 A 100,100 0 0,1 0,100 z" fill="#ccccff" stroke="#333" stroke-width="2" 
+                  onclick="pieMenuAction('index')" style="cursor: pointer;"/>
+            <path d="M 100,100 L 0,100 A 100,100 0 0,1 100,0 z" fill="#ffffcc" stroke="#333" stroke-width="2" 
+                  onclick="pieMenuAction('help')" style="cursor: pointer;"/>
+            
+            <!-- Labels -->
+            <text x="150" y="50" text-anchor="middle" font-size="14" font-weight="bold">Back</text>
+            <text x="150" y="150" text-anchor="middle" font-size="14" font-weight="bold">Next</text>
+            <text x="50" y="150" text-anchor="middle" font-size="14" font-weight="bold">Index</text>
+            <text x="50" y="50" text-anchor="middle" font-size="14" font-weight="bold">Help</text>
+            
+            <!-- Center -->
+            <circle cx="100" cy="100" r="30" fill="white" stroke="#333" stroke-width="2"/>
+            <text x="100" y="105" text-anchor="middle" font-size="12">Cancel</text>
+        </svg>
+    </div>
+    
+    <script>
+        // Page navigation history
+        let pageHistory = ['main'];
+        let currentPage = 'main';
+        
+        // Popup content
+        const popupContent = {
+            wfpc: {
+                title: "Wide Field/Planetary Camera",
+                content: "The WFPC is the workhorse instrument for imaging. It can operate in two modes: wide field for surveying large areas, and planetary for high-resolution detail. Click to learn more..."
+            },
+            foc: {
+                title: "Faint Object Camera",
+                content: "The FOC provides the highest spatial resolution of all HST instruments. Built by ESA, it can detect objects 25 times fainter than ground-based telescopes."
+            },
+            fos: {
+                title: "Faint Object Spectrograph",
+                content: "The FOS analyzes the light from very faint objects by spreading it into component colors. This reveals chemical composition, temperature, and motion."
+            },
+            solar: {
+                title: "Solar Arrays",
+                content: "Two large solar panels provide 2,400 watts of power. They track the sun automatically and can be rotated to minimize drag during orbital maneuvers."
+            },
+            aperture: {
+                title: "Aperture Door",
+                content: "The 2.4-meter primary mirror is protected by this door during servicing missions. Light enters here and travels through the optical system to the instruments."
+            }
+        };
+        
+        // Show popup
+        function showPopup(event, type) {
+            event.stopPropagation();
+            const popup = document.getElementById('popup-info');
+            const info = popupContent[type];
+            
+            document.getElementById('popup-title').textContent = info.title;
+            document.getElementById('popup-content').textContent = info.content;
+            
+            popup.style.left = (event.pageX + 10) + 'px';
+            popup.style.top = (event.pageY + 10) + 'px';
+            popup.classList.add('active');
+            
+            updateStatus(`Viewing: ${info.title}`);
+            
+            // Auto-hide after 5 seconds
+            setTimeout(() => {
+                popup.classList.remove('active');
+            }, 5000);
+        }
+        
+        // Hide popup when clicking elsewhere
+        document.addEventListener('click', () => {
+            document.getElementById('popup-info').classList.remove('active');
+        });
+        
+        // Page navigation
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show requested page
+            const page = document.getElementById(pageId + '-page');
+            if (page) {
+                page.classList.add('active');
+                pageHistory.push(pageId);
+                currentPage = pageId;
+                updatePageIndicator(pageId);
+                updateStatus(`Loaded: ${getPageTitle(pageId)}`);
+            } else {
+                // Simulate loading other pages
+                alert(`HyperTIES Navigation\n\nNavigating to: ${pageId}\n\n[This page would contain detailed information about ${pageId}]`);
+            }
+        }
+        
+        function goBack() {
+            if (pageHistory.length > 1) {
+                pageHistory.pop(); // Remove current
+                const previousPage = pageHistory[pageHistory.length - 1];
+                showPage(previousPage);
+            }
+        }
+        
+        function getPageTitle(pageId) {
+            const titles = {
+                'main': 'Space Telescope',
+                'wfpc': 'Wide Field/Planetary Camera',
+                'participants': 'Project Participants',
+                'index': 'Index',
+                'orbital': 'Orbital Characteristics',
+                'science': 'Scientific Objectives'
+            };
+            return titles[pageId] || pageId;
+        }
+        
+        function updatePageIndicator(pageId) {
+            document.getElementById('page-indicator').textContent = getPageTitle(pageId);
+        }
+        
+        function updateStatus(message) {
+            document.getElementById('status-message').textContent = message;
+        }
+        
+        // Pie menu functionality
+        let pieMenuActive = false;
+        
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            const pieMenu = document.getElementById('pie-menu');
+            
+            if (!pieMenuActive) {
+                pieMenu.style.left = (e.pageX - 100) + 'px';
+                pieMenu.style.top = (e.pageY - 100) + 'px';
+                pieMenu.classList.add('active');
+                pieMenuActive = true;
+            } else {
+                pieMenu.classList.remove('active');
+                pieMenuActive = false;
+            }
+            
+            return false;
+        });
+        
+        function pieMenuAction(action) {
+            const pieMenu = document.getElementById('pie-menu');
+            pieMenu.classList.remove('active');
+            pieMenuActive = false;
+            
+            switch(action) {
+                case 'back':
+                    goBack();
+                    break;
+                case 'next':
+                    alert('Next article in sequence...');
+                    break;
+                case 'index':
+                    showPage('index');
+                    break;
+                case 'help':
+                    showHelp();
+                    break;
+            }
+        }
+        
+        function showHelp() {
+            alert('HyperTIES Help System\n\n' +
+                  '• Click blue links to navigate between articles\n' +
+                  '• Click on telescope components for details\n' +
+                  '• Right-click anywhere for pie menu navigation\n' +
+                  '• Use Back button to return to previous articles\n\n' +
+                  'This is a demonstration of the HyperTIES hypertext system,\n' +
+                  'originally developed at the University of Maryland.');
+        }
+        
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            switch(e.key) {
+                case 'Backspace':
+                    e.preventDefault();
+                    goBack();
+                    break;
+                case 'h':
+                case 'H':
+                    showHelp();
+                    break;
+                case 'i':
+                case 'I':
+                    showPage('index');
+                    break;
+            }
+        });
+        
+        // Initialize
+        updateStatus('System initialized. Right-click for navigation menu.');
+    </script>
+</body>
+</html> 

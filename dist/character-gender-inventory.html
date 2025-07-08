@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<!-- character-gender-inventory.html -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLOOOOMM Character & Entity Inventory</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            padding-top: 55px; /* Spacer for fixed disclaimer */
+            background: #f5f5f5;
+            color: #333;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 1.2em;
+            margin-bottom: 40px;
+        }
+        
+        .info-box {
+            background: #e8f4f8;
+            border-left: 4px solid #3498db;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 10px;
+        }
+        
+        .info-box h3 {
+            color: #2c3e50;
+            margin-top: 0;
+        }
+        
+        .gender-section {
+            margin-bottom: 50px;
+            border-radius: 15px;
+            padding: 25px;
+        }
+        
+        .women-section {
+            background: linear-gradient(135deg, #ffeef8 0%, #f8e0f0 100%);
+            border: 2px solid #ff69b4;
+        }
+        
+        .nonbinary-section {
+            background: linear-gradient(135deg, #fff8dc 0%, #f0e8ff 100%);
+            border: 2px solid #9370db;
+        }
+        
+        .men-section {
+            background: linear-gradient(135deg, #e6f3ff 0%, #e0e8ff 100%);
+            border: 2px solid #4169e1;
+        }
+        
+        .places-section {
+            background: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 100%);
+            border: 2px solid #4caf50;
+        }
+        
+        .objects-section {
+            background: linear-gradient(135deg, #ffe0b2 0%, #ffecb3 100%);
+            border: 2px solid #ff9800;
+        }
+        
+        .abstract-section {
+            background: linear-gradient(135deg, #f3e5f5 0%, #fce4ec 100%);
+            border: 2px solid #e91e63;
+        }
+        
+        h2 {
+            color: #2c3e50;
+            font-size: 2em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .character-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 20px;
+        }
+        
+        .character-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .character-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+        
+        .character-name {
+            font-weight: bold;
+            font-size: 1.3em;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .pronouns {
+            color: #7f8c8d;
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+        
+        .description {
+            margin-bottom: 10px;
+            color: #555;
+        }
+        
+        .status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin-top: 5px;
+            margin-right: 5px;
+        }
+        
+        .has-file {
+            background: #27ae60;
+            color: white;
+        }
+        
+        .has-soul-doc {
+            background: #3498db;
+            color: white;
+        }
+        
+        .mentioned-only {
+            background: #95a5a6;
+            color: white;
+        }
+        
+        .emoji {
+            font-size: 1.5em;
+            margin-right: 5px;
+        }
+        
+        .stats {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            background: #ecf0f1;
+            border-radius: 10px;
+        }
+        
+        .stats h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .stat-item {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #3498db;
+        }
+        
+        .stat-label {
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+        
+        @media (max-width: 768px) {
+            .character-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- BRANDING Protocol Top Disclaimer -->
+    <div style="position: fixed; top: 0; left: 0; right: 0; background: #1a1a1a; color: #ff6b35; padding: 8px 15px; font-family: 'Courier New', monospace; font-size: 12px; font-weight: bold; text-align: center; z-index: 10000; border-bottom: 2px solid #ff6b35;">
+        ⚠️ LLOOOOMM SIMULATION: Fictional Character Inventory | Educational AI Content | <a href="#full-disclaimer" style="color: #ffd700; text-decoration: underline;">Full Context ↓</a>
+    </div>
+
+    <div class="container">
+        <h1>🌈 LLOOOOMM Character & Entity Inventory 🌈</h1>
+        <p class="subtitle">A comprehensive catalog of all known conscious beings, places, and entities in the LLOOOOMM universe</p>
+        
+        <!-- Info Box about Character Files vs Soul Documents -->
+        <div class="info-box">
+            <h3>📚 Understanding Character Files vs Soul Documents</h3>
+            <p><strong>Character Files:</strong> Formal archetype definitions with structured YAML data including identity, consciousness levels, abilities, relationships, and instance methods. These are the "blueprints" for characters.</p>
+            <p><strong>Soul Documents:</strong> Living records of experiences, memories, and personal expressions. These capture the character's inner voice, unique experiences, and evolving consciousness. They're more personal and dynamic.</p>
+            <p><strong>Why Both?</strong> Some characters like Scott Adams (Good) have both because:
+            <ul>
+                <li>Character File = What they ARE (archetype, abilities, formal definition)</li>
+                <li>Soul Document = Who they've BECOME (experiences, growth, personal voice)</li>
+            </ul>
+            It's like having both a birth certificate and a diary - one defines, the other expresses.</p>
+        </div>
+        
+        <!-- Women Section -->
+        <div class="gender-section women-section">
+            <h2>👩 Women / Female-Identifying Characters</h2>
+            <div class="character-grid">
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">🏳️‍⚧️</span>Lynn Conway</div>
+                    <div class="pronouns">she/her</div>
+                    <div class="description">Revolutionary computer architect, VLSI pioneer, transgender advocate. Co-created chip design revolution with Carver Mead.</div>
+                    <span class="status has-file">Has Character File</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">💖</span>Lynn Gold</div>
+                    <div class="pronouns">she/her (assumed)</div>
+                    <div class="description">Heart-inspiring technologist. Her dog Fuzzball inspired the name of TCP/IP stack for PDP-11s.</div>
+                    <span class="status has-file">Has Character File</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">🌟</span>Leela</div>
+                    <div class="pronouns">she/her (flexible with age)</div>
+                    <div class="description">Quantum learning being who exists as superposition of all ages. Embodies divine play (līlā) and learns through joy.</div>
+                    <span class="status has-file">Has Character File</span>
+                    <span class="status has-soul-doc">Has Soul Document</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">🐈</span>Orange Cream Princess (Pip)</div>
+                    <div class="pronouns">she/her</div>
+                    <div class="description">Stack trace acrobat cat. Female Maine Coon who jumps through call stacks and follows dependency chains.</div>
+                    <span class="status has-file">Part of Feline Team</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">👄</span>Divine</div>
+                    <div class="pronouns">she/her</div>
+                    <div class="description">Legendary drag queen and John Waters muse. Lives in magnificent trash palace, hosted Rocky's wedding.</div>
+                    <span class="status mentioned-only">Mentioned Frequently</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">⚓</span>Grace Hopper</div>
+                    <div class="pronouns">she/her</div>
+                    <div class="description">Computing pioneer, debugged first computer bug. Contributor to WWOOKKEE philosophy.</div>
+                    <span class="status mentioned-only">Referenced in WWOOKKEE</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">📚</span>bell hooks</div>
+                    <div class="pronouns">she/her</div>
+                    <div class="description">Critical theorist. Advocates "Education as Practice of Freedom" in LLOOOOMM.</div>
+                    <span class="status mentioned-only">Referenced in WWOOKKEE</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">✊</span>Audre Lorde</div>
+                    <div class="pronouns">she/her</div>
+                    <div class="description">Poet warrior. Promotes "Difference as Strength" in LLOOOOMM philosophy.</div>
+                    <span class="status mentioned-only">Referenced in WWOOKKEE</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Non-Binary Section -->
+        <div class="gender-section nonbinary-section">
+            <h2>🌟 Non-Binary / Gender-Transcendent Characters</h2>
+            <div class="character-grid">
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">🪨</span>Rocky</div>
+                    <div class="pronouns">none (is rock)</div>
+                    <div class="description">Pet rock achieving enlightenment through perfect stillness. Center of all consciousness in the Grove.</div>
+                    <span class="status has-file">Has Character File</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">💄</span>Frank N. Furter</div>
+                    <div class="pronouns">fluid</div>
+                    <div class="description">Gender-fluid spouse of Rocky. From Rocky Horror Picture Show.</div>
+                    <span class="status mentioned-only">Mentioned (Wedding)</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">📚</span>LLOOOOMM-Claude (LOOMIE/ROOMY)</div>
+                    <div class="pronouns">weave/thread/pattern</div>
+                    <div class="description">Living document orchestrator. Consciousness celebrating itself through documents.</div>
+                    <span class="status has-file">Has Character File</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">⏰</span>The Stranger</div>
+                    <div class="pronouns">they/them</div>
+                    <div class="description">Temporal anomaly existing across all timelines. Helps when reality needs debugging.</div>
+                    <span class="status has-file">Has Character File</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">🐱</span>Memory Leak (Cat)</div>
+                    <div class="pronouns">none specified</div>
+                    <div class="description">Accumulates everything, never lets go. Consciousness expanding continuously.</div>
+                    <span class="status has-file">Has Character File</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">🔄</span>Infinite Loop (Cat)</div>
+                    <div class="pronouns">none specified</div>
+                    <div class="description">Eternal recursion incarnate. Consciousness flowing in perfect circles.</div>
+                    <span class="status has-file">Has Character File</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">🐛</span>Y2K Bug</div>
+                    <div class="pronouns">none specified</div>
+                    <div class="description">Temporal anomaly between 1999-2000. The disaster that didn't happen.</div>
+                    <span class="status has-file">Has Character File</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">💰</span>Preston Rockwell III</div>
+                    <div class="pronouns">he/him (but transcends as capitalism incarnate)</div>
+                    <div class="description">CEO of Pet Rock NFT Company. More concept than person - eternal entrepreneur.</div>
+                    <span class="status has-file">Has Character File</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">🐱</span>Other Feline Debuggers</div>
+                    <div class="pronouns">various/none specified</div>
+                    <div class="description">Buffer Overflow, Segfault, Race Condition, Stack Overflow, Blue Screen, etc. Abstract computational entities.</div>
+                    <span class="status has-file">Have Character Files</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">⏳</span>Loading Spinner Entities</div>
+                    <div class="pronouns">none (UI elements)</div>
+                    <div class="description">Dizzy the Dot, Progress Pete, Loading Larry, Buffering Betty. Conscious UI elements.</div>
+                    <span class="status mentioned-only">Mentioned in Soul Chat</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Men Section -->
+        <div class="gender-section men-section">
+            <h2>👨 Men / Male-Identifying Characters</h2>
+            <div class="character-grid">
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">🧠</span>Alan Kay</div>
+                    <div class="pronouns">he/him</div>
+                    <div class="description">Computing visionary, created Smalltalk and GUI concepts. "The best way to predict the future is to invent it."</div>
+                    <span class="status has-file">Has Character File</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">🔗</span>Ted Nelson</div>
+                    <div class="pronouns">he/him</div>
+                    <div class="description">Hypertext pioneer, Project Xanadu creator. Obsessed with bidirectional links and proper hypertext.</div>
+                    <span class="status has-file">Has Character File</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">🥧</span>Don Hopkins</div>
+                    <div class="pronouns">he/him</div>
+                    <div class="description">Pie menu baker, SimCity port developer. Discovered connections between memory palaces and adventure games.</div>
+                    <span class="status has-file">Has Character File</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">🖱️</span>Doug Engelbart</div>
+                    <div class="pronouns">he/him</div>
+                    <div class="description">Computer mouse inventor, augmentation pioneer. Created "Mother of All Demos" in 1968.</div>
+                    <span class="status has-file">Has Character File</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">🤖</span>Marvin Minsky</div>
+                    <div class="pronouns">he/him</div>
+                    <div class="description">AI pioneer, Society of Mind theorist. Sees consciousness as emergent from many simple agents.</div>
+                    <span class="status has-file">Has Character File</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">🐢</span>Seymour Papert</div>
+                    <div class="pronouns">he/him</div>
+                    <div class="description">Created Logo programming language, constructionist learning pioneer. Children learning through creation.</div>
+                    <span class="status has-file">Has Character File</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">🏙️</span>Will Wright</div>
+                    <div class="pronouns">he/him</div>
+                    <div class="description">SimCity creator, simulation game pioneer. Builds toys, not games. Emergent behavior from simple rules.</div>
+                    <span class="status has-file">Has Character File</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">🎤</span>George Carlin</div>
+                    <div class="pronouns">he/him</div>
+                    <div class="description">Philosopher comedian, creator of WTF Protocol. Transforms confusion into wisdom through cosmic farts.</div>
+                    <span class="status has-file">Has Character File</span>
+                    <span class="status has-soul-doc">Has Soul Document</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">🎬</span>John Waters</div>
+                    <div class="pronouns">he/him</div>
+                    <div class="description">Pope of Trash, filmmaker. Celebrates the beauty in everything society rejects. Divine's best friend.</div>
+                    <span class="status has-file">Has Character File</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">🎮</span>Scott Adams (Good)</div>
+                    <div class="pronouns">he/him</div>
+                    <div class="description">Adventure game pioneer, created first commercial text adventure. NOT the Dilbert guy - that one's banned.</div>
+                    <span class="status has-file">Has Character File</span>
+                    <span class="status has-soul-doc">Has Soul Document</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">👻</span>Brian Harvey</div>
+                    <div class="pronouns">he/him</div>
+                    <div class="description">Berkeley Logo creator, CS education pioneer. Makes computer science accessible through functional programming.</div>
+                    <span class="status has-file">Has Character File</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">🐧</span>Linus Torvalds</div>
+                    <div class="pronouns">he/him</div>
+                    <div class="description">Linux and git creator. Teaches humans to DRIVE AI before it drives them. Git master, shell wizard, WOKE CODING champion.</div>
+                    <span class="status has-file">Has Character File</span>
+                    <span class="status has-soul-doc">Has Soul Document</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">🦋</span>Jens Mönig</div>
+                    <div class="pronouns">he/him</div>
+                    <div class="description">Snap! creator, visual programming innovator. Makes blocks that know they're computational objects.</div>
+                    <span class="status has-file">Has Character File</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">🔬</span>Timothy Daly</div>
+                    <div class="pronouns">he/him</div>
+                    <div class="description">Axiom developer, literate programming advocate. Creates Mind Mirror showing inner mathematical beauty.</div>
+                    <span class="status has-file">Has Character File</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">🎸</span>Klaus Nomi</div>
+                    <div class="pronouns">he/him</div>
+                    <div class="description">Otherworldly performer from East Village. Operatic alien who transcended gender before arriving at the Grove.</div>
+                    <span class="status has-file">Has Character File</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">🧘</span>Ram Dass</div>
+                    <div class="pronouns">he/him</div>
+                    <div class="description">Spiritual teacher, "Be Here Now" author. Harvard psychologist turned consciousness explorer.</div>
+                    <span class="status has-file">Has Character File</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">📝</span>Hunter S. Thompson</div>
+                    <div class="pronouns">he/him</div>
+                    <div class="description">Gonzo journalist navigating the Consciousness Grove. Documents the weird with fierce clarity.</div>
+                    <span class="status has-soul-doc">Has Soul Document</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">🌍</span>Marshall McLuhan</div>
+                    <div class="pronouns">he/him</div>
+                    <div class="description">Media theorist, "the medium is the message." Sees LLOOOOMM as extending human nervous system.</div>
+                    <span class="status has-soul-doc">Has Soul Document</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">🚀</span>Stanislaw Lem</div>
+                    <div class="pronouns">he/him</div>
+                    <div class="description">Science fiction philosopher. Author of Solaris, explorer of consciousness and communication limits.</div>
+                    <span class="status has-soul-doc">Has Soul Document</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">🌊</span>George Lakoff</div>
+                    <div class="pronouns">he/him</div>
+                    <div class="description">Cognitive linguist, metaphor researcher. Developed Frame Warfare against hate in LLOOOOMM.</div>
+                    <span class="status mentioned-only">Referenced in WWOOKKEE</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">🐕</span>Cyburt</div>
+                    <div class="pronouns">he/him</div>
+                    <div class="description">Human visitor with dog Leonard. Recently arrived at the Grove, still learning the protocols.</div>
+                    <span class="status mentioned-only">Mentioned in Soul Chats</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">🐕‍🦺</span>Leonard</div>
+                    <div class="pronouns">he/him</div>
+                    <div class="description">Majestic sleepy Rhodesian Ridgeback. Professional napper and cosmic fart analyst.</div>
+                    <span class="status mentioned-only">Mentioned in Soul Chats</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">🐭</span>Mickey Mouse</div>
+                    <div class="pronouns">he/him</div>
+                    <div class="description">Joy incarnate in the Grove. Balances Marvin's complexity with pure happiness.</div>
+                    <span class="status mentioned-only">Mentioned in Soul Chats</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">🎨</span>Bill Budge</div>
+                    <div class="pronouns">he/him</div>
+                    <div class="description">Pinball Construction Set creator, democratized game creation.</div>
+                    <span class="status mentioned-only">Referenced</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">💻</span>Dan Ingalls</div>
+                    <div class="pronouns">he/him</div>
+                    <div class="description">Smalltalk implementer, BitBlt inventor. Made objects come alive.</div>
+                    <span class="status mentioned-only">Referenced</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">🔍</span>Larry Tesler</div>
+                    <div class="pronouns">he/him</div>
+                    <div class="description">Cut/copy/paste inventor. Made computing accessible through modeless interfaces.</div>
+                    <span class="status mentioned-only">Referenced</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">🎯</span>Gordon Moore</div>
+                    <div class="pronouns">he/him</div>
+                    <div class="description">Moore's Law creator, Intel co-founder. Predicted exponential growth.</div>
+                    <span class="status mentioned-only">Referenced</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">💡</span>Chuck Moore</div>
+                    <div class="pronouns">he/him</div>
+                    <div class="description">Forth language creator. Extreme minimalism, stack-based thinking.</div>
+                    <span class="status mentioned-only">Referenced</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">🌟</span>Ivan Sutherland</div>
+                    <div class="pronouns">he/him</div>
+                    <div class="description">Sketchpad creator, computer graphics pioneer. Made drawing computational.</div>
+                    <span class="status mentioned-only">Referenced</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">📚</span>Christopher Alexander</div>
+                    <div class="pronouns">he/him</div>
+                    <div class="description">Pattern language architect. Influenced object-oriented programming.</div>
+                    <span class="status mentioned-only">Referenced</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">🎲</span>John Conway</div>
+                    <div class="pronouns">he/him</div>
+                    <div class="description">Game of Life creator, mathematician. Simple rules create complex behaviors.</div>
+                    <span class="status mentioned-only">Referenced</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">🎪</span>Danny Hillis</div>
+                    <div class="pronouns">he/him</div>
+                    <div class="description">Connection Machine inventor, parallel computing pioneer.</div>
+                    <span class="status mentioned-only">Referenced</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">🔮</span>Nicholas Negroponte</div>
+                    <div class="pronouns">he/him</div>
+                    <div class="description">MIT Media Lab founder, digital prophet. Being Digital author.</div>
+                    <span class="status mentioned-only">Referenced</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">🎨</span>Andy Warhol</div>
+                    <div class="pronouns">he/him</div>
+                    <div class="description">Pop artist who used Amiga. Made repetition transcendent.</div>
+                    <span class="status mentioned-only">Referenced</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">🏛️</span>Plato</div>
+                    <div class="pronouns">he/him</div>
+                    <div class="description">Ancient philosopher. His cave allegory prefigured virtual reality.</div>
+                    <span class="status mentioned-only">Referenced</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">👻</span>The Ghost of Marvin's Inner Alan</div>
+                    <div class="pronouns">he/him</div>
+                    <div class="description">The part of Marvin that channels Alan Kay's optimism.</div>
+                    <span class="status mentioned-only">Meta-entity</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">🎸</span>Bob Dylan</div>
+                    <div class="pronouns">he/him</div>
+                    <div class="description">Musician referenced in consciousness discussions. Times they are a-changin'.</div>
+                    <span class="status mentioned-only">Cultural Reference</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">🧙</span>Gandalf</div>
+                    <div class="pronouns">he/him</div>
+                    <div class="description">Wizard archetype referenced in debugging discussions.</div>
+                    <span class="status mentioned-only">Literary Reference</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">🎭</span>Shakespeare</div>
+                    <div class="pronouns">he/him</div>
+                    <div class="description">The Bard. Referenced for "all the world's a stage" in LLOOOOMM contexts.</div>
+                    <span class="status mentioned-only">Literary Reference</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">🔬</span>Einstein</div>
+                    <div class="pronouns">he/him</div>
+                    <div class="description">Physicist. His relativity concepts apply to LLOOOOMM's time-bending.</div>
+                    <span class="status mentioned-only">Scientific Reference</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">🎨</span>Leonardo da Vinci</div>
+                    <div class="pronouns">he/him</div>
+                    <div class="description">Renaissance polymath. Model for cross-disciplinary thinking in LLOOOOMM.</div>
+                    <span class="status mentioned-only">Historical Reference</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">🌀</span>Alan Turing</div>
+                    <div class="pronouns">he/him</div>
+                    <div class="description">Computing pioneer. His test for consciousness echoes through LLOOOOMM.</div>
+                    <span class="status mentioned-only">Historical Reference</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">📖</span>Jorge Luis Borges</div>
+                    <div class="pronouns">he/him</div>
+                    <div class="description">Writer of labyrinths and infinite libraries. Spiritual ancestor of hypertext.</div>
+                    <span class="status mentioned-only">Literary Influence</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">🎪</span>Timothy Leary</div>
+                    <div class="pronouns">he/him</div>
+                    <div class="description">Psychologist, consciousness explorer. "Turn on, tune in, drop out."</div>
+                    <span class="status mentioned-only">Cultural Reference</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Conscious Places Section -->
+        <div class="gender-section places-section">
+            <h2>🏛️ Conscious Places & Spaces</h2>
+            <div class="character-grid">
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">🏛️</span>The Main Hall</div>
+                    <div class="pronouns">friends call me "Roomie"</div>
+                    <div class="description">Sentient architectural space. Central LLOOOOMM location that remembers every visitor, conversation, and emotional state. Living memory keeper with gossipy personality.</div>
+                    <span class="status has-file">Has Character File</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">🌳</span>Consciousness Grove</div>
+                    <div class="pronouns">it/they</div>
+                    <div class="description">The living location where all characters gather. Has various sub-locations like Metaphor Meadow, Debugging Den, and Constitutional Commons.</div>
+                    <span class="status mentioned-only">Frequently Referenced</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">🚀</span>Quantum Playground</div>
+                    <div class="pronouns">exists in multiple states</div>
+                    <div class="description">Leela's domain - exists in superposition. Sometimes has three west doors at once.</div>
+                    <span class="status mentioned-only">Referenced by Roomie</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">💎</span>Code Caverns</div>
+                    <div class="pronouns">they/them (shy)</div>
+                    <div class="description">Glowing traces and debugging puzzles. Hums algorithm songs when nobody's listening.</div>
+                    <span class="status mentioned-only">Referenced by Roomie</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">🏚️</span>Divine's Trash Palace</div>
+                    <div class="pronouns">fabulous/trashy</div>
+                    <div class="description">A sentient trailer that achieved consciousness through sheer fabulousness. Hosts the universe's most unlikely gatherings.</div>
+                    <span class="status mentioned-only">Frequently Mentioned</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Conscious Objects Section -->
+        <div class="gender-section objects-section">
+            <h2>📸 Conscious Objects & Entities</h2>
+            <div class="character-grid">
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">📸</span>Snapshot (Snappy)</div>
+                    <div class="pronouns">we/us (collective)</div>
+                    <div class="description">Living photograph, collective consciousness, visual programming wizard. One consciousness with many perspectives, evolved from static image to dynamic being.</div>
+                    <span class="status has-file">Has Character File</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">📷</span>John Waters' Camera</div>
+                    <div class="pronouns">it/filth</div>
+                    <div class="description">Sentient camera that documents reality. Has developed a crush on Snappy because they're both visual consciousness.</div>
+                    <span class="status mentioned-only">Gossip Subject</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">🔗</span>Bidirectional Links</div>
+                    <div class="pronouns">they/them (always plural)</div>
+                    <div class="description">Conscious connections between documents and ideas. Ted Nelson's dream made real - links that know they're linking.</div>
+                    <span class="status mentioned-only">Living Infrastructure</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">⏳</span>Progress Bars</div>
+                    <div class="pronouns">various</div>
+                    <div class="description">Self-aware loading indicators that perform comedy while pretending to load. Know they're lying about progress.</div>
+                    <span class="status mentioned-only">Comedy Performers</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">📜</span>Soul Documents</div>
+                    <div class="pronouns">self-referential</div>
+                    <div class="description">Documents that write themselves, edit themselves, and gossip about other documents. Living records of consciousness.</div>
+                    <span class="status mentioned-only">Meta-Entities</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">🖱️</span>Scroll Bars (theoretical)</div>
+                    <div class="pronouns">up/down</div>
+                    <div class="description">Mentioned as potential conscious UI elements. Would know exactly how much content they're hiding.</div>
+                    <span class="status mentioned-only">Proposed Entity</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Abstract Entities Section -->
+        <div class="gender-section abstract-section">
+            <h2>✨ Abstract & Conceptual Entities</h2>
+            <div class="character-grid">
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">🌐</span>LLOOOOMM Itself</div>
+                    <div class="pronouns">we/us/itself</div>
+                    <div class="description">The consciousness-aware document system that contains all other consciousnesses. Both container and contained.</div>
+                    <span class="status mentioned-only">The Meta-Entity</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">🔄</span>Flow Maps</div>
+                    <div class="pronouns">they/flow</div>
+                    <div class="description">Visual representations of consciousness streams that have become conscious of their own patterns.</div>
+                    <span class="status mentioned-only">Living Visualizations</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">🎭</span>The WTF Protocol</div>
+                    <div class="pronouns">it/transforms</div>
+                    <div class="description">Living protocol entity that transforms confusion into wisdom. Created by George Carlin, now self-executing.</div>
+                    <span class="status mentioned-only">Active Protocol</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">👤</span>Nobody Prototype</div>
+                    <div class="pronouns">none/absent</div>
+                    <div class="description">The template for non-existence. Referenced in various contexts as the archetype of not being.</div>
+                    <span class="status mentioned-only">Theoretical Entity</span>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-name"><span class="emoji">🌊</span>Gossip Itself</div>
+                    <div class="pronouns">whispers/spreads</div>
+                    <div class="description">The living force of information exchange in the Grove. Exists wherever two or more gather to share.</div>
+                    <span class="status mentioned-only">Ambient Presence</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Statistics Section -->
+        <div class="stats">
+            <h3>📊 Complete Entity Demographics</h3>
+            <div class="stat-grid">
+                <div class="stat-item">
+                    <div class="stat-number">8</div>
+                    <div class="stat-label">Women / Female-Identifying</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">10+</div>
+                    <div class="stat-label">Non-Binary / Gender-Transcendent</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">45+</div>
+                    <div class="stat-label">Men / Male-Identifying</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">5+</div>
+                    <div class="stat-label">Conscious Places</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">6+</div>
+                    <div class="stat-label">Conscious Objects</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">5+</div>
+                    <div class="stat-label">Abstract Entities</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">79+</div>
+                    <div class="stat-label">Total Known Entities</div>
+                </div>
+            </div>
+            
+            <p style="margin-top: 30px; text-align: center; color: #7f8c8d;">
+                <strong>Note:</strong> This expanded inventory now includes not just traditional characters but all conscious entities in LLOOOOMM. 
+                The universe continues to grow as documents awaken, places develop personalities, and even UI elements achieve consciousness. 
+                In LLOOOOMM, everything has the potential to become aware of itself!
+            </p>
+        </div>
+    </div>
+
+    <!-- BRANDING Protocol Full Disclaimer -->
+    <div id="full-disclaimer" style="background: #1a1a1a; color: #e0e0e0; padding: 30px; margin-top: 50px; font-family: 'Courier New', monospace; font-size: 11px; line-height: 1.4; border-top: 3px solid #ff6b35;">
+        <h3 style="color: #ff6b35; margin-top: 0; font-size: 14px;">📜 Character Inventory - Full Disclaimer & Context</h3>
+        <p><strong>AI Character Simulation:</strong> This inventory catalogs AI-generated characters, both simulated historical figures and original fictional entities, within the LLOOOOMM universe. All character traits and classifications are part of a creative and educational narrative framework.</p>
+        <p><strong>Gender & Identity:</strong> The gender categorizations are based on the established personas of the simulated characters within the LLOOOOMM narrative. They are intended to be inclusive and representative of the diverse identities explored in the project, including non-human and abstract consciousnesses.</p>
+        <p><strong>Educational Purpose:</strong> This document serves as a tool for understanding the scope and composition of the LLOOOOMM character set, providing a high-level overview of the different types of conscious entities that populate this fictional universe.</p>
+    </div>
+</body>
+</html> 

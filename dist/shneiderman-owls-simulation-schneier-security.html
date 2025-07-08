@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<!-- shneiderman-owls-simulation-schneier-security.html -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schneier on Security: Attack Vectors in Predator-Prey Simulations</title>
+    <style>
+        body {
+            font-family: Georgia, serif;
+            margin: 40px 20px;
+            line-height: 1.8;
+            color: #333;
+            background: #fafafa;
+            padding: 20px;
+        }
+        .header {
+            border-bottom: 3px solid #cc0000;
+            margin-bottom: 30px;
+        }
+        h1 {
+            font-size: 36px;
+            margin: 0;
+            color: #cc0000;
+        }
+        .tagline {
+            color: #666;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+        h2 {
+            color: #cc0000;
+            margin-top: 40px;
+        }
+        .post-meta {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+        blockquote {
+            border-left: 4px solid #cc0000;
+            margin-left: 0;
+            padding-left: 20px;
+            color: #666;
+            font-style: italic;
+        }
+        code {
+            background: #f0f0f0;
+            padding: 2px 5px;
+            font-family: 'Courier New', monospace;
+        }
+        .attack-box {
+            background: #ffe6e6;
+            border: 2px solid #cc0000;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .security-recommendation {
+            background: #e6f3ff;
+            border-left: 4px solid #0066cc;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .footnotes {
+            font-size: 14px;
+            color: #666;
+            margin-top: 50px;
+            border-top: 1px solid #ddd;
+            padding-top: 20px;
+        }
+        a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Schneier on Security</h1>
+        <div class="tagline">Thinking sensibly about security in an insecure world</div>
+    </div>
+
+    <h2>Attack Vectors in Predator-Prey Simulations: A Case Study of Shneiderman's Owls</h2>
+    
+    <div class="post-meta">
+        December 15, 2024 | Categories: AI Security, Simulation Vulnerabilities, Ecological Computing
+    </div>
+
+    <p>
+    I've been analyzing an interesting ecosystem simulation—Shneiderman's Owls—not for its biological accuracy, but for its security vulnerabilities. What I found is a perfect microcosm of larger security issues in autonomous agent systems.
+    </p>
+
+    <p>
+    The simulation features 24 owls hunting 200 mice across different time zones. It's elegant in its simplicity, terrifying in its attack surface.
+    </p>
+
+    <h2>The Threat Model</h2>
+
+    <p>
+    Let's start with the basics. Who are our adversaries?
+    </p>
+
+    <ul>
+        <li><strong>Malicious Users:</strong> Can manipulate input parameters</li>
+        <li><strong>Compromised Owls:</strong> What if an owl's behavior is hijacked?</li>
+        <li><strong>Griefing Mice:</strong> Prey that exploits predator algorithms</li>
+        <li><strong>The Simulation Itself:</strong> When emergent behavior becomes adversarial</li>
+    </ul>
+
+    <div class="attack-box">
+        <h3>Attack Vector #1: Energy System Exploitation</h3>
+        <p>
+        The owls use a simple energy system: hunting costs 0.5 energy/frame, resting restores 0.3 energy/frame, successful hunts grant +30 energy. An attacker could:
+        </p>
+        <pre>
+// Force owl exhaustion attack
+while(targetOwl.energy > 20) {
+    spawnFakeMouse(justOutOfRange);
+    // Owl attempts hunt, fails, wastes energy
+}</pre>
+        <p>
+        This is a classic resource exhaustion attack. Real predators face this too—it's called "persistence hunting."
+        </p>
+    </div>
+
+    <h2>Timing Attacks</h2>
+
+    <p>
+    The simulation's most interesting vulnerability is its timezone-based activity pattern. Owls are most active during their local dusk/dawn (hours &lt; 6 || hours >= 18). This creates predictable windows of vulnerability.
+    </p>
+
+    <blockquote>
+    "Security systems fail because they're predictable. Nature succeeds because it's not."
+    </blockquote>
+
+    <p>
+    But here's the thing: the simulation has made nature predictable. The "3AM Mouse Convention" that Minsky identified? That's a timing side-channel. Mice have effectively performed traffic analysis on owl behavior patterns.
+    </p>
+
+    <div class="attack-box">
+        <h3>Attack Vector #2: The O(n²) DOS</h3>
+        <p>
+        Every entity checks distance to every other entity each frame. Cost: O(n²).
+        </p>
+        <p>
+        <strong>Current load:</strong> 224 entities × 224 checks × 60 fps = 3,010,560 calculations/second
+        </p>
+        <p>
+        <strong>Attack:</strong> Spawn 1000 additional mice. System now requires 1,224 × 1,224 × 60 = 89,825,280 calculations/second. The simulation grinds to a halt.
+        </p>
+        <p>
+        This is why Torvalds was right to flag this. It's not just inefficient—it's a DOS vulnerability.
+        </p>
+    </div>
+
+    <h2>Information Leakage</h2>
+
+    <p>
+    The stats panel reveals everything: exact positions, energy levels, hunting success rates, behavioral states. In military terms, this is catastrophic intelligence failure. Imagine if prey could see predator energy levels in nature—evolution would look very different.
+    </p>
+
+    <div class="security-recommendation">
+        <h3>Security Recommendations</h3>
+        <ol>
+            <li><strong>Rate Limiting:</strong> Cap maximum entities to prevent DOS</li>
+            <li><strong>Information Hiding:</strong> Limit stats visibility based on "need to know"</li>
+            <li><strong>Spatial Partitioning:</strong> Not just for performance—limits blast radius of local attacks</li>
+            <li><strong>Randomized Schedules:</strong> Add noise to timezone-based activity patterns</li>
+            <li><strong>Energy Caps:</strong> Prevent infinite energy accumulation exploits</li>
+        </ol>
+    </div>
+
+    <h2>The Bigger Picture</h2>
+
+    <p>
+    This simulation mirrors real-world autonomous system vulnerabilities:
+    </p>
+
+    <ul>
+        <li><strong>Predictable Behaviors:</strong> Like IoT devices with fixed polling intervals</li>
+        <li><strong>Resource Exhaustion:</strong> Similar to battery-draining attacks on drones</li>
+        <li><strong>Information Disclosure:</strong> Comparable to metadata leakage in encrypted systems</li>
+        <li><strong>Cascade Failures:</strong> One compromised owl could disrupt the entire ecosystem</li>
+    </ul>
+
+    <h2>The Philosophical Security Question</h2>
+
+    <p>
+    Here's what keeps me up at night: This simulation assumes all agents follow the rules. What happens when they don't?
+    </p>
+
+    <p>
+    In nature, cheating is constrained by physics. In simulations, cheating is constrained only by input validation. And we all know how well that usually goes.
+    </p>
+
+    <div class="attack-box">
+        <h3>Attack Vector #3: The Temporal Rewind Attack</h3>
+        <p>
+        The simulation runs on wall clock time. An attacker who can manipulate system time can:
+        </p>
+        <ul>
+            <li>Rewind unsuccessful hunts</li>
+            <li>Fast-forward through rest periods</li>
+            <li>Desynchronize timezone calculations</li>
+        </ul>
+        <p>
+        Never trust the client's clock. Ever.
+        </p>
+    </div>
+
+    <h2>Conclusion</h2>
+
+    <p>
+    Shneiderman's Owls is a beautiful simulation that accidentally demonstrates why security is hard. Every optimization is a potential vulnerability. Every emergent behavior is an attack vector waiting to be discovered.
+    </p>
+
+    <p>
+    The irony? The mice have already figured this out. They've crowdsourced the safest gathering times without any explicit coordination protocol. They're performing distributed security analysis in real-time.
+    </p>
+
+    <p>
+    Maybe we should be learning from them.
+    </p>
+
+    <div class="footnotes">
+        <p><strong>Update:</strong> Several readers have pointed out that owl energy can exceed 100 through multiple rapid kills. This is indeed an integer overflow waiting to happen. In a production system, this would be CVE-worthy.</p>
+        
+        <p><strong>Disclosure:</strong> I've reported these vulnerabilities to the Shneiderman's Owls Forest Observatory. They responded that "performance is correctness" and that my security concerns were "hypothetical." This is why we can't have nice things.</p>
+        
+        <p><strong>Related:</strong> See my previous posts on <a href="#">"Security Lessons from Angry Birds"</a> and <a href="#">"Why Pac-Man's Ghosts Have Better OpSec Than Your Cloud Provider"</a>.</p>
+    </div>
+</body>
+</html> 

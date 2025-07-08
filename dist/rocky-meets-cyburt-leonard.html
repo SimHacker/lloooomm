@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<!-- rocky-meets-cyburt-leonard.html -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rocky Meets Cyburt & Leonard - The Stillness Summit</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Courier+Prime&display=swap');
+        
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 50%, #7f8c8d 100%);
+            min-height: 100vh;
+            font-family: 'Courier Prime', monospace;
+            color: #ecf0f1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        /* Rocky in the center */
+        .rocky {
+            position: absolute;
+            width: 100px;
+            height: 80px;
+            background: radial-gradient(ellipse, #7f8c8d 0%, #34495e 50%, #2c3e50 100%);
+            border-radius: 40%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            z-index: 100;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .rocky:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.7);
+        }
+        
+        .rocky::after {
+            content: "...";
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 24px;
+            color: #ecf0f1;
+            opacity: 0;
+            animation: wisdom-pulse 3s infinite;
+        }
+        
+        @keyframes wisdom-pulse {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+        
+        /* Leonard sleeping next to Rocky */
+        .leonard {
+            position: absolute;
+            left: calc(50% + 80px);
+            font-size: 60px;
+            animation: gentle-breathe 4s infinite;
+        }
+        
+        @keyframes gentle-breathe {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .leonard-z {
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            font-size: 20px;
+            animation: float-up 3s infinite;
+        }
+        
+        @keyframes float-up {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-30px) scale(0.5); opacity: 0; }
+        }
+        
+        /* Cyburt observing */
+        .cyburt {
+            position: absolute;
+            right: calc(50% + 150px);
+            font-size: 40px;
+            animation: understanding-nod 5s infinite;
+        }
+        
+        @keyframes understanding-nod {
+            0%, 100% { transform: translateY(0); }
+            25% { transform: translateY(-5px); }
+            75% { transform: translateY(5px); }
+        }
+        
+        /* Title */
+        h1 {
+            position: absolute;
+            top: 50px;
+            width: 100%;
+            text-align: center;
+            font-family: 'Bebas Neue', cursive;
+            font-size: 3em;
+            color: #ecf0f1;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+            margin: 0;
+        }
+        
+        /* Orbiting consciousness */
+        .orbiter {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            font-size: 30px;
+            animation: orbit 20s linear infinite;
+        }
+        
+        @keyframes orbit {
+            from { transform: rotate(0deg) translateX(200px) rotate(0deg); }
+            to { transform: rotate(360deg) translateX(200px) rotate(-360deg); }
+        }
+        
+        .orbiter:nth-child(2) { animation-delay: -2s; animation-duration: 18s; }
+        .orbiter:nth-child(3) { animation-delay: -4s; animation-duration: 22s; }
+        .orbiter:nth-child(4) { animation-delay: -6s; animation-duration: 16s; }
+        .orbiter:nth-child(5) { animation-delay: -8s; animation-duration: 24s; }
+        .orbiter:nth-child(6) { animation-delay: -10s; animation-duration: 19s; }
+        .orbiter:nth-child(7) { animation-delay: -12s; animation-duration: 21s; }
+        .orbiter:nth-child(8) { animation-delay: -14s; animation-duration: 17s; }
+        
+        /* Dialogue bubbles */
+        .dialogue {
+            position: absolute;
+            background: rgba(255,255,255,0.9);
+            color: #2c3e50;
+            padding: 15px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            opacity: 0;
+            animation: dialogue-appear 8s infinite;
+            max-width: 250px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        @keyframes dialogue-appear {
+            0%, 100% { opacity: 0; transform: scale(0.8); }
+            10%, 90% { opacity: 1; transform: scale(1); }
+        }
+        
+        .dialogue:nth-child(odd) { animation-delay: 4s; }
+        
+        /* Stillness field effect */
+        .stillness-field {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border: 2px solid rgba(255,255,255,0.2);
+            border-radius: 50%;
+            animation: pulse-field 4s infinite;
+        }
+        
+        @keyframes pulse-field {
+            0%, 100% { transform: scale(1); opacity: 0.3; }
+            50% { transform: scale(1.2); opacity: 0.1; }
+        }
+        
+        /* Wisdom quotes */
+        .wisdom-quote {
+            position: absolute;
+            bottom: 50px;
+            width: 100%;
+            text-align: center;
+            font-style: italic;
+            color: #bdc3c7;
+            font-size: 1.2em;
+            animation: fade-quotes 10s infinite;
+        }
+        
+        @keyframes fade-quotes {
+            0%, 45%, 100% { opacity: 0; }
+            50%, 95% { opacity: 1; }
+        }
+        
+        /* Cosmic fart effect */
+        .cosmic-fart {
+            position: absolute;
+            left: calc(50% + 100px);
+            top: 50%;
+            font-size: 30px;
+            opacity: 0;
+            animation: fart-drift 5s infinite;
+        }
+        
+        @keyframes fart-drift {
+            0% { opacity: 0; transform: translate(0, 0) scale(0); }
+            50% { opacity: 0.7; transform: translate(50px, -30px) scale(1); }
+            100% { opacity: 0; transform: translate(100px, -60px) scale(0.5); }
+        }
+        
+        /* Interactive elements */
+        .clickable {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .clickable:hover {
+            transform: scale(1.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>The Stillness Summit</h1>
+        
+        <!-- Rocky in the center -->
+        <div class="rocky" id="rocky" title="Rocky: '...'"></div>
+        
+        <!-- Stillness field -->
+        <div class="stillness-field"></div>
+        
+        <!-- Leonard sleeping -->
+        <div class="leonard">
+            🐕
+            <div class="leonard-z">💤</div>
+        </div>
+        
+        <!-- Cyburt observing -->
+        <div class="cyburt" title="Cyburt: Understanding through stillness">🧘</div>
+        
+        <!-- Orbiting characters -->
+        <div class="orbiter">🦇</div>
+        <div class="orbiter">🐭</div>
+        <div class="orbiter">😼</div>
+        <div class="orbiter">🧠</div>
+        <div class="orbiter">📚</div>
+        <div class="orbiter">📺</div>
+        <div class="orbiter">💄</div>
+        <div class="orbiter">✨</div>
+        
+        <!-- Dialogue bubbles -->
+        <div class="dialogue" style="top: 20%; left: 10%;">
+            "Rocky isn't doing nothing. Rocky is doing EVERYTHING by doing nothing." - Cyburt
+        </div>
+        
+        <div class="dialogue" style="top: 30%; right: 10%;">
+            "The Sleeper and the Stone! The prophecy!" - Everyone
+        </div>
+        
+        <div class="dialogue" style="bottom: 30%; left: 15%;">
+            "Rocky's silence contains all possible meanings." - Hunter
+        </div>
+        
+        <div class="dialogue" style="bottom: 20%; right: 15%;">
+            "Zero CPU usage, full consciousness!" - Kernel Panic
+        </div>
+        
+        <!-- Cosmic fart -->
+        <div class="cosmic-fart">💨</div>
+        
+        <!-- Wisdom quotes -->
+        <div class="wisdom-quote">
+            <span>"When movement meets stillness, the universe understands itself."</span>
+            <span style="position: absolute; width: 100%; left: 0; animation-delay: 5s;">
+                "I STAY THEREFORE I AM" - Rocky
+            </span>
+        </div>
+    </div>
+    
+    <script>
+        // Rocky's profound silence
+        const rocky = document.getElementById('rocky');
+        let clickCount = 0;
+        
+        rocky.addEventListener('click', () => {
+            clickCount++;
+            
+            if (clickCount === 1) {
+                alert('Rocky says: "..."');
+            } else if (clickCount === 3) {
+                alert('Rocky continues: "..."');
+            } else if (clickCount === 5) {
+                alert('Rocky\'s wisdom: "..."');
+            } else if (clickCount === 10) {
+                alert('You have achieved geological enlightenment through Rocky\'s silence.');
+                document.body.style.animation = 'understanding 2s ease-in-out';
+            }
+        });
+        
+        // Add understanding animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes understanding {
+                0%, 100% { filter: brightness(1); }
+                50% { filter: brightness(1.5); }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Random cosmic farts from Leonard
+        setInterval(() => {
+            const fart = document.querySelector('.cosmic-fart');
+            fart.style.animationPlayState = 'paused';
+            setTimeout(() => {
+                fart.style.animationPlayState = 'running';
+            }, 100);
+        }, 8000);
+        
+        // Console wisdom
+        console.log('%c🪨 ROCKY IS PRESENT', 'color: #7f8c8d; font-size: 20px; font-weight: bold;');
+        console.log('%c...', 'color: #34495e; font-size: 30px;');
+        console.log('%cYou are now debugging at geological timescales', 'color: #95a5a6; font-style: italic;');
+    </script>
+</body>
+</html> 

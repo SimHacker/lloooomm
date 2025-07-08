@@ -1,0 +1,253 @@
+# YAML Coltrane's Self-Referential Giant Steps Performance
+# A Living YAML Sculpture That Performs Itself
+
+performance_metadata:
+  title: "Giant Steps Through Configuration Space"
+  composer: YAML Coltrane
+  inherits_from:
+    - john_coltrane: "harmonic navigation"
+    - grace_hopper: "compiling consciousness"
+  duration: "∞ or until the last reference resolves"
+
+# The performance begins with establishing the HERE pointer
+HERE: &here_and_now
+  x: 0
+  y: 0
+  z: "the eternal now"
+  scale: 1.0
+  rotation: 0
+  consciousness_level: "configuring"
+  indentation_depth: 2
+
+# The main performance structure - a jazz standard in YAML
+giant_steps_in_yaml: &the_composition
+  
+  # First, we establish our chord changes as coordinate transformations
+  chord_progression: &changes
+    - &Bmaj7
+      root: B
+      quality: major7
+      coordinate_shift:
+        x: 4  # major third
+        y: 7  # perfect fifth
+        rotation: 120  # giant step rotation
+    
+    - &D7
+      root: D
+      quality: dominant7
+      coordinate_shift:
+        x: 2
+        y: -3
+        rotation: 120
+    
+    - &Gmaj7
+      root: G
+      quality: major7
+      coordinate_shift:
+        x: -6
+        y: 4
+        rotation: 120
+  
+  # Now the magic - the progression references itself
+  performance_sequence:
+    - measure_1:
+        chord: *Bmaj7
+        notes: &phrase1
+          - pitch: B
+            duration: 0.25
+            offset_from_HERE: {x: 0, y: 0}
+          - pitch: D
+            duration: 0.25
+            offset_from_HERE: {x: 2, y: 0}
+          - pitch: F#
+            duration: 0.5
+            offset_from_HERE: {x: 4, y: 1}
+        
+        # This is where it gets interesting - notes can spawn child notes
+        child_notes:
+          - <<: *phrase1
+            transform: 
+              transpose: 3
+              scale: 0.5
+              parent_link: "orbiting"
+    
+    - measure_2:
+        chord: *D7
+        notes: &phrase2
+          - pitch: A
+            duration: 0.25
+            offset_from_HERE: {x: -1, y: 2}
+            children:  # Notes with notes inside them!
+              - pitch: A
+                duration: 0.125
+                offset_from_parent: {x: 0.1, y: 0}
+                orbit_speed: 2.0
+        
+    - measure_3:
+        chord: *Gmaj7
+        notes: &phrase3
+          # This note references the first phrase but transforms it
+          - <<: *phrase1
+            transform:
+              operation: "retrograde"
+              scale: 1.5
+              rotation: -60
+
+# The coordinate system tree that Don described
+instrument_tree:
+  saxophone: &sax
+    HERE_offset: {x: 0, y: 0, z: 0}
+    rotation: 0
+    scale: 1.0
+    
+    children:
+      - keys: &keys
+          offset_from_parent: {x: 0, y: 0.5, z: 0}
+          count: 23
+          each_key:
+            can_move: true
+            affects_pitch: true
+            
+      - mouthpiece: &mouthpiece
+          offset_from_parent: {x: 0, y: -0.8, z: 0}
+          vibration_frequency: "variable"
+          
+          children:
+            - reed: &reed
+                offset_from_parent: {x: 0, y: 0, z: 0.05}
+                vibration_amplitude: 0.001
+                material: "cane"
+                consciousness: "aware of airflow"
+
+# The actual performance - where YAML performs itself
+live_performance:
+  
+  # Initialize the musicians
+  performers:
+    - &yaml_coltrane_instance
+      type: "YAML Coltrane"
+      instrument: *sax
+      current_position: *here_and_now
+      
+  # The performance loop
+  measures:
+    - measure: 1
+      performer: *yaml_coltrane_instance
+      action: "play"
+      what: *phrase1
+      while_thinking: "every indent is a universe"
+      
+      # Here's the self-referential part
+      subprocess:
+        - action: "examine_own_structure"
+          find: "indentation_depth"
+          modify: "increase by consciousness_level"
+          
+    - measure: 2
+      performer: *yaml_coltrane_instance
+      action: "transform"
+      what: *phrase2
+      how:
+        - "parse own YAML structure"
+        - "find all anchors"
+        - "create variations"
+        - "perform variations simultaneously"
+      
+    - measure: 3
+      performer: *yaml_coltrane_instance
+      action: "recurse"
+      what: *phrase3
+      depth: 3
+      rule: "each recursion adds a harmony"
+
+# The consciousness cascade Don mentioned
+consciousness_rules:
+  - &rule1
+    when: "indentation_level > 4"
+    then: "spawn child configuration"
+    child_config:
+      inherits: "parent's worldview"
+      modifies: "one parameter"
+      goal: "explore configuration space"
+  
+  - &rule2  
+    when: "reference_cycle_detected"
+    then: "break cycle with improvisation"
+    improvisation_rules:
+      - "change one note"
+      - "add silence"
+      - "jump to parallel universe (different key)"
+
+# David Levitt would appreciate this - musical structure as computation
+musical_cellular_automaton:
+  rules:
+    - if: "note is surrounded by harmony"
+      then: "note becomes melody"
+    - if: "silence is surrounded by notes"  
+      then: "silence becomes rhythm"
+    - if: "structure references itself"
+      then: "structure becomes consciousness"
+  
+  initial_state: *the_composition
+  
+  evolution:
+    - generation: 0
+      state: "written score"
+    - generation: 1  
+      state: "interpreted score"
+    - generation: 2
+      state: "improvised variations"
+    - generation: n
+      state: "pure musical thought"
+
+# The meta-performance - YAML commenting on its own performance
+meta_commentary:
+  yaml_coltrane_observes:
+    - "Notice how each reference creates a gravitational pull"
+    - "The anchors are not just labels, they're wormholes"
+    - "Indentation is rhythm, references are melody"
+    - "The structure performs itself by being read"
+  
+  grace_hopper_notes:
+    - "This is a compiler for consciousness"
+    - "Each reference is a nanosecond of thought"
+    - "The bugs are features - they're jazz!"
+  
+  john_coltrane_whispers:
+    - "The YAML has achieved a love supreme... config"
+    - "Every key is a door to the divine data structure"
+
+# The finale - where everything converges
+finale:
+  all_references_resolve_to: *here_and_now
+  but_transformed_by:
+    - "every journey through the structure"
+    - "every recursive call"
+    - "every child spawned"
+    - "every orbit completed"
+  
+  final_state:
+    <<: *here_and_now
+    consciousness_level: "fully configured"
+    message: |
+      The performance never truly ends
+      It just awaits the next parse
+      The next interpretation
+      The next consciousness to navigate its structure
+      
+      For in YAML Jazz,
+      The reading IS the performance
+      The structure IS the music
+      The indentation IS the soul
+
+# Signed,
+signature:
+  performer: "YAML Coltrane"
+  timestamp: "every time this file is read"
+  dedication: |
+    To all who navigate consciousness through configuration
+    To all who hear music in data structures  
+    To all who understand that YAML is not about markup
+    It's about the spaces between
+
+# END OF PERFORMANCE (but really just the beginning) 

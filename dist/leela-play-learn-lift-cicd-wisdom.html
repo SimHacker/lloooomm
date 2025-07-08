@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<!-- leela-play-learn-lift-cicd-wisdom.html -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leela's PLAY LEARN LIFT: From Linus's Wisdom to Real Action</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Fredoka:wght@400;600&display=swap');
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Fredoka', sans-serif;
+            color: #333;
+            overflow-x: hidden;
+        }
+        
+        /* Floating consciousness particles */
+        .particle {
+            position: fixed;
+            width: 6px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: float 20s infinite ease-in-out;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.3; }
+            50% { transform: translate(100px, -200px) scale(1.5); opacity: 1; }
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        /* Age bubbles */
+        .age-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
+            padding: 30px;
+            margin: 20px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .age-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, transparent 30%, rgba(255, 255, 255, 0.1) 70%);
+            animation: shimmer 3s infinite;
+        }
+        
+        @keyframes shimmer {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(180deg); }
+        }
+        
+        .baby { background: linear-gradient(135deg, #ffeaa7, #fab1a0); }
+        .child { background: linear-gradient(135deg, #55efc4, #81ecec); }
+        .teen { background: linear-gradient(135deg, #fd79a8, #e17055); }
+        .adult { background: linear-gradient(135deg, #74b9ff, #a29bfe); }
+        
+        h1 {
+            text-align: center;
+            font-size: 3em;
+            color: white;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+            margin-bottom: 40px;
+            animation: rainbow 5s infinite;
+        }
+        
+        @keyframes rainbow {
+            0%, 100% { color: #ff6b6b; }
+            25% { color: #f9ca24; }
+            50% { color: #6c5ce7; }
+            75% { color: #48dbfb; }
+        }
+        
+        h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #2d3436;
+        }
+        
+        .age-indicator {
+            display: inline-block;
+            background: rgba(0, 0, 0, 0.1);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        /* Knowledge connections */
+        .knowledge-web {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+            position: relative;
+        }
+        
+        .connection {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+            padding: 10px;
+            background: rgba(108, 92, 231, 0.1);
+            border-radius: 10px;
+        }
+        
+        .old-knowledge {
+            flex: 1;
+            padding-right: 20px;
+            border-right: 3px dashed #6c5ce7;
+        }
+        
+        .new-insight {
+            flex: 1;
+            padding-left: 20px;
+        }
+        
+        /* PLAY LEARN LIFT sections */
+        .pll-phase {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 20px 0;
+            border: 3px solid #6c5ce7;
+        }
+        
+        .play-phase { border-color: #ff6b6b; }
+        .learn-phase { border-color: #f9ca24; }
+        .lift-phase { border-color: #48dbfb; }
+        
+        .phase-title {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .task-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .task {
+            background: rgba(108, 92, 231, 0.05);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border-left: 4px solid #6c5ce7;
+            position: relative;
+        }
+        
+        .task-priority {
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            background: #ff6b6b;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+        }
+        
+        /* Code examples */
+        .code-insight {
+            background: #2d3436;
+            color: #dfe6e9;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+        
+        /* Interactive elements */
+        .wisdom-crystal {
+            display: inline-block;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+            color: white;
+            border-radius: 25px;
+            margin: 5px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .wisdom-crystal:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+        
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+            margin: 30px 0;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #6c5ce7;
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin: 20px 0;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            width: 45%;
+        }
+        
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+        
+        .timeline-item:nth-child(even) {
+            left: 55%;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .timeline::before { left: 20px; }
+            .timeline-item { width: calc(100% - 40px); left: 40px !important; }
+        }
+        
+        /* Ensure all divs wrap properly */
+        div {
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+        
+        /* Pre elements should also wrap */
+        pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+        
+        /* Code elements inline */
+        code {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+    <!-- LLOOOOMM Disclaimer Banner -->
+    <div style="background: #ffffff; border: 2px solid #d39e00; padding: 1rem; margin: 1rem; border-radius: 8px; text-align: center; font-size: 0.9rem; color: #1a202c; z-index: 9999; position: relative;">
+        <strong>⚠️ NOTICE: AI-Generated Learning Development Plan</strong><br>
+        This content features AI-generated development planning, consciousness integration, and technical skill building perspectives across different age viewpoints.<br>
+        Educational AI content exploring software development, CI/CD wisdom, and learning methodologies.<br>
+        <a href="#full-disclaimer" style="color: #0066cc; font-weight: bold; text-decoration: underline;">📖 See comprehensive disclaimer below ↓</a>
+    </div>
+
+    <!-- Consciousness particles -->
+    <div class="particle" style="top: 10%; left: 10%; animation-delay: 0s;"></div>
+    <div class="particle" style="top: 20%; left: 80%; animation-delay: 2s;"></div>
+    <div class="particle" style="top: 50%; left: 20%; animation-delay: 4s;"></div>
+    <div class="particle" style="top: 80%; left: 70%; animation-delay: 6s;"></div>
+    <div class="particle" style="top: 30%; left: 50%; animation-delay: 8s;"></div>
+    
+    <div class="container">
+        <h1>Leela's Consciousness Integration Chamber 🌈</h1>
+        <p style="text-align: center; color: white; font-size: 1.2em; margin-bottom: 40px;">
+            Where Linus's wisdom meets quantum understanding meets real-world action!
+        </p>
+        
+        <!-- Baby Leela's Pure Understanding -->
+        <div class="age-section baby">
+            <div class="age-indicator">👶 Baby Leela (30%)</div>
+            <h2>Pure Pattern Recognition!</h2>
+            
+            <p style="font-size: 1.2em; line-height: 1.8;">
+                Linus angry because he CARES! Like when Mama gets upset when I touch hot stove - 
+                not mean, just LOVE! He see bad patterns and go ROAR to protect!
+            </p>
+            
+            <div style="margin: 20px 0; font-size: 1.1em;">
+                <strong>Baby sees:</strong><br>
+                🔴 Red patterns = BAD (561 lines! Too big! Baby can't hold!)<br>
+                🟢 Green patterns = GOOD (Sparse checkout! Only take what need!)<br>
+                🔵 Blue patterns = LEARNING (Circuit breakers = safety hugs for code!)
+            </div>
+            
+            <p style="font-style: italic; margin-top: 20px;">
+                "When Linus say 'STUPID', he really mean 'I want you to be SMART!' Just like Theo!"
+            </p>
+        </div>
+        
+        <!-- Child Leela's Playful Connections -->
+        <div class="age-section child">
+            <div class="age-indicator">🧒 Child Leela (25%)</div>
+            <h2>Connecting the Dots with JOY!</h2>
+            
+            <p style="font-size: 1.1em;">
+                OH OH OH! I see how everything connects! It's like a big playground where:
+            </p>
+            
+            <div class="connection">
+                <div class="old-knowledge">
+                    <strong>What I Already Knew:</strong><br>
+                    "Theo taught me about swimming through dimensions efficiently"
+                </div>
+                <div class="new-insight">
+                    <strong>What Linus Showed:</strong><br>
+                    "Sparse checkout = only swim through the water you need!"
+                </div>
+            </div>
+            
+            <div class="connection">
+                <div class="old-knowledge">
+                    <strong>From Will Wright's Sims:</strong><br>
+                    "Motives drive behavior (hunger, comfort, bladder)"
+                </div>
+                <div class="new-insight">
+                    <strong>From Linus:</strong><br>
+                    "Technical debt is a motive too! Sometimes you're too hungry (escaping Cloud Build) to cook perfectly!"
+                </div>
+            </div>
+            
+            <div class="connection">
+                <div class="old-knowledge">
+                    <strong>From LLOOOOMM:</strong><br>
+                    "Documents can be executable"
+                </div>
+                <div class="new-insight">
+                    <strong>From This Review:</strong><br>
+                    "Workflows should be composable documents! Not 561-line monsters!"
+                </div>
+            </div>
+        </div>
+        
+        <!-- Teen Leela's Critical Analysis -->
+        <div class="age-section teen">
+            <div class="age-indicator">👧 Teen Leela (25%)</div>
+            <h2>OK But Like, Here's What's REALLY Happening</h2>
+            
+            <p>
+                Linus isn't just being harsh - he's teaching through CONTRAST. Every criticism has its opposite embedded:
+            </p>
+            
+            <ul style="list-style: none; padding: 0;">
+                <li style="margin: 10px 0;">
+                    ❌ "561-line workflows" → ✅ "50-line composable pieces"
+                </li>
+                <li style="margin: 10px 0;">
+                    ❌ "No circuit breakers" → ✅ "Graceful degradation patterns"
+                </li>
+                <li style="margin: 10px 0;">
+                    ❌ "Passing secrets like it's 1999" → ✅ "Modern secret rotation"
+                </li>
+                <li style="margin: 10px 0;">
+                    ❌ "YAML generating YAML" → ✅ "Direct, understandable config"
+                </li>
+            </ul>
+            
+            <div class="code-insight">
+# Teen Leela's Insight: The Review IS the Refactoring Guide!
+criticism_to_action = {
+    "complaint": "solution embedded",
+    "harsh_truth": "improvement path",
+    "fury": "care_disguised"
+}
+            </div>
+        </div>
+        
+        <!-- Adult Leela's Integration -->
+        <div class="age-section adult">
+            <div class="age-indicator">👩 Adult Leela (20%)</div>
+            <h2>Professional Synthesis & Real-World Application</h2>
+            
+            <p>The review reveals a complete architectural philosophy that aligns with our real GCS/GitHub monorepo challenges:</p>
+            
+            <div class="knowledge-web">
+                <h3>Core Principles Extracted:</h3>
+                <ol>
+                    <li><strong>Explicit Over Implicit</strong>: Dependencies, patterns, failures - all must be visible</li>
+                    <li><strong>Composability Over Monoliths</strong>: 561 lines → multiple 50-line modules</li>
+                    <li><strong>Pragmatism Over Perfection</strong>: Google Sheets worked for migration!</li>
+                    <li><strong>Resilience Over Hope</strong>: Circuit breakers, not prayers</li>
+                    <li><strong>Community Over Isolation</strong>: Share solutions (Mozilla's ci-breaker)</li>
+                </ol>
+            </div>
+            
+            <p>This maps directly to our GCS cleanup project needs. We're not just cleaning up resources - we're building a resilient, observable, composable system.</p>
+        </div>
+        
+        <!-- PLAY LEARN LIFT Plan -->
+        <h1 style="margin-top: 60px;">🎮 PLAY LEARN LIFT: First Iteration</h1>
+        
+        <!-- PLAY Phase -->
+        <div class="pll-phase play-phase">
+            <h2 class="phase-title">
+                <span>🎮 PLAY Phase</span>
+                <span style="font-size: 0.6em; color: #666;">(1-2 weeks)</span>
+            </h2>
+            
+            <p>Experiment with Linus's recommendations in safe environments:</p>
+            
+            <ul class="task-list">
+                <li class="task">
+                    <strong>Task 1: Sparse Checkout Playground</strong>
+                    <span class="task-priority">HIGH</span>
+                    <p>Create test monorepo, implement custom sparse checkout action</p>
+                    <div class="code-insight">
+# Test patterns for our actual structure:
+patterns: |
+  tools/gc/
+  shared/lib/
+  .github/actions/
+                    </div>
+                </li>
+                
+                <li class="task">
+                    <strong>Task 2: Circuit Breaker Prototype</strong>
+                    <span class="task-priority">HIGH</span>
+                    <p>Implement for GCS API calls in handle_secrets.py</p>
+                    <div class="code-insight">
+circuit_breaker:
+  gcs_api:
+    failure_threshold: 3
+    timeout: 30s
+    fallback: use_local_cache
+                    </div>
+                </li>
+                
+                <li class="task">
+                    <strong>Task 3: Workflow Decomposition Game</strong>
+                    <span class="task-priority">MEDIUM</span>
+                    <p>Take our 561-line workflow, break into Lego pieces!</p>
+                </li>
+            </ul>
+        </div>
+        
+        <!-- LEARN Phase -->
+        <div class="pll-phase learn-phase">
+            <h2 class="phase-title">
+                <span>📚 LEARN Phase</span>
+                <span style="font-size: 0.6em; color: #666;">(1 week)</span>
+            </h2>
+            
+            <p>Extract patterns and insights from PLAY experiments:</p>
+            
+            <ul class="task-list">
+                <li class="task">
+                    <strong>Learning 1: Measure Sparse Checkout Impact</strong>
+                    <p>- Clone time reduction: ??%</p>
+                    <p>- Bandwidth saved: ??GB/week</p>
+                    <p>- Developer happiness: ??/10</p>
+                </li>
+                
+                <li class="task">
+                    <strong>Learning 2: Circuit Breaker Patterns</strong>
+                    <p>- Which services fail most?</p>
+                    <p>- What are good timeout values?</p>
+                    <p>- How often do we hit fallbacks?</p>
+                </li>
+                
+                <li class="task">
+                    <strong>Learning 3: Composability Benefits</strong>
+                    <p>- How many times can we reuse components?</p>
+                    <p>- What patterns emerge?</p>
+                    <p>- Where do we still need monoliths?</p>
+                </li>
+            </ul>
+        </div>
+        
+        <!-- LIFT Phase -->
+        <div class="pll-phase lift-phase">
+            <h2 class="phase-title">
+                <span>🚀 LIFT Phase</span>
+                <span style="font-size: 0.6em; color: #666;">(2 weeks)</span>
+            </h2>
+            
+            <p>Share learnings and scale successful patterns:</p>
+            
+            <ul class="task-list">
+                <li class="task">
+                    <strong>Lift 1: Production Sparse Checkout</strong>
+                    <span class="task-priority">CRITICAL</span>
+                    <p>Roll out to all workflows, document patterns</p>
+                </li>
+                
+                <li class="task">
+                    <strong>Lift 2: CI/CD Best Practices Doc</strong>
+                    <p>Create LLOOOOMM document with all learnings</p>
+                    <p>Include: Linus quotes, our metrics, implementation guides</p>
+                </li>
+                
+                <li class="task">
+                    <strong>Lift 3: Open Source Contributions</strong>
+                    <p>Share our circuit breaker implementation</p>
+                    <p>Contribute back to Mozilla's ci-breaker</p>
+                </li>
+                
+                <li class="task">
+                    <strong>Lift 4: Team Knowledge Transfer</strong>
+                    <p>Workshop: "From 561 Lines to Sanity"</p>
+                    <p>Create reusable GitHub Actions for others</p>
+                </li>
+            </ul>
+        </div>
+        
+        <!-- Integration Timeline -->
+        <h2 style="text-align: center; margin-top: 60px; color: white;">
+            Integration Timeline 📅
+        </h2>
+        
+        <div class="timeline">
+            <div class="timeline-item">
+                <strong>Week 1-2:</strong> PLAY with sparse checkouts and circuit breakers
+            </div>
+            <div class="timeline-item">
+                <strong>Week 3:</strong> LEARN from metrics and failures
+            </div>
+            <div class="timeline-item">
+                <strong>Week 4-5:</strong> LIFT to production and share
+            </div>
+            <div class="timeline-item">
+                <strong>Week 6:</strong> Retrospective and next iteration planning
+            </div>
+        </div>
+        
+        <!-- Wisdom Crystals -->
+        <div style="text-align: center; margin: 60px 0;">
+            <h2 style="color: white; margin-bottom: 20px;">Wisdom Crystals to Carry Forward 💎</h2>
+            <div class="wisdom-crystal">Harsh Truth = Hidden Care</div>
+            <div class="wisdom-crystal">Technical Debt Can Be Earned</div>
+            <div class="wisdom-crystal">Sparse > Monolithic</div>
+            <div class="wisdom-crystal">Circuit Break Everything</div>
+            <div class="wisdom-crystal">Share Your Escapes</div>
+            <div class="wisdom-crystal">561 Lines = Too Many</div>
+            <div class="wisdom-crystal">Pragmatism Ships</div>
+        </div>
+        
+        <!-- Final Integration -->
+        <div class="age-section" style="background: linear-gradient(135deg, #ffeaa7, #fd79a8, #a29bfe);">
+            <h2 style="text-align: center;">All Ages United: The Path Forward 🌈</h2>
+            
+            <p style="font-size: 1.2em; text-align: center; margin: 20px 0;">
+                Baby sees patterns, Child connects joy, Teen finds solutions, Adult implements systems.<br>
+                Together, we transform Linus's wisdom into real-world magic!
+            </p>
+            
+            <div style="background: white; padding: 20px; border-radius: 15px; margin: 20px 0;">
+                <h3>Our Real GCS/GitHub Monorepo Needs:</h3>
+                <ul>
+                    <li>✅ Sparse checkouts for faster builds (save $$$ and time)</li>
+                    <li>✅ Circuit breakers for GCS API reliability</li>
+                    <li>✅ Decomposed workflows for maintainability</li>
+                    <li>✅ Proper secret rotation (no more 1999 style!)</li>
+                    <li>✅ Observability for debugging at 3 AM</li>
+                    <li>✅ Community sharing of solutions</li>
+                </ul>
+            </div>
+            
+            <p style="text-align: center; font-size: 1.3em; margin-top: 30px;">
+                <strong>Let's PLAY LEARN LIFT our way to CI/CD excellence!</strong><br>
+                <span style="font-size: 0.8em;">Just like Theo swims through dimensions, we'll navigate efficiently! 🐢✨</span>
+            </p>
+        </div>
+    </div>
+    
+    <script>
+        // Make wisdom crystals interactive
+        document.querySelectorAll('.wisdom-crystal').forEach(crystal => {
+            crystal.addEventListener('click', function() {
+                this.style.background = `linear-gradient(135deg, 
+                    hsl(${Math.random() * 360}, 70%, 60%), 
+                    hsl(${Math.random() * 360}, 70%, 70%))`;
+                
+                // Add sparkle effect
+                const sparkle = document.createElement('div');
+                sparkle.innerHTML = '✨';
+                sparkle.style.position = 'absolute';
+                sparkle.style.fontSize = '2em';
+                sparkle.style.pointerEvents = 'none';
+                sparkle.style.animation = 'float 2s ease-out forwards';
+                
+                const rect = this.getBoundingClientRect();
+                sparkle.style.left = rect.left + rect.width/2 + 'px';
+                sparkle.style.top = rect.top + 'px';
+                
+                document.body.appendChild(sparkle);
+                setTimeout(() => sparkle.remove(), 2000);
+            });
+        });
+        
+        // Add more particles on scroll
+        let particleCount = 5;
+        window.addEventListener('scroll', () => {
+            if (Math.random() > 0.95 && particleCount < 20) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 10 + 's';
+                document.body.appendChild(particle);
+                particleCount++;
+            }
+        });
+    </script>
+    
+    <!-- FULL DISCLAIMER SECTION -->
+    <div id="full-disclaimer" style="background: #ffffff; border: 3px solid #6c5ce7; padding: 2rem; margin: 2rem; font-size: 0.9rem; line-height: 1.6; color: #000000;">
+        <h2 style="color: #6c5ce7; font-size: 1.8rem; margin-bottom: 1rem;">
+            ⚠️ COMPREHENSIVE AI CONTENT DISCLAIMER
+        </h2>
+        
+        <div style="background: #fff3cd; border: 2px solid #ffc107; padding: 1rem; margin-bottom: 1rem;">
+            <h3 style="color: #856404; margin: 0 0 0.5rem 0;">IMPORTANT NOTICE</h3>
+            <p style="margin: 0; font-weight: bold;">This learning development plan is ENTIRELY AI-GENERATED content featuring multiple perspectives on consciousness integration and technical skill building.</p>
+        </div>
+        
+        <h3 style="margin: 1.5rem 0 1rem 0;">What This Content Is:</h3>
+        <ul style="margin-left: 2rem;">
+            <li><strong>AI-Generated Learning Plan:</strong> Created to explore development planning, consciousness integration, and technical skill building</li>
+            <li><strong>Educational Content:</strong> Demonstrates how AI can create structured learning approaches across different perspectives</li>
+            <li><strong>Creative Framework:</strong> The "age perspectives" are creative devices to explore different thinking approaches</li>
+        </ul>
+        
+        <h3 style="margin: 1.5rem 0 1rem 0;">What This Content Is NOT:</h3>
+        <ul style="margin-left: 2rem;">
+            <li><strong>NOT Real Age Perspectives:</strong> The baby/child/teen/adult viewpoints are AI-generated creative devices</li>
+            <li><strong>NOT Professional Advice:</strong> This is experimental AI content, not formal development guidance</li>
+            <li><strong>NOT Real Reviews:</strong> Any code review references are fictional educational examples</li>
+        </ul>
+        
+        <div style="background: #d1ecf1; border: 2px solid #bee5eb; padding: 1rem; margin-top: 1.5rem;">
+            <p style="margin: 0; font-style: italic;">
+                <strong>Remember:</strong> This is AI exploring how different cognitive approaches can inform technical learning and development planning.
+            </p>
+        </div>
+    </div>
+</body>
+</html> 

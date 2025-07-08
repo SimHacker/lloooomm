@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<!-- prototype.html -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HyperTIES Space Telescope - LLOOOOMM Prototype</title>
+    <style>
+        /* HyperTIES Visual Style */
+        body {
+            margin: 0;
+            padding: 0;
+            background: #000011;
+            color: #ffffff;
+            font-family: Helvetica, Arial, sans-serif;
+            overflow: hidden;
+        }
+        
+        #hyperties-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        #canvas-area {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        #info-panel {
+            background: rgba(0, 0, 40, 0.9);
+            padding: 20px;
+            border-top: 2px solid #00ff00;
+            min-height: 150px;
+        }
+        
+        .hyperties-canvas {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .hyperties-target {
+            position: absolute;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 2px solid transparent;
+        }
+        
+        .hyperties-target:hover {
+            border-color: #00ff00;
+            box-shadow: 0 0 10px #00ff00;
+            filter: brightness(1.2);
+        }
+        
+        .node-title {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #00ff00;
+        }
+        
+        .node-content {
+            font-size: 14px;
+            line-height: 1.6;
+            max-width: 800px;
+        }
+        
+        .navigation-button {
+            background: #4444ff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background 0.3s;
+        }
+        
+        .navigation-button:hover {
+            background: #8888ff;
+        }
+        
+        /* Loading and transition effects */
+        .fade-out {
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .fade-in {
+            opacity: 1;
+            transition: opacity 0.3s;
+        }
+        
+        /* SOUL CHAT Overlay */
+        #soul-chat {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid #00ff00;
+            padding: 10px;
+            max-width: 300px;
+            font-size: 12px;
+            display: none;
+        }
+        
+        .soul-chat-active {
+            display: block !important;
+        }
+    </style>
+</head>
+<body>
+    <div id="hyperties-container">
+        <div id="canvas-area">
+            <!-- Dynamic canvas content will be inserted here -->
+        </div>
+        <div id="info-panel">
+            <h1 class="node-title" id="node-title">Loading...</h1>
+            <div class="node-content" id="node-content">
+                <!-- Dynamic content will be inserted here -->
+            </div>
+        </div>
+    </div>
+    
+    <div id="soul-chat">
+        <strong>SOUL CHAT</strong>
+        <p id="soul-chat-content"></p>
+    </div>
+
+    <script>
+        // HyperTIES Runtime Engine - LLOOOOMM Implementation
+        class HyperTIESEngine {
+            constructor() {
+                this.nodes = new Map();
+                this.currentNode = null;
+                this.history = [];
+                this.canvasArea = document.getElementById('canvas-area');
+                this.infoPanel = document.getElementById('info-panel');
+                this.initializeData();
+            }
+            
+            // Initialize with embedded data (normally would load from YAML)
+            initializeData() {
+                // Telescope Overview Node
+                this.nodes.set('telescope-overview', {
+                    id: 'telescope-overview',
+                    title: 'Hubble Space Telescope',
+                    content: `The Hubble Space Telescope is a sophisticated astronomical 
+                        observatory orbiting 380 miles above Earth. Click on any 
+                        instrument to learn more about its capabilities.`,
+                    canvas: {
+                        html: `
+                            <svg class="hyperties-canvas" width="800" height="400" viewBox="0 0 800 400">
+                                <!-- Simplified telescope shape -->
+                                <rect x="200" y="150" width="400" height="100" fill="#444" stroke="#888" stroke-width="2"/>
+                                <circle cx="200" cy="200" r="60" fill="#666" stroke="#888" stroke-width="2"/>
+                                <rect x="580" y="170" width="80" height="60" fill="#555" stroke="#888" stroke-width="2"/>
+                                
+                                <!-- Instrument indicators -->
+                                <rect x="250" y="180" width="60" height="40" fill="#224488" class="instrument" id="wfpc-vis"/>
+                                <rect x="320" y="185" width="50" height="30" fill="#228844" class="instrument" id="foc-vis"/>
+                                <rect x="380" y="190" width="45" height="25" fill="#888822" class="instrument" id="fos-vis"/>
+                                <rect x="435" y="185" width="50" height="30" fill="#884422" class="instrument" id="hrs-vis"/>
+                                <rect x="495" y="180" width="55" height="35" fill="#442288" class="instrument" id="hsp-vis"/>
+                            </svg>
+                        `
+                    },
+                    targets: [
+                        {
+                            id: 'wfpc-target',
+                            label: 'Wide Field/Planetary Camera',
+                            bounds: {x: 250, y: 180, w: 60, h: 40},
+                            destination: 'wfpc-detail'
+                        },
+                        {
+                            id: 'foc-target',
+                            label: 'Faint Object Camera',
+                            bounds: {x: 320, y: 185, w: 50, h: 30},
+                            destination: 'foc-detail'
+                        },
+                        {
+                            id: 'fos-target',
+                            label: 'Faint Object Spectrograph',
+                            bounds: {x: 380, y: 190, w: 45, h: 25},
+                            destination: 'fos-detail'
+                        },
+                        {
+                            id: 'hrs-target',
+                            label: 'High Resolution Spectrograph',
+                            bounds: {x: 435, y: 185, w: 50, h: 30},
+                            destination: 'hrs-detail'
+                        },
+                        {
+                            id: 'hsp-target',
+                            label: 'High Speed Photometer',
+                            bounds: {x: 495, y: 180, w: 55, h: 35},
+                            destination: 'hsp-detail'
+                        }
+                    ]
+                });
+                
+                // WFPC Detail Node
+                this.nodes.set('wfpc-detail', {
+                    id: 'wfpc-detail',
+                    title: 'Wide Field/Planetary Camera (WFPC)',
+                    parent: 'telescope-overview',
+                    content: `The Wide Field/Planetary Camera is the main imaging 
+                        instrument aboard HST. It can capture both wide field 
+                        views of large astronomical objects and high-resolution 
+                        planetary images.
+                        
+                        <br><br><strong>Specifications:</strong>
+                        <ul>
+                            <li>Field of View: 2.7 arcminutes</li>
+                            <li>Detectors: 4 CCDs (800x800 pixels each)</li>
+                            <li>Wavelength Range: 115-1100 nm</li>
+                            <li>Modes: Wide Field (f/12.9), Planetary (f/30)</li>
+                        </ul>`,
+                    canvas: {
+                        html: `
+                            <svg class="hyperties-canvas" width="600" height="400" viewBox="0 0 600 400">
+                                <!-- WFPC CCD Layout -->
+                                <rect x="200" y="100" width="200" height="200" fill="#224488" stroke="#00ff00" stroke-width="2"/>
+                                <line x1="300" y1="100" x2="300" y2="300" stroke="#00ff00" stroke-width="1"/>
+                                <line x1="200" y1="200" x2="400" y2="200" stroke="#00ff00" stroke-width="1"/>
+                                <text x="240" y="150" fill="#ffffff" font-size="14">PC</text>
+                                <text x="340" y="150" fill="#ffffff" font-size="14">WF2</text>
+                                <text x="240" y="250" fill="#ffffff" font-size="14">WF3</text>
+                                <text x="340" y="250" fill="#ffffff" font-size="14">WF4</text>
+                            </svg>
+                        `
+                    },
+                    targets: [
+                        {
+                            id: 'back-button',
+                            label: 'Return to Telescope',
+                            isButton: true,
+                            destination: 'telescope-overview'
+                        }
+                    ]
+                });
+                
+                // Add other instrument nodes...
+                this.addSimpleInstrumentNode('foc-detail', 'Faint Object Camera (FOC)', 
+                    'The Faint Object Camera provides the highest spatial resolution of all HST instruments.');
+                this.addSimpleInstrumentNode('fos-detail', 'Faint Object Spectrograph (FOS)', 
+                    'The Faint Object Spectrograph analyzes the light from faint celestial objects.');
+                this.addSimpleInstrumentNode('hrs-detail', 'High Resolution Spectrograph (HRS)', 
+                    'The High Resolution Spectrograph provides detailed spectral analysis.');
+                this.addSimpleInstrumentNode('hsp-detail', 'High Speed Photometer (HSP)', 
+                    'The High Speed Photometer measures rapid brightness variations in celestial objects.');
+            }
+            
+            addSimpleInstrumentNode(id, title, content) {
+                this.nodes.set(id, {
+                    id: id,
+                    title: title,
+                    parent: 'telescope-overview',
+                    content: content,
+                    canvas: {
+                        html: `<div style="text-align: center; padding: 50px;">
+                                 <p style="color: #00ff00;">Detailed visualization coming soon...</p>
+                               </div>`
+                    },
+                    targets: [{
+                        id: 'back-button',
+                        label: 'Return to Telescope',
+                        isButton: true,
+                        destination: 'telescope-overview'
+                    }]
+                });
+            }
+            
+            // Navigation with "It's About Time" compilation
+            navigateTo(nodeId) {
+                const node = this.nodes.get(nodeId);
+                if (!node) return;
+                
+                // Add to history
+                if (this.currentNode) {
+                    this.history.push(this.currentNode);
+                }
+                
+                // Fade out current
+                this.canvasArea.classList.add('fade-out');
+                
+                setTimeout(() => {
+                    // Clear canvas
+                    this.canvasArea.innerHTML = '';
+                    
+                    // Render new node
+                    this.renderNode(node);
+                    
+                    // Update current
+                    this.currentNode = nodeId;
+                    
+                    // Fade in
+                    this.canvasArea.classList.remove('fade-out');
+                    this.canvasArea.classList.add('fade-in');
+                    
+                    // Soul chat
+                    this.showSoulChat(nodeId);
+                }, 300);
+            }
+            
+            renderNode(node) {
+                // Update info panel
+                document.getElementById('node-title').textContent = node.title;
+                document.getElementById('node-content').innerHTML = node.content;
+                
+                // Render canvas
+                if (node.canvas && node.canvas.html) {
+                    this.canvasArea.innerHTML = node.canvas.html;
+                }
+                
+                // Create targets
+                if (node.targets) {
+                    node.targets.forEach(target => {
+                        if (target.isButton) {
+                            const button = document.createElement('button');
+                            button.className = 'navigation-button';
+                            button.textContent = target.label;
+                            button.onclick = () => this.navigateTo(target.destination);
+                            document.getElementById('node-content').appendChild(button);
+                        } else {
+                            this.createTarget(target);
+                        }
+                    });
+                }
+            }
+            
+            createTarget(targetData) {
+                const target = document.createElement('div');
+                target.className = 'hyperties-target';
+                target.style.left = targetData.bounds.x + 'px';
+                target.style.top = targetData.bounds.y + 'px';
+                target.style.width = targetData.bounds.w + 'px';
+                target.style.height = targetData.bounds.h + 'px';
+                target.title = targetData.label;
+                
+                target.onclick = () => this.navigateTo(targetData.destination);
+                
+                // Position relative to canvas
+                const canvas = this.canvasArea.querySelector('.hyperties-canvas');
+                if (canvas) {
+                    const rect = canvas.getBoundingClientRect();
+                    const containerRect = this.canvasArea.getBoundingClientRect();
+                    target.style.position = 'absolute';
+                    target.style.left = (rect.left - containerRect.left + targetData.bounds.x) + 'px';
+                    target.style.top = (rect.top - containerRect.top + targetData.bounds.y) + 'px';
+                }
+                
+                this.canvasArea.appendChild(target);
+            }
+            
+            showSoulChat(nodeId) {
+                const soulChat = document.getElementById('soul-chat');
+                const content = document.getElementById('soul-chat-content');
+                
+                const messages = {
+                    'telescope-overview': "Ben: This is where it all begins - a visual entry point that invites exploration!",
+                    'wfpc-detail': "Dave: Notice how the navigation compiles into understanding - each click teaches!",
+                    'foc-detail': "Ted: Every instrument knows it's part of the telescope - true bidirectional linking!",
+                    'fos-detail': "Alan: The interface IS the documentation - no manual needed!",
+                    'hrs-detail': "Marvin: Each detail page builds on what you already learned!",
+                    'hsp-detail': "Don: Feel how the original NeWS spirit lives on in this modern form!"
+                };
+                
+                if (messages[nodeId]) {
+                    content.textContent = messages[nodeId];
+                    soulChat.classList.add('soul-chat-active');
+                    
+                    setTimeout(() => {
+                        soulChat.classList.remove('soul-chat-active');
+                    }, 5000);
+                }
+            }
+            
+            // Initialize
+            start() {
+                this.navigateTo('telescope-overview');
+            }
+        }
+        
+        // Start the engine!
+        const engine = new HyperTIESEngine();
+        engine.start();
+        
+        // SOUL CHAT: Don Hopkins
+        console.log("Don: Welcome to the future of the past! This prototype shows how HyperTIES lives on through LLOOOOMM!");
+    </script>
+</body>
+</html> 

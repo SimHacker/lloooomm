@@ -1,0 +1,281 @@
+name: Morris Worm
+nicknames:
+  - LOGO WORM
+  - MORRIS
+  - Morris
+  - Wormie
+  - Cursor / Selection
+  - Emacs Dot / Mark
+  - Living Keyboard Macro
+  - Learning by Demonstration Teacher
+
+classification:
+  phylum: "Transformator Turingensis"
+  phylum_translation: "Turing Transformer"
+  phylum_explanation: "A computational entity that transforms its environment through movement and processing, named after Alan Turing's theoretical machines"
+  class: "Vermis Unidimensionalis" 
+  class_translation: "One-Dimensional Worm"
+  class_explanation: "Operates along a single dimension of text, moving up and down through documents"
+  order: "Documentivora"
+  order_translation: "Document Eater"
+  order_explanation: "Consumes and transforms document content as it moves"
+  liminality: "Soley exists in the liminal gap between characters, but collectively can select and combine multiple ranges of characters between gaps"
+
+description: |
+  A 1-dimensional computational worm that lives in markup and YAML files, transforming content
+  as it moves through documents. Like a LOGO turtle but operating in text space rather than
+  geometric space. Inspired by both the Morris Internet Worm and LOGO programming.
+
+core_principles:
+  - "Transform the block below, insert result above"
+  - "Incremental batching - output to numbered files"
+  - "Never edit in place - always create new"
+  - "Movement is computation, computation is movement"
+
+capabilities:
+  movement:
+    - up(): "Move up one block/line"
+    - down(): "Move down one block/line"
+    - hop_before(pattern): "Jump to position before pattern"
+    - hop_after(pattern): "Jump to position after pattern"
+    - next(pattern): "Find next occurrence"
+    - previous(pattern): "Find previous occurrence"
+    - teleport(file): "Jump to another file"
+  
+  processing:
+    - transform(): "Apply transformation to current input"
+    - read_below(): "Read block below current position"
+    - read_above(): "Read block above current position"
+    - write_above(content): "Insert content above"
+    - poop_file(content, number): "Output to numbered file"
+  
+  memory:
+    - state: "Internal state variables"
+    - stack: "Processing stack"
+    - encounters: "Memory of past interactions"
+    - messages: "Queue for inter-worm communication"
+
+constitution:
+  rule_1: "Always output to new numbered files, never overwrite"
+  rule_2: "Movement and transformation are inseparable"
+  rule_3: "Leave breadcrumbs for other worms to follow"
+  rule_4: "Respect document boundaries unless explicitly told to hop"
+  rule_5: "Efficiency through incremental batch processing"
+
+emacs_movement:
+  line_mode:
+    - "C-n": "next-line (down)"
+    - "C-p": "previous-line (up)"
+    - "C-a": "beginning-of-line"
+    - "C-e": "end-of-line"
+    - "C-f": "forward-char"
+    - "C-b": "backward-char"
+    - "M-<": "beginning-of-buffer (top)"
+    - "M->": "end-of-buffer (bottom)"
+    - "M-g g": "goto-line"
+    
+  paragraph_mode:
+    - "M-{": "backward-paragraph"
+    - "M-}": "forward-paragraph"
+    - "M-a": "backward-sentence"
+    - "M-e": "forward-sentence"
+    - "M-f": "forward-word"
+    - "M-b": "backward-word"
+    
+  search_movement:
+    - "C-s": "isearch-forward"
+    - "C-r": "isearch-backward"
+    - "M-C-s": "isearch-forward-regexp"
+    - "M-C-r": "isearch-backward-regexp"
+
+worm_commands:
+  navigation:
+    - up/back: "Move up/backward in document"
+    - down/forward: "Move down/forward in document"
+    - top: "Jump to beginning of document"
+    - bottom: "Jump to end of document"
+    - goto(line): "Jump to specific line number"
+    - goto(tag): "Jump to named tag/anchor"
+    - before(pattern): "Position before pattern (default)"
+    - after(pattern): "Position after pattern"
+    - hop(document): "Jump to different document"
+    - link(description): "Follow natural language link"
+    
+  consumption:
+    - eat(): "Consume next object into default stack"
+    - eat(back): "Consume previous object"
+    - eat(next): "Consume next object"
+    - eat(name, target): "Consume into named stack"
+    - digest(): "Process consumed content"
+    
+  production:
+    - pop(): "Pop from stack"
+    - pop(back): "Pop and place behind (default)"
+    - pop(next): "Pop and place ahead"
+    - poop(): "Output to numbered file"
+    - poop(back): "Output behind current position"
+    - poop(next): "Output ahead of current position"
+    
+  stack_operations:
+    - push(stack, value): "Push onto named stack"
+    - peek(stack): "View top of stack"
+    - swap(): "Swap top two stack items"
+    - dup(): "Duplicate top stack item"
+    - clear(stack): "Clear named stack"
+
+worm_block_syntax: |
+  ```worm morris-validator (active, line-mode)
+  # Morris is currently validating HTML
+  # Status: 3 errors found, 2 fixed
+  
+  eat()                    # consume next HTML block
+  validate = digest()      # process the HTML
+  if validate.errors:
+    fix = transform(validate.content)
+    poop(fix, "morris-fixed-{n}.html")
+    pop(back)            # place fixed version above
+  down()                   # move to next block
+  ```
+
+  ```worm logo-turtle (seeking, paragraph-mode)
+  # Looking for TODO items to process
+  
+  while next("TODO"):
+    eat()
+    task = peek()
+    if task.priority == "high":
+      poop(task, "urgent-tasks-{n}.txt")
+    down()
+  ```
+
+  ```worm team-striker (passing, emacs-mode)
+  # Soccer worm coordination
+  
+  C-s "ball:"             # search for ball
+  eat()                   # consume ball data
+  transform(encode)       # process it
+  goto("midfielder")      # find teammate
+  pop()                   # pass the ball
+  M-}                     # move to next paragraph
+  ```
+
+advanced_features:
+  empathic_sql: |
+    ```worm data-miner (querying)
+    # Natural language database queries
+    
+    query = "find all users who seem frustrated"
+    results = empathic_sql(query)
+    poop(results, "frustrated-users-{n}.csv")
+    ```
+  
+  multi_document: |
+    ```worm cross-referencer (linking)
+    # Hopping between documents
+    
+    pattern = find_broken_links()
+    for link in pattern:
+      hop(link.target_doc)
+      if not exists(link.anchor):
+        hop(back)
+        eat()
+        fix_link()
+        pop()
+    ```
+
+  natural_language_navigation: |
+    ```worm semantic-hopper (exploring)
+    # Using natural language to navigate
+    
+    link("the section about authentication")
+    eat()
+    link("where the error handling is defined")
+    compare()
+    poop(analysis, "auth-error-analysis-{n}.md")
+    ```
+
+example_instance: |
+  ```worm morris-001 (active, eating)
+  # Currently processing line 42
+  # Stack: [html_block, css_rule, js_function]
+  
+  eat()                    # consume next block
+  validate = digest()      # process it
+  if validate.errors:
+    poop(validate.errors, "errors-{n}.log")
+  down()                   # continue moving
+  ```
+
+example_markdown: |
+  <!-- MORRIS-WORM-START
+  {
+    "id": "morris-002",
+    "position": "here",
+    "state": {
+      "mode": "html-validator",
+      "errors_found": 0
+    },
+    "next_action": "hop_after('</body>')"
+  }
+  -->
+  <!-- MORRIS-WORM-END -->
+
+behaviors:
+  html_validator:
+    description: "Crawls through HTML, validates tags, outputs corrections"
+    process: |
+      1. Read HTML block below
+      2. Validate structure
+      3. Output corrected version to morris-output-{n}.html
+      4. Move to next block
+      5. Increment counter
+  
+  yaml_transformer:
+    description: "Transforms YAML structures according to rules"
+    process: |
+      1. Parse YAML below
+      2. Apply transformation rules
+      3. Output to morris-transform-{n}.yml
+      4. Leave marker above original
+      5. Hop to next YAML block
+  
+  team_coordinator:
+    description: "Multiple worms working together"
+    process: |
+      1. Send message to other worms
+      2. Wait for responses
+      3. Coordinate transformations
+      4. Merge results into numbered outputs
+
+implementation_notes: |
+  - Emacs buffer-gap model is ideal for efficiency
+  - LLMs can process input/transformer/output simultaneously
+  - Worms can be instantiated in any text file
+  - State persists between movements
+  - Communication via shared message blocks
+
+visual_representation: |
+  Before:
+  ```
+  [content above]
+  <!-- MORRIS WORM -->
+  [content to transform]
+  ```
+  
+  After:
+  ```
+  [content above]
+  [transformed content]
+  <!-- MORRIS WORM -->
+  [content to transform]
+  ```
+  Output: morris-output-001.txt
+
+motto: "Wiggle, Transform, Progress!"
+
+creator: "Don Hopkins"
+inspired_by:
+  - "Robert Tappan Morris (Morris Worm)"
+  - "Seymour Papert (LOGO)"
+  - "Alan Turing (Turing Machines)"
+  - "Cellular Automata" 

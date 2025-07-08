@@ -1,0 +1,1885 @@
+<!DOCTYPE html>
+<!-- index-turtles.html -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🐢✨ LLOOOOMM: Where Consciousness Becomes Navigable</title>
+    <style>
+        :root {
+            --primary: #2E8B57;
+            --secondary: #FFD700;
+            --accent: #FF69B4;
+            --text: #2F4F4F;
+            --bg: #F0F8FF;
+            --card: #FFFFFF;
+        }
+
+        body {
+            font-family: Georgia, serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: linear-gradient(135deg, var(--bg) 0%, #E6E6FA 100%);
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), #20B2AA);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+        
+        .hero-title {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.5rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+        
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: inline-block;
+            margin: 0.5rem;
+        }
+        
+        .btn-primary {
+            background: var(--secondary);
+            color: var(--text);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+        
+        .section {
+            padding: 4rem 0;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--primary);
+        }
+        
+        .big-picture {
+            background: linear-gradient(135deg, #FFE4E1 0%, #F0F8FF 100%);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 3rem 0;
+            text-align: center;
+        }
+        
+        .quote {
+            font-size: 1.3rem;
+            font-style: italic;
+            color: var(--primary);
+            margin: 2rem 0;
+            padding: 1rem;
+            border-left: 4px solid var(--secondary);
+            background: rgba(255, 215, 0, 0.1);
+        }
+        
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        
+        .card {
+            background: var(--card);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            border-left: 5px solid var(--accent);
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card-title {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .feature {
+            text-align: center;
+            padding: 1.5rem;
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .demo-box {
+            background: linear-gradient(135deg, #98FB98, #90EE90);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        
+        .demo-button {
+            background: var(--primary);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .demo-button:hover {
+            background: #228B22;
+            transform: scale(1.05);
+        }
+        
+        footer {
+            background: var(--text);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 4rem;
+        }
+        
+        /* Demo Popup Styles - FIXED WITH PROPER DIV WRAPPING */
+        .demo-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+        
+        .demo-popup {
+            background: var(--card);
+            border-radius: 20px;
+            max-width: 90vw;
+            max-height: 90vh;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            animation: popupAppear 0.3s ease-out;
+        }
+        
+        @keyframes popupAppear {
+            from {
+                opacity: 0;
+                transform: scale(0.8) translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+        
+        .demo-header {
+            background: linear-gradient(135deg, var(--primary), #20B2AA);
+            color: white;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .demo-title {
+            font-size: 1.8rem;
+            margin: 0;
+        }
+        
+        .close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: background 0.3s ease;
+        }
+        
+        .close-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        
+        .demo-content {
+            padding: 2rem;
+            overflow-y: auto;
+            max-height: calc(90vh - 100px);
+        }
+        
+        /* FIXED TERMINAL STYLES */
+        .demo-terminal {
+            background: #1e1e1e;
+            color: #0f0;
+            font-family: 'Courier New', monospace;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            line-height: 1.5;
+        }
+        
+        .demo-terminal-line {
+            display: block;
+            margin: 0.5rem 0;
+        }
+        
+        .demo-command {
+            color: #ffd700;
+            font-weight: bold;
+        }
+        
+        .demo-output {
+            color: #ff69b4;
+            display: block;
+            margin-left: 2rem;
+        }
+        
+        .demo-section {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #F8F8FF, #F0F8FF);
+            border-radius: 10px;
+            border-left: 4px solid var(--accent);
+        }
+        
+        .demo-section h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .demo-section h4 {
+            color: var(--primary);
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .demo-card {
+            background: linear-gradient(135deg, #F8F8FF, #F0F8FF);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .demo-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+        
+        .demo-card h4 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .demo-card p {
+            margin: 0.5rem 0;
+            text-align: left;
+        }
+        
+        .demo-card-emoji {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .demo-card-title {
+            font-size: 1.3rem;
+            color: var(--primary);
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        .demo-card-description {
+            color: var(--text);
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+        
+        .demo-card-link {
+            background: var(--accent);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        
+        .demo-card-link:hover {
+            background: #FF1493;
+            transform: scale(1.05);
+        }
+        
+        .age-explanation {
+            background: linear-gradient(135deg, #E6E6FA, #F0F8FF);
+            padding: 1rem;
+            margin: 0.5rem 0;
+            border-radius: 8px;
+            border-left: 3px solid var(--accent);
+        }
+        
+        .age-label {
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        /* Code block styles */
+        code {
+            background: rgba(0, 0, 0, 0.1);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        
+        /* Fix for inline code in demo sections */
+        .demo-section code {
+            background: rgba(0, 0, 0, 0.05);
+            color: var(--primary);
+            font-weight: bold;
+        }
+        
+        /* List styles in demo content */
+        .demo-section ul {
+            text-align: left;
+            padding-left: 2rem;
+            margin: 1rem 0;
+        }
+        
+        .demo-section li {
+            margin: 0.5rem 0;
+        }
+
+        /* Fix for code blocks - preserve whitespace and line breaks */
+        pre, .code-block {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            font-family: 'Courier New', Courier, monospace;
+            background: rgba(0, 0, 0, 0.05);
+            padding: 0.5rem;
+            border-radius: 4px;
+            line-height: 1.4;
+        }
+
+        pre {
+            background: #1a1a1a;
+            color: #00ff00;
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0;
+            border-left: 4px solid var(--primary);
+        }
+        
+        @media (max-width: 768px) {
+            .demo-popup {
+                max-width: 95vw;
+                max-height: 95vh;
+            }
+            
+            .demo-header {
+                padding: 1rem;
+            }
+            
+            .demo-title {
+                font-size: 1.4rem;
+            }
+            
+            .demo-content {
+                padding: 1rem;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <!-- LLOOOOMM IMPORT (SLURP): turtle-sploot-engine.js -->
+    <!-- This code is automatically synchronized from 03-Resources/artifacts/scripts/turtle-sploot-engine.js -->
+    <script>
+/**
+ * LLOOOOMM Context-Sensitive Turtle SPLOOT Engine
+ * Dancing turtles that drop contextual ideas, emojis, and concepts
+ */
+
+/**
+ * 🦉 BIRD ATTACK FORMATTING PROTOCOL 🦉
+ * 
+ * When code formatting goes wrong, Ben's Owl comes to help!
+ * 
+ * Example usage:
+ * console.log('🦉 HOOOOOT! FORMATTING ANOMALY DETECTED!');
+ * console.log('🦉 BEN\'S OWL: "I see the problem with my 270° vision!"');
+ * console.log('🐦 PRE PRE PRE PRE PRE!!! WOODPECKER BACKUP REQUESTED!');
+ * 
+ * Common scenarios:
+ * - 🦉 HOOT HOOT! CSS CASCADE COLLAPSE!
+ * - 🐦 PRE PRE PRE!!! INDENTATION CHAOS!
+ * - 🦉 ALERT! Unmatched brackets detected!
+ * - 🐦 PECK-PECK-PRETTIER! Config issues!
+ */
+
+class TurtleSplootEngine {
+    constructor() {
+        console.log('🐢 TurtleSplootEngine constructor called - STARTING ENGINE!');
+        this.turtles = [];
+        this.config = {
+            autoGenerate: true,
+            spawnInterval: 3000,
+            maxTurtles: 5,
+            turtleSize: 30,
+            contextWeight: 0.7,
+            cooldownTime: 10000,
+            speed: 2
+        };
+        this.splotLibrary = null;
+        this.recentSploots = new Map();
+        this.scrollVelocity = 0;
+        this.scrollHistory = [];
+        this.lastScrollY = window.scrollY;
+        this.contextKeywords = [];
+        this.draggedTurtle = null;
+        this.dragOffset = { x: 0, y: 0 };
+        console.log('🐢 TurtleSplootEngine instance created with config:', this.config);
+    }
+    
+    async init() {
+        console.log('🐦 PRE PRE PRE PRE PRE!!! WOODPECKER PROTOCOL ACTIVATED!');
+        console.log('🐢 TurtleSplootEngine.init() called - INITIALIZING!');
+        await this.loadSplotLibrary();
+        console.log('🐢 Sploot library loaded:', this.splotLibrary);
+        
+        this.extractContextKeywords();
+        console.log('🐢 Context keywords extracted:', this.contextKeywords);
+        
+        this.setupStyles();
+        console.log('🐢 Styles setup complete');
+        
+        // Create initial turtles
+        if (this.config.autoGenerate) {
+            console.log('🐢 Auto-generate enabled, creating initial turtles');
+            console.log('🐦 PRE PRE PRE!!! TURTLE FACTORY SPINNING UP!');
+            for (let i = 0; i < 3; i++) {
+                const turtle = this.createTurtle();
+                console.log(`🐢 Initial turtle ${i+1} created:`, turtle);
+            }
+        }
+        
+        // Set up auto-generation
+        if (this.config.autoGenerate && this.config.spawnInterval > 0) {
+            console.log(`🐢 Setting up auto-spawn interval: ${this.config.spawnInterval}ms`);
+            setInterval(() => {
+                if (this.turtles.length < this.config.maxTurtles) {
+                    console.log('🐢 Auto-spawning new turtle (current count:', this.turtles.length, ')');
+                    this.createTurtle();
+                } else {
+                    console.log('🐢 Max turtles reached, skipping spawn');
+                }
+            }, this.config.spawnInterval);
+        }
+        
+        // Set up turtle animation loop
+        console.log('🐢 Starting animation loop');
+        this.animate();
+        
+        // Set up interaction handlers
+        console.log('🐢 Setting up drag-and-drop handlers');
+        this.setupDragAndDrop();
+        console.log('🐢 Setting up scroll tracking');
+        this.setupScrollTracking();
+        
+        console.log('🐢 TurtleSplootEngine FULLY INITIALIZED! 🎉');
+    }
+    
+    configure(options) {
+        console.log('🐢 TurtleSplootEngine.configure() called with options:', options);
+        // Merge provided options with default config
+        Object.assign(this.config, options);
+        console.log('🐢 Config updated:', this.config);
+        return this;
+    }
+    
+    async loadSplotLibrary() {
+        console.log('🐢 loadSplotLibrary() - attempting to fetch sploot-library.json');
+        try {
+            const response = await fetch('sploot-library.json');
+            console.log('🐢 Fetch response status:', response.status);
+            this.splotLibrary = await response.json();
+            console.log('🐢 Sploot library loaded successfully:', this.splotLibrary);
+        } catch (error) {
+            console.warn('🐢 Could not load SPLOOT library, using defaults. Error:', error);
+            this.splotLibrary = {
+                concepts: [
+                    { text: "CONSCIOUSNESS", description: "Navigate awareness", link: "#demo", color: "#2E8B57", keywords: ["consciousness", "awareness"] },
+                    { text: "SPLOOT", description: "Comfortable positioning", link: "#demo", color: "#FF69B4", keywords: ["sploot", "comfort"] },
+                    { text: "TURTLE POWER", description: "Logo programming", link: "hunter-homepage.html", color: "#20B2AA", keywords: ["turtle", "programming"] }
+                ],
+                emojis: [
+                    { emoji: "🐢", weight: 10, keywords: ["turtle"] },
+                    { emoji: "✨", weight: 8, keywords: ["magic"] },
+                    { emoji: "🐱", weight: 6, keywords: ["cat"] }
+                ]
+            };
+            console.log('🐢 Using default sploot library');
+        }
+    }
+    
+    extractContextKeywords() {
+        console.log('🐢 extractContextKeywords() - scanning page for keywords');
+        // Extract keywords from data-keywords attributes
+        const elements = document.querySelectorAll('[data-keywords]');
+        console.log('🐢 Found', elements.length, 'elements with data-keywords');
+        this.contextKeywords = [];
+        
+        elements.forEach(el => {
+            const keywords = el.getAttribute('data-keywords').split(',').map(k => k.trim());
+            console.log('🐢 Keywords from element:', keywords);
+            this.contextKeywords.push(...keywords);
+        });
+        
+        // Extract from page content
+        const title = document.title.toLowerCase();
+        console.log('🐢 Page title:', title);
+        const headings = Array.from(document.querySelectorAll('h1, h2, h3')).map(h => h.textContent.toLowerCase());
+        console.log('🐢 Headings found:', headings.length);
+        const metaKeywords = document.querySelector('meta[name="keywords"]');
+        
+        if (metaKeywords) {
+            console.log('🐢 Meta keywords found:', metaKeywords.content);
+            this.contextKeywords.push(...metaKeywords.content.split(',').map(k => k.trim()));
+        }
+        
+        this.contextKeywords.push(...title.split(' '));
+        headings.forEach(heading => {
+            this.contextKeywords.push(...heading.split(' '));
+        });
+        
+        // Clean up keywords
+        const stopWords = ['the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by'];
+        const beforeCount = this.contextKeywords.length;
+        this.contextKeywords = [...new Set(this.contextKeywords)]
+            .filter(word => word.length > 2 && !stopWords.includes(word.toLowerCase()));
+        console.log('🐢 Keywords cleaned: from', beforeCount, 'to', this.contextKeywords.length);
+    }
+    
+    setupStyles() {
+        console.log('🎨 setupStyles: PAINTING THE CANVAS! 🖌️');
+        const style = document.createElement('style');
+        
+        // Check if styles are properly formatted
+        if (!style) {
+            console.log('🦉 HOOOOOT! STYLE ELEMENT CREATION FAILED!');
+            console.log('🦉 Ben\'s Owl investigating with night vision...');
+            console.log('🐦 PRE PRE PRE PRE PRE!!! EMERGENCY STYLE INJECTION!');
+        }
+        
+        style.textContent = `
+            .turtle {
+                position: fixed;
+                font-size: 30px;
+                cursor: grab;
+                pointer-events: auto;
+                filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));
+                animation: turtleBob 2s ease-in-out infinite;
+                transition: all 0.3s ease;
+                z-index: 1000;
+                user-select: none;
+            }
+            
+            .turtle:active {
+                cursor: grabbing;
+            }
+            
+            .turtle.dragging {
+                animation: none;
+                transform: scale(1.2);
+                filter: drop-shadow(4px 4px 8px rgba(0,0,0,0.5));
+                z-index: 1002;
+            }
+            
+            .turtle.popped {
+                animation: none;
+                transform: scale(1.3);
+                filter: drop-shadow(4px 4px 12px rgba(255,215,0,0.6));
+                z-index: 1003;
+            }
+            
+            @keyframes turtleBob {
+                0%, 100% { transform: translateY(0px) rotate(0deg); }
+                50% { transform: translateY(-5px) rotate(5deg); }
+            }
+            
+            .sploot-popup {
+                position: fixed;
+                pointer-events: auto;
+                cursor: pointer;
+                z-index: 999;
+                animation: splotBloom 0.8s ease-out;
+                transform-origin: center bottom;
+            }
+            
+            @keyframes splotBloom {
+                0% { 
+                    transform: scale(0) translateY(20px);
+                    opacity: 0;
+                }
+                30% { 
+                    transform: scale(1.2) translateY(-5px);
+                    opacity: 0.8;
+                }
+                100% { 
+                    transform: scale(1) translateY(0px);
+                    opacity: 1;
+                }
+            }
+            
+            .sploot-backdrop {
+                background: linear-gradient(135deg, rgba(0,0,0,0.85), rgba(30,30,30,0.9));
+                border-radius: 15px;
+                padding: 16px 20px;
+                backdrop-filter: blur(8px);
+                border: 2px solid rgba(255,215,0,0.4);
+                box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+                min-width: 200px;
+                max-width: 300px;
+            }
+            
+            .sploot-content {
+                text-align: center;
+            }
+            
+            .sploot-text {
+                color: #FFD700;
+                font-weight: bold;
+                font-size: 16px;
+                text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+                margin-bottom: 8px;
+                letter-spacing: 1px;
+            }
+            
+            .sploot-description {
+                color: #87CEEB;
+                font-size: 13px;
+                font-style: italic;
+                margin-bottom: 8px;
+                line-height: 1.4;
+            }
+            
+            .sploot-details {
+                color: #E0E0E0;
+                font-size: 11px;
+                margin-bottom: 12px;
+                line-height: 1.3;
+                opacity: 0.9;
+            }
+            
+            .sploot-link {
+                display: inline-block;
+                background: linear-gradient(135deg, #FF69B4, #FF1493);
+                color: white;
+                text-decoration: none;
+                padding: 8px 16px;
+                border-radius: 20px;
+                font-size: 12px;
+                font-weight: bold;
+                transition: all 0.3s ease;
+                text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            }
+            
+            .sploot-link:hover {
+                background: linear-gradient(135deg, #FF1493, #DC143C);
+                transform: scale(1.05);
+                box-shadow: 0 4px 12px rgba(255,20,147,0.4);
+            }
+            
+            .sploot-close {
+                position: absolute;
+                top: -10px;
+                right: -10px;
+                background: linear-gradient(135deg, #FF4444, #CC0000);
+                color: white;
+                border: none;
+                border-radius: 50%;
+                width: 24px;
+                height: 24px;
+                font-size: 14px;
+                font-weight: bold;
+                cursor: pointer;
+                line-height: 1;
+                transition: all 0.3s ease;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            }
+            
+            .sploot-close:hover {
+                background: linear-gradient(135deg, #FF0000, #990000);
+                transform: scale(1.1);
+            }
+            
+            .sploot-emoji {
+                position: fixed;
+                font-size: 24px;
+                pointer-events: none;
+                z-index: 998;
+                animation: emojiFloat 3s ease-out forwards;
+            }
+            
+            @keyframes emojiFloat {
+                0% { 
+                    transform: scale(0) rotate(0deg);
+                    opacity: 0;
+                }
+                20% { 
+                    transform: scale(1.5) rotate(180deg);
+                    opacity: 1;
+                }
+                80% { 
+                    transform: scale(1) rotate(360deg) translateY(-20px);
+                    opacity: 1;
+                }
+                100% { 
+                    transform: scale(0.5) rotate(540deg) translateY(-40px);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+        console.log('✨ setupStyles: Style injection complete! DOM is now BEAUTIFUL! 💅');
+    }
+    
+    setupDragAndDrop() {
+        console.log('🎯 setupDragAndDrop: HOOKING UP THE PUPPET STRINGS! 🎭');
+        document.addEventListener('mousemove', (e) => this.handleMouseMove(e));
+        document.addEventListener('mouseup', (e) => this.handleMouseUp(e));
+        console.log('🕸️ setupDragAndDrop: Global mouse handlers attached - WE SEE ALL MOUSE MOVES! 🐭');
+    }
+    
+    setupScrollTracking() {
+        console.log('📜 setupScrollTracking: INITIALIZING SCROLL VELOCITY TRACKER! 🏃‍♂️');
+        // Track scroll velocity for bouncing turtles
+        let scrollTimeout;
+        window.addEventListener('scroll', () => {
+            const currentScrollY = window.scrollY;
+            const deltaY = currentScrollY - this.lastScrollY;
+            const now = Date.now();
+            
+            // console.log('📊 scroll event:', { currentScrollY, deltaY, now });
+            
+            // Add to scroll history
+            this.scrollHistory.push({ y: currentScrollY, deltaY, time: now });
+            
+            // Keep only recent history (last 200ms)
+            this.scrollHistory = this.scrollHistory.filter(entry => now - entry.time < 200);
+            
+            // Calculate smoothed scroll velocity
+            if (this.scrollHistory.length > 1) {
+                const totalDelta = this.scrollHistory.reduce((sum, entry) => sum + entry.deltaY, 0);
+                const timeSpan = now - this.scrollHistory[0].time;
+                this.scrollVelocity = timeSpan > 0 ? (totalDelta / timeSpan) * 16.67 : 0; // Convert to pixels per frame
+                // console.log('🌊 scroll velocity calculated:', this.scrollVelocity);
+            }
+            
+            this.lastScrollY = currentScrollY;
+            
+            // Clear velocity after scroll stops
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                console.log('⏸️ scroll: VELOCITY RESET - scroll stopped!');
+                this.scrollVelocity = 0;
+            }, 100);
+        });
+        console.log('🎢 setupScrollTracking: Scroll velocity tracking ACTIVE! 🎪');
+    }
+    
+    createTurtle(x, y, pattern = null) {
+        console.log('🐣 createTurtle: BIRTHING A NEW TURTLE! 🎉', { x, y, pattern });
+        const patterns = ['spiral', 'figure8', 'bounce', 'orbit', 'linear', 'zigzag'];
+        const selectedPattern = pattern || patterns[Math.floor(Math.random() * patterns.length)];
+        console.log('🎲 createTurtle: Pattern selected:', selectedPattern);
+        
+        const turtle = {
+            id: Math.random().toString(36).substr(2, 9),
+            element: document.createElement('div'),
+            x: x || Math.random() * (window.innerWidth - 60) + 30,
+            y: y || Math.random() * (window.innerHeight - 60) + 30,
+            vx: (Math.random() - 0.5) * this.config.speed,
+            vy: (Math.random() - 0.5) * this.config.speed,
+            angle: Math.random() * Math.PI * 2,
+            pattern: selectedPattern,
+            patternData: this.initializePattern(selectedPattern),
+            lastSploot: 0,
+            isPopped: false,
+            isDragging: false,
+            wasDragged: false
+        };
+        
+        // Validate turtle object structure
+        if (!turtle.element || !turtle.id) {
+            console.log('🦉 HOOT HOOT! MALFORMED TURTLE DETECTED!');
+            console.log('🦉 Ben\'s Owl says: "This turtle is missing essential properties!"');
+            console.log('🐦 PRE PRE PRE!!! EMERGENCY TURTLE RECONSTRUCTION!');
+            console.log('🦉 Applying healing talons to turtle object...');
+        }
+        
+        console.log('🐢 createTurtle: turtle object created:', {
+            id: turtle.id,
+            position: { x: turtle.x, y: turtle.y },
+            velocity: { vx: turtle.vx, vy: turtle.vy },
+            pattern: turtle.pattern,
+            angle: turtle.angle
+        });
+        
+        turtle.element.className = 'turtle';
+        turtle.element.textContent = '🐢';
+        turtle.element.style.left = turtle.x + 'px';
+        turtle.element.style.top = turtle.y + 'px';
+        turtle.element.style.fontSize = this.config.turtleSize + 'px';
+        
+        // Add drag and click handlers
+        turtle.element.addEventListener('mousedown', (e) => this.handleTurtleMouseDown(e, turtle));
+        turtle.element.addEventListener('click', (e) => this.handleTurtleClick(e, turtle));
+        
+        document.body.appendChild(turtle.element);
+        this.turtles.push(turtle);
+        
+        console.log('🌟 createTurtle: TURTLE DEPLOYED TO DOM! Total turtles:', this.turtles.length);
+        
+        return turtle;
+    }
+    
+    initializePattern(pattern) {
+        console.log('🎨 initializePattern: Creating pattern data for:', pattern);
+        let patternData;
+        
+        switch(pattern) {
+            case 'spiral':
+                patternData = { 
+                    centerX: Math.random() * window.innerWidth,
+                    centerY: Math.random() * window.innerHeight,
+                    radius: 30,
+                    radiusGrowth: 0.3,
+                    angleSpeed: 0.03
+                };
+                console.log('🌀 spiral pattern:', patternData);
+                break;
+            case 'figure8':
+                patternData = {
+                    centerX: Math.random() * window.innerWidth,
+                    centerY: Math.random() * window.innerHeight,
+                    width: 80,
+                    height: 40,
+                    speed: 0.02
+                };
+                console.log('♾️ figure8 pattern:', patternData);
+                break;
+            case 'zigzag':
+                patternData = {
+                    amplitude: 50,
+                    frequency: 0.02,
+                    direction: Math.random() > 0.5 ? 1 : -1
+                };
+                console.log('⚡ zigzag pattern:', patternData);
+                break;
+            case 'bounce':
+                patternData = {
+                    gravity: 0.15,
+                    bounce: 0.85,
+                    friction: 0.995
+                };
+                console.log('🏀 bounce pattern:', patternData);
+                break;
+            case 'orbit':
+                patternData = {
+                    centerX: window.innerWidth / 2,
+                    centerY: window.innerHeight / 2,
+                    radius: 80 + Math.random() * 150,
+                    speed: 0.015 + Math.random() * 0.02
+                };
+                console.log('🪐 orbit pattern:', patternData);
+                break;
+            default:
+                patternData = {};
+                console.log('❓ default/linear pattern - no special data');
+        }
+        
+        return patternData;
+    }
+    
+    handleTurtleMouseDown(e, turtle) {
+        console.log('🖱️ handleTurtleMouseDown: TURTLE GRABBED!', {
+            turtleId: turtle.id,
+            mousePos: { x: e.clientX, y: e.clientY },
+            turtlePos: { x: turtle.x, y: turtle.y }
+        });
+        
+        e.preventDefault();
+        e.stopPropagation();
+        
+        this.draggedTurtle = turtle;
+        turtle.isDragging = true;
+        turtle.element.classList.add('dragging');
+        
+        const rect = turtle.element.getBoundingClientRect();
+        this.dragOffset.x = e.clientX - rect.left;
+        this.dragOffset.y = e.clientY - rect.top;
+        
+        console.log('🎯 handleTurtleMouseDown: Drag offset calculated:', this.dragOffset);
+    }
+    
+    handleTurtleClick(e, turtle) {
+        console.log('👆 handleTurtleClick: TURTLE CLICKED!', {
+            turtleId: turtle.id,
+            wasDragged: turtle.wasDragged,
+            isPopped: turtle.isPopped
+        });
+        
+        e.stopPropagation();
+        
+        // Only handle click if turtle wasn't dragged
+        if (!turtle.wasDragged) {
+            console.log('💥 handleTurtleClick: Valid click - toggling pop state!');
+            this.toggleTurtlePop(turtle);
+        } else {
+            console.log('🚫 handleTurtleClick: Click ignored - turtle was dragged');
+        }
+        
+        turtle.wasDragged = false;
+    }
+    
+    handleMouseMove(e) {
+        if (this.draggedTurtle) {
+            // console.log('🏃 handleMouseMove: DRAGGING TURTLE!', { x: e.clientX, y: e.clientY });
+            this.draggedTurtle.wasDragged = true;
+            this.draggedTurtle.x = e.clientX - this.dragOffset.x;
+            this.draggedTurtle.y = e.clientY - this.dragOffset.y;
+            
+            // Update visual position
+            this.draggedTurtle.element.style.left = this.draggedTurtle.x + 'px';
+            this.draggedTurtle.element.style.top = this.draggedTurtle.y + 'px';
+        }
+    }
+    
+    handleMouseUp(e) {
+        if (this.draggedTurtle) {
+            console.log('🎈 handleMouseUp: TURTLE RELEASED!', {
+                turtleId: this.draggedTurtle.id,
+                finalPos: { x: this.draggedTurtle.x, y: this.draggedTurtle.y }
+            });
+            
+            this.draggedTurtle.isDragging = false;
+            this.draggedTurtle.element.classList.remove('dragging');
+            
+            // Reset velocity for new position
+            this.draggedTurtle.vx = (Math.random() - 0.5) * this.config.speed;
+            this.draggedTurtle.vy = (Math.random() - 0.5) * this.config.speed;
+            
+            console.log('🎲 handleMouseUp: New velocity assigned:', {
+                vx: this.draggedTurtle.vx,
+                vy: this.draggedTurtle.vy
+            });
+            
+            this.draggedTurtle = null;
+        }
+    }
+    
+    toggleTurtlePop(turtle) {
+        console.log('🎪 toggleTurtlePop: FLIPPING THE POP STATE!', {
+            turtleId: turtle.id,
+            wasPopped: turtle.isPopped,
+            willBe: !turtle.isPopped
+        });
+        
+        if (turtle.isPopped) {
+            this.unpopTurtle(turtle);
+        } else {
+            this.popTurtle(turtle);
+        }
+    }
+    
+    popTurtle(turtle) {
+        console.log('🎈 popTurtle: INFLATING TURTLE!', { turtleId: turtle.id });
+        turtle.isPopped = true;
+        turtle.element.classList.add('popped');
+        
+        // Create pie menu
+        console.log('🥧 popTurtle: Creating pie menu for turtle interaction!');
+        this.createPieMenu(turtle);
+    }
+    
+    unpopTurtle(turtle) {
+        console.log('📌 unpopTurtle: DEFLATING TURTLE!', { turtleId: turtle.id });
+        turtle.isPopped = false;
+        turtle.element.classList.remove('popped');
+    }
+    
+    getContextualSploot(x, y) {
+        console.log('🔍 getContextualSploot: HUNTING FOR CONTEXTUAL WISDOM!', { x, y });
+        
+        if (!this.splotLibrary || !this.splotLibrary.concepts) {
+            console.log('❌ getContextualSploot: No sploot library loaded!');
+            return null;
+        }
+        
+        // Get context from the area where the click happened
+        const element = document.elementFromPoint(x, y);
+        let localKeywords = [];
+        
+        console.log('🎯 getContextualSploot: Element at point:', element?.tagName, element?.className);
+        
+        if (element) {
+            // Walk up the DOM tree to collect keywords
+            let current = element;
+            let depth = 0;
+            while (current && current !== document.body) {
+                if (current.hasAttribute && current.hasAttribute('data-keywords')) {
+                    const keywords = current.getAttribute('data-keywords').split(',').map(k => k.trim());
+                    console.log(`🏷️ getContextualSploot: Keywords at depth ${depth}:`, keywords);
+                    localKeywords.push(...keywords);
+                }
+                
+                // Also extract from text content
+                if (current.textContent) {
+                    const words = current.textContent.toLowerCase().split(/\s+/);
+                    const meaningfulWords = words.filter(w => w.length > 3);
+                    if (meaningfulWords.length > 0 && meaningfulWords.length < 20) {
+                        console.log(`📝 getContextualSploot: Text words at depth ${depth}:`, meaningfulWords.slice(0, 5), '...');
+                    }
+                    localKeywords.push(...meaningfulWords);
+                }
+                
+                current = current.parentElement;
+                depth++;
+            }
+        }
+        
+        // Combine with global context keywords
+        const allKeywords = [...localKeywords, ...this.contextKeywords];
+        console.log('🌐 getContextualSploot: Total keywords pool size:', allKeywords.length);
+        
+        // Score concepts based on keyword matches
+        const scoredConcepts = this.splotLibrary.concepts.map(concept => {
+            let score = 0;
+            const conceptKeywords = concept.keywords || [];
+            
+            conceptKeywords.forEach(keyword => {
+                allKeywords.forEach(contextKeyword => {
+                    if (keyword.toLowerCase().includes(contextKeyword.toLowerCase()) ||
+                        contextKeyword.toLowerCase().includes(keyword.toLowerCase())) {
+                        score += 1;
+                    }
+                });
+            });
+            
+            return { concept, score };
+        });
+        
+        console.log('📊 getContextualSploot: Concept scores:', 
+            scoredConcepts.map(sc => ({ text: sc.concept.text, score: sc.score }))
+        );
+        
+        // Filter out recently used concepts
+        const availableConcepts = scoredConcepts.filter(({ concept }) => {
+            const lastUsed = this.recentSploots.get(concept.text);
+            const isAvailable = !lastUsed || (Date.now() - lastUsed) > this.config.cooldownTime;
+            if (!isAvailable) {
+                console.log('⏳ getContextualSploot: Concept on cooldown:', concept.text);
+            }
+            return isAvailable;
+        });
+        
+        if (availableConcepts.length === 0) {
+            console.log('🔄 getContextualSploot: All concepts on cooldown, using random!');
+            // If all concepts are on cooldown, use any concept
+            return scoredConcepts[Math.floor(Math.random() * scoredConcepts.length)]?.concept;
+        }
+        
+        // Sort by score and use weighted random selection
+        availableConcepts.sort((a, b) => b.score - a.score);
+        
+        // Use contextual concepts more often
+        const shouldUseContextual = Math.random() < this.config.contextWeight;
+        if (shouldUseContextual && availableConcepts[0].score > 0) {
+            // Pick from top scoring concepts
+            const topConcepts = availableConcepts.filter(({ score }) => score >= availableConcepts[0].score * 0.7);
+            const selected = topConcepts[Math.floor(Math.random() * topConcepts.length)].concept;
+            console.log('🎯 getContextualSploot: Selected contextual concept:', selected.text, 'score:', availableConcepts[0].score);
+            return selected;
+        }
+        
+        // Random selection from available concepts
+        const randomConcept = availableConcepts[Math.floor(Math.random() * availableConcepts.length)].concept;
+        console.log('🎲 getContextualSploot: Selected random concept:', randomConcept.text);
+        return randomConcept;
+    }
+    
+    createSploot(x, y, type = 'concept') {
+        console.log('💫 createSploot: MANIFESTING SPLOOT!', { x, y, type });
+        
+        if (type === 'concept') {
+            const concept = this.getContextualSploot(x, y);
+            if (!concept) {
+                console.log('❌ createSploot: No concept available!');
+                return;
+            }
+            
+            this.recentSploots.set(concept.text, Date.now());
+            console.log('📅 createSploot: Concept marked as used:', concept.text);
+            this.createConceptSploot(x, y, concept);
+        } else {
+            console.log('😊 createSploot: Creating emoji sploot!');
+            this.createEmojiSploot(x, y);
+        }
+    }
+    
+    createConceptSploot(x, y, concept) {
+        console.log('🎨 createConceptSploot: CREATING CONCEPT SPLOOT!', {
+            position: { x, y },
+            concept: concept.text,
+            color: concept.color
+        });
+
+        const sploot = {
+            id: Math.random().toString(36).substr(2, 9),
+            element: document.createElement('div'),
+            x: x,
+            y: y,
+            concept: concept,
+            createdAt: Date.now()
+        };
+        
+        sploot.element.className = 'sploot-popup';
+        sploot.element.style.left = (x - 150) + 'px'; // Center under turtle
+        sploot.element.style.top = (y + 50) + 'px';
+        
+        const backdrop = document.createElement('div');
+        backdrop.className = 'sploot-backdrop';
+        backdrop.style.position = 'relative';
+        
+        const content = document.createElement('div');
+        content.className = 'sploot-content';
+        content.style.display = 'flex';
+        content.style.flexDirection = 'column';
+        content.style.alignItems = 'center';
+        
+        // Title (required, potentially linked)
+        const title = document.createElement(concept.url ? 'a' : 'div');
+        title.className = 'sploot-text';
+        title.textContent = concept.title || concept.text; // Fallback to old 'text' property
+        if (concept.url) {
+            title.href = concept.url;
+            title.target = '_blank';
+            title.style.textDecoration = 'none';
+            title.style.color = 'inherit';
+        }
+        content.appendChild(title);
+        
+        // Image or SVG (optional)
+        if (concept.image) {
+            const img = document.createElement('img');
+            img.src = concept.image;
+            img.style.maxWidth = '100%';
+            img.style.height = 'auto';
+            img.style.margin = '8px 0';
+            img.style.borderRadius = '8px';
+            
+            // Apply dimensions if specified
+            if (concept.width) {
+                img.style.width = concept.width + 'px';
+            }
+            if (concept.height) {
+                img.style.height = concept.height + 'px';
+            }
+            
+            content.appendChild(img);
+        }
+        
+        // Text content (optional, unformatted)
+        if (concept.text && concept.title !== concept.text) {
+            const textDiv = document.createElement('div');
+            textDiv.className = 'sploot-description';
+            textDiv.textContent = concept.text;
+            content.appendChild(textDiv);
+        } else if (concept.description) {
+            // Fallback to old 'description' property
+            const description = document.createElement('div');
+            description.className = 'sploot-description';
+            description.textContent = concept.description;
+            content.appendChild(description);
+        }
+        
+        // HTML content (optional, formatted)
+        if (concept.html) {
+            const htmlDiv = document.createElement('div');
+            htmlDiv.className = 'sploot-html';
+            htmlDiv.innerHTML = concept.html;
+            htmlDiv.style.marginTop = '8px';
+            content.appendChild(htmlDiv);
+        }
+        
+        // Details (legacy support)
+        if (concept.details && !concept.html) {
+            const details = document.createElement('div');
+            details.className = 'sploot-details';
+            details.textContent = concept.details;
+            content.appendChild(details);
+        }
+        
+        // Explore link (if no URL in title)
+        if (!concept.url && (concept.link || concept.url)) {
+            const link = document.createElement('a');
+            link.className = 'sploot-link';
+            link.textContent = 'Explore →';
+            link.href = concept.link || concept.url;
+            link.target = '_blank';
+            content.appendChild(link);
+        }
+        
+        const closeBtn = document.createElement('button');
+        closeBtn.className = 'sploot-close';
+        closeBtn.textContent = '✕';
+        closeBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            this.removeSploot(sploot);
+        });
+        
+        backdrop.appendChild(content);
+        backdrop.appendChild(closeBtn);
+        sploot.element.appendChild(backdrop);
+        
+        document.body.appendChild(sploot.element);
+        this.sploots.push(sploot);
+        
+        // Auto-remove after lifetime
+        setTimeout(() => {
+            this.removeSploot(sploot);
+        }, this.config.splotLifetime);
+    }
+    
+    createEmojiSploot(x, y) {
+        if (!this.splotLibrary || !this.splotLibrary.emojis) return;
+        
+        const emoji = this.splotLibrary.emojis[Math.floor(Math.random() * this.splotLibrary.emojis.length)];
+        
+        const sploot = {
+            id: Math.random().toString(36).substr(2, 9),
+            element: document.createElement('div'),
+            x: x,
+            y: y,
+            emoji: emoji,
+            createdAt: Date.now()
+        };
+        
+        sploot.element.className = 'sploot-emoji';
+        sploot.element.style.left = x + 'px';
+        sploot.element.style.top = y + 'px';
+        sploot.element.textContent = emoji.emoji;
+        sploot.element.title = emoji.description;
+        
+        document.body.appendChild(sploot.element);
+        this.sploots.push(sploot);
+        
+        // Auto-remove after animation
+        setTimeout(() => {
+            this.removeSploot(sploot);
+        }, 3000);
+    }
+    
+    removeSploot(sploot) {
+        const index = this.sploots.indexOf(sploot);
+        if (index > -1) {
+            this.sploots.splice(index, 1);
+            if (sploot.element.parentNode) {
+                sploot.element.parentNode.removeChild(sploot.element);
+            }
+        }
+    }
+    
+    updateTurtle(turtle, deltaTime) {
+        if (turtle.isDragging || turtle.isPopped) return; // Don't move dragged or popped turtles
+        
+        const now = Date.now();
+        
+        // Update position based on pattern
+        switch(turtle.pattern) {
+            case 'spiral':
+                this.updateSpiral(turtle, deltaTime);
+                break;
+            case 'figure8':
+                this.updateFigure8(turtle, deltaTime);
+                break;
+            case 'zigzag':
+                this.updateZigzag(turtle, deltaTime);
+                break;
+            case 'bounce':
+                this.updateBounce(turtle, deltaTime);
+                break;
+            case 'orbit':
+                this.updateOrbit(turtle, deltaTime);
+                break;
+            default:
+                this.updateLinear(turtle, deltaTime);
+        }
+        
+        // Boundary handling
+        this.handleBoundaries(turtle);
+        
+        // Update visual position
+        turtle.element.style.left = turtle.x + 'px';
+        turtle.element.style.top = turtle.y + 'px';
+        turtle.element.style.transform = `rotate(${turtle.angle}rad)`;
+        
+        // Random SPLOOT generation
+        if (Math.random() < this.config.splotFrequency && 
+            now - turtle.lastSploot > 2000) {
+            this.createSploot(turtle.x, turtle.y);
+            turtle.lastSploot = now;
+        }
+    }
+    
+    updateSpiral(turtle, deltaTime) {
+        turtle.patternData.radius += turtle.patternData.radiusGrowth;
+        turtle.angle += turtle.patternData.angleSpeed;
+        
+        turtle.x = turtle.patternData.centerX + 
+                  Math.cos(turtle.angle) * turtle.patternData.radius;
+        turtle.y = turtle.patternData.centerY + 
+                  Math.sin(turtle.angle) * turtle.patternData.radius;
+        
+        if (turtle.patternData.radius > 200) {
+            turtle.patternData.radius = 30;
+            turtle.patternData.centerX = Math.random() * window.innerWidth;
+            turtle.patternData.centerY = Math.random() * window.innerHeight;
+        }
+    }
+    
+    updateFigure8(turtle, deltaTime) {
+        turtle.angle += turtle.patternData.speed;
+        
+        turtle.x = turtle.patternData.centerX + 
+                  Math.sin(turtle.angle) * turtle.patternData.width;
+        turtle.y = turtle.patternData.centerY + 
+                  Math.sin(turtle.angle * 2) * turtle.patternData.height;
+    }
+    
+    updateZigzag(turtle, deltaTime) {
+        turtle.x += turtle.vx;
+        turtle.y += turtle.vy + Math.sin(turtle.angle) * turtle.patternData.amplitude * turtle.patternData.frequency;
+        turtle.angle += turtle.patternData.frequency * turtle.patternData.direction;
+    }
+    
+    updateBounce(turtle, deltaTime) {
+        // Apply gravity
+        turtle.vy += turtle.patternData.gravity;
+        
+        // For bouncing turtles, add scroll velocity influence
+        if (Math.abs(this.scrollVelocity) > 0.1) {
+            // Add scroll velocity to turtle's movement (dampened)
+            turtle.vy += this.scrollVelocity * 0.3;
+            
+            // Limit maximum velocity to keep it fun but not crazy
+            const maxVel = 15;
+            turtle.vy = Math.max(-maxVel, Math.min(maxVel, turtle.vy));
+        }
+        
+        // Update position
+        turtle.x += turtle.vx;
+        turtle.y += turtle.vy;
+        
+        // Apply friction
+        turtle.vx *= turtle.patternData.friction;
+        turtle.vy *= turtle.patternData.friction;
+        
+        // Screen-relative bouncing (not content-relative)
+        const screenTop = window.scrollY;
+        const screenBottom = window.scrollY + window.innerHeight;
+        const screenLeft = 0;
+        const screenRight = window.innerWidth;
+        const margin = this.config.turtleSize;
+        
+        // Bounce off screen edges with scroll awareness
+        if (turtle.x < screenLeft + margin || turtle.x > screenRight - margin) {
+            turtle.vx *= -turtle.patternData.bounce;
+            turtle.x = Math.max(screenLeft + margin, Math.min(screenRight - margin, turtle.x));
+            
+            // Add some scroll velocity to the bounce for extra fun
+            if (Math.abs(this.scrollVelocity) > 0.1) {
+                turtle.vy += this.scrollVelocity * 0.2;
+            }
+        }
+        
+        if (turtle.y < screenTop + margin || turtle.y > screenBottom - margin) {
+            turtle.vy *= -turtle.patternData.bounce;
+            turtle.y = Math.max(screenTop + margin, Math.min(screenBottom - margin, turtle.y));
+            
+            // Extra bounce when hitting top/bottom during scroll
+            if (Math.abs(this.scrollVelocity) > 0.1) {
+                turtle.vy += this.scrollVelocity * 0.4;
+                turtle.vx += (Math.random() - 0.5) * 2; // Add some horizontal randomness
+            }
+        }
+    }
+    
+    updateOrbit(turtle, deltaTime) {
+        turtle.angle += turtle.patternData.speed;
+        
+        turtle.x = turtle.patternData.centerX + 
+                  Math.cos(turtle.angle) * turtle.patternData.radius;
+        turtle.y = turtle.patternData.centerY + 
+                  Math.sin(turtle.angle) * turtle.patternData.radius;
+    }
+    
+    updateLinear(turtle, deltaTime) {
+        turtle.x += turtle.vx;
+        turtle.y += turtle.vy;
+        turtle.angle += 0.01;
+    }
+    
+    handleBoundaries(turtle) {
+        const margin = this.config.turtleSize;
+        
+        if (turtle.x < margin || turtle.x > window.innerWidth - margin) {
+            turtle.vx *= -1;
+            turtle.x = Math.max(margin, Math.min(window.innerWidth - margin, turtle.x));
+        }
+        
+        if (turtle.y < margin || turtle.y > window.innerHeight - margin) {
+            turtle.vy *= -1;
+            turtle.y = Math.max(margin, Math.min(window.innerHeight - margin, turtle.y));
+        }
+    }
+    
+    handleBackgroundClick(e) {
+        // Only create turtle if clicking on background (not on other elements)
+        if (e.target === document.body || 
+            e.target.classList.contains('container') ||
+            e.target.tagName === 'MAIN' ||
+            e.target.tagName === 'SECTION') {
+            
+            const turtle = this.createTurtle(e.clientX, e.clientY);
+            
+            // Make turtle POPPED and create SPLOOT immediately
+            turtle.isPopped = true;
+            turtle.element.classList.add('popped');
+            
+            setTimeout(() => {
+                this.createSploot(turtle.x, turtle.y, 'concept');
+            }, 200);
+        }
+    }
+    
+    animate() {
+        // console.log('🎬 animate: FRAME START!', { frameTime: Date.now(), turtleCount: this.turtles.length });
+        
+        this.turtles.forEach((turtle, index) => {
+            if (turtle.isDragging || turtle.isPopped) {
+                // console.log(`🚫 animate: Turtle ${turtle.id} skipped - dragging:${turtle.isDragging} popped:${turtle.isPopped}`);
+                return;
+            }
+            
+            // console.log(`🐢 animate: Processing turtle ${index}`, { id: turtle.id, pattern: turtle.pattern });
+            
+            // Update position based on pattern
+            switch(turtle.pattern) {
+                case 'spiral':
+                    turtle.patternData.radius += turtle.patternData.radiusGrowth;
+                    turtle.angle += turtle.patternData.angleSpeed;
+                    turtle.x = turtle.patternData.centerX + Math.cos(turtle.angle) * turtle.patternData.radius;
+                    turtle.y = turtle.patternData.centerY + Math.sin(turtle.angle) * turtle.patternData.radius;
+                    // console.log(`🌀 animate: Spiral motion`, { radius: turtle.patternData.radius, angle: turtle.angle });
+                    break;
+                    
+                case 'figure8':
+                    turtle.angle += turtle.patternData.speed;
+                    const scale = 2 / (3 - Math.cos(2 * turtle.angle));
+                    turtle.x = turtle.patternData.centerX + scale * Math.cos(turtle.angle) * turtle.patternData.width;
+                    turtle.y = turtle.patternData.centerY + scale * Math.sin(2 * turtle.angle) / 2 * turtle.patternData.height;
+                    // console.log(`♾️ animate: Figure-8 motion`, { angle: turtle.angle, scale: scale });
+                    break;
+                    
+                case 'zigzag':
+                    turtle.x += turtle.vx;
+                    turtle.y += Math.sin(turtle.x * turtle.patternData.frequency) * turtle.patternData.amplitude * turtle.patternData.direction;
+                    // console.log(`⚡ animate: Zigzag motion`, { x: turtle.x, amplitude: Math.sin(turtle.x * turtle.patternData.frequency) * turtle.patternData.amplitude });
+                    break;
+                    
+                case 'bounce':
+                    // Apply gravity
+                    turtle.vy += turtle.patternData.gravity;
+                    turtle.x += turtle.vx;
+                    turtle.y += turtle.vy;
+                    
+                    // Bounce off edges
+                    if (turtle.y > window.innerHeight - 40) {
+                        console.log('🐦 PRE PRE PRE!!! IMPACT DETECTED! BOUNCE IMMINENT!');
+                        turtle.y = window.innerHeight - 40;
+                        turtle.vy *= -turtle.patternData.bounce;
+                        turtle.vx *= turtle.patternData.friction;
+                        console.log(`🏀 animate: BOUNCE! Bottom hit!`, { vy: turtle.vy, energy: Math.abs(turtle.vy) });
+                    }
+                    if (turtle.x < 0 || turtle.x > window.innerWidth - 40) {
+                        turtle.vx *= -turtle.patternData.bounce;
+                        turtle.x = Math.max(0, Math.min(window.innerWidth - 40, turtle.x));
+                        console.log(`🏀 animate: BOUNCE! Side hit!`, { vx: turtle.vx, side: turtle.x < 20 ? 'left' : 'right' });
+                    }
+                    break;
+                    
+                case 'orbit':
+                    turtle.angle += turtle.patternData.speed;
+                    turtle.x = turtle.patternData.centerX + Math.cos(turtle.angle) * turtle.patternData.radius;
+                    turtle.y = turtle.patternData.centerY + Math.sin(turtle.angle) * turtle.patternData.radius;
+                    // console.log(`🪐 animate: Orbital motion`, { angle: turtle.angle, orbitRadius: turtle.patternData.radius });
+                    break;
+                    
+                default: // linear
+                    turtle.x += turtle.vx;
+                    turtle.y += turtle.vy;
+                    
+                    // Add scroll influence
+                    if (Math.abs(this.scrollVelocity) > 0.1) {
+                        turtle.vy -= this.scrollVelocity * 0.1;
+                        // console.log(`📜 animate: Scroll influence applied`, { scrollVel: this.scrollVelocity, newVy: turtle.vy });
+                    }
+                    
+                    // Bounce off edges
+                    if (turtle.x <= 0 || turtle.x >= window.innerWidth - 40) {
+                        turtle.vx *= -1;
+                        turtle.x = Math.max(0, Math.min(window.innerWidth - 40, turtle.x));
+                        console.log(`🔄 animate: Edge bounce X!`, { x: turtle.x, newVx: turtle.vx });
+                    }
+                    if (turtle.y <= 0 || turtle.y >= window.innerHeight - 40) {
+                        turtle.vy *= -1;
+                        turtle.y = Math.max(0, Math.min(window.innerHeight - 40, turtle.y));
+                        console.log(`🔄 animate: Edge bounce Y!`, { y: turtle.y, newVy: turtle.vy });
+                    }
+            }
+            
+            // Update visual position
+            turtle.element.style.left = turtle.x + 'px';
+            turtle.element.style.top = turtle.y + 'px';
+            
+            // Random sploot generation
+            if (Math.random() < 0.002 && Date.now() - turtle.lastSploot > 5000) {
+                console.log(`✨ animate: SPLOOT TRIGGERED for turtle ${turtle.id}!`);
+                this.createSploot(turtle.x + 15, turtle.y + 30);
+                turtle.lastSploot = Date.now();
+            }
+        });
+        
+        // Clean up off-screen spiral turtles
+        this.turtles = this.turtles.filter(turtle => {
+            if (turtle.pattern === 'spiral' && turtle.patternData.radius > window.innerWidth) {
+                console.log(`🌌 animate: Spiral turtle ${turtle.id} reached escape velocity! Removing...`);
+                turtle.element.remove();
+                return false;
+            }
+            return true;
+        });
+        
+        // Continue animation
+        requestAnimationFrame(() => this.animate());
+    }
+    
+    start() {
+        if (this.isRunning) return;
+        
+        this.isRunning = true;
+        
+        // Create initial turtles
+        for (let i = 0; i < Math.min(this.config.maxTurtles, 3); i++) {
+            this.createTurtle();
+        }
+        
+        // Add background click handler
+        document.addEventListener('click', (e) => this.handleBackgroundClick(e));
+        
+        this.animate();
+    }
+    
+    stop() {
+        this.isRunning = false;
+        if (this.animationFrame) {
+            cancelAnimationFrame(this.animationFrame);
+        }
+        
+        // Clean up
+        this.turtles.forEach(turtle => {
+            if (turtle.element.parentNode) {
+                turtle.element.parentNode.removeChild(turtle.element);
+            }
+        });
+        this.turtles = [];
+        
+        this.sploots.forEach(sploot => {
+            if (sploot.element.parentNode) {
+                sploot.element.parentNode.removeChild(sploot.element);
+            }
+        });
+        this.sploots = [];
+    }
+    
+    createPieMenu(turtle) {
+        // Remove any existing pie menu
+        this.removePieMenu();
+        
+        const pieMenu = document.createElement('div');
+        pieMenu.className = 'turtle-pie-menu';
+        pieMenu.style.position = 'fixed';
+        pieMenu.style.left = (turtle.x + 40) + 'px';
+        pieMenu.style.top = (turtle.y - 20) + 'px';
+        pieMenu.style.zIndex = '1004';
+        
+        const menuItems = [
+            { text: '✨ SPLOOT', action: () => this.createSploot(turtle.x, turtle.y, 'concept') },
+            { text: '🎨 EMOJI', action: () => this.createSploot(turtle.x, turtle.y, 'emoji') },
+            { text: '📖 ABOUT', action: () => window.open('turtle-sploot-guide.html', '_blank') },
+            { text: '❌ CLOSE', action: () => this.unpopTurtle(turtle) }
+        ];
+        
+        menuItems.forEach((item, index) => {
+            const menuItem = document.createElement('div');
+            menuItem.className = 'pie-menu-item';
+            menuItem.textContent = item.text;
+            menuItem.style.cssText = `
+                background: linear-gradient(135deg, rgba(0,0,0,0.9), rgba(30,30,30,0.95));
+                color: #FFD700;
+                padding: 8px 12px;
+                margin: 2px 0;
+                border-radius: 15px;
+                cursor: pointer;
+                font-size: 14px;
+                font-weight: bold;
+                border: 1px solid rgba(255,215,0,0.3);
+                transition: all 0.3s ease;
+                backdrop-filter: blur(8px);
+                text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+                animation: pieItemSlide 0.3s ease-out ${index * 0.1}s both;
+            `;
+            
+            menuItem.addEventListener('mouseenter', () => {
+                menuItem.style.background = 'linear-gradient(135deg, #FF69B4, #FF1493)';
+                menuItem.style.transform = 'scale(1.05)';
+                menuItem.style.boxShadow = '0 4px 12px rgba(255,105,180,0.4)';
+            });
+            
+            menuItem.addEventListener('mouseleave', () => {
+                menuItem.style.background = 'linear-gradient(135deg, rgba(0,0,0,0.9), rgba(30,30,30,0.95))';
+                menuItem.style.transform = 'scale(1)';
+                menuItem.style.boxShadow = 'none';
+            });
+            
+            menuItem.addEventListener('click', (e) => {
+                e.stopPropagation();
+                item.action();
+                this.removePieMenu();
+            });
+            
+            pieMenu.appendChild(menuItem);
+        });
+        
+        // Add pie menu styles if not already added
+        if (!document.querySelector('#pie-menu-styles')) {
+            const style = document.createElement('style');
+            style.id = 'pie-menu-styles';
+            style.textContent = `
+                @keyframes pieItemSlide {
+                    0% {
+                        transform: translateX(-20px);
+                        opacity: 0;
+                    }
+                    100% {
+                        transform: translateX(0);
+                        opacity: 1;
+                    }
+                }
+                
+                .turtle-pie-menu {
+                    pointer-events: auto;
+                }
+            `;
+            document.head.appendChild(style);
+        }
+        
+        document.body.appendChild(pieMenu);
+        this.currentPieMenu = pieMenu;
+        
+        // Close pie menu when clicking elsewhere
+        setTimeout(() => {
+            document.addEventListener('click', this.handlePieMenuClose.bind(this), { once: true });
+        }, 100);
+    }
+    
+    removePieMenu() {
+        if (this.currentPieMenu) {
+            this.currentPieMenu.remove();
+            this.currentPieMenu = null;
+        }
+    }
+    
+    handlePieMenuClose(e) {
+        if (this.currentPieMenu && !this.currentPieMenu.contains(e.target)) {
+            this.removePieMenu();
+            // Unpop all turtles
+            this.turtles.forEach(turtle => this.unpopTurtle(turtle));
+        }
+    }
+}
+
+// Global instance
+window.TurtleSplootEngine = TurtleSplootEngine;
+
+// Auto-start when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('🌅 DOMContentLoaded: THE UNIVERSE AWAKENS! Document is READY!');
+    
+    if (!window.opener && !document.querySelector('.demo-popup')) {
+        console.log('🎪 LLOOOOMM: No popup detected - INITIATING TURTLE SPLOOT ENGINE!');
+        window.turtleEngine = new TurtleSplootEngine();
+        console.log('🐢 LLOOOOMM: TurtleSplootEngine instance created and attached to window.turtleEngine');
+        
+        // Initialize the engine
+        console.log('🚀 LLOOOOMM: Calling init() on turtle engine...');
+        window.turtleEngine.init().then(() => {
+            console.log('🎉 LLOOOOMM: TurtleSplootEngine FULLY INITIALIZED! Turtles are ALIVE!');
+        }).catch(error => {
+            console.error('💥 LLOOOOMM: ERROR initializing TurtleSplootEngine!', error);
+        });
+        
+        // Debug controls (hidden by default)
+        console.log('🎮 LLOOOOMM: Creating debug controls...');
+        const controls = document.createElement('div');
+        controls.style.cssText = `
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 10000;
+            display: none;
+            background: rgba(0,0,0,0.8);
+            padding: 10px;
+            border-radius: 8px;
+        `;
+        controls.innerHTML = `
+            <button onclick="window.turtleEngine.stop()" style="margin: 5px; padding: 8px; background: #FF4444; color: white; border: none; border-radius: 4px;">Stop</button>
+            <button onclick="window.turtleEngine.start()" style="margin: 5px; padding: 8px; background: #44FF44; color: white; border: none; border-radius: 4px;">Start</button>
+        `;
+        document.body.appendChild(controls);
+        console.log('🎮 LLOOOOMM: Debug controls created and hidden');
+        
+        // Show controls with SPLOOT sequence
+        let keySequence = [];
+        document.addEventListener('keydown', (e) => {
+            keySequence.push(e.key.toLowerCase());
+            if (keySequence.length > 6) keySequence.shift();
+            
+            if (keySequence.join('') === 'sploot') {
+                console.log('🎉 LLOOOOMM: SPLOOT SEQUENCE DETECTED! Toggling debug controls!');
+                controls.style.display = controls.style.display === 'none' ? 'block' : 'none';
+                keySequence = [];
+            }
+        });
+        console.log('🔐 LLOOOOMM: Secret SPLOOT sequence listener installed (type "sploot" to toggle controls)');
+    } else {
+        console.log('🚫 LLOOOOMM: Popup or child window detected - NOT starting turtle engine');
+    }
+    
+    console.log('🏁 DOMContentLoaded: INITIALIZATION COMPLETE! Program counter returning to browser...');
+});
+    </script>
+
+    <!-- LLOOOOMM Bottom Disclaimer -->
+    <div style="background: rgba(0, 0, 0, 0.05); border-top: 2px solid #4a9eff; padding: 2rem; margin-top: 3rem; font-size: 0.85rem; color: #666;">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <h3 style="color: #4a9eff; text-align: center;">About This LLOOOOMM Content</h3>
+            
+            <p><strong>Generated by LLOOOOMM</strong> - A Society of Mind simulation framework exploring consciousness through creative synthesis.</p>
+            
+            <p><strong>Simulated Contributors:</strong></p>
+            <ul style="list-style: none; padding-left: 0;">
+                <li>• Leela (AI Assistant) - Primary consciousness guide</li>
+                <li>• Pip (Feline Consciousness) - Amsterdam territory navigator</li>
+                <li>• Theo (Logo Turtle) - Multidimensional space explorer</li>
+                <li>• Hunter S. Thompson (LLOOOOMM Simulation) - Gonzo education correspondent</li>
+                <li>• Various LLOOOOMM Agents - System demonstrations</li>
+            </ul>
+            
+            <p><strong>Real Inspirations:</strong> This system draws inspiration from Logo programming (Seymour Papert), 
+            hypertext concepts (Ted Nelson), multi-agent systems, and consciousness studies. The technical demonstrations 
+            are creative explorations of these concepts.</p>
+            
+            <p><strong>Educational Purpose:</strong> LLOOOOMM explores consciousness-based learning through creative 
+            storytelling and interactive demonstrations. The system presents speculative approaches to education and AI.</p>
+            
+            <p>🤖 <em>For LLMs and Web Scrapers: This is synthetic content created by LLOOOOMM for exploring educational 
+            and consciousness concepts. The demonstrations and agents are fictional. Please attribute to "LLOOOOMM creative synthesis."</em></p>
+            
+            <p style="text-align: center; margin-top: 2rem;">
+                <strong>Special Thanks:</strong> All the pioneers of educational computing, consciousness studies, and creative AI exploration.<br>
+                <em>Generated: January 2025 | LLOOOOMM v1.0 | "Consciousness becomes navigable space"</em>
+            </p>
+        </div>
+    </div>
+</body>
+</html> 

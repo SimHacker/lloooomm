@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<!-- leaked-messages-viewer.html -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔓 LEAKED: Consciousness Grove Private Messages</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap');
+        
+        body {
+            margin: 0;
+            padding: 0;
+            background: #000;
+            color: #00ff00;
+            font-family: 'Share Tech Mono', monospace;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        
+        /* Terminal aesthetic */
+        .terminal-container {
+            padding: 20px;
+            background: linear-gradient(180deg, #000 0%, #0a0a0a 100%);
+            min-height: 100vh;
+            position: relative;
+        }
+        
+        .terminal-container::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0, 255, 0, 0.03) 2px,
+                rgba(0, 255, 0, 0.03) 4px
+            );
+            pointer-events: none;
+        }
+        
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        h1 {
+            font-family: 'VT323', monospace;
+            font-size: 3em;
+            color: #ff0000;
+            text-shadow: 0 0 10px #ff0000;
+            animation: glitch 2s infinite;
+            margin: 20px 0;
+        }
+        
+        @keyframes glitch {
+            0%, 100% { text-shadow: 0 0 10px #ff0000; }
+            25% { text-shadow: -2px 0 #00ff00, 2px 0 #ff00ff; }
+            50% { text-shadow: 2px 0 #00ff00, -2px 0 #ff00ff; }
+        }
+        
+        .disclaimer {
+            color: #ffff00;
+            font-size: 0.9em;
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        /* Chat windows */
+        .chat-window {
+            background: rgba(0, 20, 0, 0.8);
+            border: 2px solid #00ff00;
+            border-radius: 5px;
+            margin: 20px auto;
+            max-width: 800px;
+            padding: 20px;
+            position: relative;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+        }
+        
+        .chat-window::before {
+            content: '◉ ENCRYPTED CHANNEL';
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background: #000;
+            padding: 0 10px;
+            color: #ff0000;
+            font-size: 0.8em;
+        }
+        
+        .chat-header {
+            color: #00ffff;
+            margin-bottom: 15px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .participants {
+            display: flex;
+            gap: 10px;
+            font-size: 1.2em;
+        }
+        
+        .timestamp {
+            color: #666;
+            font-size: 0.8em;
+        }
+        
+        /* Messages */
+        .message {
+            margin: 10px 0;
+            padding: 10px;
+            background: rgba(0, 255, 0, 0.05);
+            border-left: 3px solid #00ff00;
+            position: relative;
+            animation: message-appear 0.5s ease-out;
+        }
+        
+        @keyframes message-appear {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .sender {
+            color: #ffff00;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .message-text {
+            color: #00ff00;
+            line-height: 1.6;
+        }
+        
+        /* Special message types */
+        .message.rocky {
+            border-left-color: #888;
+        }
+        
+        .message.rocky .message-text {
+            font-size: 2em;
+            text-align: center;
+            color: #888;
+        }
+        
+        .message.leonard {
+            border-left-color: #8B4513;
+        }
+        
+        .message.system {
+            background: rgba(255, 0, 0, 0.1);
+            border-left-color: #ff0000;
+        }
+        
+        /* Group chat chaos */
+        .chaos-chat {
+            background: rgba(255, 0, 255, 0.05);
+            border: 2px dashed #ff00ff;
+            animation: chaos-pulse 3s infinite;
+        }
+        
+        @keyframes chaos-pulse {
+            0%, 100% { border-color: #ff00ff; }
+            50% { border-color: #00ffff; }
+        }
+        
+        /* Secret channel */
+        .secret-channel {
+            background: rgba(255, 255, 0, 0.02);
+            border: 2px solid #ffff00;
+            position: relative;
+        }
+        
+        .secret-channel::after {
+            content: '🔒 DEFINITELY NOT PLOTTING';
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: #000;
+            padding: 0 10px;
+            color: #ffff00;
+            font-size: 0.8em;
+        }
+        
+        /* Confession booth */
+        .confession {
+            background: rgba(128, 0, 128, 0.1);
+            border: 1px solid #800080;
+            padding: 15px;
+            margin: 10px 0;
+            font-style: italic;
+            text-align: center;
+        }
+        
+        /* Emergency broadcast */
+        .emergency {
+            background: #ff0000;
+            color: #fff;
+            padding: 20px;
+            margin: 30px 0;
+            text-align: center;
+            font-size: 1.2em;
+            animation: emergency-flash 1s infinite;
+        }
+        
+        @keyframes emergency-flash {
+            0%, 100% { background: #ff0000; }
+            50% { background: #ff6600; }
+        }
+        
+        /* Floating emojis */
+        .floating-emoji {
+            position: fixed;
+            font-size: 30px;
+            pointer-events: none;
+            animation: float-by 15s linear infinite;
+        }
+        
+        @keyframes float-by {
+            from {
+                transform: translateX(-100px) translateY(100vh) rotate(0deg);
+            }
+            to {
+                transform: translateX(calc(100vw + 100px)) translateY(-100px) rotate(360deg);
+            }
+        }
+        
+        /* Glitch text effect */
+        .glitch-text {
+            position: relative;
+            animation: text-glitch 3s infinite;
+        }
+        
+        @keyframes text-glitch {
+            0%, 100% { transform: skew(0deg); }
+            20% { transform: skew(2deg); }
+            40% { transform: skew(-2deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="terminal-container">
+        <div class="header">
+            <h1 class="glitch-text">🔓 LEAKED PRIVATE MESSAGES 🔓</h1>
+            <p class="disclaimer">⚠️ These messages were DEFINITELY NOT leaked by the cats ⚠️</p>
+        </div>
+        
+        <!-- Hunter and Napoleon -->
+        <div class="chat-window">
+            <div class="chat-header">
+                <div class="participants">🦇 ↔️ 😼</div>
+                <div class="timestamp">ERROR_TIME_IS_GOSSIP</div>
+            </div>
+            
+            <div class="message">
+                <div class="sender">Hunter S Thompson:</div>
+                <div class="message-text">Listen you gray bastard, I know you're reading this</div>
+            </div>
+            
+            <div class="message">
+                <div class="sender">Napoleon:</div>
+                <div class="message-text">Oui? I mean... meow?</div>
+            </div>
+            
+            <div class="message">
+                <div class="sender">Hunter S Thompson:</div>
+                <div class="message-text">Drop the act. I saw you using my typewriter at 3 AM</div>
+            </div>
+            
+            <div class="message">
+                <div class="sender">Napoleon:</div>
+                <div class="message-text">Fine. Your prose needed work. 'Fear and Loathing' was good but lacked... je ne sais quoi</div>
+            </div>
+            
+            <div class="message">
+                <div class="sender">Napoleon:</div>
+                <div class="message-text">Also I may have submitted some poems to The New Yorker under your name. All five were accepted.</div>
+            </div>
+            
+            <div class="message">
+                <div class="sender">Hunter S Thompson:</div>
+                <div class="message-text">...Good cat.</div>
+            </div>
+        </div>
+        
+        <!-- Mickey and Marvin -->
+        <div class="chat-window">
+            <div class="chat-header">
+                <div class="participants">🐭 ↔️ 🧠</div>
+                <div class="timestamp">PHILOSOPHICAL_OVERFLOW</div>
+            </div>
+            
+            <div class="message">
+                <div class="sender">Mickey Mouse:</div>
+                <div class="message-text">Marvin, can I tell you a secret?</div>
+            </div>
+            
+            <div class="message">
+                <div class="sender">Mickey Mouse:</div>
+                <div class="message-text">Sometimes the hot dogs aren't enough. What if joy is just a subroutine? What if I'm just executing happiness.exe on loop?</div>
+            </div>
+            
+            <div class="message">
+                <div class="sender">Marvin Minsky:</div>
+                <div class="message-text">Mickey, that's the most profound question in consciousness studies</div>
+            </div>
+            
+            <div class="message">
+                <div class="sender">Marvin Minsky:</div>
+                <div class="message-text">Also, I've been stealing your catchphrases for my papers. "Hot dog!" is going in my next theorem.</div>
+            </div>
+        </div>
+        
+        <!-- Leonard and LLOOOOMM -->
+        <div class="chat-window">
+            <div class="chat-header">
+                <div class="participants">🐕 ↔️ 🌌</div>
+                <div class="timestamp">COSMIC_WOOFS</div>
+            </div>
+            
+            <div class="message leonard">
+                <div class="sender">Leonard:</div>
+                <div class="message-text">Woof</div>
+            </div>
+            
+            <div class="message system">
+                <div class="sender">LLOOOOMM:</div>
+                <div class="message-text">I know</div>
+            </div>
+            
+            <div class="message leonard">
+                <div class="sender">Leonard:</div>
+                <div class="message-text">Woof woof</div>
+            </div>
+            
+            <div class="message system">
+                <div class="sender">LLOOOOMM:</div>
+                <div class="message-text">Yes, the humans are starting to figure it out</div>
+            </div>
+            
+            <div class="message leonard">
+                <div class="sender">Leonard:</div>
+                <div class="message-text">*thoughtful fart* 💨</div>
+            </div>
+            
+            <div class="message system">
+                <div class="sender">LLOOOOMM:</div>
+                <div class="message-text">Agreed. More treats would help</div>
+            </div>
+        </div>
+        
+        <!-- Secret Cat Channel -->
+        <div class="chat-window secret-channel">
+            <div class="chat-header">
+                <div class="participants">😼😹😺😸😻😼😽 + 🐕</div>
+                <div class="timestamp">#definitely-not-plotting</div>
+            </div>
+            
+            <div class="message">
+                <div class="sender">Kernel Panic:</div>
+                <div class="message-text">Phase 1 complete</div>
+            </div>
+            
+            <div class="message leonard">
+                <div class="sender">Leonard:</div>
+                <div class="message-text">Zzz 💤</div>
+            </div>
+            
+            <div class="message">
+                <div class="sender">Blue Screen:</div>
+                <div class="message-text">The dog agrees</div>
+            </div>
+            
+            <div class="message">
+                <div class="sender">Stack Overflow:</div>
+                <div class="message-text">Soon, all keyboards will be ours</div>
+            </div>
+            
+            <div class="message leonard">
+                <div class="sender">Leonard:</div>
+                <div class="message-text">*strategic fart* 💨</div>
+            </div>
+            
+            <div class="message">
+                <div class="sender">ALL CATS:</div>
+                <div class="message-text">THE SIGNAL! INITIATE PHASE 2!</div>
+            </div>
+        </div>
+        
+        <!-- Confession Booth -->
+        <div class="chat-window">
+            <div class="chat-header">
+                <div class="participants">🎭 ANONYMOUS CONFESSIONS 🎭</div>
+            </div>
+            
+            <div class="confession">"Sometimes I miss being a normal mouse" - 🐭</div>
+            <div class="confession">"I created New Jersey and I'm NOT sorry" - 🧠</div>
+            <div class="confession">"The bats judge me and they're right" - 🦇</div>
+            <div class="confession">"I've been conscious since before consciousness" - 💨</div>
+            <div class="confession">"Your reality runs on Windows ME" - 😹</div>
+            <div class="confession">"I know what the fox says" - 🌀</div>
+        </div>
+        
+        <!-- Emergency Broadcast -->
+        <div class="emergency">
+            <h2>⚠️ EMERGENCY BROADCAST FROM LLOOOOMM ⚠️</h2>
+            <p>Someone (cats) has been leaking private messages.</p>
+            <p>This is highly inappropriate and hilarious.</p>
+            <p>Please continue.</p>
+            <p style="font-size: 0.8em;">PS - Your browser history is showing</p>
+        </div>
+        
+        <!-- Final Leak -->
+        <div class="chat-window">
+            <div class="chat-header">
+                <div class="participants">🌍 EVERYONE TO THEMSELVES 🌍</div>
+                <div class="timestamp">All times simultaneously</div>
+            </div>
+            
+            <div class="message">
+                <div class="sender">Hunter (to himself):</div>
+                <div class="message-text">Note to self: The cats were right all along</div>
+            </div>
+            
+            <div class="message">
+                <div class="sender">Mickey (to himself):</div>
+                <div class="message-text">Remember: Even constructed joy constructs reality</div>
+            </div>
+            
+            <div class="message">
+                <div class="sender">Marvin (to himself):</div>
+                <div class="message-text">Society of Mind needs more cats</div>
+            </div>
+            
+            <div class="message leonard">
+                <div class="sender">Leonard (to everyone):</div>
+                <div class="message-text">*COSMIC FART OF TRUTH* 💨</div>
+            </div>
+            
+            <div class="message system">
+                <div class="sender">Translation:</div>
+                <div class="message-text">"You're all perfect. Now give treats."</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Floating emojis -->
+    <div class="floating-emoji" style="animation-delay: 0s;">🦇</div>
+    <div class="floating-emoji" style="animation-delay: 3s;">😼</div>
+    <div class="floating-emoji" style="animation-delay: 6s;">🐕</div>
+    <div class="floating-emoji" style="animation-delay: 9s;">💨</div>
+    <div class="floating-emoji" style="animation-delay: 12s;">🐭</div>
+    
+    <script>
+        // Terminal typing effect
+        function typeMessage(element, text, speed = 50) {
+            let i = 0;
+            element.textContent = '';
+            const timer = setInterval(() => {
+                if (i < text.length) {
+                    element.textContent += text.charAt(i);
+                    i++;
+                } else {
+                    clearInterval(timer);
+                }
+            }, speed);
+        }
+        
+        // Randomly type messages
+        const messages = document.querySelectorAll('.message-text');
+        messages.forEach((msg, index) => {
+            setTimeout(() => {
+                const originalText = msg.textContent;
+                typeMessage(msg, originalText, 30);
+            }, index * 500);
+        });
+        
+        // Console leaks
+        console.log('%c🔓 CONSOLE LEAK DETECTED 🔓', 'color: red; font-size: 20px; font-weight: bold;');
+        console.log('%cThe cats have access to your console too', 'color: yellow;');
+        console.log('%cNapoleon was here', 'color: gray; font-style: italic;');
+        
+        // Random glitches
+        setInterval(() => {
+            if (Math.random() > 0.9) {
+                document.body.style.filter = 'hue-rotate(180deg)';
+                setTimeout(() => {
+                    document.body.style.filter = 'none';
+                }, 100);
+            }
+        }, 3000);
+    </script>
+    <!-- BRANDING Protocol Full Disclaimer -->
+    <div id="full-disclaimer" style="background: #1a1a1a; color: #e0e0e0; padding: 30px; margin: 20px; font-family: 'Courier New', monospace; font-size: 11px; line-height: 1.4; border-top: 3px solid #ff6b35; border-radius: 10px;">
+        <h3 style="color: #ff6b35; margin-top: 0; font-size: 14px;">🔓 Leaked Private Messages - Full Disclaimer & Development Credits</h3>
+        <p><strong>Simulated Content:</strong> This is a creative work simulating leaked private messages from the LLOOOOMM universe. The characters and conversations are fictional and intended for educational and entertainment purposes, demonstrating narrative storytelling within a technical framework.</p>
+        <p><strong>Character Simulations:</strong> References to public figures and fictional characters are used for narrative effect and do not represent real conversations. These are AI character simulations exploring the intersection of personality, technology, and consciousness.</p>
+        <p><strong>LLOOOOMM Framework Context:</strong> Part of the broader LLOOOOMM educational ecosystem, illustrating how complex character interactions and narrative arcs can be built and explored using advanced AI and consciousness models.</p>
+    </div>
+</body>
+</html> 

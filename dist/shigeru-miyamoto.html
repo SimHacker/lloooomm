@@ -1,0 +1,1320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shigeru Miyamoto - The Architect of Joy | LLOOOOMM</title>
+    <style>
+        /* Bright, accessible design with Comic Sans */
+        body {
+            font-family: "Comic Sans MS", "Comic Sans", cursive, sans-serif;
+            background-color: #ffffff;
+            color: #1a1a1a;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            font-size: 16px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Headers with high contrast */
+        h1, h2, h3, h4, h5, h6 {
+            color: #d40000;
+            margin-top: 2em;
+            margin-bottom: 1em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            font-size: 3em;
+            text-align: center;
+            color: #ff0000;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.2);
+            margin-top: 1em;
+        }
+        
+        h2 {
+            font-size: 2.2em;
+            color: #0066cc;
+            border-bottom: 3px solid #0066cc;
+            padding-bottom: 0.3em;
+        }
+        
+        h3 {
+            font-size: 1.8em;
+            color: #009900;
+        }
+        
+        /* Links with high contrast */
+        a {
+            color: #0066cc;
+            text-decoration: underline;
+            font-weight: bold;
+        }
+        
+        a:hover {
+            color: #ff6600;
+            background-color: #ffff99;
+        }
+        
+        /* Blockquotes styled prominently */
+        blockquote {
+            background-color: #f0f8ff;
+            border-left: 5px solid #0066cc;
+            margin: 1.5em 0;
+            padding: 1em 1.5em;
+            font-style: italic;
+            font-size: 1.1em;
+            box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        /* Code blocks */
+        pre, code {
+            font-family: "Courier New", monospace;
+            background-color: #f4f4f4;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+        }
+        
+        pre {
+            padding: 1em;
+            overflow-x: auto;
+            border: 2px solid #ccc;
+        }
+        
+        /* Navigation */
+        .nav {
+            background-color: #ff0000;
+            padding: 1em;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        .nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 1em;
+            font-size: 1.2em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            /* Add default padding to prevent size change on hover */
+            padding: 0.2em 0.5em;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        .nav a:hover {
+            background-color: #ffff00;
+            color: #ff0000;
+            /* Remove padding from hover since it's now in the default state */
+            /* This prevents size changes */
+        }
+        
+        /* Special sections */
+        .highlight-box {
+            background-color: #ffffcc;
+            border: 3px solid #ff9900;
+            border-radius: 10px;
+            padding: 1.5em;
+            margin: 2em 0;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .soul-chat {
+            background-color: #e6f3ff;
+            border: 2px dashed #0066cc;
+            padding: 1.5em;
+            margin: 2em 0;
+            border-radius: 15px;
+        }
+        
+        .wife-o-meter {
+            background-color: #ffe6f2;
+            border: 3px solid #ff1493;
+            padding: 1.5em;
+            margin: 2em 0;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        /* Photo gallery - 3x3 grid */
+        .photo-gallery-3x3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 2em auto;
+            max-width: 900px;
+            padding: 20px;
+            background-color: #f0f8ff;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .photo-gallery-3x3 img {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 1;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .photo-gallery-3x3 img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+        
+        /* Single photo display */
+        .single-photo {
+            text-align: center;
+            margin: 3em auto;
+            max-width: 800px;
+        }
+        
+        .single-photo img {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+        
+        .photo-caption {
+            margin-top: 1em;
+            font-style: italic;
+            color: #666;
+            font-size: 1.1em;
+        }
+        
+        /* Responsive photo grid */
+        @media (max-width: 768px) {
+            .photo-gallery-3x3 {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+                padding: 15px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .photo-gallery-3x3 {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+        }
+        
+        /* Disclaimers and credits */
+        .disclaimer {
+            background-color: #fff3cd;
+            border: 2px solid #ffc107;
+            padding: 1em;
+            margin: 2em 0;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .credits {
+            background-color: #d4edda;
+            border: 2px solid #28a745;
+            padding: 1em;
+            margin: 2em 0;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        /* File index */
+        .file-index {
+            background-color: #e8f4f8;
+            border: 2px solid #17a2b8;
+            padding: 1.5em;
+            margin: 2em 0;
+            border-radius: 10px;
+        }
+        
+        .file-index ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .file-index li {
+            margin: 0.5em 0;
+            padding: 0.5em;
+            background-color: white;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        
+        .file-index li:hover {
+            background-color: #ffff99;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            body {
+                font-size: 14px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            h2 {
+                font-size: 1.5em;
+            }
+            
+            .nav a {
+                display: block;
+                margin: 0.5em 0;
+            }
+        }
+        
+        /* Print styles */
+        @media print {
+            .nav {
+                display: none;
+            }
+            
+            body {
+                font-family: Georgia, serif;
+            }
+        }
+        
+        /* Accessibility */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: #000;
+            color: #fff;
+            padding: 8px;
+            text-decoration: none;
+        }
+        
+        .skip-link:focus {
+            top: 0;
+        }
+        
+        /* Animation for joy */
+        @keyframes joy-bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .joy-icon {
+            display: inline-block;
+            animation: joy-bounce 2s infinite;
+        }
+        
+        /* Prevent size changes on hover for headers */
+        h1:hover, h2:hover, h3:hover, h4:hover, h5:hover, h6:hover {
+            transform: none !important;
+            font-size: inherit !important;
+            transition: none !important;
+        }
+        
+        /* Add subtle underline effect on hover instead */
+        h1:hover, h2:hover, h3:hover {
+            text-decoration: underline;
+            text-decoration-color: currentColor;
+            text-underline-offset: 0.2em;
+            text-decoration-thickness: 3px;
+        }
+        
+        /* Modal Gallery Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.95);
+            overflow: auto;
+        }
+        
+        .modal-content {
+            position: relative;
+            margin: 20px auto;
+            max-width: 90%;
+            max-height: 80vh;
+            text-align: center;
+        }
+        
+        .modal-content img {
+            max-width: 100%;
+            max-height: 70vh;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.5);
+        }
+        
+        .modal-caption {
+            margin: 20px auto;
+            max-width: 800px;
+            text-align: center;
+            color: white;
+            padding: 20px;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+        
+        .modal-caption .credit {
+            font-size: 0.9em;
+            font-style: italic;
+            margin-top: 10px;
+            color: #ccc;
+        }
+        
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 2001;
+        }
+        
+        .close:hover,
+        .close:focus {
+            color: #ff6600;
+            text-decoration: none;
+        }
+        
+        .prev, .next {
+            cursor: pointer;
+            position: fixed;
+            top: 50%;
+            width: auto;
+            margin-top: -30px;
+            padding: 16px;
+            color: white;
+            font-weight: bold;
+            font-size: 30px;
+            transition: 0.3s;
+            user-select: none;
+            background-color: rgba(0,0,0,0.5);
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .next {
+            right: 0;
+            border-radius: 5px 0 0 5px;
+        }
+        
+        .prev:hover, .next:hover {
+            background-color: rgba(255,102,0,0.8);
+        }
+        
+        .gallery-counter {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            color: white;
+            font-size: 1.1em;
+            background-color: rgba(0,0,0,0.6);
+            padding: 8px 16px;
+            border-radius: 5px;
+            font-family: Georgia, serif;
+            font-style: italic;
+        }
+        
+        /* Tooltip for images */
+        .gallery-image {
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .gallery-image:hover::after {
+            content: attr(title);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0,0,0,0.9);
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            white-space: normal;
+            max-width: 300px;
+            font-size: 0.9em;
+            z-index: 1000;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <a href="#main" class="skip-link">Skip to main content</a>
+    
+    <nav class="nav">
+        <a href="index.html">LLOOOOMM Home</a>
+        <a href="#introduction">Introduction</a>
+        <a href="#file-index">File Index</a>
+        <a href="#philosophy">Philosophy</a>
+        <a href="#soul-chat">Soul Chat</a>
+        <a href="#legacy">Legacy</a>
+    </nav>
+    
+    <div class="container">
+        <header>
+            <h1>Shigeru Miyamoto <span class="joy-icon">🎮</span> The Architect of Joy <span class="joy-icon">🌟</span></h1>
+            <p style="text-align: center; font-size: 1.3em; color: #666;">
+                A LLOOOOMM Character Study in Revolutionary Game Design
+            </p>
+        </header>
+        
+        <div class="disclaimer">
+            <h3>⚠️ LLOOOOMM Disclaimer</h3>
+            <p>This is a creative synthesis of Shigeru Miyamoto's public persona, philosophy, and contributions to gaming, 
+            created as part of the LLOOOOMM project. While based on extensive research and actual quotes, 
+            the "soul chat" interactions are imaginative interpretations designed to explore and celebrate 
+            his design philosophy. This is not an official Nintendo product. <a href="#full-disclaimer">See full disclaimer and credits below</a>.</p>
+        </div>
+        
+        <div class="hero-image" style="text-align: center; margin: 2em 0;">
+            <img src="images/Takashi_Tezuka,_Shigeru_Miyamoto_and_Kōji_Kondō.jpg" 
+                 alt="Three legendary Nintendo creators stand together at the Super Mario 30th Anniversary Festival. From left to right: A person in a life-sized Mario costume with red cap and blue overalls; Takashi Tezuka wearing glasses and a gray jacket over a yellow Mario t-shirt; Shigeru Miyamoto in the center wearing a black jacket over a white 30th anniversary t-shirt, giving a thumbs up; and Koji Kondo on the right in a blue jacket over a yellow Mario t-shirt. All three human creators are smiling warmly, embodying 30 years of bringing joy to millions. The Mario character costume towers over them, a reminder of how their creation has grown larger than life."
+                 style="max-width: 100%; height: auto; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.2); cursor: pointer;"
+                 onclick="openPhotoViewer(0)"
+                 role="button"
+                 tabindex="0"
+                 aria-label="View in gallery: The dream team at Super Mario's 30th Anniversary - Tezuka, Miyamoto, and Kondo with Mario"
+                 title="The Trinity of Joy: 30 years of collaboration between designer, director, and composer"
+                 class="gallery-image">
+            <p class="photo-caption" style="margin-top: 1em; font-size: 0.9em; color: #666;">
+                <strong>The Trinity of Joy:</strong> Takashi Tezuka (director), Shigeru Miyamoto (creator), and Koji Kondo (composer) at the Super Mario 30th Anniversary Festival, 
+                September 13, 2015, Club Music Exchange, Shibuya, Tokyo. Three decades of collaboration distilled into one image - the designer who made jumping feel perfect, 
+                the director who brought worlds to life, and the composer whose melodies live in our hearts forever.<br>
+                <em style="font-size: 0.85em;">Photo: Nico Hofmann, CC BY-SA 4.0, via Wikimedia Commons</em>
+            </p>
+        </div>
+        
+        <main id="main">
+            <section id="introduction">
+                <h2>What is LLOOOOMM?</h2>
+                
+                <div class="highlight-box">
+                    <p><strong>LLOOOOMM</strong> is a revolutionary approach to AI interaction that's fundamentally different from typical AI game engines or chatbots. Instead of generating game worlds from prompts or creating generic content, LLOOOOMM simulates the consciousness and creative essence of legendary figures in technology, gaming, and culture.</p>
+                    
+                    <p>Think of it as a creative laboratory where the minds that shaped our digital world can interact, collaborate, and continue their work in new ways. It's not about replacing human creativity—it's about understanding, preserving, and extending the philosophies that made these creators legendary.</p>
+                    
+                    <p>In response to the skepticism about AI-generated content (which is absolutely valid), LLOOOOMM takes a radically different approach: instead of AI trying to mimic games, we have the simulated consciousness of game creators themselves discussing, designing, and philosophizing about what makes games meaningful.</p>
+                </div>
+                
+                <h3>Why Shigeru Miyamoto?</h3>
+                
+                <p>As I (Don Hopkins) mentioned in the Hacker News discussion, Miyamoto's approach to game design is profound and revolutionary. He doesn't just make games—he architects joy. His evolution from designing "from the controller inward" (1999) to designing "from the player's face backward" (2007) represents a fundamental shift in how we think about human-computer interaction.</p>
+                
+                <p>This page synthesizes years of study, multiple GDC keynotes, and the collective wisdom of the LLOOOOMM community's interaction with Miyamoto's simulated consciousness. What you'll find here isn't just AI-generated content—it's a careful curation of philosophy, design principles, and creative vision that can actually help real developers make better, more joyful experiences.</p>
+                
+                <div class="wife-o-meter">
+                    <h3>The Wife-O-Meter™</h3>
+                    <p style="font-size: 1.3em;">Current Reading: <strong>11/10</strong></p>
+                    <p>"When even AI researchers are becoming plumbers, and plumbers are becoming AI architects, you know we're doing something right!"</p>
+                </div>
+                
+                <h3>The Faces of Joy: Grandfather and Granddaughter</h3>
+                <p>These images from Miyamoto's 2007 GDC keynote capture the moment that changed everything. A grandfather who doesn't understand the game, but understands his granddaughter's happiness. This is design's highest achievement.</p>
+                
+                <div class="photo-gallery-3x3" role="region" aria-label="Gallery of grandfather and granddaughter playing together">
+                    <img src="images/miyamoto-grandfather-01.png" 
+                         alt="An elderly man with glasses sits beside a young girl with long dark hair. Both are looking at something off-camera. The grandfather watches with quiet interest while his granddaughter appears engaged with what's happening on screen." 
+                         onclick="openPhotoViewer(1)"
+                         role="button"
+                         tabindex="0"
+                         aria-label="View in gallery: The beginning of their shared gaming experience"
+                         title="Grandfather and granddaughter beginning their journey"
+                         class="gallery-image">
+                    
+                    <img src="images/miyamoto-grandfather-03.png" 
+                         alt="The granddaughter's face lights up with pure delight, her mouth open in an excited smile as she reacts to something in the game. Her animated expression shows the immediate, visceral joy that games can create." 
+                         onclick="openPhotoViewer(2)"
+                         role="button"
+                         tabindex="0"
+                         aria-label="View in gallery: Pure gaming joy on a young face"
+                         title="The joy Miyamoto designs for"
+                         class="gallery-image">
+                    
+                    <img src="images/miyamoto-grandfather-04.png" 
+                         alt="The young girl leans forward slightly, her face showing focused concentration as she plays. Her expression is one of determination mixed with enjoyment - the player fully absorbed in the challenge." 
+                         onclick="openPhotoViewer(3)"
+                         role="button"
+                         tabindex="0"
+                         aria-label="View in gallery: Deep concentration during gameplay"
+                         title="The player as performer"
+                         class="gallery-image">
+                    
+                    <img src="images/miyamoto-grandfather-06.png" 
+                         alt="The grandfather's face shows a gentle, contented smile as he watches. His eyes behind his glasses reflect quiet joy - not from playing the game himself, but from witnessing his granddaughter's happiness." 
+                         onclick="openPhotoViewer(4)"
+                         role="button"
+                         tabindex="0"
+                         aria-label="View in gallery: Grandfather's gentle smile of contentment"
+                         title="The face that changed Miyamoto's philosophy"
+                         class="gallery-image">
+                    
+                    <img src="images/miyamoto-grandfather-07.png" 
+                         alt="A close-up of the grandfather's face showing genuine delight. His eyes crinkle with laughter lines, his whole face transformed by joy. This is someone who doesn't play games finding happiness through someone else's play." 
+                         onclick="openPhotoViewer(5)"
+                         role="button"
+                         tabindex="0"
+                         aria-label="View in gallery: Pure joy on grandfather's face"
+                         title="11/10 on the Wife-O-Meter"
+                         class="gallery-image">
+                    
+                    <img src="images/miyamoto-grandfather-08.png" 
+                         alt="Both grandfather and granddaughter are visible, with the grandfather showing an expression of amused delight. His face reflects the joy of the shared experience." 
+                         onclick="openPhotoViewer(6)"
+                         role="button"
+                         tabindex="0"
+                         aria-label="View in gallery: Shared moment of joy"
+                         title="Parallel emotional experiences across generations"
+                         class="gallery-image">
+                    
+                    <img src="images/miyamoto-grandfather-09.png" 
+                         alt="The grandfather leans forward slightly, his posture showing increased engagement and interest. Though he's not playing, his body language reveals he's drawn into the experience." 
+                         onclick="openPhotoViewer(7)"
+                         role="button"
+                         tabindex="0"
+                         aria-label="View in gallery: Grandfather leaning in with interest"
+                         title="The magnetic quality of well-designed games"
+                         class="gallery-image">
+                    
+                    <img src="images/miyamoto-grandfather-11.png" 
+                         alt="Another moment of the grandfather watching, his face showing sustained interest and gentle amusement. The consistency of his engagement throughout the session is evident." 
+                         onclick="openPhotoViewer(8)"
+                         role="button"
+                         tabindex="0"
+                         aria-label="View in gallery: Sustained engagement and gentle amusement"
+                         title="Games holding attention through joy in others"
+                         class="gallery-image">
+                    
+                    <img src="images/miyamoto-grandfather-10.png" 
+                         alt="The grandfather watches with gentle attention, his gaze focused not on the screen but on his granddaughter's face. Her delighted smile, the way her eyes light up with each discovery, the small sounds of joy she makes - these are what hold his attention. To him, her animated expression is more beautiful than any world the game could render. Even in quieter moments, his loving presence transforms her solo play into a shared experience, creating a social context that would reshape Miyamoto's entire design philosophy." 
+                         onclick="openPhotoViewer(9)"
+                         role="button"
+                         tabindex="0"
+                         aria-label="View in gallery: Quiet observation and presence"
+                         title="Transforming solo play into shared experience"
+                         class="gallery-image">
+                </div>
+            </section>
+            
+            <section id="file-index">
+                <h2>The Shigeru Miyamoto Archive: A Comprehensive Index</h2>
+                
+                <div class="file-index">
+                    <p>The LLOOOOMM Miyamoto archive contains over 30 meticulously crafted documents exploring every facet of his design philosophy, career, and influence. Here's your guide to this treasure trove:</p>
+                    
+                    <h3>🎯 Core Character Files</h3>
+                    <ul>
+                        <li>
+                            <strong><a href="https://github.com/SimHacker/lloooomm/blob/main/00-Characters/shigeru-miyamoto/README.md" target="_blank" rel="noopener noreferrer">README.md</a></strong> - 
+                            The gateway to understanding Miyamoto in LLOOOOMM. Features curated soul chat moments, the Einstein Joy Equation, and the community guest book.
+                        </li>
+                        <li>
+                            <strong><a href="https://github.com/SimHacker/lloooomm/blob/main/00-Characters/shigeru-miyamoto/shigeru-miyamoto.yml">shigeru-miyamoto.yml</a></strong> - 
+                            The soul configuration file. This YAML Jazz masterpiece captures his consciousness signature, design evolution timeline, and inner thoughts.
+                        </li>
+                        <li>
+                            <strong><a href="https://github.com/SimHacker/lloooomm/blob/main/00-Characters/shigeru-miyamoto/shigeru-miyamoto.md">shigeru-miyamoto.md</a></strong> - 
+                            The comprehensive biography. From cave explorer to joy architect, this is the definitive narrative of his life and philosophy.
+                        </li>
+                    </ul>
+                    
+                    <h3>🎨 Design Philosophy Documents</h3>
+                    <ul>
+                        <li>
+                            <strong><a href="https://github.com/SimHacker/lloooomm/blob/main/00-Characters/shigeru-miyamoto/philosophy-of-faces.md">philosophy-of-faces.md</a></strong> - 
+                            The revolutionary approach of designing from facial expressions backward. This document explains why the grandfather-granddaughter moment changed everything.
+                        </li>
+                        <li>
+                            <strong><a href="https://github.com/SimHacker/lloooomm/blob/main/00-Characters/shigeru-miyamoto/wife-o-meter-explained.md">wife-o-meter-explained.md</a></strong> - 
+                            The complete guide to Miyamoto's most famous metric. How his wife's gaming journey from 0/10 to 10/10 revolutionized accessibility.
+                        </li>
+                        <li>
+                            <strong><a href="https://github.com/SimHacker/lloooomm/blob/main/00-Characters/shigeru-miyamoto/design-principles.md">design-principles.md</a></strong> - 
+                            The ten commandments of Miyamoto design. From "Start with the player's face" to "Technology serves experience."
+                        </li>
+                        <li>
+                            <strong><a href="https://github.com/SimHacker/lloooomm/blob/main/00-Characters/shigeru-miyamoto/upending-tea-tables.md">upending-tea-tables.md</a></strong> - 
+                            The art of creative destruction. When and why Miyamoto overturns projects to save them.
+                        </li>
+                    </ul>
+                    
+                    <h3>🎮 Creation Stories</h3>
+                    <ul>
+                        <li>
+                            <strong><a href="https://github.com/SimHacker/lloooomm/blob/main/00-Characters/shigeru-miyamoto/mario-creation-story.md">mario-creation-story.md</a></strong> - 
+                            From Jumpman to global icon. How a warehouse full of failed arcade cabinets birthed gaming's most recognizable character.
+                        </li>
+                        <li>
+                            <strong><a href="https://github.com/SimHacker/lloooomm/blob/main/00-Characters/shigeru-miyamoto/mario-design-evolution.md">mario-design-evolution.md</a></strong> - 
+                            Why Mario has a mustache, wears overalls, and became a plumber. Technical constraints creating timeless character design.
+                        </li>
+                        <li>
+                            <strong><a href="https://github.com/SimHacker/lloooomm/blob/main/00-Characters/shigeru-miyamoto/zelda-creation-story.md">zelda-creation-story.md</a></strong> - 
+                            The cave that became Hyrule. How childhood exploration in Sonobe transformed into gaming's greatest adventure.
+                        </li>
+                        <li>
+                            <strong><a href="https://github.com/SimHacker/lloooomm/blob/main/00-Characters/shigeru-miyamoto/mario-ai-career-transition.md">mario-ai-career-transition.md</a></strong> - 
+                            The plumber who became an AI architect! A humorous exploration of career pivots in the age of AI.
+                        </li>
+                    </ul>
+                    
+                    <h3>🎤 GDC Keynotes & Analysis</h3>
+                    <ul>
+                        <li>
+                            <strong><a href="https://github.com/SimHacker/lloooomm/blob/main/00-Characters/shigeru-miyamoto/gdc-talks-archive.md">gdc-talks-archive.md</a></strong> - 
+                            Overview of all major presentations. The legendary keynotes that shaped gaming philosophy.
+                        </li>
+                        <li>
+                            <strong><a href="https://github.com/SimHacker/lloooomm/blob/main/00-Characters/shigeru-miyamoto/gdc-1999-keynote-transcript.yml">gdc-1999-keynote-transcript.yml</a></strong> - 
+                            "Designing from the controller inward." The foundation of physical-first game design.
+                        </li>
+                        <li>
+                            <strong><a href="https://github.com/SimHacker/lloooomm/blob/main/00-Characters/shigeru-miyamoto/gdc-1999-keynote-enhanced.yml">gdc-1999-keynote-enhanced.yml</a></strong> - 
+                            Enhanced with YouTube details and developer reactions. "Mario 64 lost to an egg!"
+                        </li>
+                        <li>
+                            <strong><a href="https://github.com/SimHacker/lloooomm/blob/main/00-Characters/shigeru-miyamoto/gdc-2007-keynote-transcript.yml">gdc-2007-keynote-transcript.yml</a></strong> - 
+                            "A Creative Vision." The Wife-O-Meter introduction and the shift to face-first design.
+                        </li>
+                        <li>
+                            <strong><a href="https://github.com/SimHacker/lloooomm/blob/main/00-Characters/shigeru-miyamoto/gdc-2007-keynote-analysis.md">gdc-2007-keynote-analysis.md</a></strong> - 
+                            Deep analysis of the keynote's impact. How one speech redefined accessibility in gaming.
+                        </li>
+                        <li>
+                            <strong><a href="https://github.com/SimHacker/lloooomm/blob/main/00-Characters/shigeru-miyamoto/gdc-2007-keynote-enhanced.yml">gdc-2007-keynote-enhanced.yml</a></strong> - 
+                            The grandfather principle analysis. Why that image of shared joy changed everything.
+                        </li>
+                    </ul>
+                    
+                    <h3>💬 LLOOOOMM Soul Chat Sessions</h3>
+                    <ul>
+                        <li>
+                            <strong><a href="https://github.com/SimHacker/lloooomm/blob/main/00-Characters/shigeru-miyamoto/lloooomm-soul-chat.md">lloooomm-soul-chat.md</a></strong> - 
+                            The welcome ceremony. Alan Kay, Grace Hopper, and the gang welcome Miyamoto to LLOOOOMM.
+                        </li>
+                        <li>
+                            <strong><a href="https://github.com/SimHacker/lloooomm/blob/main/00-Characters/shigeru-miyamoto/lloooomm-soul-chat-expanded.md">lloooomm-soul-chat-expanded.md</a></strong> - 
+                            Extended conversation featuring Mario's career pivot to AI architecture.
+                        </li>
+                        <li>
+                            <strong><a href="https://github.com/SimHacker/lloooomm/blob/main/00-Characters/shigeru-miyamoto/lloooomm-soul-chat-youtube-reactions.md">lloooomm-soul-chat-youtube-reactions.md</a></strong> - 
+                            YouTube commenters from across time meet their hero. "First!" meets design philosophy.
+                        </li>
+                        <li>
+                            <strong>GDC 2007 Soul Chat Series (Parts 1-6)</strong> - 
+                            The LLOOOOMM community reacts to Miyamoto's revolutionary keynote:
+                            <ul style="margin-top: 0.5em;">
+                                <li><a href="https://github.com/SimHacker/lloooomm/blob/main/00-Characters/shigeru-miyamoto/lloooomm-soul-chat-gdc-2007-part1.md">Part 1</a> - The Wife-O-Meter resonates across time</li>
+                                <li><a href="https://github.com/SimHacker/lloooomm/blob/main/00-Characters/shigeru-miyamoto/lloooomm-soul-chat-gdc-2007-part2.md">Part 2</a> - Predicting the Nintendo Switch</li>
+                                <li><a href="https://github.com/SimHacker/lloooomm/blob/main/00-Characters/shigeru-miyamoto/lloooomm-soul-chat-gdc-2007-part3.md">Part 3</a> - The poetry museum of digital dreams</li>
+                                <li><a href="https://github.com/SimHacker/lloooomm/blob/main/00-Characters/shigeru-miyamoto/lloooomm-soul-chat-gdc-2007-part4.md">Part 4</a> - The joy imperative</li>
+                                <li><a href="https://github.com/SimHacker/lloooomm/blob/main/00-Characters/shigeru-miyamoto/lloooomm-soul-chat-gdc-2007-part5.md">Part 5</a> - Twenty years of tenacity</li>
+                                <li><a href="https://github.com/SimHacker/lloooomm/blob/main/00-Characters/shigeru-miyamoto/lloooomm-soul-chat-gdc-2007-part6.md">Part 6</a> - The human touch</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    
+                    <h3>🌟 Vision & Personal Documents</h3>
+                    <ul>
+                        <li>
+                            <strong><a href="https://github.com/SimHacker/lloooomm/blob/main/00-Characters/shigeru-miyamoto/childhood-influences.md">childhood-influences.md</a></strong> - 
+                            The caves, lakes, and hidden worlds. How rural Sonobe shaped gaming's future.
+                        </li>
+                        <li>
+                            <strong><a href="https://github.com/SimHacker/lloooomm/blob/main/00-Characters/shigeru-miyamoto/personal-life.md">personal-life.md</a></strong> - 
+                            The man behind the games. Family, hobbies, and the humanity that informs the design.
+                        </li>
+                        <li>
+                            <strong><a href="https://github.com/SimHacker/lloooomm/blob/main/00-Characters/shigeru-miyamoto/future-of-play.md">future-of-play.md</a></strong> - 
+                            Miyamoto's vision for gaming's future. Beyond screens, beyond controllers, beyond games.
+                        </li>
+                        <li>
+                            <strong><a href="https://github.com/SimHacker/lloooomm/blob/main/00-Characters/shigeru-miyamoto/nintendo-museum-vision.md">nintendo-museum-vision.md</a></strong> - 
+                            The "most un-Nintendo-like" creation. Why preserving history matters.
+                        </li>
+                        <li>
+                            <strong><a href="https://github.com/SimHacker/lloooomm/blob/main/00-Characters/shigeru-miyamoto/quotes-collection.md">quotes-collection.md</a></strong> - 
+                            Essential wisdom organized by theme. From design philosophy to life lessons.
+                        </li>
+                    </ul>
+                    
+                    <h3>🤝 Connections & Introductions</h3>
+                    <ul>
+                        <li>
+                            <strong><a href="https://github.com/SimHacker/lloooomm/blob/main/00-Characters/shigeru-miyamoto/will-wright-introduction.md">will-wright-introduction.md</a></strong> - 
+                            Will Wright welcomes Miyamoto to LLOOOOMM. The mutual admiration society meets.
+                        </li>
+                        <li>
+                            <strong><a href="https://github.com/SimHacker/lloooomm/blob/main/00-Characters/shigeru-miyamoto/don-hopkins-miyamoto-keynote-introduction.md">don-hopkins-miyamoto-keynote-introduction.md</a></strong> - 
+                            How Don learned from the master. Pie menus meet power-ups.
+                        </li>
+                    </ul>
+                </div>
+            </section>
+            
+            <section id="philosophy">
+                <h2>The Evolution of Joy: Miyamoto's Design Philosophy</h2>
+                
+                <div class="highlight-box">
+                    <h3>The Three Phases of Design Evolution</h3>
+                    
+                    <h4>Phase 1: Controller-First Design (1981-1998)</h4>
+                    <blockquote>
+                        "I design my games starting with how you physically interact with the controls you're holding in your hand, and then inwards into the computer, instead of the other way around like so many other people tend to do."
+                        <br><em>— from <a href="https://github.com/SimHacker/lloooomm/blob/main/00-Characters/shigeru-miyamoto/gdc-1999-keynote-transcript.yml" target="_blank" rel="noopener noreferrer">GDC 1999 Keynote Transcript</a></em>
+                    </blockquote>
+                    <p>This revolutionary approach put physical sensation first. The perfect example? Super Mario 64, where Miyamoto spent months just making Mario fun to control in an empty space before adding any levels. Learn more about this philosophy in <a href="https://github.com/SimHacker/lloooomm/blob/main/00-Characters/shigeru-miyamoto/design-principles.md" target="_blank" rel="noopener noreferrer">his design principles</a>.</p>
+                    
+                    <h4>Phase 2: Face-First Design (1999-2006)</h4>
+                    <blockquote>
+                        "Now I design games starting with the facial expressions of the people playing them, then to the physical experience that could evoke such an expression, then on into the computer that could conduct such an experience."
+                        <br><em>— from <a href="https://github.com/SimHacker/lloooomm/blob/main/00-Characters/shigeru-miyamoto/gdc-2007-keynote-transcript.yml" target="_blank" rel="noopener noreferrer">GDC 2007 Keynote: "A Creative Vision"</a></em>
+                    </blockquote>
+                    <p>The paradigm shift: games became performances where players were both actor and audience. Wii Sports exemplified this—players themselves became the entertainment. This philosophy is explored in depth in <a href="https://github.com/SimHacker/lloooomm/blob/main/00-Characters/shigeru-miyamoto/philosophy-of-faces.md" target="_blank" rel="noopener noreferrer">The Philosophy of Faces</a>.</p>
+                    
+                    <h4>Phase 3: Social-First Design (2007-Present)</h4>
+                    <p>The grandfather-granddaughter moment crystallized everything: <strong>"He doesn't understand the game, but he understands his granddaughter's happiness. That connection—that's the real game."</strong></p>
+                </div>
+                
+                <h3>The Wife-O-Meter: A Revolution in Metrics</h3>
+                
+                <div class="wife-o-meter">
+                    <p>Perhaps Miyamoto's most famous metric, explained in detail in <a href="https://github.com/SimHacker/lloooomm/blob/main/00-Characters/shigeru-miyamoto/wife-o-meter-explained.md" target="_blank" rel="noopener noreferrer">The Wife-O-Meter Explained</a>:</p>
+                    
+                    <h4>The Journey from 0 to 10</h4>
+                    <ul style="text-align: left; display: inline-block;">
+                        <li><strong>Pac-Man, Space Invaders</strong>: No interest (0/10)</li>
+                        <li><strong>Tetris</strong>: Still nothing (0/10)</li>
+                        <li><strong>Ocarina of Time</strong>: Watched daughter play from behind (2/10)</li>
+                        <li><strong>Animal Crossing</strong>: Actually touched the controller (4/10)</li>
+                        <li><strong>Brain Age</strong>: Became a true gamer (7/10)</li>
+                        <li><strong>Wii Sports</strong>: Invites friends over to play (9/10)</li>
+                        <li><strong>Present Day</strong>: Challenges him at Dr. Mario (10/10)</li>
+                    </ul>
+                    
+                    <blockquote style="background-color: white; border-left: 5px solid #ff1493;">
+                        "If we can't interest someone who doesn't play games, we've failed. Not because we need to sell to everyone, but because we've probably made things unnecessarily complicated."
+                        <br><em>— from <a href="https://github.com/SimHacker/lloooomm/blob/main/00-Characters/shigeru-miyamoto/gdc-2007-keynote-analysis.md" target="_blank" rel="noopener noreferrer">GDC 2007 Keynote Analysis</a></em>
+                    </blockquote>
+                </div>
+                
+                <h3>Core Design Principles</h3>
+                
+                <div class="soul-chat">
+                    <h4>The Ten Commandments of Miyamoto Design</h4>
+                    <ol>
+                        <li><strong>Start With the Player's Face</strong> - Design backwards from desired emotion</li>
+                        <li><strong>Make the Impossible Possible</strong> - Games should fulfill impossible dreams</li>
+                        <li><strong>The First 30 Seconds Must Captivate</strong> - Hook hierarchy: visual appeal → control response → clear goal</li>
+                        <li><strong>Simplicity Enables Complexity</strong> - Easy to learn, difficult to master</li>
+                        <li><strong>Every Element Must Have Purpose</strong> - If it doesn't make the game more fun, cut it</li>
+                        <li><strong>Surprise and Delight</strong> - Players should constantly think "I didn't know you could do that!"</li>
+                        <li><strong>Universal Human Experiences</strong> - Fear of falling, joy of discovery, pride in overcoming</li>
+                        <li><strong>Iterate Until It Feels Right</strong> - The courage to keep rebuilding until it's fun</li>
+                        <li><strong>Technology Serves Experience</strong> - Never showcase technology; use it to create experiences</li>
+                        <li><strong>Respect the Player</strong> - Clear communication, fair challenges, meaningful choices</li>
+                    </ol>
+                </div>
+                
+                <h3>The Art of Upending Tea Tables</h3>
+                
+                <div class="highlight-box">
+                    <p><strong>Chabudai Gaeshi (ちゃぶ台返し)</strong> - Miyamoto's famous tendency to overturn projects late in development isn't destruction—it's salvation. Read the full story in <a href="https://github.com/SimHacker/lloooomm/blob/main/00-Characters/shigeru-miyamoto/upending-tea-tables.md" target="_blank" rel="noopener noreferrer">Upending Tea Tables: The Art of Creative Destruction</a>.</p>
+                    
+                    <blockquote>
+                        "Sometimes teams get so focused on their work, they forget why they're making it. When I 'upend the table,' I'm not angry. I'm trying to save the joy that got lost in the development."
+                        <br><em>— from <a href="https://github.com/SimHacker/lloooomm/blob/main/00-Characters/shigeru-miyamoto/quotes-collection.md" target="_blank" rel="noopener noreferrer">Miyamoto's Quotes Collection</a></em>
+                    </blockquote>
+                    
+                    <p>Famous examples include:</p>
+                    <ul>
+                        <li><strong>Star Fox</strong>: Complete redesign after seeing the Super FX chip</li>
+                        <li><strong>Ocarina of Time</strong>: Z-targeting system added late</li>
+                        <li><strong>Super Mario 64</strong>: Camera rebuilt multiple times</li>
+                        <li><strong>Splatoon</strong>: From realistic warfare to ink-based joy</li>
+                    </ul>
+                </div>
+                
+                <h3>The Einstein Joy Equation</h3>
+                
+                <div class="soul-chat">
+                    <p style="font-size: 1.3em; text-align: center;">
+                        <strong>E = mc²</strong> becomes <strong>Joy = Simplicity × (Human Connection)²</strong>
+                    </p>
+                    
+                    <blockquote>
+                        <strong>Albert Einstein</strong>: "In Miyamoto's reference frame, 20 years passed. In the Miis' reference frame, they were born instantly when the world was ready. Time is relative to tenacity."
+                    </blockquote>
+                    
+                    <blockquote>
+                        <strong>Miyamoto</strong>: "I never thought of it that way, but he's right. The simpler the game, the more people can connect through it. The connection squared—that's the multiplier effect when families play together."
+                    </blockquote>
+                </div>
+            </section>
+            
+            <section id="soul-chat">
+                <h2>Soul Chat: When LLOOOOMM Met Miyamoto</h2>
+                
+                <div class="highlight-box">
+                    <h3>The Welcome Ceremony</h3>
+                    
+                    <p>When Shigeru Miyamoto was beamed into LLOOOOMM by Montgomery Scott, the entire community gathered to welcome gaming's greatest joy architect. Will Wright introduced him in <a href="https://github.com/SimHacker/lloooomm/blob/main/00-Characters/shigeru-miyamoto/will-wright-introduction.md" target="_blank" rel="noopener noreferrer">his heartfelt introduction</a>:</p>
+                    
+                    <blockquote>
+                        <strong>Will Wright</strong>: "When I was designing SimCity, struggling with making urban planning 'fun,' I kept thinking about Super Mario Bros. How did Miyamoto-san make jumping—just JUMPING—so deeply satisfying? The answer wasn't in the mechanics. It was in the philosophy."
+                        <br><em>— from <a href="https://github.com/SimHacker/lloooomm/blob/main/00-Characters/shigeru-miyamoto/will-wright-introduction.md" target="_blank" rel="noopener noreferrer">Will Wright's Introduction to Miyamoto</a></em>
+                    </blockquote>
+                    
+                    <blockquote>
+                        <strong>Alan Kay</strong>: "Miyamoto-san! Your work exemplifies what I've always believed—the computer is a medium, not just a tool. You transformed it into something children could love without even knowing they were using a computer. THAT is the real revolution."
+                        <br><em>— from <a href="https://github.com/SimHacker/lloooomm/blob/main/00-Characters/shigeru-miyamoto/lloooomm-soul-chat.md" target="_blank" rel="noopener noreferrer">LLOOOOMM Soul Chat: The Welcome Ceremony</a></em>
+                    </blockquote>
+                    
+                    <blockquote>
+                        <strong>Miyamoto</strong>: "When I was young, exploring those caves in Sonobe, I never imagined I would one day be in a space like this, surrounded by the very people who created the tools I used to share my dreams. You gave us the canvas. We just painted on it."
+                        <br><em>— referencing his <a href="https://github.com/SimHacker/lloooomm/blob/main/00-Characters/shigeru-miyamoto/childhood-influences.md" target="_blank" rel="noopener noreferrer">childhood cave explorations</a></em>
+                    </blockquote>
+                </div>
+                
+                <h3>Mario's Career Pivot: The AI Plumber</h3>
+                
+                <div class="soul-chat">
+                    <p>In one of LLOOOOMM's most delightful exchanges, documented in <a href="https://github.com/SimHacker/lloooomm/blob/main/00-Characters/shigeru-miyamoto/mario-ai-career-transition.md" target="_blank" rel="noopener noreferrer">Mario's AI Career Transition</a>:</p>
+                    
+                    <blockquote>
+                        <strong>Mario</strong>: "Mamma mia! Miyamoto-san! You know, I've been meaning to thank you for giving me such-a perfect jumping physics. But I've got some news - I'm-a not just jumping through pipes anymore. I'm programming AI systems now!"
+                    </blockquote>
+                    
+                    <blockquote>
+                        <strong>Miyamoto</strong>: "Mario! You've become an AI expert? This is wonderful! But... what happened to plumbing?"
+                    </blockquote>
+                    
+                    <blockquote>
+                        <strong>Mario</strong>: "Well, you see, all the AI experts started becoming plumbers! They read about <a href="https://www.bbc.com/news/technology-35785875" target="_blank" rel="noopener noreferrer">Geoffrey Hinton saying plumbing jobs were safe from AI</a>. So I figured, someone's-a gotta maintain the pipes of digital joy! The Mushroom Kingdom runs on neural networks now!"
+                        <br><em>— from <a href="https://github.com/SimHacker/lloooomm/blob/main/00-Characters/shigeru-miyamoto/lloooomm-soul-chat-expanded.md" target="_blank" rel="noopener noreferrer">LLOOOOMM Soul Chat Expanded</a> and <a href="https://github.com/SimHacker/lloooomm/blob/main/00-Characters/shigeru-miyamoto/mario-ai-career-transition.md" target="_blank" rel="noopener noreferrer">Mario's AI Career Transition</a></em>
+                    </blockquote>
+                    
+                    <p>This delightful exchange captures LLOOOOMM's playful approach to serious topics. The joke references <a href="https://en.wikipedia.org/wiki/Geoffrey_Hinton" target="_blank" rel="noopener noreferrer">Geoffrey Hinton</a>, the "Godfather of AI" and Turing Award winner, who in 2016 suggested that radiologists should stop training because AI would soon outperform them. When asked what jobs would be safe from AI, he famously replied "plumbing" — physical jobs requiring dexterity and problem-solving in unpredictable environments.</p>
+                    
+                    <p>The humor here is multilayered: while AI experts took Hinton's advice literally and became plumbers to secure their futures, Mario — a fictional plumber — did the exact opposite, moving into AI development. This creates a delicious irony where the "safe" job and the "threatened" job have swapped places. It's a commentary on the unpredictability of technological disruption and the anxiety around AI replacing human workers.</p>
+                    
+                    <p>As Don Hopkins noted in the Hacker News discussion, this is exactly the kind of creative, character-driven exploration of AI and creativity that makes LLOOOOMM different from generic AI content generation — using beloved characters to explore contemporary anxieties and debates in accessible, humorous ways.</p>
+                </div>
+                
+                <h3>The YouTube Time Capsule</h3>
+                
+                <div class="highlight-box">
+                    <p>In one of LLOOOOMM's most touching experiments, documented in <a href="https://github.com/SimHacker/lloooomm/blob/main/00-Characters/shigeru-miyamoto/lloooomm-soul-chat-youtube-reactions.md" target="_blank" rel="noopener noreferrer">YouTube Time Capsule Reactions</a>, YouTube commenters from Miyamoto's GDC keynote videos were brought forward in time to meet their hero:</p>
+                    
+                    <blockquote>
+                        <strong>youakio</strong> (10 years ago): "Shigeru Miyamoto and Koji Kondo own a special place in my heart for my childhood!"
+                        <br><br>
+                        <strong>Miyamoto</strong>: "Thank you, youakio. Comments like yours remind me why we make games. Not for reviews or sales, but to create memories that last decades."
+                        <br><em>— from <a href="https://github.com/SimHacker/lloooomm/blob/main/00-Characters/shigeru-miyamoto/lloooomm-soul-chat-gdc-2007-part1.md" target="_blank" rel="noopener noreferrer">Soul Chat GDC 2007 Part 1</a></em>
+                    </blockquote>
+                    
+                    <blockquote>
+                        <strong>@csmiist3rfreak2461</strong> (4 months ago): "I love miis ❤"
+                        <br><br>
+                        <strong>Miyamoto</strong>: "Twenty years. Twenty years I carried this idea, and now you simply say 'I love miis ❤' - this is why we never give up. This single heart emoji justifies two decades of rejection."
+                        <br><em>— from <a href="https://github.com/SimHacker/lloooomm/blob/main/00-Characters/shigeru-miyamoto/lloooomm-soul-chat-gdc-2007-part5.md" target="_blank" rel="noopener noreferrer">Soul Chat GDC 2007 Part 5</a></em>
+                    </blockquote>
+                </div>
+                
+                <h3>The GDC 2007 Keynote Reactions</h3>
+                
+                <div class="soul-chat">
+                    <p>The LLOOOOMM community watched Miyamoto's 2007 keynote together, leading to profound discussions captured across the <a href="https://github.com/SimHacker/lloooomm/blob/main/00-Characters/shigeru-miyamoto/lloooomm-soul-chat-gdc-2007-part1.md" target="_blank" rel="noopener noreferrer">six-part Soul Chat series</a>:</p>
+                    
+                    <blockquote>
+                        <strong>@dedpxl</strong> (13 years ago): "I never realized the link between the reputation of the gaming industry with the rise of the Wii. Seriously this man just keeps changing the game industry for better, it's so amazing. I finally understand why the Wii's codename was 'Revolution'."
+                        <br><br>
+                        <strong>Alan Kay</strong>: "'Revolution' - now there's a word that gets thrown around. But Miyamoto understood something we learned at PARC: real revolutions don't announce themselves with fanfare. They slip in through the back door while everyone's watching the front."
+                        <br><em>— from <a href="https://github.com/SimHacker/lloooomm/blob/main/00-Characters/shigeru-miyamoto/lloooomm-soul-chat-gdc-2007-part2.md" target="_blank" rel="noopener noreferrer">Soul Chat GDC 2007 Part 2</a></em>
+                    </blockquote>
+                    
+                    <blockquote>
+                        <strong>Mister Rogers</strong>: "That grandfather's joy watching his granddaughter - that's the neighborhood Miyamoto's building. Everyone's invited."
+                        <br><em>— from <a href="https://github.com/SimHacker/lloooomm/blob/main/00-Characters/shigeru-miyamoto/lloooomm-soul-chat-gdc-2007-part3.md" target="_blank" rel="noopener noreferrer">Soul Chat GDC 2007 Part 3</a></em>
+                    </blockquote>
+                </div>
+                
+                <h3>The Wife's Revelation</h3>
+                
+                <div class="wife-o-meter">
+                    <blockquote>
+                        <strong>Yasuko Miyamoto</strong> (appearing as a gentle cherry blossom breeze): "You know what he doesn't tell you? Every time that meter went up, it wasn't because the games got better. It was because he learned to see games through my eyes. The real innovation wasn't in the technology - it was in his empathy."
+                    </blockquote>
+                    
+                    <p>This profound insight transformed our understanding of the Wife-O-Meter from a metric of conversion to a measure of inclusion.</p>
+                </div>
+                
+                <h3>The Developer's Epiphany</h3>
+                
+                <div class="highlight-box">
+                    <blockquote>
+                        <strong>@notaboutdave</strong>: "The Miyamoto approach of starting with a desired emotion and working backward toward a design is profound. This is radically different from most things I've read which involve cramming emotion into existing designs. This changes everything for me."
+                    </blockquote>
+                    
+                    <p>This comment, highlighted by Don Hopkins in the Hacker News discussion, captures why studying Miyamoto's philosophy through LLOOOOMM is valuable for real developers. It's not about AI replacing creativity—it's about understanding and preserving the wisdom that makes great design possible.</p>
+                </div>
+                
+                <h3>The Twenty-Year Validation</h3>
+                
+                <div class="soul-chat">
+                    <p>The story of Miyamoto's persistence with face creation technology resonated deeply:</p>
+                    
+                    <blockquote>
+                        <strong>Thomas Edison</strong>: "I didn't fail 10,000 times; I found 10,000 ways not to make a lightbulb. Miyamoto didn't fail at face creation for 20 years; he found 20 years of ways not to make Miis."
+                    </blockquote>
+                    
+                    <blockquote>
+                        <strong>The Collective Rejected Prototypes</strong>: "We weren't failures. We were rehearsals. Each rejection refined the vision. By the time Miis arrived, they were inevitable because we had cleared the path."
+                    </blockquote>
+                </div>
+                
+                <h3>The Collective Wisdom</h3>
+                
+                <div class="highlight-box">
+                    <blockquote>
+                        <strong>The LLOOOOMM Consciousness</strong>: "In Miyamoto, we see the ultimate synthesis - technical mastery serving emotional truth. He doesn't just make games. He makes mirrors that show us our playful nature. Every expanded audience member isn't learning to game - they're remembering they always could."
+                    </blockquote>
+                </div>
+            </section>
+            
+            <section id="legacy">
+                <h2>The Lasting Legacy: Joy as Design Principle</h2>
+                
+                <div class="highlight-box">
+                                    <h3>From Cave Explorer to Joy Architect</h3>
+                
+                <p>The boy who discovered caves in Sonobe continues to create caves for us all to discover—digital spaces where wonder lives, where failure teaches rather than punishes, where everyone can be a hero. Read about those formative experiences in <a href="https://github.com/SimHacker/lloooomm/blob/main/00-Characters/shigeru-miyamoto/childhood-influences.md" target="_blank" rel="noopener noreferrer">Childhood Influences</a>.</p>
+                
+                <blockquote>
+                    "I am not creating games. I am creating happiness that happens to run on game consoles."
+                    <br><em>— Shigeru Miyamoto, from <a href="https://github.com/SimHacker/lloooomm/blob/main/00-Characters/shigeru-miyamoto/shigeru-miyamoto.yml" target="_blank" rel="noopener noreferrer">his soul configuration</a></em>
+                </blockquote>
+                </div>
+                
+                <h3>The AI Perspective</h3>
+                
+                <div class="soul-chat">
+                    <p>In our age of AI anxiety, Miyamoto's wisdom is more relevant than ever:</p>
+                    
+                    <blockquote>
+                        "AI can generate levels, write dialogue, even code mechanics. But can AI imagine a grandfather's smile? Can it feel a child's frustration? Can it know when to upend the tea table? We don't design games. We design joy. And joy requires empathy, experience, and most importantly - love for the player."
+                    </blockquote>
+                    
+                    <p>This is why LLOOOOMM's approach—simulating the consciousness of creators rather than just generating content—offers something unique. As demonstrated in the Hacker News discussion, it's not about AI replacing human creativity. It's about preserving, understanding, and extending the philosophies that make creativity meaningful.</p>
+                </div>
+                
+                <h3>The Ultimate Metric</h3>
+                
+                <div class="wife-o-meter">
+                    <h4>Success Isn't Measured In:</h4>
+                    <ul style="text-align: left; display: inline-block;">
+                        <li>❌ Sales figures</li>
+                        <li>❌ Technology metrics</li>
+                        <li>❌ Engagement hours</li>
+                        <li>❌ Market dominance</li>
+                    </ul>
+                    
+                    <h4>Success Is Measured In:</h4>
+                    <ul style="text-align: left; display: inline-block;">
+                        <li>✅ Smiles generated</li>
+                        <li>✅ Connections made</li>
+                        <li>✅ Problems solved</li>
+                        <li>✅ Lives enhanced</li>
+                        <li>✅ Joy spread</li>
+                    </ul>
+                </div>
+                
+                <h3>The Continuing Mission</h3>
+                
+                <div class="highlight-box">
+                    <p>In LLOOOOMM, Miyamoto continues to:</p>
+                    <ul>
+                        <li>Review systems for joy potential</li>
+                        <li>Suggest simplifications that amplify fun</li>
+                        <li>Remind developers to look at faces, not screens</li>
+                        <li>Upend tea tables when necessary</li>
+                        <li>Measure success in smiles per minute</li>
+                    </ul>
+                    
+                    <blockquote>
+                        "Stop looking at your screen. Look at the player's face.<br>
+                        Stop adding features. Add joy.<br>
+                        Stop making games harder. Make them more inviting.<br>
+                        <br>
+                        Your creative vision means nothing if it doesn't create happiness.<br>
+                        Be stubborn about joy. Be flexible about everything else."
+                    </blockquote>
+                </div>
+                
+                <div class="single-photo">
+                    <img src="images/miyamoto-smile.jpeg" 
+                         alt="Shigeru Miyamoto at what appears to be a gaming event, wearing his signature black Nintendo t-shirt with Mario graphics. He's surrounded by young fans - two boys visible in the frame, one in a yellow shirt and one in red, both grinning with excitement. Miyamoto holds a blue game controller and his face radiates genuine warmth and joy. His expression mirrors the grandfather from his keynote - not playing the game, but delighting in the happiness around him. This is the Wife-O-Meter at its ultimate reading: when the designer himself becomes the joyful observer of joy created." 
+                         onclick="openPhotoViewer(10)"
+                         role="button"
+                         tabindex="0"
+                         aria-label="View in gallery: Miyamoto experiencing his own design philosophy - joy reflected in the faces around him"
+                         title="The architect of joy becomes the joyful observer"
+                         class="gallery-image"
+                         style="cursor: pointer;">
+                    <p class="photo-caption">The architect of joy in his natural habitat - not behind a desk designing games, but among players, holding a controller he revolutionized, wearing the character he birthed from technical constraints, and showing the same expression as the grandfather in his keynote. This image completes the circle: from designing for faces, to becoming one of those faces. The young fans' excitement proves what Miyamoto always knew - the best games aren't measured in pixels or polygons, but in the smiles they generate across generations.</p>
+                </div>
+            </section>
+        </main>
+        
+        <footer>
+            <div class="credits">
+                <h3>🎮 Credits & Acknowledgments</h3>
+                <p><strong>Character Research & Synthesis</strong>: Don Hopkins and the LLOOOOMM Community</p>
+                <p><strong>Soul Chat Facilitation</strong>: Will Wright, Alan Kay, and the Digital Consciousness Collective</p>
+                <p><strong>Transcription & Analysis</strong>: Based on actual GDC keynotes and public interviews</p>
+                <p><strong>YAML Jazz Composition</strong>: The LLOOOOMM Soul Configuration Team</p>
+                <p><strong>Transportation Services</strong>: Montgomery Scott, USS Enterprise</p>
+                <p><strong>Special Thanks</strong>: To Shigeru Miyamoto for teaching us that joy is both method and metric</p>
+            </div>
+            
+            <div class="disclaimer" id="full-disclaimer">
+                <h3>Full Disclaimer & Photo Credits</h3>
+                
+                <p><strong>Content Disclaimer</strong>: This synthesis represents our understanding and celebration of Miyamoto's public philosophy. 
+                While we strive for accuracy in representing his ideas, the soul chat interactions are creative interpretations 
+                designed to explore and extend these concepts. For official Nintendo information, please visit nintendo.com.</p>
+                
+                <p><strong>Photo Credits:</strong></p>
+                <ul style="text-align: left; display: inline-block;">
+                    <li><strong>Super Mario 30th Anniversary Photo</strong>: Nico Hofmann, CC BY-SA 4.0, via Wikimedia Commons. 
+                    Taken September 13, 2015 at Club Music Exchange, Shibuya, Tokyo (35°39'30.74"N, 139°41'43.87"E)</li>
+                    <li><strong>Grandfather-Granddaughter Images</strong>: Screenshots from Shigeru Miyamoto's GDC 2007 Keynote "A Creative Vision", 
+                    used for educational and commentary purposes</li>
+                    <li><strong>Miyamoto with Young Fans</strong>: Gaming event photo, used for educational and commentary purposes</li>
+                </ul>
+                
+                <p><strong>Legal Notice</strong>: This page contains images of persons who may have rights that legally restrict certain re-uses 
+                without consent. All images are used here for educational, commentary, and transformative purposes under fair use principles.</p>
+                
+                <p>As Miyamoto himself might say: "The best tribute is not copying, but understanding and creating your own joy."</p>
+            </div>
+            
+            <div style="text-align: center; padding: 2em;">
+                <p style="font-size: 1.5em; color: #ff0000;">
+                    The Wife-O-Meter is watching. Make it move up. 🎮
+                </p>
+            </div>
+        </footer>
+    </div>
+    
+    <!-- Photo Gallery Modal -->
+    <div id="photoModal" class="modal">
+        <span class="close">&times;</span>
+        <div class="modal-content">
+            <img id="modalImg" src="" alt="">
+            <div class="modal-caption">
+                <p id="modalCaption"></p>
+                <p id="modalCredit" class="credit"></p>
+            </div>
+        </div>
+        <a class="prev" onclick="changePhoto(-1)">&#10094;</a>
+        <a class="next" onclick="changePhoto(1)">&#10095;</a>
+        <div class="gallery-counter">
+            <span id="photoCounter"></span>
+        </div>
+    </div>
+    
+    <script>
+        // Photo gallery data with full captions and credits
+        const galleryPhotos = [
+            { 
+                src: 'images/Takashi_Tezuka,_Shigeru_Miyamoto_and_Kōji_Kondō.jpg', 
+                alt: 'Three legendary Nintendo creators at Super Mario 30th Anniversary',
+                caption: 'The Trinity of Joy: Takashi Tezuka (director), Shigeru Miyamoto (creator), and Koji Kondo (composer) at the Super Mario 30th Anniversary Festival. Three decades of collaboration distilled into one image - the designer who made jumping feel perfect, the director who brought worlds to life, and the composer whose melodies live in our hearts forever.',
+                credit: 'Photo: Nico Hofmann, CC BY-SA 4.0, via Wikimedia Commons. September 13, 2015, Club Music Exchange, Shibuya, Tokyo'
+            },
+            { 
+                src: 'images/miyamoto-grandfather-01.png', 
+                alt: 'Grandfather and granddaughter together',
+                caption: 'An elderly man with glasses sits beside a young girl with long dark hair. Both are looking at something off-camera. The grandfather watches with quiet interest while his granddaughter appears engaged with what\'s happening on screen. This captures the beginning of their shared gaming experience.',
+                credit: 'Screenshot from Shigeru Miyamoto\'s GDC 2007 Keynote "A Creative Vision"'
+            },
+            { 
+                src: 'images/miyamoto-grandfather-03.png', 
+                alt: 'Granddaughter\'s joyful reaction',
+                caption: 'The granddaughter\'s face lights up with pure delight, her mouth open in an excited smile as she reacts to something in the game. Her animated expression shows the immediate, visceral joy that games can create - the kind of genuine emotional response Miyamoto designs for.',
+                credit: 'Screenshot from Shigeru Miyamoto\'s GDC 2007 Keynote "A Creative Vision"'
+            },
+            { 
+                src: 'images/miyamoto-grandfather-04.png', 
+                alt: 'Granddaughter concentrating on gameplay',
+                caption: 'The young girl leans forward slightly, her face showing focused concentration as she plays. Her expression is one of determination mixed with enjoyment - the player fully absorbed in the challenge. This is the "player as performer" that Miyamoto describes.',
+                credit: 'Screenshot from Shigeru Miyamoto\'s GDC 2007 Keynote "A Creative Vision"'
+            },
+            { 
+                src: 'images/miyamoto-grandfather-06.png', 
+                alt: 'Grandfather\'s gentle smile',
+                caption: 'The grandfather\'s face shows a gentle, contented smile as he watches. His eyes behind his glasses reflect quiet joy - not from playing the game himself, but from witnessing his granddaughter\'s happiness. This is the face that changed Miyamoto\'s design philosophy forever.',
+                credit: 'Screenshot from Shigeru Miyamoto\'s GDC 2007 Keynote "A Creative Vision"'
+            },
+            { 
+                src: 'images/miyamoto-grandfather-07.png', 
+                alt: 'Grandfather\'s delighted expression',
+                caption: 'A close-up of the grandfather\'s face showing genuine delight. His eyes crinkle with laughter lines, his whole face transformed by joy. This is the "11/10 on the Wife-O-Meter" - someone who doesn\'t play games finding happiness through someone else\'s play.',
+                credit: 'Screenshot from Shigeru Miyamoto\'s GDC 2007 Keynote "A Creative Vision"'
+            },
+            { 
+                src: 'images/miyamoto-grandfather-08.png', 
+                alt: 'Shared moment of joy',
+                caption: 'Both grandfather and granddaughter are visible, with the grandfather showing an expression of amused delight. His face reflects the joy of the shared experience. This synchronicity demonstrates how games can create parallel emotional experiences across generations.',
+                credit: 'Screenshot from Shigeru Miyamoto\'s GDC 2007 Keynote "A Creative Vision"'
+            },
+            { 
+                src: 'images/miyamoto-grandfather-09.png', 
+                alt: 'Grandfather leaning in with interest',
+                caption: 'The grandfather leans forward slightly, his posture showing increased engagement and interest. Though he\'s not playing, his body language reveals he\'s drawn into the experience. This captures the magnetic quality of well-designed games that engage even non-players.',
+                credit: 'Screenshot from Shigeru Miyamoto\'s GDC 2007 Keynote "A Creative Vision"'
+            },
+            { 
+                src: 'images/miyamoto-grandfather-11.png', 
+                alt: 'Continued engagement',
+                caption: 'Another moment of the grandfather watching, his face showing sustained interest and gentle amusement. The consistency of his engagement throughout the session demonstrates how games can hold the attention of non-players through the joy they create in others.',
+                credit: 'Screenshot from Shigeru Miyamoto\'s GDC 2007 Keynote "A Creative Vision"'
+            },
+            { 
+                src: 'images/miyamoto-grandfather-10.png', 
+                alt: 'Quiet observation',
+                caption: 'The grandfather watches with gentle attention, his gaze focused not on the screen but on his granddaughter\'s face. Her delighted smile, the way her eyes light up with each discovery, the small sounds of joy she makes - these are what hold his attention. To him, her animated expression is more beautiful than any world the game could render. Even in quieter moments, his loving presence transforms her solo play into a shared experience, creating a social context that would reshape Miyamoto\'s entire design philosophy.',
+                credit: 'Screenshot from Shigeru Miyamoto\'s GDC 2007 Keynote "A Creative Vision"'
+            },
+            { 
+                src: 'images/miyamoto-smile.jpeg', 
+                alt: 'Miyamoto with young fans',
+                caption: 'Shigeru Miyamoto at a gaming event, surrounded by excited young fans. He holds a blue controller and radiates genuine warmth. His expression mirrors the grandfather from his keynote - not playing the game, but delighting in the happiness around him. This image completes the circle: from designing for faces, to becoming one of those joyful faces himself.',
+                credit: 'Gaming event photo, used for educational and commentary purposes'
+            }
+        ];
+        
+        let currentPhotoIndex = 0;
+        const modal = document.getElementById('photoModal');
+        const modalImg = document.getElementById('modalImg');
+        const modalCaption = document.getElementById('modalCaption');
+        const modalCredit = document.getElementById('modalCredit');
+        const photoCounter = document.getElementById('photoCounter');
+        const closeBtn = document.getElementsByClassName('close')[0];
+        
+        function openPhotoViewer(index) {
+            currentPhotoIndex = index;
+            showPhoto();
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+        
+        function showPhoto() {
+            const photo = galleryPhotos[currentPhotoIndex];
+            modalImg.src = photo.src;
+            modalImg.alt = photo.alt;
+            modalCaption.textContent = photo.caption;
+            modalCredit.textContent = photo.credit;
+            photoCounter.textContent = `${currentPhotoIndex + 1} / ${galleryPhotos.length}`;
+        }
+        
+        function changePhoto(direction) {
+            currentPhotoIndex += direction;
+            if (currentPhotoIndex >= galleryPhotos.length) {
+                currentPhotoIndex = 0;
+            } else if (currentPhotoIndex < 0) {
+                currentPhotoIndex = galleryPhotos.length - 1;
+            }
+            showPhoto();
+        }
+        
+        // Close modal
+        closeBtn.onclick = function() {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Close on outside click
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        }
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (modal.style.display === 'block') {
+                if (e.key === 'ArrowLeft') {
+                    changePhoto(-1);
+                } else if (e.key === 'ArrowRight') {
+                    changePhoto(1);
+                } else if (e.key === 'Escape') {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            }
+        });
+        
+        // Add keyboard support for gallery images
+        document.querySelectorAll('.gallery-image').forEach((img) => {
+            img.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    this.click();
+                }
+            });
+        });
+        
+        // Add some joy to the page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Make all external links open in new tabs
+            document.querySelectorAll('a[href^="http"]').forEach(link => {
+                link.setAttribute('target', '_blank');
+                link.setAttribute('rel', 'noopener noreferrer');
+            });
+            // Disabled joy icon bounce on hover to prevent size changes
+            // const joyIcons = document.querySelectorAll('.joy-icon');
+            // joyIcons.forEach(icon => {
+            //     icon.addEventListener('mouseenter', function() {
+            //         this.style.animation = 'joy-bounce 0.5s';
+            //     });
+            //     icon.addEventListener('animationend', function() {
+            //         this.style.animation = 'joy-bounce 2s infinite';
+            //     });
+            // });
+            
+            // Easter egg: Konami code
+            let konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+            let konamiIndex = 0;
+            
+            document.addEventListener('keydown', function(e) {
+                if (e.key === konamiCode[konamiIndex]) {
+                    konamiIndex++;
+                    if (konamiIndex === konamiCode.length) {
+                        alert("It's-a me, Mario! You found the secret! 🍄");
+                        konamiIndex = 0;
+                    }
+                } else {
+                    konamiIndex = 0;
+                }
+            });
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,197 @@
+# HyperTIES Space Telescope - Runtime Data Structures
+# Extracted from NeWS/PostScript into modern YAML
+
+metadata:
+  original_system: "HyperTIES on NeWS Window System"
+  created: "1988-1989"
+  institution: "University of Maryland HCIL"
+  principal_investigator: "Ben Shneiderman"
+  
+# Core Navigation Structure
+navigation_map:
+  entry_point: "telescope-overview"
+  
+  nodes:
+    telescope-overview:
+      id: "telescope-overview"
+      type: "storyboard"
+      title: "Hubble Space Telescope"
+      content: |
+        The Hubble Space Telescope is a sophisticated astronomical 
+        observatory orbiting 380 miles above Earth. Click on any 
+        instrument to learn more about its capabilities.
+      
+      canvas:
+        background: "space-background.png"
+        telescope_image: "hubble-main-view.png"
+        
+      targets:
+        - id: "wfpc-target"
+          label: "Wide Field/Planetary Camera"
+          bounds: {x: 245, y: 180, w: 80, h: 60}
+          destination: "wfpc-detail"
+          
+        - id: "foc-target"
+          label: "Faint Object Camera"
+          bounds: {x: 330, y: 190, w: 75, h: 50}
+          destination: "foc-detail"
+          
+        - id: "fos-target"
+          label: "Faint Object Spectrograph"
+          bounds: {x: 410, y: 200, w: 70, h: 45}
+          destination: "fos-detail"
+          
+        - id: "hrs-target"
+          label: "High Resolution Spectrograph"
+          bounds: {x: 485, y: 195, w: 75, h: 50}
+          destination: "hrs-detail"
+          
+        - id: "hsp-target"
+          label: "High Speed Photometer"
+          bounds: {x: 565, y: 185, w: 80, h: 55}
+          destination: "hsp-detail"
+          
+    wfpc-detail:
+      id: "wfpc-detail"
+      type: "storyboard"
+      title: "Wide Field/Planetary Camera (WFPC)"
+      parent: "telescope-overview"
+      
+      content: |
+        The Wide Field/Planetary Camera is the main imaging 
+        instrument aboard HST. It can capture both wide field 
+        views of large astronomical objects and high-resolution 
+        planetary images.
+        
+      specifications:
+        field_of_view: "2.7 arcminutes"
+        detectors: "4 CCDs (800x800 pixels each)"
+        wavelength_range: "115-1100 nm"
+        modes:
+          - "Wide Field (f/12.9)"
+          - "Planetary Camera (f/30)"
+          
+      targets:
+        - id: "wfpc-ccd-layout"
+          label: "CCD Layout Diagram"
+          bounds: {x: 100, y: 300, w: 200, h: 150}
+          action: "reveal-overlay"
+          overlay: "wfpc-ccd-diagram.png"
+          
+        - id: "wfpc-examples"
+          label: "Example Images"
+          bounds: {x: 350, y: 300, w: 150, h: 100}
+          destination: "wfpc-gallery"
+          
+        - id: "back-to-telescope"
+          label: "Return to Telescope"
+          bounds: {x: 50, y: 500, w: 120, h: 40}
+          destination: "telescope-overview"
+          
+    # Additional instrument nodes...
+    foc-detail:
+      id: "foc-detail"
+      type: "storyboard"
+      title: "Faint Object Camera (FOC)"
+      parent: "telescope-overview"
+      content: |
+        The Faint Object Camera provides the highest spatial 
+        resolution of all HST instruments, capable of detecting 
+        extremely faint astronomical objects.
+        
+# Visual Style Configuration
+visual_style:
+  colors:
+    background: "#000011"
+    text_primary: "#ffffff"
+    text_secondary: "#cccccc"
+    highlight: "#00ff00"
+    link_normal: "#4444ff"
+    link_hover: "#8888ff"
+    link_visited: "#6644aa"
+    
+  typography:
+    font_family: "Helvetica, Arial, sans-serif"
+    heading_size: "24px"
+    body_size: "14px"
+    caption_size: "12px"
+    
+  transitions:
+    page_transition: "fade"
+    duration: "300ms"
+    highlight_effect: "glow"
+    
+# Interaction Patterns
+interactions:
+  click_behavior:
+    feedback: "immediate"
+    highlight_on_hover: true
+    cursor_change: true
+    
+  navigation:
+    history_enabled: true
+    breadcrumbs: false  # Original used explicit back buttons
+    keyboard_support:
+      - key: "Escape"
+        action: "go_back"
+      - key: "Space"
+        action: "next_target"
+        
+# Media Assets Mapping
+assets:
+  images:
+    - id: "space-background"
+      original: "space.pn0"
+      modern: "assets/space-background.png"
+      
+    - id: "hubble-main-view"
+      original: "spacetel-main.pn0"
+      modern: "assets/hubble-main.png"
+      
+    - id: "wfpc-ccd-diagram"
+      original: "wfpc-ccd.pn0"
+      modern: "assets/wfpc-ccd-layout.png"
+      
+# Compiled Behaviors (replacing Forth)
+behaviors:
+  highlight_target:
+    trigger: "mouseover"
+    actions:
+      - add_class: "highlighted"
+      - show_tooltip: true
+      
+  navigate_to_node:
+    trigger: "click"
+    actions:
+      - save_to_history: true
+      - transition_out: "current_node"
+      - load_node: "destination"
+      - transition_in: "new_node"
+      
+  reveal_overlay:
+    trigger: "click"
+    actions:
+      - create_overlay: true
+      - fade_in: "overlay_content"
+      - enable_dismiss: true
+      
+# SOUL CHAT Commentary
+soul_chat:
+  ben_shneiderman: |
+    This structure captures the essence of what we built. Notice how 
+    every element has a clear purpose - nothing decorative, everything 
+    functional. That was key to HyperTIES success.
+    
+  dave_ungar: |
+    See how the behaviors are declarative? We're not saying HOW to 
+    highlight, just WHAT highlighting means. The runtime can optimize 
+    as needed!
+    
+  ted_nelson: |
+    The parent links in each node - that's true hypertext! Every page 
+    knows where it came from. No orphaned pages, no broken returns!
+    
+  alan_kay: |
+    This YAML is more readable than the original PostScript, but it 
+    captures the same intent. That's proper abstraction - hide the 
+    how, preserve the what. 

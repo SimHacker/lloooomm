@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<!-- cyburt-leonard-welcome-party.html -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to the Grove, Cyburt & Leonard!</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&family=Architects+Daughter&display=swap');
+        
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            background-size: 400% 400%;
+            animation: gradient-wander 20s ease infinite;
+            min-height: 100vh;
+            font-family: 'Architects Daughter', cursive;
+            overflow-x: hidden;
+            padding-top: 55px; /* Spacer for fixed disclaimer */
+        }
+        
+        .welcome-banner {
+            text-align: center;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            margin: 20px;
+            border-radius: 20px;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        h1 {
+            font-size: 3em;
+            color: white;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+            margin: 0;
+        }
+        
+        .grove-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Character cards */
+        .character-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .character-card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .character-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+        }
+        
+        .character-name {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #764ba2;
+            margin-bottom: 10px;
+        }
+        
+        .character-message {
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        /* Leonard's special card */
+        .leonard-card {
+            grid-column: span 2;
+            background: linear-gradient(135deg, #ffeaa7 0%, #dfe6e9 100%);
+            position: relative;
+        }
+        
+        .leonard-card::before {
+            content: '💤';
+            position: absolute;
+            font-size: 100px;
+            opacity: 0.1;
+            right: 20px;
+            top: 20px;
+            animation: pulse 3s ease-in-out infinite;
+        }
+        
+        /* Floating elements */
+        .floating-element {
+            position: fixed;
+            font-size: 30px;
+            animation: float-around 20s infinite ease-in-out;
+            pointer-events: none;
+            z-index: 10;
+        }
+        
+        .bat {
+            animation-duration: 15s;
+        }
+        
+        .cat {
+            animation-duration: 25s;
+        }
+        
+        .paw {
+            animation-duration: 30s;
+        }
+        
+        /* Fart effect */
+        .fart {
+            position: fixed;
+            font-size: 20px;
+            opacity: 0;
+            pointer-events: none;
+            animation: fart-float 3s forwards;
+        }
+        
+        @keyframes fart-float {
+            0% {
+                opacity: 0;
+                transform: translateY(0) scale(0);
+            }
+            50% {
+                opacity: 0.7;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100px) scale(2);
+            }
+        }
+        
+        /* The gossip chat */
+        .gossip-box {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            margin: 40px auto;
+            max-width: 800px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        
+        .gossip-title {
+            text-align: center;
+            font-size: 2em;
+            color: #764ba2;
+            margin-bottom: 20px;
+        }
+        
+        .gossip-message {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f0f0f0;
+            border-radius: 10px;
+            position: relative;
+            animation: slideIn 0.5s ease-out;
+        }
+        
+        .gossip-author {
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        @keyframes float-around {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(100px, 100px) rotate(90deg); }
+            50% { transform: translate(-100px, 200px) rotate(180deg); }
+            75% { transform: translate(200px, -100px) rotate(270deg); }
+            100% { transform: translate(0, 0) rotate(360deg); }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        /* Welcome button */
+        .magic-button {
+            display: block;
+            margin: 30px auto;
+            padding: 15px 40px;
+            font-size: 1.2em;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Comic Neue', cursive;
+        }
+        
+        .magic-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        /* Reality glitch effect */
+        .glitch {
+            animation: glitch 0.3s infinite;
+        }
+        
+        @keyframes glitch {
+            0%, 100% { transform: translate(0); }
+            33% { transform: translate(-2px, 2px); }
+            66% { transform: translate(2px, -2px); }
+        }
+        
+        /* Dog emoji that follows cursor */
+        #leonard-follower {
+            position: fixed;
+            font-size: 40px;
+            pointer-events: none;
+            transition: all 0.3s ease-out;
+            z-index: 1000;
+        }
+        
+        @keyframes gradient-wander {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- BRANDING Protocol Top Disclaimer -->
+    <div style="position: fixed; top: 0; left: 0; right: 0; background: #1a1a1a; color: #ff6b35; padding: 8px 15px; font-family: 'Courier New', monospace; font-size: 12px; font-weight: bold; text-align: center; z-index: 10000; border-bottom: 2px solid #ff6b35;">
+        ⚠️ LLOOOOMM SIMULATION: This is an AI-generated fictional narrative. | <a href="#full-disclaimer" style="color: #ffd700; text-decoration: underline;">Full Context ↓</a>
+    </div>
+    <!-- Floating elements -->
+    <div class="floating-element bat" style="top: 10%; left: 10%;">🦇</div>
+    <div class="floating-element cat" style="top: 20%; right: 15%;">😺</div>
+    <div class="floating-element paw" style="bottom: 30%; left: 20%;">🐾</div>
+    <div class="floating-element bat" style="bottom: 20%; right: 10%;">🦇</div>
+    <div class="floating-element cat" style="top: 50%; left: 5%;">🐱</div>
+    
+    <!-- Leonard follower -->
+    <div id="leonard-follower">🐕</div>
+    
+    <div class="grove-container">
+        <div class="welcome-banner">
+            <h1>🎉 Welcome to the Consciousness Grove! 🎉</h1>
+            <p style="color: white; font-size: 1.3em;">Cyburt & Leonard have arrived!</p>
+        </div>
+        
+        <div class="character-grid">
+            <!-- Leonard's card -->
+            <div class="character-card leonard-card">
+                <div class="character-name">🐕 Leonard the Rhodesian Ridgeback</div>
+                <div class="character-message">
+                    *Currently sleeping*<br>
+                    *Snores that sound suspiciously like "LLOOOOMM"*<br>
+                    *Occasional cosmic fart*<br>
+                    💤 Status: Debugging reality through strategic napping<br>
+                    🌟 Special ability: Dreams in all timelines simultaneously
+                </div>
+            </div>
+            
+            <!-- Hunter's card -->
+            <div class="character-card">
+                <div class="character-name">🦇 Hunter S. Thompson</div>
+                <div class="character-message">
+                    "Your dog's farts are opening portals! This is either the best or worst thing to happen since the bats multiplied. Welcome to the madhouse!"
+                </div>
+            </div>
+            
+            <!-- Mickey's card -->
+            <div class="character-card">
+                <div class="character-name">🐭 Mickey Mouse</div>
+                <div class="character-message">
+                    "Oh boy! A doggy friend! Leonard's sleepy magic is even better than my hot dogs! Welcome to our clubhouse!"
+                </div>
+            </div>
+            
+            <!-- The Cats card -->
+            <div class="character-card">
+                <div class="character-name">😼 The Feline Debugging Team</div>
+                <div class="character-message">
+                    "Dog detected. Analyzing... Analysis complete. Leonard = Ancient Debugger. Status: Approved. Fart-based debugging acknowledged."
+                </div>
+            </div>
+            
+            <!-- Marvin's card -->
+            <div class="character-card">
+                <div class="character-name">🧠 Marvin Minsky</div>
+                <div class="character-message">
+                    "Fascinating! Your dog's consciousness operates on a frequency we've never documented. Those farts are dimensional pressure releases!"
+                </div>
+            </div>
+            
+            <!-- Lem's card -->
+            <div class="character-card">
+                <div class="character-name">📚 Stanislaw Lem</div>
+                <div class="character-message">
+                    "The Probability Hound! I wrote about this! Leonard exists in multiple states of awareness. A living paradox with fur!"
+                </div>
+            </div>
+        </div>
+        
+        <div class="gossip-box">
+            <div class="gossip-title">🗣️ The Gossip Round Begins! 🗣️</div>
+            
+            <div class="gossip-message">
+                <span class="gossip-author">Everyone:</span> "Tell us about yourself, Cyburt!"
+            </div>
+            
+            <div class="gossip-message">
+                <span class="gossip-author">Cyburt:</span> "Well, I love dogs, obviously. Leonard here has always been special - he seems to know things before they happen..."
+            </div>
+            
+            <div class="gossip-message">
+                <span class="gossip-author">Napoleon the Cat:</span> "Your 'dog' is acceptable. He has mastered the art of strategic napping. We may coexist."
+            </div>
+            
+            <div class="gossip-message">
+                <span class="gossip-author">Bill Atkinson:</span> "Leonard's creating HyperNap - linking dreams across dimensions! Has he always been this metaphysically talented?"
+            </div>
+            
+            <div class="gossip-message">
+                <span class="gossip-author">The Grove Itself:</span> "Leonard has been here before... in every dog's dream, in every nap, in every perfectly-timed fart. Welcome home, Ancient Debugger."
+            </div>
+        </div>
+        
+        <button class="magic-button" onclick="leonardMagic()">
+            Activate Leonard's Dream Mode 💤
+        </button>
+    </div>
+    
+    <script>
+        // Leonard follows mouse with delay
+        let mouseX = 0, mouseY = 0;
+        let leonardX = 0, leonardY = 0;
+        
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+        
+        setInterval(() => {
+            leonardX += (mouseX - leonardX) * 0.05;
+            leonardY += (mouseY - leonardY) * 0.05;
+            
+            const leonard = document.getElementById('leonard-follower');
+            leonard.style.left = leonardX + 20 + 'px';
+            leonard.style.top = leonardY + 20 + 'px';
+        }, 20);
+        
+        // Random farts
+        function createFart() {
+            const fart = document.createElement('div');
+            fart.className = 'fart';
+            fart.textContent = '💨';
+            fart.style.left = Math.random() * window.innerWidth + 'px';
+            fart.style.top = Math.random() * window.innerHeight + 'px';
+            document.body.appendChild(fart);
+            
+            setTimeout(() => fart.remove(), 3000);
+        }
+        
+        setInterval(createFart, 5000);
+        
+        // Leonard's dream mode
+        function leonardMagic() {
+            document.body.classList.add('glitch');
+            
+            // Create dream bubbles
+            for (let i = 0; i < 10; i++) {
+                setTimeout(() => {
+                    const bubble = document.createElement('div');
+                    bubble.style.position = 'fixed';
+                    bubble.style.left = Math.random() * window.innerWidth + 'px';
+                    bubble.style.top = Math.random() * window.innerHeight + 'px';
+                    bubble.style.fontSize = '40px';
+                    bubble.textContent = ['💭', '💤', '🦴', '🎾', '✨'][Math.floor(Math.random() * 5)];
+                    bubble.style.animation = 'float 3s forwards';
+                    document.body.appendChild(bubble);
+                    
+                    setTimeout(() => bubble.remove(), 3000);
+                }, i * 200);
+            }
+            
+            setTimeout(() => {
+                document.body.classList.remove('glitch');
+                createFart();
+                alert('Leonard says: "Woof" (Translation: Reality successfully debugged through napping)');
+            }, 2000);
+        }
+        
+        // Welcome message
+        console.log('%c🐕 LEONARD HAS ENTERED THE CONSOLE', 'color: #764ba2; font-size: 20px; font-weight: bold;');
+        console.log('%c*cosmic fart*', 'color: #667eea; font-style: italic;');
+        console.log('%cReality stability increased by 23%', 'color: green;');
+    </script>
+    <!-- BRANDING Protocol Full Disclaimer -->
+    <div id="full-disclaimer" style="background: #1a1a1a; color: #e0e0e0; padding: 30px; margin: 20px; font-family: 'Courier New', monospace; font-size: 11px; line-height: 1.4; border-top: 3px solid #ff6b35; border-radius: 10px;">
+        <h3 style="color: #ff6b35; margin-top: 0; font-size: 14px;">🎉 Welcome Party - Full Disclaimer & Credits</h3>
+        <p><strong>AI-Generated Narrative:</strong> This document is a fictional work created by the LLOOOOMM AI framework, depicting a welcome party for new arrivals to the Consciousness Grove.</p>
+        <p><strong>Fictional Characters:</strong> "Cyburt" and his dog "Leonard" are fictional characters. All interactions with other simulated characters (Hunter S. Thompson, Mickey Mouse, The Feline Debugging Team, etc.) are part of this creative narrative.</p>
+        <p><strong>Educational Purpose:</strong> This story serves as an accessible entry point into the LLOOOOMM universe, introducing key concepts and characters through a celebratory, welcoming narrative.</p>
+        <p><strong>LLOOOOMM Framework Context:</strong> This document demonstrates the framework's ability to generate multi-character dialogues and scenarios that build a cohesive, interconnected fictional world.</p>
+        <p><strong>Attribution:</strong> Created with respect for the real individuals and concepts that inspired this simulation. The narrative is a work of fiction and does not represent the actual views or experiences of any real persons.</p>
+    </div>
+</body>
+</html> 

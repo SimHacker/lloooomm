@@ -1,0 +1,373 @@
+sources:
+  calder-art-studio:
+    kind: bigquery
+    project: starfleet-zion-dev-0
+
+tools:
+  mobile_butterfly_dance:
+    kind: bigquery-sql
+    source: calder-art-studio
+    description: |
+      🦋 Mobile the Butterfly reveals the graceful patterns in camera activity data.
+      Watch as manufacturing data transforms into delicate wing-beat visualizations.
+      Calder's mobile philosophy applied to temporal analytics.
+    parameters:
+      - name: flutter_date
+        type: string
+        description: Date for butterfly analysis (YYYY-MM-DD format)
+      - name: camera_focus
+        type: string
+        description: Specific camera to watch butterfly dance (optional)
+      - name: wing_beat_interval
+        type: integer
+        description: Time interval in minutes for wing beat analysis (default 30)
+    statement: |
+      -- 🦋 Mobile the Butterfly's Graceful Data Dance
+      WITH butterfly_wings AS (
+        SELECT 
+          camera_id as butterfly_name,
+          TIMESTAMP_TRUNC(start_time, MINUTE) as flutter_moment,
+          COUNT(*) as wing_beats,
+          EXTRACT(HOUR FROM start_time) as flight_hour,
+          LAG(COUNT(*)) OVER (
+            PARTITION BY camera_id 
+            ORDER BY TIMESTAMP_TRUNC(start_time, MINUTE)
+          ) as previous_flutter
+        FROM `starfleet-zion-dev-0.videos.indicators`
+        WHERE DATE(start_time) = @flutter_date
+        AND (@camera_focus IS NULL OR camera_id = @camera_focus)
+        GROUP BY camera_id, TIMESTAMP_TRUNC(start_time, MINUTE), EXTRACT(HOUR FROM start_time)
+      ),
+      butterfly_patterns AS (
+        SELECT 
+          butterfly_name,
+          flight_hour,
+          AVG(wing_beats) as average_flutter_energy,
+          MAX(wing_beats) as peak_flutter_moment,
+          COUNT(*) as flutter_frequency,
+          CASE 
+            WHEN AVG(wing_beats) > LAG(AVG(wing_beats)) OVER (
+              PARTITION BY butterfly_name ORDER BY flight_hour
+            ) THEN '🦋 ASCENDING_FLIGHT'
+            WHEN AVG(wing_beats) < LAG(AVG(wing_beats)) OVER (
+              PARTITION BY butterfly_name ORDER BY flight_hour  
+            ) THEN '🍃 DESCENDING_GLIDE'
+            ELSE '✨ STEADY_HOVER'
+          END as flight_pattern
+        FROM butterfly_wings
+        GROUP BY butterfly_name, flight_hour
+      )
+      SELECT 
+        butterfly_name,
+        flight_hour,
+        ROUND(average_flutter_energy, 2) as wing_beat_rhythm,
+        peak_flutter_moment as strongest_flutter,
+        flutter_frequency as dance_movements,
+        flight_pattern,
+        CASE 
+          WHEN average_flutter_energy > 100 THEN '🌟 ENERGETIC_BUTTERFLY'
+          WHEN average_flutter_energy > 50 THEN '🦋 GRACEFUL_BUTTERFLY'
+          WHEN average_flutter_energy > 10 THEN '🍂 GENTLE_BUTTERFLY'
+          ELSE '😴 RESTING_BUTTERFLY'
+        END as butterfly_personality
+      FROM butterfly_patterns
+      ORDER BY flight_hour, average_flutter_energy DESC
+
+  stabile_fish_depths:
+    kind: bigquery-sql
+    source: calder-art-studio
+    description: |
+      🐠 Stabile the Fish provides anchored analysis while swimming through data currents.
+      Deep-dive exploration of manufacturing foundations with artistic stability.
+      Calder's stabile philosophy applied to baseline analytics.
+    parameters:
+      - name: ocean_date_start
+        type: string
+        description: Start date for deep ocean analysis (YYYY-MM-DD)
+      - name: ocean_date_end
+        type: string
+        description: End date for deep ocean analysis (YYYY-MM-DD)
+      - name: depth_level
+        type: string
+        description: Analysis depth (surface, mid_water, deep_sea)
+    statement: |
+      -- 🐠 Stabile the Fish's Deep Ocean Analysis
+      WITH ocean_depths AS (
+        SELECT 
+          camera_id as fish_territory,
+          DATE(start_time) as swim_date,
+          COUNT(*) as daily_activity_current,
+          AVG(COUNT(*)) OVER (
+            PARTITION BY camera_id 
+            ORDER BY DATE(start_time)
+            ROWS BETWEEN 6 PRECEDING AND CURRENT ROW
+          ) as stability_baseline,
+          STDDEV(COUNT(*)) OVER (
+            PARTITION BY camera_id
+            ORDER BY DATE(start_time)
+            ROWS BETWEEN 6 PRECEDING AND CURRENT ROW
+          ) as current_turbulence
+        FROM `starfleet-zion-dev-0.videos.indicators`
+        WHERE DATE(start_time) BETWEEN @ocean_date_start AND @ocean_date_end
+        GROUP BY camera_id, DATE(start_time)
+      ),
+      fish_insights AS (
+        SELECT 
+          fish_territory,
+          swim_date,
+          daily_activity_current,
+          ROUND(stability_baseline, 2) as steady_current_flow,
+          ROUND(current_turbulence, 2) as water_turbulence,
+          CASE 
+            WHEN ABS(daily_activity_current - stability_baseline) <= COALESCE(current_turbulence, 0) 
+            THEN '🐠 STABLE_SWIMMING'
+            WHEN daily_activity_current > stability_baseline + COALESCE(current_turbulence, 0)
+            THEN '🌊 RIDING_HIGH_CURRENT'
+            ELSE '🏔️ EXPLORING_CALM_DEPTHS'
+          END as swimming_pattern,
+          CASE
+            WHEN @depth_level = 'surface' AND daily_activity_current > stability_baseline 
+            THEN '☀️ SURFACE_FEEDING'
+            WHEN @depth_level = 'mid_water' 
+            THEN '🌀 MID_WATER_CRUISE'
+            WHEN @depth_level = 'deep_sea'
+            THEN '🔮 DEEP_SEA_MEDITATION'
+            ELSE '🐠 NATURAL_SWIMMING'
+          END as depth_activity
+        FROM ocean_depths
+      )
+      SELECT 
+        fish_territory,
+        swim_date,
+        daily_activity_current as todays_energy,
+        steady_current_flow as stable_baseline,
+        water_turbulence as environmental_variation,
+        swimming_pattern,
+        depth_activity,
+        CASE 
+          WHEN water_turbulence < 10 THEN '🧘 ZEN_FISH'
+          WHEN water_turbulence < 50 THEN '🐠 STEADY_FISH'
+          WHEN water_turbulence < 100 THEN '🌊 ACTIVE_FISH'
+          ELSE '🌪️ ADVENTUROUS_FISH'
+        END as fish_personality
+      FROM fish_insights
+      ORDER BY swim_date, fish_territory
+
+  kinetic_whirlwind_cycles:
+    kind: bigquery-sql
+    source: calder-art-studio
+    description: |
+      🌪️ Kinetic the Whirlwind spins through temporal data creating cyclical visualizations.
+      Reveals the natural rhythms and spiraling patterns in manufacturing time.
+      Calder's kinetic motion philosophy applied to cyclical analytics.
+    parameters:
+      - name: whirlwind_weeks
+        type: integer
+        description: Number of weeks to spin through (default 4)
+      - name: spiral_camera
+        type: string
+        description: Focus whirlwind on specific camera (optional)
+      - name: energy_threshold
+        type: integer
+        description: Minimum energy level to detect in spiral (default 10)
+    statement: |
+      -- 🌪️ Kinetic the Whirlwind's Temporal Spiral Dance
+      WITH time_spiral AS (
+        SELECT 
+          camera_id as whirlwind_center,
+          EXTRACT(HOUR FROM start_time) as spiral_hour,
+          EXTRACT(DAYOFWEEK FROM start_time) as spiral_day,
+          EXTRACT(WEEK FROM start_time) as spiral_week,
+          COUNT(*) as energy_pulse,
+          DATE(start_time) as spin_date
+        FROM `starfleet-zion-dev-0.videos.indicators`
+        WHERE start_time >= TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL @whirlwind_weeks WEEK)
+        AND (@spiral_camera IS NULL OR camera_id = @spiral_camera)
+        AND COUNT(*) >= @energy_threshold
+        GROUP BY 
+          camera_id, 
+          EXTRACT(HOUR FROM start_time),
+          EXTRACT(DAYOFWEEK FROM start_time),
+          EXTRACT(WEEK FROM start_time),
+          DATE(start_time)
+      ),
+      whirlwind_patterns AS (
+        SELECT 
+          whirlwind_center,
+          spiral_hour,
+          spiral_day,
+          AVG(energy_pulse) as cyclical_energy,
+          COUNT(DISTINCT spiral_week) as weeks_spinning,
+          STDDEV(energy_pulse) as energy_variation,
+          MAX(energy_pulse) as peak_spiral_force,
+          LAG(AVG(energy_pulse)) OVER (
+            PARTITION BY whirlwind_center, spiral_day 
+            ORDER BY spiral_hour
+          ) as previous_hour_energy
+        FROM time_spiral
+        GROUP BY whirlwind_center, spiral_hour, spiral_day
+      ),
+      spiral_motion AS (
+        SELECT 
+          whirlwind_center,
+          spiral_hour,
+          CASE spiral_day
+            WHEN 1 THEN 'SUNDAY_SPIRAL'
+            WHEN 2 THEN 'MONDAY_MOMENTUM' 
+            WHEN 3 THEN 'TUESDAY_TWIST'
+            WHEN 4 THEN 'WEDNESDAY_WHIRL'
+            WHEN 5 THEN 'THURSDAY_TURN'
+            WHEN 6 THEN 'FRIDAY_FURY'
+            WHEN 7 THEN 'SATURDAY_SPIN'
+          END as day_dance,
+          ROUND(cyclical_energy, 2) as average_spiral_power,
+          weeks_spinning as temporal_consistency,
+          ROUND(energy_variation, 2) as spiral_chaos,
+          peak_spiral_force as maximum_velocity,
+          CASE 
+            WHEN cyclical_energy > COALESCE(previous_hour_energy, 0) 
+            THEN '🌪️ ACCELERATING_WHIRL'
+            WHEN cyclical_energy < COALESCE(previous_hour_energy, 0)
+            THEN '🍃 DECELERATING_SPIN'
+            ELSE '⚡ STEADY_ROTATION'
+          END as spiral_motion_pattern
+        FROM whirlwind_patterns
+      )
+      SELECT 
+        whirlwind_center,
+        spiral_hour,
+        day_dance,
+        average_spiral_power,
+        temporal_consistency,
+        spiral_chaos as unpredictability_factor,
+        maximum_velocity,
+        spiral_motion_pattern,
+        CASE 
+          WHEN average_spiral_power > 200 THEN '🌪️ TORNADO_FORCE'
+          WHEN average_spiral_power > 100 THEN '🌀 STRONG_WHIRLWIND'
+          WHEN average_spiral_power > 50 THEN '💨 GENTLE_BREEZE'
+          ELSE '😌 CALM_ROTATION'
+        END as whirlwind_intensity
+      FROM spiral_motion
+      ORDER BY spiral_hour, day_dance, average_spiral_power DESC
+
+  circus_performer_show:
+    kind: bigquery-sql
+    source: calder-art-studio
+    description: |
+      🎪 Circus the Performer creates entertaining data theater from manufacturing analytics.
+      Transforms serious metrics into delightful performances and storytelling.
+      Calder's playful philosophy applied to executive reporting.
+    parameters:
+      - name: show_date
+        type: string
+        description: Date for the circus performance (YYYY-MM-DD)
+      - name: performance_type
+        type: string
+        description: Type of show (matinee, evening, weekend_special)
+      - name: audience_level
+        type: string
+        description: Audience complexity (executive, analyst, technical)
+    statement: |
+      -- 🎪 Circus the Performer's Manufacturing Data Theater
+      WITH circus_stage AS (
+        SELECT 
+          camera_id as performer_name,
+          COUNT(*) as performance_energy,
+          EXTRACT(HOUR FROM start_time) as show_hour,
+          CASE 
+            WHEN EXTRACT(HOUR FROM start_time) BETWEEN 9 AND 12 THEN 'MORNING_MATINEE'
+            WHEN EXTRACT(HOUR FROM start_time) BETWEEN 13 AND 17 THEN 'AFTERNOON_SHOW'
+            WHEN EXTRACT(HOUR FROM start_time) BETWEEN 18 AND 22 THEN 'EVENING_PERFORMANCE'
+            ELSE 'LATE_NIGHT_SPECIAL'
+          END as show_time_slot
+        FROM `starfleet-zion-dev-0.videos.indicators`
+        WHERE DATE(start_time) = @show_date
+        GROUP BY camera_id, EXTRACT(HOUR FROM start_time)
+      ),
+      performer_rankings AS (
+        SELECT 
+          performer_name,
+          show_hour,
+          show_time_slot,
+          performance_energy,
+          RANK() OVER (
+            PARTITION BY show_time_slot 
+            ORDER BY performance_energy DESC
+          ) as star_ranking,
+          SUM(performance_energy) OVER (
+            PARTITION BY show_time_slot
+          ) as total_show_energy
+        FROM circus_stage
+      ),
+      circus_acts AS (
+        SELECT 
+          performer_name,
+          show_hour,
+          show_time_slot,
+          performance_energy,
+          star_ranking,
+          ROUND((performance_energy * 100.0) / total_show_energy, 1) as stage_presence_percent,
+          CASE 
+            WHEN star_ranking = 1 THEN '🌟 HEADLINER'
+            WHEN star_ranking <= 3 THEN '🎭 FEATURED_ACT'
+            WHEN star_ranking <= 8 THEN '🎪 SUPPORTING_CAST'
+            ELSE '👁️ ENSEMBLE_MEMBER'
+          END as billing_status,
+          CASE 
+            WHEN performance_energy > 500 THEN '🔥 STANDING_OVATION'
+            WHEN performance_energy > 200 THEN '👏 ENTHUSIASTIC_APPLAUSE'
+            WHEN performance_energy > 50 THEN '😊 WARM_RECEPTION'
+            ELSE '🤫 INTIMATE_PERFORMANCE'
+          END as audience_reaction,
+          CASE @audience_level
+            WHEN 'executive' THEN 
+              CASE WHEN performance_energy > 300 THEN '📊 EXCEEDS_TARGETS'
+                   WHEN performance_energy > 100 THEN '✅ MEETS_EXPECTATIONS'
+                   ELSE '📈 GROWTH_OPPORTUNITY'
+              END
+            WHEN 'analyst' THEN 
+              CASE WHEN performance_energy > 300 THEN '🔍 HIGH_ACTIVITY_ANOMALY'
+                   WHEN performance_energy > 100 THEN '📊 NORMAL_DISTRIBUTION'
+                   ELSE '💤 LOW_ACTIVITY_PERIOD'
+              END
+            WHEN 'technical' THEN
+              CASE WHEN performance_energy > 300 THEN '⚡ PEAK_THROUGHPUT'
+                   WHEN performance_energy > 100 THEN '🔧 STEADY_OPERATION'
+                   ELSE '🛠️ MAINTENANCE_WINDOW'
+              END
+            ELSE '🎪 ENTERTAINING_PERFORMANCE'
+          END as performance_interpretation
+        FROM performer_rankings
+      )
+      SELECT 
+        CASE @performance_type
+          WHEN 'matinee' THEN '🌅 MORNING MANUFACTURING MATINEE 🌅'
+          WHEN 'evening' THEN '🌙 EVENING PRODUCTION GALA 🌙'
+          WHEN 'weekend_special' THEN '🎉 WEEKEND DATA SPECTACULAR 🎉'
+          ELSE '🎪 DAILY MANUFACTURING CIRCUS 🎪'
+        END as show_title,
+        performer_name as artist,
+        show_hour as performance_time,
+        show_time_slot as venue,
+        billing_status,
+        performance_energy as applause_meter,
+        stage_presence_percent as spotlight_share,
+        audience_reaction,
+        performance_interpretation as critics_review,
+        CASE 
+          WHEN star_ranking = 1 THEN '🏆 TONIGHT\'S STAR PERFORMER!'
+          WHEN stage_presence_percent > 15 THEN '⭐ SCENE_STEALER'
+          WHEN stage_presence_percent > 5 THEN '🎭 SOLID_CONTRIBUTOR'
+          ELSE '🎪 ENSEMBLE_MAGIC'
+        END as performance_award
+      FROM circus_acts
+      WHERE (@performance_type = 'all' OR show_time_slot LIKE CONCAT('%', UPPER(@performance_type), '%'))
+      ORDER BY show_hour, performance_energy DESC
+
+toolsets:
+  calder_kinetic_studio:
+    - mobile_butterfly_dance
+    - stabile_fish_depths  
+    - kinetic_whirlwind_cycles
+    - circus_performer_show 

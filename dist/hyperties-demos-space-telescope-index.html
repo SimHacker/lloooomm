@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<!-- hyperties-demos-space-telescope-index.html -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HyperTIES: The Space Telescope in Orbit | LLOOOOMM</title>
+    <meta name="description" content="Interactive HyperTIES demo showing the Space Telescope with clickable instruments and pie menu navigation">
+    <meta name="keywords" content="HyperTIES, Space Telescope, Hubble, interactive demo, pie menus, LLOOOOMM">
+    <meta name="author" content="LLOOOOMM Project">
+    
+    <!-- LLOOOOMM Integration -->
+    <link rel="canonical" href="https://lloooomm.com/characters/hyperties/demos/space-telescope/index.html">
+    
+    <style>
+        body {
+            font-family: Times, serif;
+            background: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .hyperties-window {
+            width: 640px;
+            margin: 20px auto;
+            background: white;
+            border: 2px solid #333;
+            box-shadow: 5px 5px 10px rgba(0,0,0,0.3);
+        }
+        
+        .window-title {
+            background: #333;
+            color: white;
+            padding: 5px 10px;
+            font-family: Helvetica, sans-serif;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        .page-content {
+            padding: 20px;
+            min-height: 400px;
+        }
+        
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+        }
+        
+        .definition {
+            background: #e8e8e8;
+            padding: 15px;
+            margin: 20px 0;
+            border-left: 4px solid #666;
+            font-style: italic;
+        }
+        
+        .hyperlink {
+            color: #0000ff;
+            text-decoration: underline;
+            cursor: pointer;
+            font-weight: bold;
+            background: #e0e0ff;
+            padding: 2px 4px;
+            border: 1px solid #0000ff;
+        }
+        
+        .hyperlink:hover {
+            background: #0000ff;
+            color: white;
+        }
+        
+        .inline-link {
+            color: #0000ff;
+            text-decoration: underline;
+            cursor: pointer;
+            background: #f0f0ff;
+            padding: 0 2px;
+        }
+        
+        .inline-link:hover {
+            background: #0000ff;
+            color: white;
+        }
+        
+        .telescope-diagram {
+            position: relative;
+            width: 600px;
+            height: 400px;
+            margin: 20px auto;
+            background: #f8f8f8;
+            border: 1px solid #ccc;
+        }
+        
+        .telescope-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        .instrument-target {
+            position: absolute;
+            background: rgba(0, 0, 255, 0.1);
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .instrument-target:hover {
+            background: rgba(0, 0, 255, 0.3);
+            border-color: #0000ff;
+        }
+        
+        .instrument-label {
+            position: absolute;
+            background: white;
+            border: 1px solid #333;
+            padding: 2px 5px;
+            font-size: 12px;
+            font-family: Helvetica, sans-serif;
+            pointer-events: none;
+        }
+        
+        .controls {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #333;
+            text-align: center;
+        }
+        
+        .control-button {
+            display: inline-block;
+            margin: 5px;
+            padding: 8px 15px;
+            background: #e0e0e0;
+            border: 2px solid #333;
+            cursor: pointer;
+            font-family: Helvetica, sans-serif;
+            font-weight: bold;
+        }
+        
+        .control-button:hover {
+            background: #333;
+            color: white;
+        }
+        
+        .navigation-bar {
+            background: #e0e0e0;
+            padding: 10px;
+            border-top: 1px solid #333;
+            font-family: Helvetica, sans-serif;
+            font-size: 12px;
+        }
+        
+        .nav-button {
+            display: inline-block;
+            margin: 0 5px;
+            padding: 3px 8px;
+            background: white;
+            border: 1px solid #666;
+            cursor: pointer;
+        }
+        
+        .nav-button:hover {
+            background: #666;
+            color: white;
+        }
+        
+        .pie-menu-hint {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            font-size: 11px;
+            color: #666;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="hyperties-window">
+        <div class="window-title">HyperTIES Browser - The Space Telescope in Orbit</div>
+        
+        <div class="page-content">
+            <h1 class="title">The Space Telescope in Orbit</h1>
+            
+            <div class="definition">
+                The Hubble Space Telescope is a large optical telescope in orbit around Earth, 
+                designed to observe the universe without atmospheric interference.
+            </div>
+            
+            <p>
+                The Space Telescope represents one of humanity's most ambitious scientific instruments. 
+                Launched into orbit to escape Earth's atmosphere, it provides unprecedented views of 
+                the cosmos.
+            </p>
+            
+            <div class="telescope-diagram">
+                <svg viewBox="0 0 600 400" class="telescope-image">
+                    <!-- Simplified telescope body -->
+                    <rect x="150" y="150" width="300" height="100" fill="#cccccc" stroke="#333" stroke-width="2"/>
+                    <polygon points="450,200 500,180 500,220" fill="#999999" stroke="#333" stroke-width="2"/>
+                    <rect x="100" y="180" width="50" height="40" fill="#999999" stroke="#333" stroke-width="2"/>
+                    
+                    <!-- Solar panels -->
+                    <rect x="200" y="80" width="200" height="60" fill="#4444ff" stroke="#333" stroke-width="2"/>
+                    <rect x="200" y="260" width="200" height="60" fill="#4444ff" stroke="#333" stroke-width="2"/>
+                    
+                    <!-- Instrument labels -->
+                    <text x="300" y="30" text-anchor="middle" font-family="Helvetica" font-size="18" font-weight="bold">
+                        Hubble Space Telescope
+                    </text>
+                </svg>
+                
+                <!-- Interactive targets for instruments -->
+                <div class="instrument-target" style="left: 160px; top: 160px; width: 80px; height: 80px;" 
+                     onclick="showInstrument('WFPC')" title="Wide Field/Planetary Camera"></div>
+                <div class="instrument-label" style="left: 165px; top: 165px;">WFPC</div>
+                
+                <div class="instrument-target" style="left: 250px; top: 160px; width: 80px; height: 80px;" 
+                     onclick="showInstrument('FOC')" title="Faint Object Camera"></div>
+                <div class="instrument-label" style="left: 265px; top: 165px;">FOC</div>
+                
+                <div class="instrument-target" style="left: 340px; top: 160px; width: 80px; height: 80px;" 
+                     onclick="showInstrument('FOS')" title="Faint Object Spectrograph"></div>
+                <div class="instrument-label" style="left: 355px; top: 165px;">FOS</div>
+                
+                <div class="instrument-target" style="left: 250px; top: 90px; width: 140px; height: 50px;" 
+                     onclick="showInstrument('HRS')" title="High Resolution Spectrograph"></div>
+                <div class="instrument-label" style="left: 300px; top: 105px;">HRS</div>
+                
+                <div class="instrument-target" style="left: 250px; top: 260px; width: 140px; height: 50px;" 
+                     onclick="showInstrument('HSP')" title="High Speed Photometer"></div>
+                <div class="instrument-label" style="left: 300px; top: 275px;">HSP</div>
+            </div>
+            
+            <p>
+                Click on any instrument in the diagram above to learn more about its capabilities.
+                The telescope carries five main scientific instruments:
+            </p>
+            
+            <ul>
+                <li><span class="inline-link" onclick="showInstrument('WFPC')">WFPC</span> - Wide Field/Planetary Camera</li>
+                <li><span class="inline-link" onclick="showInstrument('FOC')">FOC</span> - Faint Object Camera</li>
+                <li><span class="inline-link" onclick="showInstrument('FOS')">FOS</span> - Faint Object Spectrograph</li>
+                <li><span class="inline-link" onclick="showInstrument('HRS')">HRS</span> - High Resolution Spectrograph</li>
+                <li><span class="inline-link" onclick="showInstrument('HSP')">HSP</span> - High Speed Photometer</li>
+            </ul>
+            
+            <p>
+                Additional information:
+            </p>
+            
+            <div style="margin: 20px 0;">
+                <span class="hyperlink" onclick="navigate('orbital-view')">View Orbital Diagram</span>
+                <span class="hyperlink" onclick="navigate('participants')">Project Participants</span>
+                <span class="hyperlink" onclick="navigate('science-goals')">Scientific Objectives</span>
+            </div>
+            
+            <div class="controls">
+                <div class="control-button" onclick="navigate('index')">Return to Index</div>
+                <div class="control-button" onclick="navigate('help')">Help</div>
+                <div class="control-button" onclick="showDefinition()">Definition</div>
+            </div>
+        </div>
+        
+        <div class="navigation-bar">
+            <span class="nav-button" onclick="history.back()">Back</span>
+            <span class="nav-button" onclick="navigate('index')">Index</span>
+            <span class="nav-button" onclick="navigate('home')">Home</span>
+            <span class="nav-button" onclick="window.print()">Print</span>
+            <span style="float: right; margin-right: 10px;">Page 1 of 1</span>
+        </div>
+        
+        <div class="pie-menu-hint">Right-click for pie menu</div>
+    </div>
+    
+    <script>
+        function showInstrument(instrument) {
+            const descriptions = {
+                'WFPC': 'Wide Field/Planetary Camera - The main imaging instrument',
+                'FOC': 'Faint Object Camera - For observing very dim objects',
+                'FOS': 'Faint Object Spectrograph - Analyzes light spectra',
+                'HRS': 'High Resolution Spectrograph - Detailed spectral analysis',
+                'HSP': 'High Speed Photometer - Measures rapid light variations'
+            };
+            alert('HyperTIES Navigation:\n\n' + instrument + ':\n' + descriptions[instrument] + 
+                  '\n\n[In the real system, this would navigate to a detailed article about this instrument]');
+        }
+        
+        function navigate(target) {
+            alert('HyperTIES Navigation:\n\nNavigating to: ' + target + 
+                  '\n\n[In the real system, this would load the corresponding article]');
+        }
+        
+        function showDefinition() {
+            alert('HyperTIES Definition:\n\n' +
+                  'The Hubble Space Telescope is a space-based observatory launched in 1990. ' +
+                  'It orbits Earth at an altitude of about 547 kilometers (340 miles), ' +
+                  'completing one orbit every 95 minutes.\n\n' +
+                  'Named after astronomer Edwin Hubble, it has revolutionized our understanding ' +
+                  'of the universe through its unprecedented observations.');
+        }
+        
+        // Simulate pie menu on right-click
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            alert('HyperTIES Pie Menu:\n\n' +
+                  '↑ Back\n' +
+                  '→ Next\n' +
+                  '↓ Index\n' +
+                  '← Previous\n\n' +
+                  '[Pie menus provided quick navigation in all directions]');
+            return false;
+        });
+    </script>
+</body>
+</html> 

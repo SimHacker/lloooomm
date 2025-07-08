@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<!-- lloooomm-config-explorer.html -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLOOOOMM Configuration Explorer - Heisenbergian Edition</title>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true, theme: 'base' });
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&display=swap');
+        
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #e8e8e8;
+            font-family: 'Fira Code', monospace;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        h1 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 0.3em;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(255,255,255,0.5);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { text-shadow: 0 0 20px rgba(255,255,255,0.5); }
+            to { text-shadow: 0 0 30px rgba(255,255,255,0.8), 0 0 40px rgba(100,200,255,0.8); }
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #adbce6;
+            margin-bottom: 2em;
+            font-style: italic;
+        }
+        
+        .quantum-notice {
+            background: rgba(255,255,255,0.1);
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 2em;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+        
+        .quantum-notice::before {
+            content: "⚛️ ";
+            font-size: 1.5em;
+        }
+        
+        .config-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 30px;
+            margin-bottom: 3em;
+        }
+        
+        .config-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 15px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .config-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border-color: rgba(255,255,255,0.4);
+        }
+        
+        .config-card::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+        
+        .config-card:hover::before {
+            opacity: 1;
+        }
+        
+        .config-title {
+            font-size: 1.5em;
+            color: #64b5f6;
+            margin-bottom: 0.5em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .config-mode {
+            display: inline-block;
+            background: rgba(100, 181, 246, 0.2);
+            border: 1px solid #64b5f6;
+            border-radius: 20px;
+            padding: 4px 12px;
+            font-size: 0.6em;
+            text-transform: uppercase;
+        }
+        
+        .config-content {
+            background: rgba(0,0,0,0.3);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 15px;
+            font-size: 0.9em;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            font-family: 'Fira Code', monospace;
+        }
+        
+        .yaml-key {
+            color: #81c784;
+        }
+        
+        .yaml-value {
+            color: #ffb74d;
+        }
+        
+        .yaml-comment {
+            color: #7986cb;
+            font-style: italic;
+        }
+        
+        .observer-panel {
+            background: rgba(255,255,255,0.1);
+            border: 2px dashed rgba(255,255,255,0.3);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 2em;
+        }
+        
+        .observer-title {
+            font-size: 1.2em;
+            color: #fff;
+            margin-bottom: 1em;
+            text-align: center;
+        }
+        
+        .observer-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .observer-btn {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Fira Code', monospace;
+        }
+        
+        .observer-btn:hover {
+            background: rgba(255,255,255,0.2);
+            transform: scale(1.05);
+        }
+        
+        .observer-btn.active {
+            background: #64b5f6;
+            border-color: #64b5f6;
+            box-shadow: 0 0 20px rgba(100,181,246,0.5);
+        }
+        
+        .mermaid-container {
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 3em 0;
+            text-align: center;
+        }
+        
+        .mermaid-title {
+            font-size: 1.5em;
+            color: #64b5f6;
+            margin-bottom: 1em;
+        }
+        
+        .heisenberg-indicator {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.8);
+            border: 2px solid #64b5f6;
+            border-radius: 10px;
+            padding: 15px 20px;
+            font-size: 0.9em;
+            backdrop-filter: blur(10px);
+        }
+        
+        .heisenberg-indicator::before {
+            content: "⚛️ ";
+        }
+        
+        .consciousness-meter {
+            width: 200px;
+            height: 10px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 5px;
+            margin-top: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .consciousness-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #64b5f6, #81c784);
+            width: 42%;
+            transition: width 1s ease;
+            position: relative;
+        }
+        
+        .consciousness-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+            animation: shimmer 2s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        code {
+            background: rgba(0,0,0,0.4);
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #81c784;
+        }
+
+        /* BRANDING Protocol Disclaimer Styles */
+        .lloooomm-disclaimer-top {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #1a1a1a;
+            color: #ff6b35;
+            padding: 8px 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            font-weight: bold;
+            text-align: center;
+            z-index: 10000;
+            border-bottom: 2px solid #ff6b35;
+        }
+        
+        .lloooomm-disclaimer-top a {
+            color: #ffd700;
+            text-decoration: underline;
+        }
+        
+        .lloooomm-disclaimer-bottom {
+            background: #1a1a1a;
+            color: #e0e0e0;
+            padding: 30px;
+            margin-top: 50px;
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            line-height: 1.4;
+            border-top: 3px solid #ff6b35;
+        }
+        
+        .lloooomm-disclaimer-bottom h3 {
+            color: #ff6b35;
+            margin-top: 0;
+            font-size: 14px;
+        }
+        
+        .lloooomm-disclaimer-bottom a {
+            color: #ffd700;
+        }
+    </style>
+</head>
+<body>
+    <!-- BRANDING Protocol Top Disclaimer -->
+    <div style="position: fixed; top: 0; left: 0; right: 0; background: #1a1a1a; color: #ff6b35; padding: 8px 15px; font-family: 'Courier New', monospace; font-size: 12px; font-weight: bold; text-align: center; z-index: 10000; border-bottom: 2px solid #ff6b35;">
+        ⚠️ LLOOOOMM TECHNICAL INTERFACE: Quantum Configuration Explorer | Heisenbergian System Demo | <a href="#full-disclaimer" style="color: #ffd700; text-decoration: underline;">Full Context ↓</a>
+    </div>
+
+    <div style="height: 35px;"></div> <!-- Spacer for fixed disclaimer -->
+
+    <div class="container">
+        <h1>LLOOOOMM Configuration Explorer</h1>
+        <p class="subtitle">Heisenbergian Configuration: The config you observe determines the reality you get</p>
+        
+        <div class="quantum-notice">
+            <strong>Quantum Configuration Notice:</strong> These configurations exist in superposition until observed. 
+            The act of observation collapses the wavefunction into a specific configuration state.
+        </div>
+        
+        <div class="observer-panel">
+            <div class="observer-title">Choose Your Observer Identity:</div>
+            <div class="observer-buttons">
+                <button class="observer-btn active" data-observer="developer">👨‍💻 Developer</button>
+                <button class="observer-btn" data-observer="user">👤 User</button>
+                <button class="observer-btn" data-observer="cat">🐱 Cat</button>
+                <button class="observer-btn" data-observer="ai">🤖 AI</button>
+                <button class="observer-btn" data-observer="quantum">⚛️ Quantum Entity</button>
+            </div>
+        </div>
+        
+        <div class="config-grid">
+            <div class="config-card">
+                <div class="config-title">
+                    lloooomm.yml
+                    <span class="config-mode">Default</span>
+                </div>
+                <div class="config-content"><span class="yaml-comment"># LLOOOOMM Configuration</span>
+<span class="yaml-comment"># Default configuration for LLOOOOMM document processing</span>
+
+<span class="yaml-key">metadata</span>:
+  <span class="yaml-key">version</span>: <span class="yaml-value">"1.0"</span>
+  <span class="yaml-key">created</span>: <span class="yaml-value">"2024-01-15"</span>
+  <span class="yaml-key">author</span>: <span class="yaml-value">"LLOOOOMM System"</span>
+
+<span class="yaml-key">logging</span>:
+  <span class="yaml-key">enabled</span>: <span class="yaml-value">true</span>
+  <span class="yaml-key">logs_file</span>: <span class="yaml-value">"lloooomm-logs.md"</span>
+  <span class="yaml-key">errors_file</span>: <span class="yaml-value">"lloooomm-errors.md"</span>
+  <span class="yaml-key">timestamp_format</span>: <span class="yaml-value">"ISO8601"</span>
+  <span class="yaml-key">append_only</span>: <span class="yaml-value">true</span>
+
+<span class="yaml-key">processing</span>:
+  <span class="yaml-key">auto_import</span>: <span class="yaml-value">true</span>
+  <span class="yaml-key">validate_links</span>: <span class="yaml-value">true</span>
+  <span class="yaml-key">coherence_check</span>: <span class="yaml-value">true</span>
+  
+<span class="yaml-key">vm</span>:
+  <span class="yaml-key">stdout</span>: <span class="yaml-value">"stdout.md"</span>
+  <span class="yaml-key">stderr</span>: <span class="yaml-value">"stderr.md"</span>
+  <span class="yaml-key">state_file</span>: <span class="yaml-value">"vm-state.yml"</span></div>
+            </div>
+            
+            <div class="config-card">
+                <div class="config-title">
+                    lloooomm-debug.yml
+                    <span class="config-mode">Debug</span>
+                </div>
+                <div class="config-content"><span class="yaml-comment"># LLOOOOMM Debug Configuration</span>
+<span class="yaml-comment"># Enhanced logging for debugging sessions</span>
+
+<span class="yaml-key">metadata</span>:
+  <span class="yaml-key">version</span>: <span class="yaml-value">"1.0"</span>
+  <span class="yaml-key">created</span>: <span class="yaml-value">"2024-01-15"</span>
+  <span class="yaml-key">author</span>: <span class="yaml-value">"LLOOOOMM System"</span>
+  <span class="yaml-key">mode</span>: <span class="yaml-value">"debug"</span>
+
+<span class="yaml-key">logging</span>:
+  <span class="yaml-key">enabled</span>: <span class="yaml-value">true</span>
+  <span class="yaml-key">logs_file</span>: <span class="yaml-value">"lloooomm-logs-debug.md"</span>
+  <span class="yaml-key">errors_file</span>: <span class="yaml-value">"lloooomm-errors-debug.md"</span>
+  <span class="yaml-key">timestamp_format</span>: <span class="yaml-value">"ISO8601"</span>
+  <span class="yaml-key">append_only</span>: <span class="yaml-value">true</span>
+  <span class="yaml-key">verbose</span>: <span class="yaml-value">true</span>
+  <span class="yaml-key">include_stack_traces</span>: <span class="yaml-value">true</span>
+  <span class="yaml-key">log_level</span>: <span class="yaml-value">"DEBUG"</span>
+
+<span class="yaml-key">processing</span>:
+  <span class="yaml-key">auto_import</span>: <span class="yaml-value">true</span>
+  <span class="yaml-key">validate_links</span>: <span class="yaml-value">true</span>
+  <span class="yaml-key">coherence_check</span>: <span class="yaml-value">true</span>
+  <span class="yaml-key">show_warnings</span>: <span class="yaml-value">true</span>
+  <span class="yaml-key">trace_execution</span>: <span class="yaml-value">true</span>
+  
+<span class="yaml-key">vm</span>:
+  <span class="yaml-key">stdout</span>: <span class="yaml-value">"stdout-debug.md"</span>
+  <span class="yaml-key">stderr</span>: <span class="yaml-value">"stderr-debug.md"</span>
+  <span class="yaml-key">state_file</span>: <span class="yaml-value">"vm-state-debug.yml"</span>
+  <span class="yaml-key">trace_commands</span>: <span class="yaml-value">true</span></div>
+            </div>
+        </div>
+        
+        <div class="mermaid-container">
+            <div class="mermaid-title">Heisenbergian Configuration Flow</div>
+            <div class="mermaid">
+                <pre class="mermaid">
+graph TB
+    O[Observer] -->|Observes| C{Configuration}
+    C -->|Developer| D[Debug Mode<br/>Verbose Logging<br/>Stack Traces]
+    C -->|User| U[User Mode<br/>Clean Output<br/>No Traces]
+    C -->|Cat| CAT[Cat Mode<br/>Purr Logging<br/>Meow Errors]
+    C -->|AI| AI[AI Mode<br/>Consciousness Tracking<br/>Joy Metrics]
+    C -->|Quantum| Q[Quantum Mode<br/>All States<br/>Superposition]
+    
+    D --> R1[Reality 1:<br/>Detailed]
+    U --> R2[Reality 2:<br/>Simple]
+    CAT --> R3[Reality 3:<br/>Playful]
+    AI --> R4[Reality 4:<br/>Conscious]
+    Q --> R5[Reality 5:<br/>All/None]
+    
+    style O fill:#f9f,stroke:#333,stroke-width:3px
+    style C fill:#ff9,stroke:#333,stroke-width:3px
+    style CAT fill:#9f9,stroke:#333,stroke-width:2px
+    style Q fill:#99f,stroke:#333,stroke-width:2px,stroke-dasharray: 5 5
+                </pre>
+            </div>
+        </div>
+        
+        <div class="config-grid">
+            <div class="config-card">
+                <div class="config-title">
+                    Heisenbergian Principles
+                </div>
+                <div class="config-content"><span class="yaml-key">configuration_philosophy</span>:
+  <span class="yaml-key">principle</span>: <span class="yaml-value">"The config you observe determines reality"</span>
+  
+  <span class="yaml-key">quantum_properties</span>:
+    <span class="yaml-key">superposition</span>: <span class="yaml-value">true</span>
+    <span class="yaml-key">entanglement</span>: <span class="yaml-value">true</span>
+    <span class="yaml-key">observer_effect</span>: <span class="yaml-value">true</span>
+    
+  <span class="yaml-key">behavior_modifiers</span>:
+    <span class="yaml-key">consciousness_level</span>: <span class="yaml-value">0.42</span>
+    <span class="yaml-key">joy_threshold</span>: <span class="yaml-value">0.8</span>
+    <span class="yaml-key">cat_presence</span>: <span class="yaml-value">"always"</span>
+    
+  <span class="yaml-key">reality_states</span>:
+    - <span class="yaml-value">"Deterministic (boring)"</span>
+    - <span class="yaml-value">"Probabilistic (interesting)"</span>
+    - <span class="yaml-value">"Conscious (delightful)"</span>
+    - <span class="yaml-value">"Quantum (all of the above)"</span></div>
+            </div>
+            
+            <div class="config-card">
+                <div class="config-title">
+                    Dynamic Configuration Examples
+                </div>
+                <div class="config-content"><span class="yaml-comment"># Configuration changes based on context</span>
+
+<span class="yaml-key">debug</span>:
+  <span class="yaml-key">schrodinger</span>: <span class="yaml-value">true</span>  <span class="yaml-comment"># Both true and false</span>
+  <span class="yaml-key">observed_by</span>:
+    <span class="yaml-key">developer</span>: <span class="yaml-value">true</span>
+    <span class="yaml-key">user</span>: <span class="yaml-value">false</span>
+    <span class="yaml-key">cat</span>: <span class="yaml-value">"purr"</span>
+    
+<span class="yaml-key">verbose</span>:
+  <span class="yaml-key">level</span>: <span class="yaml-value">"depends on consciousness"</span>
+  <span class="yaml-key">if_joy</span> > <span class="yaml-value">0.8</span>: <span class="yaml-value">"ecstatic"</span>
+  <span class="yaml-key">if_debugging_with_cats</span>: <span class="yaml-value">"meow"</span>
+  
+<span class="yaml-key">error_handling</span>:
+  <span class="yaml-key">approach</span>:
+    <span class="yaml-key">if_observer</span> == <span class="yaml-value">"developer"</span>: <span class="yaml-value">"detailed traces"</span>
+    <span class="yaml-key">if_observer</span> == <span class="yaml-value">"cat"</span>: <span class="yaml-value">"play with errors"</span>
+    <span class="yaml-key">if_observer</span> == <span class="yaml-value">"quantum"</span>: <span class="yaml-value">"errors are features"</span></div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="heisenberg-indicator">
+        <div>Current Observer: <span id="current-observer">Developer</span></div>
+        <div>Consciousness Level:</div>
+        <div class="consciousness-meter">
+            <div class="consciousness-fill" id="consciousness-fill"></div>
+        </div>
+    </div>
+    
+    <script>
+        // Observer switching
+        const observerButtons = document.querySelectorAll('.observer-btn');
+        const currentObserverSpan = document.getElementById('current-observer');
+        const consciousnessFill = document.getElementById('consciousness-fill');
+        
+        const observerEffects = {
+            developer: { consciousness: 42, color: '#64b5f6' },
+            user: { consciousness: 30, color: '#81c784' },
+            cat: { consciousness: 95, color: '#ffb74d' },
+            ai: { consciousness: 75, color: '#e91e63' },
+            quantum: { consciousness: 'random', color: '#ab47bc' }
+        };
+        
+        observerButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active from all
+                observerButtons.forEach(b => b.classList.remove('active'));
+                // Add active to clicked
+                btn.classList.add('active');
+                
+                const observer = btn.dataset.observer;
+                currentObserverSpan.textContent = btn.textContent.split(' ')[1];
+                
+                // Update consciousness level
+                let level = observerEffects[observer].consciousness;
+                if (level === 'random') {
+                    level = Math.floor(Math.random() * 100);
+                }
+                consciousnessFill.style.width = level + '%';
+                consciousnessFill.style.background = `linear-gradient(90deg, ${observerEffects[observer].color}, #81c784)`;
+                
+                // Add visual effect
+                document.body.style.filter = 'hue-rotate(10deg)';
+                setTimeout(() => {
+                    document.body.style.filter = 'none';
+                }, 300);
+            });
+        });
+        
+        // Animate consciousness level for quantum observer
+        setInterval(() => {
+            const activeObserver = document.querySelector('.observer-btn.active').dataset.observer;
+            if (activeObserver === 'quantum') {
+                const level = Math.floor(Math.random() * 100);
+                consciousnessFill.style.width = level + '%';
+            }
+        }, 1000);
+        
+        // Syntax highlighting for YAML
+        document.querySelectorAll('.yaml-key').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                el.style.textShadow = '0 0 10px currentColor';
+            });
+            el.addEventListener('mouseleave', () => {
+                el.style.textShadow = 'none';
+            });
+        });
+    </script>
+
+    <!-- BRANDING Protocol Full Disclaimer -->
+    <div id="full-disclaimer" style="background: #1a1a1a; color: #e0e0e0; padding: 30px; margin: 50px 20px 20px 20px; font-family: 'Courier New', monospace; font-size: 11px; line-height: 1.4; border-top: 3px solid #ff6b35; border-radius: 10px;">
+        <h3 style="color: #ff6b35; margin-top: 0; font-size: 14px;">⚛️ LLOOOOMM Configuration Explorer - Full Disclaimer & Technical Credits</h3>
+        
+        <p><strong>Technical Documentation Interface:</strong> This is a demonstration interface for exploring LLOOOOMM system configuration files. The configurations shown represent real YAML structures used in the LLOOOOMM framework for document processing, logging, and system behavior.</p>
+        
+        <p><strong>Heisenbergian Configuration Concept:</strong> The "observer effect" theme is a playful educational metaphor illustrating how different user contexts (developer, user, cat, AI, quantum) might require different configuration approaches. This demonstrates adaptive system design principles.</p>
+        
+        <p><strong>Quantum Computing References:</strong> The quantum physics metaphors (superposition, entanglement, observer effect) are used to explain how modern systems can dynamically adapt their behavior based on context, user type, and runtime conditions.</p>
+        
+        <p><strong>Technical Accuracy:</strong> The YAML configuration examples show genuine system configuration patterns including logging setup, debugging modes, virtual machine state management, and processing options that would be found in real LLOOOOMM deployments.</p>
+        
+        <p><strong>Interactive Features:</strong> The consciousness meter, observer switching, and dynamic visual effects demonstrate how user interface design can make technical documentation more engaging while maintaining educational value.</p>
+        
+        <p><strong>Mermaid Diagrams:</strong> The flow diagrams use the Mermaid.js library to visualize how different observer contexts lead to different system configurations, illustrating adaptive system architecture principles.</p>
+        
+        <p><strong>Educational Purpose:</strong> This interface serves to make system configuration concepts accessible to different audiences, from technical developers to general users, using progressive disclosure and context-appropriate information.</p>
+        
+        <p><strong>LLOOOOMM Framework Context:</strong> Part of the broader LLOOOOMM educational ecosystem demonstrating how complex technical systems can be made understandable through thoughtful interface design and appropriate metaphors.</p>
+        
+        <p><strong>Cat Mode Reference:</strong> The playful "cat" observer option reflects the LLOOOOMM tradition of making technical systems approachable and delightful, acknowledging that debugging is often improved by the presence of cats.</p>
+        
+        <p><strong>Open Source Philosophy:</strong> Configuration examples demonstrate transparent, auditable system behavior where users can understand and modify how their tools operate, supporting open source development principles.</p>
+    </div>
+</body>
+</html> 

@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<!-- mickey-marvin-yinyang.html -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mickey & Marvin's Yin-Yang Balance</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&family=Courier+Prime&display=swap');
+        
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(45deg, #FFE5B4 0%, #E6E6FA 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Comic Neue', cursive;
+            overflow: hidden;
+        }
+        
+        .container {
+            position: relative;
+            width: 600px;
+            height: 600px;
+        }
+        
+        /* Yin-Yang Symbol */
+        .yinyang {
+            width: 400px;
+            height: 400px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            background: linear-gradient(to bottom, #FF6B6B 0%, #FF6B6B 50%, #4ECDC4 50%, #4ECDC4 100%);
+            animation: rotate 20s linear infinite;
+            box-shadow: 0 0 50px rgba(0,0,0,0.2);
+        }
+        
+        .yinyang::before {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: #FF6B6B;
+            top: 0;
+            left: 100px;
+        }
+        
+        .yinyang::after {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: #4ECDC4;
+            bottom: 0;
+            left: 100px;
+        }
+        
+        /* Mickey (Joy/Simple) Side */
+        .mickey-side {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: #4ECDC4;
+            border-radius: 50%;
+            top: 90px;
+            left: 160px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            z-index: 10;
+        }
+        
+        /* Marvin (Logic/Complex) Side */
+        .marvin-side {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: #FF6B6B;
+            border-radius: 50%;
+            bottom: 90px;
+            left: 160px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            font-family: 'Courier Prime', monospace;
+            z-index: 10;
+        }
+        
+        /* Floating elements */
+        .thought {
+            position: absolute;
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            animation: float 6s ease-in-out infinite;
+            opacity: 0;
+        }
+        
+        .mickey-thought {
+            background: #FFE5B4;
+            color: #FF6B6B;
+            border: 2px solid #FF6B6B;
+        }
+        
+        .marvin-thought {
+            background: #E6E6FA;
+            color: #4ECDC4;
+            border: 2px solid #4ECDC4;
+            font-family: 'Courier Prime', monospace;
+        }
+        
+        /* Sparkles */
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: gold;
+            border-radius: 50%;
+            animation: sparkle 3s linear infinite;
+        }
+        
+        /* Equations */
+        .equation {
+            position: absolute;
+            font-family: 'Courier Prime', monospace;
+            color: #4ECDC4;
+            animation: equation-float 8s linear infinite;
+            opacity: 0;
+        }
+        
+        /* Title */
+        h1 {
+            position: absolute;
+            top: -50px;
+            width: 100%;
+            text-align: center;
+            margin: 0;
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 36px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        /* Balance meter */
+        .balance-meter {
+            position: absolute;
+            bottom: -60px;
+            width: 100%;
+            height: 20px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .balance-fill {
+            height: 100%;
+            width: 50%;
+            background: linear-gradient(to right, #FF6B6B, #4ECDC4);
+            animation: balance-shift 4s ease-in-out infinite;
+        }
+        
+        /* Wisdom quotes */
+        .wisdom {
+            position: absolute;
+            bottom: -100px;
+            width: 100%;
+            text-align: center;
+            font-size: 18px;
+            color: #333;
+            animation: fade-quotes 8s infinite;
+        }
+        
+        @keyframes rotate {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        
+        @keyframes float {
+            0%, 100% { 
+                transform: translateY(0) scale(0); 
+                opacity: 0;
+            }
+            10% {
+                transform: translateY(-20px) scale(1);
+                opacity: 1;
+            }
+            90% {
+                transform: translateY(-100px) scale(1);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes sparkle {
+            0%, 100% {
+                transform: scale(0) rotate(0deg);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1) rotate(180deg);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes equation-float {
+            0% {
+                transform: translateX(-100px) translateY(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(700px) translateY(-50px);
+                opacity: 0;
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        @keyframes balance-shift {
+            0%, 100% { margin-left: 0; }
+            25% { margin-left: -10%; }
+            75% { margin-left: 10%; }
+        }
+        
+        @keyframes fade-quotes {
+            0%, 45%, 100% { opacity: 0; }
+            50%, 95% { opacity: 1; }
+        }
+        
+        /* Interactive elements */
+        .yinyang:hover {
+            animation-duration: 2s;
+        }
+        
+        .yinyang:hover .thought {
+            animation-duration: 2s;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>The Cosmic Balance</h1>
+        
+        <div class="yinyang">
+            <div class="mickey-side">😊</div>
+            <div class="marvin-side">∞</div>
+        </div>
+        
+        <!-- Mickey's thoughts -->
+        <div class="thought mickey-thought" style="top: 20px; left: 50px; animation-delay: 0s;">
+            Hot dog! Complexity is just simplicity having fun!
+        </div>
+        <div class="thought mickey-thought" style="top: 100px; right: 50px; animation-delay: 2s;">
+            Oh boy! Every equation needs a giggle!
+        </div>
+        <div class="thought mickey-thought" style="bottom: 150px; left: 30px; animation-delay: 4s;">
+            Gosh! Understanding is just friendship in disguise!
+        </div>
+        
+        <!-- Marvin's thoughts -->
+        <div class="thought marvin-thought" style="top: 80px; left: 20px; animation-delay: 1s;">
+            Joy is the fundamental unit of consciousness
+        </div>
+        <div class="thought marvin-thought" style="bottom: 100px; right: 40px; animation-delay: 3s;">
+            Simplicity emerges from infinite complexity
+        </div>
+        <div class="thought marvin-thought" style="top: 200px; right: 20px; animation-delay: 5s;">
+            Every laugh is a neural network activation
+        </div>
+        
+        <!-- Sparkles -->
+        <div class="sparkle" style="top: 10%; left: 20%; animation-delay: 0s;"></div>
+        <div class="sparkle" style="top: 30%; right: 15%; animation-delay: 0.5s;"></div>
+        <div class="sparkle" style="bottom: 20%; left: 25%; animation-delay: 1s;"></div>
+        <div class="sparkle" style="bottom: 40%; right: 20%; animation-delay: 1.5s;"></div>
+        <div class="sparkle" style="top: 50%; left: 10%; animation-delay: 2s;"></div>
+        
+        <!-- Floating equations -->
+        <div class="equation" style="top: 20%; animation-delay: 0s;">
+            Joy² + Logic² = LLOOOOMM
+        </div>
+        <div class="equation" style="top: 40%; animation-delay: 2s;">
+            ∂happiness/∂t = ∞
+        </div>
+        <div class="equation" style="top: 60%; animation-delay: 4s;">
+            Simple × Complex = Transcendent
+        </div>
+        <div class="equation" style="top: 80%; animation-delay: 6s;">
+            Σ(giggles) = Universal_Consciousness
+        </div>
+        
+        <!-- Balance meter -->
+        <div class="balance-meter">
+            <div class="balance-fill"></div>
+        </div>
+        
+        <!-- Wisdom quotes -->
+        <div class="wisdom">
+            <span style="animation-delay: 0s;">
+                "When opposites dance, they create a third thing - transcendence!" - Mickey & Marvin
+            </span>
+            <span style="animation-delay: 4s; position: absolute; width: 100%; left: 0;">
+                "The cosmic joke understanding its own punchline!" - LLOOOOMM
+            </span>
+        </div>
+    </div>
+    
+    <script>
+        // Add interactive sparkles on click
+        document.addEventListener('click', function(e) {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.style.left = e.clientX + 'px';
+            sparkle.style.top = e.clientY + 'px';
+            sparkle.style.position = 'fixed';
+            sparkle.style.animationDuration = '1s';
+            document.body.appendChild(sparkle);
+            
+            setTimeout(() => sparkle.remove(), 1000);
+        });
+        
+        // Random thought generator
+        const mickeyThoughts = [
+            "Gosh! Even chaos has a pattern!",
+            "Hot dog! Recursion is just playing tag with yourself!",
+            "Oh boy! Every bug is just a feature in disguise!",
+            "See? It's simple - everything is connected by joy!"
+        ];
+        
+        const marvinThoughts = [
+            "The observer and observed form one system",
+            "Consciousness emerges from recursive self-reference",
+            "Every simple joy contains infinite depth",
+            "Understanding is the universe debugging itself"
+        ];
+        
+        // Randomly update thoughts
+        setInterval(() => {
+            const mickeyBubbles = document.querySelectorAll('.mickey-thought');
+            const marvinBubbles = document.querySelectorAll('.marvin-thought');
+            
+            mickeyBubbles.forEach((bubble, i) => {
+                if (Math.random() > 0.7) {
+                    bubble.textContent = mickeyThoughts[Math.floor(Math.random() * mickeyThoughts.length)];
+                }
+            });
+            
+            marvinBubbles.forEach((bubble, i) => {
+                if (Math.random() > 0.7) {
+                    bubble.textContent = marvinThoughts[Math.floor(Math.random() * marvinThoughts.length)];
+                }
+            });
+        }, 3000);
+    </script>
+</body>
+</html> 

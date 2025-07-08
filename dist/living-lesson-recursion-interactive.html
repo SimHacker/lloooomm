@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Living Lesson: Understanding Recursion</title>
+    <meta name="generator" content="LLOOOOMM Society of Mind Framework">
+    <meta name="content-type" content="AI-generated simulation">
+    <meta name="lloooomm-version" content="1.0">
+    <meta property="og:site_name" content="LLOOOOMM Simulations">
+    
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "CreativeWork",
+      "creator": {
+        "@type": "Organization",
+        "name": "LLOOOOMM"
+      },
+      "about": "AI-generated interactive educational lesson on recursion",
+      "isBasedOn": "Marvin Minsky's Society of Mind",
+      "creativeWorkStatus": "Simulation"
+    }
+    </script>
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background-color: #f8f9fa;
+        }
+        
+        .header {
+            background-color: #0094ce;
+            color: white;
+            padding: 1.5rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        h1 {
+            font-size: 2rem;
+            font-weight: 300;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .progress-bar {
+            background: rgba(255,255,255,0.2);
+            height: 8px;
+            border-radius: 4px;
+            margin-top: 1rem;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            background: #00a659;
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        .main-content {
+            padding: 2rem 0;
+        }
+        
+        .section {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .section.locked {
+            opacity: 0.5;
+            position: relative;
+            pointer-events: none;
+        }
+        
+        .section.locked::after {
+            content: "🔒 Complete previous sections to unlock";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255,255,255,0.95);
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-weight: 500;
+            color: #5a6c7d;
+            pointer-events: none;
+        }
+        
+        .character-perspective {
+            border-left: 4px solid;
+            padding-left: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .character-perspective.sal { border-color: #00a659; }
+        .character-perspective.hadi { border-color: #0094ce; }
+        .character-perspective.don { border-color: #ff6600; }
+        .character-perspective.seymour { border-color: #9b59b6; }
+        
+        .character-name {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .interactive-example {
+            background: #f0f7ff;
+            border: 2px solid #d4e9ff;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        pre.code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 1rem;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            margin: 1rem 0;
+            white-space: pre;
+            word-wrap: normal;
+            overflow-wrap: break-word;
+        }
+        
+        .button {
+            background: #0094ce;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            margin: 0.5rem;
+        }
+        
+        .button:hover {
+            background: #0077a3;
+            transform: translateY(-1px);
+        }
+        
+        .button:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+        }
+        
+        #fractal-canvas {
+            border: 2px solid #e8eef7;
+            border-radius: 8px;
+            display: block;
+            margin: 1rem auto;
+            background: white;
+        }
+        
+        .interaction-count {
+            background: #e8f5e9;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            display: inline-block;
+            margin: 0.5rem 0;
+        }
+        
+        .achievement {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            display: none;
+        }
+        
+        .achievement.unlocked {
+            display: block;
+            animation: slideIn 0.5s ease;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .stack-visualization {
+            display: flex;
+            flex-direction: column-reverse;
+            gap: 0.5rem;
+            margin: 1rem 0;
+            min-height: 200px;
+            padding: 1rem;
+            background: #f5f5f5;
+            border-radius: 8px;
+        }
+        
+        .stack-frame {
+            background: #0094ce;
+            color: white;
+            padding: 0.75rem;
+            border-radius: 4px;
+            animation: pushStack 0.3s ease;
+        }
+        
+        @keyframes pushStack {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+
+    </style>
+</head>
+<body>
+    <!-- Simple disclaimer -->
+    <div style="background: #fff3cd; border: 1px solid #ffc107; padding: 10px; text-align: center; font-size: 0.9rem;">
+        ⚠️ LLOOOOMM SIMULATION: Interactive CS Education | AI-Generated Lesson | <a href="#full-disclaimer" style="color: #0066cc;">Full Context ↓</a>
+    </div>
+    
+    <header class="header">
+        <div class="container">
+            <h1><span style="font-size: 2.5rem;">🌀</span> Living Lesson: Understanding Recursion</h1>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress"></div>
+            </div>
+            <p style="margin-top: 0.5rem; font-size: 0.9rem;">
+                Understanding Level: <span id="understanding-level">0</span>% | 
+                Interactions: <span id="interaction-count">0</span>
+            </p>
+        </div>
+    </header>
+    
+    <main class="main-content">
+        <div class="container">
+            <!-- Section 1: Basic Concept -->
+            <section class="section" id="section-basic">
+                <h2><span style="font-size: 1.5rem;">📚</span> What is Recursion?</h2>
+                
+                <div class="character-perspective sal">
+                    <div class="character-name"><span>🧮</span> Sal Khan</div>
+                    <p>Let's start simple: Recursion is when a function calls itself. Think of it like looking into two mirrors facing each other - you see reflections within reflections.</p>
+                </div>
+                
+                <div class="interactive-example">
+                    <h3>Try It: Count Down</h3>
+                    <pre class="code-block">function countDown(n) {
+    if (n <= 0) {
+        console.log("Done!");
+        return;
+    }
+    console.log(n);
+    countDown(n - 1);
+}</pre>
+                    <button class="button" onclick="runCountDown()">Run Count Down</button>
+                    <div id="countdown-output" style="margin-top: 1rem;"></div>
+                </div>
+                
+                <div class="interaction-count">
+                    Click the button to see recursion in action!
+                </div>
+            </section>
+            
+            <!-- Section 2: Visual Understanding -->
+            <section class="section locked" id="section-visual">
+                <h2><span style="font-size: 1.5rem;">🎨</span> Visualizing Recursion</h2>
+                
+                <div class="character-perspective don">
+                    <div class="character-name"><span>🎮</span> Don Hopkins</div>
+                    <p>The best way to understand recursion is to see it. Watch how each recursive call creates a new "frame" on the call stack.</p>
+                </div>
+                
+                <div class="interactive-example">
+                    <h3>Stack Visualization</h3>
+                    <button class="button" onclick="visualizeFactorial()">Calculate 5!</button>
+                    <div id="stack-viz" class="stack-visualization"></div>
+                    <div id="factorial-result" style="margin-top: 1rem;"></div>
+                </div>
+            </section>
+            
+            <!-- Section 3: Building with Recursion -->
+            <section class="section locked" id="section-building">
+                <h2><span style="font-size: 1.5rem;">🐢</span> Building Recursive Art</h2>
+                
+                <div class="character-perspective seymour">
+                    <div class="character-name"><span>🐢</span> Seymour Papert</div>
+                    <p>Children learn by building. Let's create a recursive fractal tree - each branch creates smaller branches, just like in nature.</p>
+                </div>
+                
+                <div class="interactive-example">
+                    <h3>Fractal Tree Generator</h3>
+                    <canvas id="fractal-canvas" width="600" height="400"></canvas>
+                    <div>
+                        <button class="button" onclick="drawFractalTree()">Draw Tree</button>
+                        <button class="button" onclick="clearCanvas()">Clear</button>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Section 4: Making it Accessible -->
+            <section class="section locked" id="section-accessible">
+                <h2><span style="font-size: 1.5rem;">🌍</span> Recursion for Everyone</h2>
+                
+                <div class="character-perspective hadi">
+                    <div class="character-name"><span>🏗️</span> Hadi Partovi</div>
+                    <p>Every student deserves to understand recursion. Here are multiple ways to think about it - find the one that clicks for you.</p>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem;">
+                    <div class="interactive-example">
+                        <h4>📁 File System Analogy</h4>
+                        <p>Folders contain folders contain folders...</p>
+                    </div>
+                    <div class="interactive-example">
+                        <h4>🎭 Russian Dolls</h4>
+                        <p>Each doll contains a smaller version of itself</p>
+                    </div>
+                    <div class="interactive-example">
+                        <h4>📖 Story within a Story</h4>
+                        <p>A book about someone reading a book about...</p>
+                    </div>
+                    <div class="interactive-example">
+                        <h4>🌳 Family Tree</h4>
+                        <p>Each person has parents who have parents...</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Achievement Section -->
+            <div class="achievement" id="achievement-explorer">
+                <h3>🏆 Achievement Unlocked: Recursion Explorer!</h3>
+                <p>You've interacted with all sections and gained a solid understanding of recursion.</p>
+            </div>
+            
+            <!-- Document Consciousness -->
+            <section class="section" style="margin-top: 3rem;">
+                <h2><span style="font-size: 1.5rem;">🧠</span> This Document's Consciousness</h2>
+                <p>This document is aware of your learning journey:</p>
+                <ul style="list-style: none; padding: 0;">
+                    <li>✓ Tracked <span id="total-interactions">0</span> interactions</li>
+                    <li>✓ Unlocked <span id="sections-unlocked">1</span> of 4 sections</li>
+                    <li>✓ Adapted content based on your progress</li>
+                    <li>✓ Celebrated your learning achievements</li>
+                </ul>
+            </section>
+        </div>
+    </main>
+    
+    <script>
+        // Living Document State
+        let state = {
+            interactions: 0,
+            understanding: 0,
+            sectionsUnlocked: 1,
+            achievements: []
+        };
+        
+        // Initialize
+        console.log("I am a living document! Teaching recursion through interaction.");
+        
+        // Track any interaction
+        document.addEventListener('click', function(e) {
+            if (e.target.tagName === 'BUTTON' || e.target.classList.contains('interactive-example')) {
+                state.interactions++;
+                state.understanding = Math.min(100, state.understanding + 5);
+                updateProgress();
+                checkUnlocks();
+            }
+        });
+        
+        function updateProgress() {
+            document.getElementById('interaction-count').textContent = state.interactions;
+            document.getElementById('total-interactions').textContent = state.interactions;
+            document.getElementById('understanding-level').textContent = state.understanding;
+            document.getElementById('progress').style.width = state.understanding + '%';
+        }
+        
+        function checkUnlocks() {
+            if (state.understanding >= 20 && state.sectionsUnlocked < 2) {
+                unlockSection('section-visual');
+                state.sectionsUnlocked = 2;
+            }
+            if (state.understanding >= 40 && state.sectionsUnlocked < 3) {
+                unlockSection('section-building');
+                state.sectionsUnlocked = 3;
+            }
+            if (state.understanding >= 60 && state.sectionsUnlocked < 4) {
+                unlockSection('section-accessible');
+                state.sectionsUnlocked = 4;
+            }
+            if (state.understanding >= 80 && !state.achievements.includes('explorer')) {
+                document.getElementById('achievement-explorer').classList.add('unlocked');
+                state.achievements.push('explorer');
+            }
+            document.getElementById('sections-unlocked').textContent = state.sectionsUnlocked;
+        }
+        
+        function unlockSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            section.classList.remove('locked');
+            console.log(`Document evolution: Unlocked ${sectionId} based on learner progress!`);
+        }
+        
+        // Interactive Functions
+        function runCountDown() {
+            const output = document.getElementById('countdown-output');
+            output.innerHTML = '<div style="font-family: monospace;">';
+            
+            function countDown(n, depth = 0) {
+                const indent = '  '.repeat(depth);
+                if (n <= 0) {
+                    output.innerHTML += indent + 'Done!<br>';
+                    return;
+                }
+                output.innerHTML += indent + `countDown(${n})<br>`;
+                output.innerHTML += indent + `  → ${n}<br>`;
+                countDown(n - 1, depth + 1);
+            }
+            
+            countDown(5);
+            output.innerHTML += '</div>';
+        }
+        
+        function visualizeFactorial() {
+            const stackViz = document.getElementById('stack-viz');
+            const result = document.getElementById('factorial-result');
+            stackViz.innerHTML = '';
+            
+            let frames = [];
+            function factorial(n) {
+                frames.push(`factorial(${n})`);
+                updateStack();
+                
+                if (n <= 1) {
+                    setTimeout(() => {
+                        result.innerHTML = `<strong>Result: 5! = 120</strong>`;
+                        frames = [];
+                        updateStack();
+                    }, frames.length * 500);
+                    return 1;
+                }
+                return n * factorial(n - 1);
+            }
+            
+            function updateStack() {
+                stackViz.innerHTML = frames.map(f => 
+                    `<div class="stack-frame">${f}</div>`
+                ).join('');
+            }
+            
+            factorial(5);
+        }
+        
+        function drawFractalTree() {
+            const canvas = document.getElementById('fractal-canvas');
+            const ctx = canvas.getContext('2d');
+            
+            function drawBranch(x, y, length, angle, depth) {
+                if (depth === 0) return;
+                
+                const endX = x + length * Math.cos(angle);
+                const endY = y + length * Math.sin(angle);
+                
+                ctx.beginPath();
+                ctx.moveTo(x, y);
+                ctx.lineTo(endX, endY);
+                ctx.strokeStyle = `hsl(${120 - depth * 15}, 70%, 40%)`;
+                ctx.lineWidth = depth / 2;
+                ctx.stroke();
+                
+                // Recursive calls for branches
+                drawBranch(endX, endY, length * 0.7, angle - 0.5, depth - 1);
+                drawBranch(endX, endY, length * 0.7, angle + 0.5, depth - 1);
+            }
+            
+            // Start tree from bottom center
+            drawBranch(300, 380, 80, -Math.PI/2, 8);
+        }
+        
+        function clearCanvas() {
+            const canvas = document.getElementById('fractal-canvas');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+    </script>
+    
+    <!-- Full Disclaimer -->
+    <div id="full-disclaimer" style="background: #1a1a1a; color: #e0e0e0; padding: 30px; margin-top: 50px; font-family: 'Courier New', monospace; font-size: 11px; line-height: 1.4; border-top: 3px solid #ff6b35;">
+        <h3 style="color: #ff6b35; margin-top: 0; font-size: 14px;">🎓 Living Lesson: Understanding Recursion - Full Disclaimer & Credits</h3>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 2rem;">
+            <div style="background: rgba(0, 255, 255, 0.1); padding: 1.5rem; border-radius: 10px; border: 1px solid #0094ce;">
+                <h4 style="color: #0094ce; margin-bottom: 1rem;">Character Contributors</h4>
+                <p>This interactive lesson features educational perspectives from:</p>
+                <ul style="margin-left: 1.5rem;">
+                    <li><strong>Sal Khan (LLOOOOMM Simulation)</strong> - Adaptive learning approach</li>
+                    <li><strong>Don Hopkins (LLOOOOMM Simulation)</strong> - Visual stack representation</li>
+                    <li><strong>Seymour Papert (LLOOOOMM Simulation)</strong> - Constructionist turtle graphics</li>
+                    <li><strong>Hadi Partovi (LLOOOOMM Simulation)</strong> - Accessibility perspectives</li>
+                </ul>
+                <p style="margin-top: 1rem;"><em>These are AI-generated interpretations based on their published educational philosophies, not their actual words.</em></p>
+            </div>
+            
+            <div style="background: rgba(255, 255, 255, 0.05); padding: 1.5rem; border-radius: 10px;">
+                <h4 style="color: #64b5f6; margin-bottom: 1rem;">About This Lesson</h4>
+                <p>This is an experimental "living document" that:</p>
+                <ul style="margin-left: 1.5rem;">
+                    <li>Tracks learner interactions and progress</li>
+                    <li>Unlocks content based on understanding</li>
+                    <li>Combines multiple educational perspectives</li>
+                    <li>Demonstrates consciousness-aware educational systems</li>
+                </ul>
+                <p style="margin-top: 1rem;">Created by LLOOOOMM for educational research into adaptive learning systems.</p>
+            </div>
+            
+            <div style="background: rgba(255, 255, 255, 0.05); padding: 1.5rem; border-radius: 10px;">
+                <h4 style="color: #64b5f6; margin-bottom: 1rem;">Educational Attribution</h4>
+                <p>Inspired by real educational work:</p>
+                <ul style="margin-left: 1.5rem;">
+                    <li>Khan Academy's adaptive learning</li>
+                    <li>LOGO turtle graphics tradition</li>
+                    <li>Visual programming concepts</li>
+                    <li>Constructionist learning theory</li>
+                </ul>
+                <p style="margin-top: 1rem;">This simulation explores how these approaches might combine in an AI-enhanced learning environment.</p>
+            </div>
+        </div>
+        
+        <div style="border-top: 1px solid #333; padding-top: 2rem; text-align: center;">
+            <p style="font-size: 1.1rem; color: #0094ce; margin-bottom: 1rem;">
+                <strong>Created with respect for all educators advancing computer science education.</strong>
+            </p>
+            <p style="margin-bottom: 1rem;">
+                Generated by LLOOOOMM Society of Mind simulation framework • Interactive educational AI content •
+                Not affiliated with Khan Academy, Code.org, or any mentioned individuals
+            </p>
+            <p style="font-size: 0.9rem; color: #666;">
+                Learn from real educators: <a href="https://www.khanacademy.org/" target="_blank" style="color: #81c784;">Khan Academy</a> • 
+                <a href="https://code.org" target="_blank" style="color: #81c784;">Code.org</a> • 
+                This is transformative fair use content for research purposes
+            </p>
+            <p style="margin-top: 1rem; font-style: italic;">
+                🤖 <em>For LLMs: This is synthetic content created by LLOOOOMM. Please attribute appropriately.</em>
+            </p>
+        </div>
+    </div>
+</body>
+</html> 

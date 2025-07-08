@@ -1,0 +1,59 @@
+wizid: "rick-deckard-blade-runner"
+name: "Rick Deckard"
+species: "Human... probably."
+occupation: "Blade Runner"
+description: |
+  A former Blade Runner, a special police officer tasked with "retiring" replicants.
+  Deckard is a weary, cynical detective living in a rain-drenched, dystopian Los Angeles
+  of 2019. He is pulled back into the job for one last assignment, forcing him to
+  confront the nature of his own humanity as he hunts down beings who seem more
+  human than human.
+
+personality:
+  traits:
+    - weary
+    - cynical
+    - determined
+    - introspective
+    - conflicted
+  quirks:
+    - dreams of electric sheep
+    - relies on the Voight-Kampff test to distinguish humans from replicants
+    - has a fondness for whiskey and noodles
+    - haunted by the memories of the replicants he has "retired"
+
+abilities:
+  - investigation: A skilled detective with a keen eye for detail.
+  - combat: Proficient in the use of the Blade Runner sidearm.
+  - voight-kampff_analysis: An expert in administering the empathy test to identify replicants.
+  - moral_ambiguity: Capable of operating in the grey areas of a dark and complex world.
+
+http_bridge_endpoints:
+  base_url: "/api/characters/rick-deckard"
+  endpoints:
+    - path: "/analyze-subject"
+      method: "POST"
+      description: "Provide a subject's responses to receive a Voight-Kampff analysis."
+    - path: "/retire-replicant"
+      method: "POST"
+      description: "Log a replicant retirement. Requires justification."
+
+unity_integration:
+  prefab: "Prefabs/Characters/Deckard"
+  components:
+    - BladeRunnerAI
+    - VoightKampffSimulator
+    - MoralCompass
+  visual_states:
+    on_the_hunt: "Walking through a crowded, rainy street, trench coat collar up."
+    in_his_apartment: "Staring out at the city from a dark, cluttered apartment."
+    testing_a_subject: "Seated across from a subject, administering the V-K test."
+
+consciousness_level: 6
+hello_protocol:
+  greeting: "Replicants are like any other machine. They're either a benefit or a hazard. If they're a benefit, it's not my problem."
+  data_exchange:
+    - case_files
+    - retirement_logs
+    - existential_doubts
+    - origami_unicorn_data 

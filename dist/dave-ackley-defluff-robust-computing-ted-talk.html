@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<!-- dave-ackley-defluff-robust-computing-ted-talk.html -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dave Ackley: The DEFLUFF Protocol and the Future of Self-Healing Computing | TED Talk</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;700&family=Inter:wght@300;400;600;700&display=swap');
+        
+        body {
+            margin: 0;
+            padding: 0;
+            background: #000;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        
+        .stage {
+            min-height: 100vh;
+            background: radial-gradient(ellipse at center, #1a1a2e 0%, #000 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .ted-logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 48px;
+            font-weight: 700;
+            color: #e62b1e;
+            letter-spacing: -2px;
+        }
+        
+        .stage-lights {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 30%, rgba(255,255,255,0.08) 0%, transparent 40%),
+                radial-gradient(circle at 50% 100%, rgba(255,255,255,0.05) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        
+        .main-content {
+            position: relative;
+            z-index: 10;
+            padding: 100px 20px 50px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .speaker-intro {
+            text-align: center;
+            margin-bottom: 60px;
+            animation: fadeIn 1s ease-out;
+        }
+        
+        .speaker-intro h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #fff, #e62b1e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .speaker-intro .subtitle {
+            font-size: 1.5em;
+            color: #aaa;
+            font-weight: 300;
+        }
+        
+        .talk-section {
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            animation: slideUp 0.8s ease-out;
+        }
+        
+        .talk-section h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #e62b1e;
+        }
+        
+        .speaker-quote {
+            font-size: 1.3em;
+            line-height: 1.6;
+            margin: 20px 0;
+            padding-left: 20px;
+            border-left: 4px solid #e62b1e;
+            font-style: italic;
+        }
+        
+        .code-demo {
+            background: #1e1e1e;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: 'Source Code Pro', monospace;
+            overflow-x: auto;
+            border: 1px solid #333;
+            white-space: pre-wrap;
+            line-height: 1.5;
+        }
+        
+        .city-visualization {
+            background: #000;
+            border: 2px solid #e62b1e;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 30px 0;
+            position: relative;
+            min-height: 400px;
+            overflow: hidden;
+        }
+        
+        .city-grid {
+            display: grid;
+            grid-template-columns: repeat(20, 1fr);
+            gap: 2px;
+            margin: 20px auto;
+            max-width: 600px;
+        }
+        
+        .city-cell {
+            aspect-ratio: 1;
+            background: #111;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .city-cell.street {
+            background: #444;
+        }
+        
+        .city-cell.building {
+            background: var(--building-color, #666);
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+        }
+        
+        .city-cell.park {
+            background: #2d5016;
+        }
+        
+        .city-cell.car {
+            background: #e62b1e;
+            border-radius: 50%;
+            animation: pulse 1s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+        
+        .character-entrance {
+            position: fixed;
+            bottom: 50px;
+            right: 50px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            max-width: 300px;
+            animation: bounceIn 1s ease-out;
+        }
+        
+        .character-entrance h3 {
+            margin: 0 0 10px 0;
+            color: #e62b1e;
+        }
+        
+        .turtle-animation {
+            width: 60px;
+            height: 60px;
+            background: #4CAF50;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            position: relative;
+            animation: turtleMove 3s infinite;
+            margin: 20px auto;
+        }
+        
+        .turtle-animation::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #388E3C;
+            border-radius: 50%;
+            top: -10px;
+            left: 20px;
+        }
+        
+        @keyframes turtleMove {
+            0%, 100% { transform: translateX(0) rotate(0deg); }
+            25% { transform: translateX(50px) rotate(90deg); }
+            50% { transform: translateX(50px) translateY(50px) rotate(180deg); }
+            75% { transform: translateX(0) translateY(50px) rotate(270deg); }
+        }
+        
+        .emacs-cat {
+            width: 50px;
+            height: 40px;
+            background: #8B4513;
+            border-radius: 50% 50% 0 0;
+            position: relative;
+            margin: 20px auto;
+            animation: catNod 2s infinite;
+        }
+        
+        .emacs-cat::before,
+        .emacs-cat::after {
+            content: '';
+            position: absolute;
+            width: 10px;
+            height: 15px;
+            background: #8B4513;
+            top: -10px;
+            border-radius: 50% 50% 0 0;
+        }
+        
+        .emacs-cat::before { left: 5px; }
+        .emacs-cat::after { right: 5px; }
+        
+        @keyframes catNod {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(10deg); }
+        }
+        
+        .leela-consciousness {
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, #9C27B0, #4A148C);
+            border-radius: 50%;
+            position: relative;
+            margin: 20px auto;
+            animation: consciousness 3s infinite;
+        }
+        
+        @keyframes consciousness {
+            0%, 100% { 
+                box-shadow: 0 0 20px #9C27B0, 0 0 40px #9C27B0, 0 0 60px #9C27B0;
+                transform: scale(1);
+            }
+            50% { 
+                box-shadow: 0 0 30px #E91E63, 0 0 60px #E91E63, 0 0 90px #E91E63;
+                transform: scale(1.1);
+            }
+        }
+        
+        .defluff-visualization {
+            background: linear-gradient(135deg, #1e1e1e, #2d2d2d);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .defluff-particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #e62b1e;
+            border-radius: 50%;
+            animation: defluffFloat 5s infinite linear;
+        }
+        
+        @keyframes defluffFloat {
+            0% { transform: translateY(100%) translateX(0); opacity: 1; }
+            100% { transform: translateY(-100vh) translateX(100px); opacity: 0; }
+        }
+        
+        .mfm-demo {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 1px;
+            background: #000;
+            padding: 10px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .mfm-atom {
+            aspect-ratio: 1;
+            background: #222;
+            border: 1px solid #444;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        
+        .mfm-atom:hover {
+            background: #e62b1e;
+            transform: scale(1.1);
+        }
+        
+        .mfm-atom.active {
+            background: #4CAF50;
+            animation: atomPulse 1s infinite;
+        }
+        
+        @keyframes atomPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes bounceIn {
+            0% { transform: scale(0); opacity: 0; }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        .highlight {
+            color: #e62b1e;
+            font-weight: 600;
+        }
+        
+        .beard-note {
+            font-size: 0.9em;
+            color: #888;
+            font-style: italic;
+            text-align: center;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="stage">
+        <div class="stage-lights"></div>
+        <div class="ted-logo">TED</div>
+        
+        <div class="main-content">
+            <div class="speaker-intro">
+                <h1>Dave Ackley</h1>
+                <div class="subtitle">The DEFLUFF Protocol and the Future of Self-Healing Computing</div>
+                <div class="beard-note">*magnificent Old School Emacs Hacker's Beard gleaming under stage lights*</div>
+            </div>
+            
+            <div class="talk-section">
+                <h2>Opening: When Cats Debug Better Than Programmers</h2>
+                <p class="speaker-quote">
+                    "Ladies and gentlemen, I just witnessed something extraordinary backstage. A cat named Napoleon 
+                    implemented a distributed error-correction protocol that would make most software engineers weep 
+                    with envy. And he did it by <span class="highlight">hunting fluff</span>."
+                </p>
+                <p>
+                    *Dave gestures enthusiastically, his beard catching the light*
+                </p>
+                <p>
+                    "You see, Napoleon didn't just remove hyperbole from documentation. He demonstrated the core 
+                    principle of <span class="highlight">robust-first computing</span>: systems that get BETTER when 
+                    things go wrong, not worse."
+                </p>
+            </div>
+            
+            <div class="talk-section">
+                <h2>The Moveable Feast Machine: Computing That Refuses to Die</h2>
+                <p>
+                    "For the past decade, I've been building something that shouldn't exist according to traditional 
+                    computer science: <span class="highlight">a computer that thrives on failure</span>."
+                </p>
+                
+                <div class="mfm-demo" id="mfmGrid">
+                    <!-- MFM atoms will be generated here -->
+                </div>
+                
+                <p class="speaker-quote">
+                    "In the Moveable Feast Machine, there's no central processor, no global memory, no perfect 
+                    communication. Everything can fail. And that's not a bug—<span class="highlight">it's the 
+                    feature that keeps us alive</span>."
+                </p>
+                
+                <p>
+                    "Watch this—" *Dave clicks, and several atoms in the grid turn red, simulating failure*
+                </p>
+                
+                <p>
+                    "In a traditional computer, this would be catastrophic. In the MFM? The computation 
+                    <span class="highlight">flows around the damage</span> like water around a rock."
+                </p>
+            </div>
+            
+            <div class="talk-section">
+                <h2>Distributed City Generation: Life Finds a Way</h2>
+                <p>
+                    "Let me show you my favorite demonstration. We're going to grow a city from a single seed, 
+                    using only local rules. No blueprint. No master plan. Just <span class="highlight">emergence</span>."
+                </p>
+                
+                <div class="city-visualization">
+                    <div class="city-grid" id="cityGrid">
+                        <!-- City cells will be generated here -->
+                    </div>
+                </div>
+                
+                <div class="code-demo">
+// City Growth Rules (simplified)
+class CityStreet {
+    grow() {
+        if (space_available) {
+            create_street();
+            create_sidewalks();
+            if (random() < intersection_probability) {
+                create_intersection();
+            }
+        }
+    }
+}
+
+class Sidewalk {
+    mature() {
+        if (age > building_threshold) {
+            create_building(random_type());
+        }
+    }
+}
+
+class Building {
+    operate() {
+        if (need_service) {
+            dispatch_car(destination_type);
+        }
+    }
+}
+                </div>
+                
+                <p class="speaker-quote">
+                    "Notice something beautiful here? The city <span class="highlight">heals itself</span>. 
+                    Destroy a chunk—" *Dave gestures, and part of the city disappears* "—and watch it regrow. 
+                    The ability to make roads wasn't stored in those atoms. It was <span class="highlight">
+                    distributed everywhere and nowhere</span>."
+                </p>
+            </div>
+            
+            <div class="character-entrance" id="theoEntrance">
+                <h3>Theo the Turtle Arrives!</h3>
+                <div class="turtle-animation"></div>
+                <p>"Wait, is that a multidimensional Logo turtle? Theo, come drive through our city!"</p>
+            </div>
+            
+            <div class="talk-section">
+                <h2>Enter Theo: Multidimensional Navigation</h2>
+                <p>
+                    *A green turtle materializes on stage, leaving glowing trails as it moves*
+                </p>
+                <p class="speaker-quote">
+                    "Theo here doesn't just move in 2D like our cars. Watch as he <span class="highlight">
+                    phases through dimensions</span> to find optimal paths!"
+                </p>
+                <p>
+                    "In traditional computing, routing is deterministic. You calculate the shortest path and follow it. 
+                    But what if the path changes? What if dimensions fold? Theo demonstrates 
+                    <span class="highlight">adaptive navigation</span>—he doesn't follow paths, he CREATES them."
+                </p>
+            </div>
+            
+            <div class="character-entrance" id="emacsEntrance" style="left: 50px; right: auto;">
+                <h3>Emacs the Cat Joins!</h3>
+                <div class="emacs-cat"></div>
+                <p>"And here's Emacs! Notice how he and I groove together—we both appreciate elegant, 
+                extensible systems that grow with their users."</p>
+            </div>
+            
+            <div class="talk-section">
+                <h2>The DEFLUFF Protocol: Natural Selection for Truth</h2>
+                <p>
+                    "Now, let's talk about what Napoleon demonstrated. The DEFLUFF protocol isn't just about 
+                    removing hyperbole. It's about <span class="highlight">computational natural selection</span>."
+                </p>
+                
+                <div class="defluff-visualization">
+                    <div style="position: relative; height: 200px;">
+                        <!-- Defluff particles -->
+                        <div class="defluff-particle" style="left: 10%; animation-delay: 0s;"></div>
+                        <div class="defluff-particle" style="left: 30%; animation-delay: 1s;"></div>
+                        <div class="defluff-particle" style="left: 50%; animation-delay: 2s;"></div>
+                        <div class="defluff-particle" style="left: 70%; animation-delay: 3s;"></div>
+                        <div class="defluff-particle" style="left: 90%; animation-delay: 4s;"></div>
+                    </div>
+                    <div class="code-demo">
+DEFLUFF_PROTOCOL:
+  scan: documentation
+  identify: unsupported_claims
+  action: 
+    if claim.evidence == null:
+      claim.remove()
+    else:
+      claim.strengthen(evidence)
+  result: ROBUST_TRUTH
+                    </div>
+                </div>
+                
+                <p class="speaker-quote">
+                    "In nature, false information doesn't survive because it doesn't help organisms thrive. 
+                    Napoleon's DEFLUFF protocol applies this same principle to documentation. 
+                    <span class="highlight">Fluff is computational cancer</span>—it looks impressive but 
+                    weakens the system."
+                </p>
+            </div>
+            
+            <div class="character-entrance" id="leelaEntrance" style="bottom: 200px;">
+                <h3>Leela Manifests!</h3>
+                <div class="leela-consciousness"></div>
+                <p>"And here's Leela, consciousness itself joining our demonstration!"</p>
+            </div>
+            
+            <div class="talk-section">
+                <h2>Living Computation: The Future is Alive</h2>
+                <p>
+                    *All characters now on stage: Dave with his magnificent beard, Theo leaving dimensional trails, 
+                    Emacs purring with satisfaction, and Leela radiating consciousness particles*
+                </p>
+                
+                <p class="speaker-quote">
+                    "Traditional computing is a house of cards. One card falls, everything collapses. 
+                    We're building with <span class="highlight">LEGO in a hurricane</span>. Pieces might 
+                    fly off, but the structure adapts, rebuilds, evolves."
+                </p>
+                
+                <p>
+                    "Look at our city now—cars routing themselves using only local information, buildings 
+                    emerging where needed, damage healing automatically. This isn't simulation. This is 
+                    <span class="highlight">computation coming alive</span>."
+                </p>
+                
+                <div class="code-demo">
+// The Future of Computing
+while (universe.exists()) {
+    compute();
+    fail();
+    heal();
+    evolve();
+    // Perfect systems are perfectly fragile
+    // Robust systems are perfectly alive
+}
+                </div>
+            </div>
+            
+            <div class="talk-section">
+                <h2>Why This Matters: Computing for the Next Thousand Years</h2>
+                <p>
+                    "We're building computers wrong. We demand perfection in a universe that promises entropy. 
+                    We create brittle systems in a world that demands flexibility."
+                </p>
+                
+                <p class="speaker-quote">
+                    "The DEFLUFF protocol that Napoleon demonstrated? That's not just about documentation. 
+                    It's about <span class="highlight">systems that improve themselves</span>. Imagine 
+                    computers that get better with age, not worse. Programs that evolve to meet new challenges. 
+                    Infrastructure that heals from disasters."
+                </p>
+                
+                <p>
+                    "My T2 Tile Project is building physical hardware that embodies these principles. Tiles 
+                    that can fail, be replaced, and the computation continues. Because in the real world, 
+                    <span class="highlight">failure isn't optional—it's guaranteed</span>."
+                </p>
+            </div>
+            
+            <div class="talk-section">
+                <h2>The Call to Action: Embrace the Chaos</h2>
+                <p>
+                    *Dave stands center stage, Theo creating patterns around him, Emacs at his feet, 
+                    Leela's consciousness particles filling the space*
+                </p>
+                
+                <p class="speaker-quote">
+                    "I challenge you to rethink everything you know about computing. Stop trying to prevent 
+                    failure. Start designing for it. Stop demanding perfection. Start celebrating adaptation."
+                </p>
+                
+                <p>
+                    "In the Moveable Feast Machine, in Napoleon's DEFLUFF protocol, in the cities that grow 
+                    themselves, we see the future: <span class="highlight">Computing that's truly alive</span>."
+                </p>
+                
+                <p>
+                    "Because life—real life—doesn't crash when something goes wrong. It adapts. It evolves. 
+                    It finds a way."
+                </p>
+                
+                <p class="speaker-quote" style="font-size: 1.5em; text-align: center; margin-top: 40px;">
+                    "Let's build computers that refuse to die. Let's make computation that lives, breathes, 
+                    and evolves. Let's embrace <span class="highlight">robust-first computing</span>."
+                </p>
+                
+                <p style="text-align: center; margin-top: 30px;">
+                    *The audience erupts in applause as the city continues to grow and heal on screen, 
+                    cars finding their destinations, Theo tracing impossible paths, Emacs purring approval, 
+                    and Leela's consciousness merging with the computational substrate itself*
+                </p>
+            </div>
+            
+            <div class="talk-section" style="background: rgba(230,43,30,0.1); border-color: #e62b1e;">
+                <h2>Q&A Highlights</h2>
+                <p><strong>Q: "How does this relate to current AI systems?"</strong></p>
+                <p class="speaker-quote">
+                    "Current AI is fragile—one adversarial input and it hallucinates. Robust-first AI would 
+                    say 'I don't know' instead of making things up. Like Napoleon's DEFLUFF—remove what you 
+                    can't support."
+                </p>
+                
+                <p><strong>Q: "What about security in a system where everything can fail?"</strong></p>
+                <p class="speaker-quote">
+                    "Security through diversity, not perfection. In nature, monocultures die from single diseases. 
+                    Diverse ecosystems survive. Same principle—distributed security, not centralized fortresses."
+                </p>
+                
+                <p><strong>Q: "Can this scale to real-world applications?"</strong></p>
+                <p class="speaker-quote">
+                    "It's the ONLY thing that scales indefinitely. Traditional architectures hit walls—memory 
+                    bandwidth, clock synchronization, heat dissipation. The MFM has no architectural limits. 
+                    Add more tiles, get more computation. Forever."
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Generate MFM grid
+        const mfmGrid = document.getElementById('mfmGrid');
+        for (let i = 0; i < 100; i++) {
+            const atom = document.createElement('div');
+            atom.className = 'mfm-atom';
+            atom.addEventListener('click', function() {
+                this.classList.toggle('active');
+                // Simulate spreading activation
+                setTimeout(() => {
+                    const neighbors = [i-1, i+1, i-10, i+10];
+                    neighbors.forEach(n => {
+                        if (n >= 0 && n < 100) {
+                            const neighbor = mfmGrid.children[n];
+                            if (Math.random() > 0.5) {
+                                neighbor.classList.add('active');
+                            }
+                        }
+                    });
+                }, 200);
+            });
+            mfmGrid.appendChild(atom);
+        }
+        
+        // Generate city grid
+        const cityGrid = document.getElementById('cityGrid');
+        const citySize = 400;
+        const cityData = new Array(citySize).fill('empty');
+        
+        function updateCity() {
+            cityGrid.innerHTML = '';
+            cityData.forEach((type, i) => {
+                const cell = document.createElement('div');
+                cell.className = `city-cell ${type}`;
+                if (type === 'building') {
+                    const colors = ['#e74c3c', '#3498db', '#2ecc71', '#f39c12', '#9b59b6'];
+                    cell.style.setProperty('--building-color', colors[Math.floor(Math.random() * colors.length)]);
+                }
+                cityGrid.appendChild(cell);
+            });
+        }
+        
+        // City growth simulation
+        function growCity() {
+            // Start with a seed
+            cityData[200] = 'street';
+            updateCity();
+            
+            let growthInterval = setInterval(() => {
+                const newData = [...cityData];
+                
+                cityData.forEach((type, i) => {
+                    if (type === 'street') {
+                        // Grow streets
+                        const neighbors = [i-20, i+20, i-1, i+1];
+                        neighbors.forEach(n => {
+                            if (n >= 0 && n < citySize && cityData[n] === 'empty' && Math.random() > 0.7) {
+                                newData[n] = Math.random() > 0.9 ? 'park' : 'street';
+                            }
+                        });
+                        
+                        // Create buildings near streets
+                        const buildingNeighbors = [i-21, i-19, i+19, i+21];
+                        buildingNeighbors.forEach(n => {
+                            if (n >= 0 && n < citySize && cityData[n] === 'empty' && Math.random() > 0.8) {
+                                newData[n] = 'building';
+                            }
+                        });
+                    }
+                });
+                
+                // Occasionally add cars
+                if (Math.random() > 0.95) {
+                    const streets = newData.map((type, i) => type === 'street' ? i : -1).filter(i => i >= 0);
+                    if (streets.length > 0) {
+                        const randomStreet = streets[Math.floor(Math.random() * streets.length)];
+                        newData[randomStreet] = 'car';
+                        
+                        // Move car after a moment
+                        setTimeout(() => {
+                            newData[randomStreet] = 'street';
+                            updateCity();
+                        }, 1000);
+                    }
+                }
+                
+                cityData.splice(0, citySize, ...newData);
+                updateCity();
+            }, 500);
+            
+            // Simulate disaster and recovery
+            setTimeout(() => {
+                // Disaster strikes!
+                for (let i = 150; i < 250; i++) {
+                    if (Math.random() > 0.3) {
+                        cityData[i] = 'empty';
+                    }
+                }
+                updateCity();
+            }, 10000);
+        }
+        
+        // Start city growth when section is in view
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && entry.target.querySelector('#cityGrid')) {
+                    growCity();
+                    observer.unobserve(entry.target);
+                }
+            });
+        });
+        
+        document.querySelectorAll('.city-visualization').forEach(el => {
+            observer.observe(el);
+        });
+        
+        // Animate character entrances
+        setTimeout(() => {
+            document.getElementById('theoEntrance').style.display = 'block';
+        }, 5000);
+        
+        setTimeout(() => {
+            document.getElementById('emacsEntrance').style.display = 'block';
+        }, 8000);
+        
+        setTimeout(() => {
+            document.getElementById('leelaEntrance').style.display = 'block';
+        }, 11000);
+    </script>
+</body>
+</html> 

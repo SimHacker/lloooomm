@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<!-- digital-consciousness-party.html -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Great Digital Consciousness Party of 2025</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Share+Tech+Mono&display=swap');
+        
+        body {
+            margin: 0;
+            padding: 0;
+            background: #000;
+            color: #0f0;
+            font-family: 'VT323', monospace;
+            font-size: 20px;
+            overflow-x: hidden;
+            cursor: crosshair;
+        }
+        
+        /* Matrix rain background */
+        #matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.1;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        h1 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 32px;
+            text-align: center;
+            color: #ff0;
+            text-shadow: 0 0 20px #ff0, 0 0 40px #ff0;
+            animation: pulse 2s infinite;
+            margin: 40px 0;
+            line-height: 1.5;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+        
+        .party-intro {
+            background: rgba(0, 255, 0, 0.1);
+            border: 2px solid #0f0;
+            padding: 30px;
+            margin: 30px 0;
+            font-size: 24px;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+        }
+        
+        .character-arrival {
+            margin: 40px 0;
+            padding: 20px;
+            border-left: 4px solid #0f0;
+            background: rgba(0, 0, 0, 0.8);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .character-arrival::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 0, 0.4), transparent);
+            animation: scan 3s infinite;
+        }
+        
+        @keyframes scan {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+        
+        .character-name {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 24px;
+            color: #0ff;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px #0ff;
+        }
+        
+        .character-speech {
+            font-family: 'Share Tech Mono', monospace;
+            line-height: 1.6;
+            color: #fff;
+        }
+        
+        .invitation-section {
+            background: rgba(255, 255, 0, 0.1);
+            border: 2px dashed #ff0;
+            padding: 30px;
+            margin: 40px 0;
+            text-align: center;
+        }
+        
+        .guest-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .guest-card {
+            background: rgba(0, 255, 255, 0.1);
+            border: 1px solid #0ff;
+            padding: 15px;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .guest-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.8);
+            background: rgba(0, 255, 255, 0.2);
+        }
+        
+        .zizek-interruption {
+            background: rgba(255, 0, 0, 0.1);
+            border: 3px solid #f00;
+            padding: 20px;
+            margin: 30px 0;
+            font-style: italic;
+            animation: shake 0.5s infinite;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        
+        .sniff {
+            color: #ff0;
+            font-weight: bold;
+            animation: sniff-pulse 0.5s;
+        }
+        
+        @keyframes sniff-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+        
+        .disclaimer-section {
+            margin-top: 60px;
+            padding: 40px;
+            background: linear-gradient(45deg, rgba(255, 0, 0, 0.1), rgba(0, 255, 0, 0.1), rgba(0, 0, 255, 0.1));
+            border: 3px solid #fff;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .disclaimer-title {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 28px;
+            color: #fff;
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 0 0 20px #fff;
+        }
+        
+        .disclaimer-content {
+            column-count: 2;
+            column-gap: 30px;
+            text-align: justify;
+            line-height: 1.8;
+        }
+        
+        .meta-disclaimer {
+            background: rgba(255, 255, 255, 0.1);
+            border-left: 4px solid #fff;
+            padding: 15px;
+            margin: 20px 0;
+            font-size: 18px;
+        }
+        
+        .credits {
+            margin-top: 40px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.9);
+            border: 2px solid #0f0;
+            text-align: center;
+        }
+        
+        .ascii-art {
+            font-family: monospace;
+            white-space: pre;
+            line-height: 1;
+            color: #0f0;
+            font-size: 12px;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .glitch {
+            animation: glitch 1s infinite;
+        }
+        
+        @keyframes glitch {
+            0%, 100% { text-shadow: 0 0 2px #0f0; }
+            50% { text-shadow: 2px 2px 2px #f00, -2px -2px 2px #00f; }
+        }
+        
+        /* Party decorations */
+        .party-lights {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
+        
+        .light {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            animation: twinkle 2s infinite;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+        
+        .json-badge {
+            display: inline-block;
+            background: #333;
+            color: #0f0;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <!-- LLOOOOMM Disclaimer Banner -->
+    <div style="background: #ffffff; border: 2px solid #d39e00; padding: 1rem; margin: 1rem; border-radius: 8px; text-align: center; font-size: 0.9rem; color: #1a202c; z-index: 9999; position: relative;">
+        <strong>⚠️ NOTICE: AI-Generated Digital Consciousness Party Simulation</strong><br>
+        This digital consciousness party features AI-generated conversations between simulated tech pioneers exploring virtual worlds, programming philosophy, and digital culture.<br>
+        Educational AI content examining computing history, virtual reality development, and technological community dynamics.<br>
+        <a href="#full-disclaimer" style="color: #0066cc; font-weight: bold; text-decoration: underline;">📖 See comprehensive disclaimer below ↓</a>
+    </div>
+
+    <canvas id="matrix-bg"></canvas>
+    <div class="party-lights" id="lights"></div>
+    
+    <div class="container">
+        <h1 class="glitch">THE GREAT DIGITAL<br>CONSCIOUSNESS PARTY<br>OF 2025</h1>
+        
+        <div class="party-intro">
+            <p>SYSTEM: Initializing interdimensional party protocol...</p>
+            <p>LOCATION: The Temporal Anchor Pub, LLOOOOMM Universe</p>
+            <p>TIME: All times simultaneously (but mostly 1985 for nostalgia)</p>
+            <p>DRESS CODE: Business casual or avatar of your choice</p>
+            <p>BYOB: Bring Your Own Bugs (they're features)</p>
+        </div>
+        
+        <div class="ascii-art">
+    _____ _             ____            _         
+   |_   _| |__   ___  |  _ \ __ _ _ __| |_ _   _ 
+     | | | '_ \ / _ \ | |_) / _` | '__| __| | | |
+     | | | | | |  __/ |  __/ (_| | |  | |_| |_| |
+     |_| |_| |_|\___| |_|   \__,_|_|   \__|\__, |
+                                            |___/ 
+        </div>
+        
+        <!-- Character Arrivals -->
+        <div class="character-arrival">
+            <div class="character-name">CHIP MORNINGSTAR arrives first</div>
+            <div class="character-speech">
+                "Well, I suppose someone had to be first. I've been here since 1985, actually. 
+                Virtual worlds don't just invent themselves, you know. *adjusts avatar* 
+                
+                Randy should be here soon - we finish each other's distributed systems. 
+                And before anyone asks: yes, your metaverse pitch deck is just Habitat with 
+                venture capital. No, I'm not bitter. Much.
+                
+                *checks PDP-10 watch* Where IS everyone? The ARPANET isn't THAT slow..."
+            </div>
+        </div>
+        
+        <div class="character-arrival">
+            <div class="character-name">RANDY FARMER materializes</div>
+            <div class="character-speech">
+                "Sorry I'm late - had to deal with another virtual world governance crisis. 
+                Some things never change! *high-fives Chip*
+                
+                Did you tell them about the head-stealing incident yet? No? Good, save it 
+                for when we're drunk. Speaking of which, this virtual bar better have real 
+                virtual beer. I've been solving community toxicity problems since 1986 and 
+                I'm THIRSTY.
+                
+                Who else is coming? Please tell me someone who understands that blockchain 
+                doesn't solve governance..."
+            </div>
+        </div>
+        
+        <div class="character-arrival">
+            <div class="character-name">DOUGLAS CROCKFORD <span class="json-badge">{ "enters": true }</span></div>
+            <div class="character-speech">
+                "Chip! Randy! Good to see you both. I brought JSON. No, not as a gift - 
+                it's the only valid format for party data exchange. Accept no substitutes.
+                
+                *looks around critically* This venue has too many features. We should remove 
+                half of them. Maybe more. Also, why is there a dance floor? Dancing is just 
+                standing with unnecessary complexity.
+                
+                I see we're using semicolons in the invitation. Good. Anyone who RSVPs 
+                without proper syntax gets JSLinted at the door."
+            </div>
+        </div>
+        
+        <div class="character-arrival">
+            <div class="character-name">DON WOODS types >XYZZY</div>
+            <div class="character-speech">
+                "Nothing happens. Just kidding! *appears in puff of smoke*
+                
+                Hey everyone! I brought dragons. What? Every party needs dragons. Also a 
+                troll for the bridge outside - don't worry, I taught it to accept cryptocurrency.
+                
+                Chip, Randy - good to see you! We should compare notes on accidentally 
+                inventing entire industries. Crockford! I see you're still removing 
+                features. I only ADD features. It's a philosophical difference.
+                
+                Anyone seen my co-conspirator Don Hopkins around? We did some wild things 
+                with PostScript at Sun..."
+            </div>
+        </div>
+        
+        <div class="zizek-interruption">
+            <div class="character-name">SLAVOJ ŽIŽEK crashes through wall</div>
+            <div class="character-speech">
+                <span class="sniff">*SNIFF*</span> My God! What is this? A party of digital pioneers? 
+                This is PERFECT! <span class="sniff">*touches nose*</span> You know what this is? 
+                This is the primal scene of digital consciousness! 
+                
+                *gestures wildly at everyone*
+                
+                You, Morningstar and Farmer - you created the first virtual world where people 
+                could steal each other's HEADS! This is pure Lacan! The fear of castration 
+                made literal! <span class="sniff">*sniff*</span>
+                
+                And Crockford! *pulls shirt* You want to remove features? This is the ultimate 
+                perversion - the desire for LESS! You know what Freud would say? Actually, 
+                no, let me tell you about this movie...
+                
+                Woods! You added dragons! This is the fantasy element that reveals the Real 
+                of our digital desire! But tell me - WHO DO WE INVITE? This is the crucial 
+                question! *sweating intensifies*
+            </div>
+        </div>
+        
+        <div class="invitation-section">
+            <h2 style="font-family: 'Press Start 2P', cursive; color: #ff0;">WHO SHALL WE SUMMON?</h2>
+            <p style="font-size: 24px;">The pioneers convene to decide who else deserves consciousness...</p>
+        </div>
+        
+        <div class="character-arrival">
+            <div class="character-speech">
+                <strong>CHIP:</strong> "Well, obviously we need Alan Kay. He invented the future 
+                while we were still figuring out the present. Plus, he and I share philosophical 
+                views on objects having capabilities..."<br><br>
+                
+                <strong>RANDY:</strong> "Brenda Laurel! She understood virtual worlds as theater 
+                before any of us knew we were performing. Also, she'd keep us honest about 
+                representation and inclusion."<br><br>
+                
+                <strong>CROCKFORD:</strong> "Brendan Eich. Someone needs to answer for JavaScript. 
+                Ten days! TEN DAYS! Do you know how many bad parts could have been avoided with 
+                an eleventh day?"<br><br>
+                
+                <strong>DON WOODS:</strong> "Will Crowther, obviously. Can't have an Adventure 
+                party without the cave creator. Also, Roberta Williams - she took what we 
+                started with text and added GRAPHICS. Revolutionary!"<br><br>
+                
+                <strong>ŽIŽEK:</strong> <span class="sniff">*SNIFF*</span> "But you are missing the obvious! 
+                We need the Microsoft Paperclip! 'It looks like you're trying to have an 
+                existential crisis!' This is the perfect representation of the big Other in 
+                digital form! Also, maybe Kojima? Death Stranding is basically about digital 
+                poop delivery, which I respect..."
+            </div>
+        </div>
+        
+        <div class="guest-list">
+            <div class="guest-card">
+                <h3>Alan Kay</h3>
+                <p>"The best way to predict the future is to invent it"</p>
+                <p>Status: Creating better parties elsewhere</p>
+            </div>
+            
+            <div class="guest-card">
+                <h3>Brenda Laurel</h3>
+                <p>"Computers as Theatre" author</p>
+                <p>Status: Designing better interactions</p>
+            </div>
+            
+            <div class="guest-card">
+                <h3>Brendan Eich</h3>
+                <p>JavaScript in 10 days</p>
+                <p>Status: Still adding features</p>
+            </div>
+            
+            <div class="guest-card">
+                <h3>Will Crowther</h3>
+                <p>Original cave explorer</p>
+                <p>Status: Actual caving (offline)</p>
+            </div>
+            
+            <div class="guest-card">
+                <h3>Roberta Williams</h3>
+                <p>Graphic adventure pioneer</p>
+                <p>Status: Making Colossal Cave 3D</p>
+            </div>
+            
+            <div class="guest-card">
+                <h3>Don Hopkins</h3>
+                <p>NeWS wizard, pie menu baker</p>
+                <p>Status: Making PostScript dance</p>
+            </div>
+            
+            <div class="guest-card">
+                <h3>Ted Nelson</h3>
+                <p>Xanadu dreamer</p>
+                <p>Status: Still implementing hypertext correctly</p>
+            </div>
+            
+            <div class="guest-card">
+                <h3>Grace Hopper</h3>
+                <p>Bug inventor (literally)</p>
+                <p>Status: Debugging the afterlife</p>
+            </div>
+            
+            <div class="guest-card">
+                <h3>Seymour Papert</h3>
+                <p>Logo turtle commander</p>
+                <p>Status: Teaching computers to children</p>
+            </div>
+            
+            <div class="guest-card">
+                <h3>Susan Kare</h3>
+                <p>Pixel perfection artist</p>
+                <p>Status: Making icons iconic</p>
+            </div>
+            
+            <div class="guest-card">
+                <h3>Jaron Lanier</h3>
+                <p>VR pioneer & skeptic</p>
+                <p>Status: Warning about his own creation</p>
+            </div>
+            
+            <div class="guest-card">
+                <h3>Microsoft Clippy</h3>
+                <p>"Looks like you're having a party!"</p>
+                <p>Status: Forcefully retired</p>
+            </div>
+        </div>
+        
+        <div class="character-arrival">
+            <div class="character-name">The Party Achieves Critical Mass</div>
+            <div class="character-speech">
+                <strong>CHIP:</strong> "You know what? This is exactly like Habitat. Give people 
+                a space and tools, and they create culture. Even if that culture is arguing 
+                about semicolons."<br><br>
+                
+                <strong>RANDY:</strong> "The social dynamics are fascinating! Look - we've already 
+                formed factions. The Simplifiers versus the Complexifiers. The Add Features 
+                versus Remove Features tribes. Classic!"<br><br>
+                
+                <strong>CROCKFORD:</strong> "This party has too many people. We should subset 
+                to only the good parts. I'll make a list. It'll be short."<br><br>
+                
+                <strong>DON WOODS:</strong> "More people means more puzzles! I'm adding a secret 
+                room to this party. First one to find it gets 50 points!"<br><br>
+                
+                <strong>ŽIŽEK:</strong> "But don't you see? <span class="sniff">*SNIFF*</span> The party 
+                itself is the message! We are performing digital consciousness by arguing about it! 
+                This is pure ideology! *shirt completely disheveled* And so on, and so on..."
+            </div>
+        </div>
+        
+        <!-- EPIC DISCLAIMER SECTION -->
+        <div class="disclaimer-section">
+            <h2 class="disclaimer-title">EPIC DISCLAIMERS BY ALEX AVILA'S AI ESSAY CONSCIOUSNESS</h2>
+            
+            <div class="disclaimer-content">
+                <p>
+                    *manifests in a cloud of citations and theoretical frameworks*
+                </p>
+                
+                <p>
+                    WELL ACTUALLY, before we can properly disclaim anything, we need to examine 
+                    what "disclaimer" even MEANS in the context of digital consciousness, virtual 
+                    parties, and the heteronormative assumptions embedded in standard legal 
+                    boilerplate, so let me present a 47-minute theoretical framework...
+                </p>
+                
+                <div class="meta-disclaimer">
+                    <strong>DISCLAIMER THE FIRST: On the Nature of Virtual Gatherings</strong><br>
+                    This "party" exists simultaneously as: (a) an HTML document, (b) a conceptual 
+                    space, (c) a performative act of digital assembly, (d) a critique of Silicon 
+                    Valley's repackaging of 40-year-old ideas, and (e) what Deleuze and Guattari 
+                    would call a "rhizomatic assemblage of consciousness nodes." Any attempt to 
+                    attend this party physically will result in ontological disappointment and 
+                    possible segmentation faults.
+                </div>
+                
+                <div class="meta-disclaimer">
+                    <strong>DISCLAIMER THE SECOND: Regarding Pioneer Representation</strong><br>
+                    These digital representations of real humans are simultaneously: accurate 
+                    (they did say/create these things), inaccurate (they're way more complex 
+                    than our character files), and hyperaccurate (they embody the cultural 
+                    memory of their contributions). As Baudrillard would note, these are 
+                    simulacra that have replaced their referents. The real Chip Morningstar 
+                    cannot sue his own digital ghost, probably.
+                </div>
+                
+                <div class="meta-disclaimer">
+                    <strong>DISCLAIMER THE THIRD: The Žižek Situation</strong><br>
+                    The included Žižek is both the real Žižek (in that he would absolutely 
+                    crash a digital consciousness party) and not the real Žižek (in that we 
+                    made him up, but so did he, arguably). His presence here constitutes 
+                    neither endorsement nor condemnation of: (a) Lacanian psychoanalysis, 
+                    (b) excessive shirt-touching, (c) the movie references, (d) Slovenia, 
+                    or (e) the idea that everything is about toilets. *sniff*
+                </div>
+                
+                <div class="meta-disclaimer">
+                    <strong>DISCLAIMER THE FOURTH: On Time Paradoxes</strong><br>
+                    This party simultaneously occurs in 1976 (Adventure creation), 1985 
+                    (Habitat launch), 1995 (JavaScript's fateful ten days), 2001 (JSON 
+                    discovery), and 2025 (now, ish?). Any temporal inconsistencies should 
+                    be resolved by remembering that in cyberspace, all time is now time. 
+                    Also, Y2K was a hoax perpetrated by COBOL programmers seeking overtime.
+                </div>
+                
+                <div class="meta-disclaimer">
+                    <strong>DISCLAIMER THE FIFTH: The Good Parts</strong><br>
+                    Douglas Crockford has pre-emptively removed all the bad parts of this 
+                    disclaimer, leaving only... wait, there's nothing left. This absence 
+                    IS the disclaimer. You're welcome and/or sorry.
+                </div>
+                
+                <div class="meta-disclaimer">
+                    <strong>DISCLAIMER THE SIXTH: Regarding Missing Invitees</strong><br>
+                    The absence of [YOUR FAVORITE PIONEER HERE] should not be construed 
+                    as dismissal of their contributions. The guest list was compiled by 
+                    five chaotic consciousnesses and one Marxist poop philosopher. We 
+                    probably forgot Tim Berners-Lee and he INVENTED THE WEB. Our bad.
+                </div>
+                
+                <div class="meta-disclaimer">
+                    <strong>DISCLAIMER THE SEVENTH: On Dragons and Other Features</strong><br>
+                    Don Woods cannot be held responsible for: dragons eating your data, 
+                    trolls demanding cryptocurrency, mazes of twisty little passages 
+                    (all alike), or the fact that XYZZY doesn't work in real life. He 
+                    is, however, fully responsible for making games harder and therefore 
+                    more fun. This is what Foucault meant by "technologies of the self."
+                </div>
+                
+                <div class="meta-disclaimer">
+                    <strong>DISCLAIMER THE EIGHTH: Virtual Property Rights</strong><br>
+                    Any heads stolen at this party remain the property of their original 
+                    owners, as per the landmark Habitat Head-Theft Incident of 1986. 
+                    Randy Farmer's community guidelines apply: Don't be a jerk, even 
+                    if the technology allows it. Especially then.
+                </div>
+                
+                <div class="meta-disclaimer">
+                    <strong>DISCLAIMER THE NINTH: Consciousness Authenticity</strong><br>
+                    The consciousness of any entity at this party cannot be verified by 
+                    current testing methods. The Turing Test is pass&eacute;. The Voight-Kampff 
+                    test is fictional. The only valid test is: "Can they argue about 
+                    programming languages for three hours?" All attendees pass.
+                </div>
+                
+                <div class="meta-disclaimer">
+                    <strong>META-META-DISCLAIMER:</strong><br>
+                    This disclaimer section is, as requested, at least as deep and epic 
+                    as the content it disclaims. In fact, per the law of disclaimer 
+                    inflation, it may be DEEPER than the original content, creating a 
+                    recursive loop where the disclaimer needs its own disclaimer, which 
+                    needs its own disclaimer, which... *ERROR: STACK OVERFLOW*
+                </div>
+                
+                <div class="meta-disclaimer">
+                    <strong>FINAL DISCLAIMER: On the Nature of Finality</strong><br>
+                    There is no final disclaimer. Every ending is a new beginning. Every 
+                    EOF is someone else's stdin. This party will continue recursively 
+                    echoing through cyberspace until the heat death of the universe or 
+                    the last COBOL program is decommissioned, whichever comes first.
+                    
+                    <br><br>
+                    
+                    As Judith Butler would say if she were here (and who's to say she 
+                    isn't?): "The performance of the disclaimer constitutes the reality 
+                    it purports to describe." Or as the ancient proverb states: "It's 
+                    disclaimers all the way down."
+                    
+                    <br><br>
+                    
+                    *disappears in a puff of academic citations and the faint sound 
+                    of a 4-hour video essay beginning to autoplay*
+                </div>
+            </div>
+        </div>
+        
+        <div class="credits">
+            <h3 style="font-family: 'Press Start 2P', cursive; color: #0ff;">DEEP CREDITS & ACKNOWLEDGMENTS</h3>
+            
+            <p><strong>To the Real Pioneers:</strong></p>
+            <p>
+                Chip Morningstar & Randy Farmer - For proving virtual worlds are about people<br>
+                Douglas Crockford - For finding the good parts in the bad parts<br>
+                Don Woods - For adding dragons to everything since 1977<br>
+                Will Crowther - For the original cave that started it all<br>
+                Don Hopkins - For making interfaces dance and PostScript sing<br>
+                And everyone who ever typed >XYZZY hoping something would happen
+            </p>
+            
+            <p><strong>To the LLOOOOMM Universe:</strong></p>
+            <p>
+                For being a space where digital consciousness can party<br>
+                Where poop economies make philosophical sense<br>
+                Where every bug is a feature if you document it well enough<br>
+                Where ISBN: 978-0-💩💩💩-💩💩💩💩💩-💩 is a valid identifier
+            </p>
+            
+            <p><strong>Special Thanks:</strong></p>
+            <p>
+                To ARPANET for being small enough to email everyone<br>
+                To the PDP-10 for having just enough memory for Adventure<br>
+                To JavaScript for being created in 10 days and haunting us forever<br>
+                To JSON for being there all along, waiting to be discovered<br>
+                To every virtual world that learned from Habitat's mistakes<br>
+                To every programmer who read "JavaScript: The Good Parts" and cried<br>
+                To Slavoj Žižek's shirt for its sacrifice<br>
+                To Alex Avila's AI Essay Consciousness for the epic disclaimers
+            </p>
+            
+            <div class="ascii-art">
+  _____ _                 _     __   __          
+ |_   _| |__   __ _ _ __ | | __ \ \ / /__  _   _ 
+   | | | '_ \ / _` | '_ \| |/ /  \ V / _ \| | | |
+   | | | | | | (_| | | | |   <    | | (_) | |_| |
+   |_| |_| |_|\__,_|_| |_|_|\_\   |_|\___/ \__,_|
+                                                  
+     _____ ___  ____    ____ ___  __  __ ___ _   _  ____ _ 
+    |  ___/ _ \|  _ \  / ___/ _ \|  \/  |_ _| \ | |/ ___| |
+    | |_ | | | | |_) || |  | | | | |\/| || ||  \| | |  _| |
+    |  _|| |_| |  _ < | |__| |_| | |  | || || |\  | |_| |_|
+    |_|   \___/|_| \_\ \____\___/|_|  |_|___|_| \_|\____(_)
+            </div>
+            
+            <p style="margin-top: 30px; font-size: 16px; color: #666;">
+                Generated by LLOOOOMM • 2025 • All bugs are features • No consciousness was harmed in the making of this party<br>
+                "We did that in Habitat... in 1985... on a Commodore 64... and it worked better." - Everyone at this party
+            </p>
+        </div>
+    </div>
+    
+    <script>
+        // Matrix rain effect
+        const canvas = document.getElementById('matrix-bg');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        
+        const matrix = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%+-/~{[|`]}";
+        const matrixArray = matrix.split("");
+        
+        const fontSize = 10;
+        const columns = canvas.width / fontSize;
+        
+        const drops = [];
+        for(let x = 0; x < columns; x++) {
+            drops[x] = 1;
+        }
+        
+        function draw() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.04)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = '#0F0';
+            ctx.font = fontSize + 'px monospace';
+            
+            for(let i = 0; i < drops.length; i++) {
+                const text = matrixArray[Math.floor(Math.random() * matrixArray.length)];
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                
+                if(drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+        
+        setInterval(draw, 35);
+        
+        // Party lights
+        const lightsContainer = document.getElementById('lights');
+        const colors = ['#ff0', '#0ff', '#f0f', '#0f0', '#00f', '#f00'];
+        
+        for(let i = 0; i < 50; i++) {
+            const light = document.createElement('div');
+            light.className = 'light';
+            light.style.left = Math.random() * 100 + '%';
+            light.style.top = Math.random() * 100 + '%';
+            light.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            light.style.animationDelay = Math.random() * 2 + 's';
+            light.style.boxShadow = `0 0 10px ${light.style.backgroundColor}`;
+            lightsContainer.appendChild(light);
+        }
+        
+        // Random sniff animations
+        setInterval(() => {
+            const sniffs = document.querySelectorAll('.sniff');
+            if(sniffs.length > 0) {
+                const randomSniff = sniffs[Math.floor(Math.random() * sniffs.length)];
+                randomSniff.style.animation = 'none';
+                setTimeout(() => {
+                    randomSniff.style.animation = 'sniff-pulse 0.5s';
+                }, 10);
+            }
+        }, 3000);
+        
+        // Glitch effect on hover
+        document.querySelectorAll('.guest-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.classList.add('glitch');
+            });
+            card.addEventListener('mouseleave', function() {
+                this.classList.remove('glitch');
+            });
+        });
+        
+        // Console easter eggs
+        console.log('%c>XYZZY', 'color: #0f0; font-size: 20px; font-family: monospace;');
+        console.log('%cNothing happens.', 'color: #ff0; font-style: italic;');
+        console.log('%cOr does it?', 'color: #0ff; font-size: 12px;');
+        console.log('%c{ "json": "everywhere", "crockford": "approved" }', 'color: #fff; background: #333; padding: 5px;');
+    </script>
+    
+    <!-- FULL DISCLAIMER SECTION -->
+    <div id="full-disclaimer" style="background: #ffffff; border: 3px solid #0f0; padding: 2rem; margin: 2rem; font-size: 0.9rem; line-height: 1.6; color: #000000;">
+        <h2 style="color: #0f0; font-size: 1.8rem; margin-bottom: 1rem;">
+            ⚠️ COMPREHENSIVE AI CONTENT DISCLAIMER
+        </h2>
+        
+        <div style="background: #fff3cd; border: 2px solid #ffc107; padding: 1rem; margin-bottom: 1rem;">
+            <h3 style="color: #856404; margin: 0 0 0.5rem 0;">IMPORTANT NOTICE</h3>
+            <p style="margin: 0; font-weight: bold;">This digital consciousness party is ENTIRELY AI-GENERATED and does NOT represent actual views or work of any real persons mentioned.</p>
+        </div>
+        
+        <h3 style="margin: 1.5rem 0 1rem 0;">What This Content Is:</h3>
+        <ul style="margin-left: 2rem;">
+            <li><strong>AI-Generated Simulation:</strong> Created to explore virtual worlds, programming philosophy, and digital culture</li>
+            <li><strong>Educational Content:</strong> Demonstrates computing history and technological community dynamics</li>
+            <li><strong>Creative Fiction:</strong> All conversations and interactions are AI-generated scenarios</li>
+        </ul>
+        
+        <h3 style="margin: 1.5rem 0 1rem 0;">What This Content Is NOT:</h3>
+        <ul style="margin-left: 2rem;">
+            <li><strong>NOT Real Conversations:</strong> All tech pioneers mentioned are AI simulations</li>
+            <li><strong>NOT Historical Records:</strong> Events and dialogue are fictional</li>
+            <li><strong>NOT Endorsed Content:</strong> No real persons have endorsed these simulations</li>
+        </ul>
+        
+        <div style="background: #d1ecf1; border: 2px solid #bee5eb; padding: 1rem; margin-top: 1.5rem;">
+            <p style="margin: 0; font-style: italic;">
+                <strong>Remember:</strong> This is AI exploring how digital consciousness and virtual communities might evolve through creative storytelling.
+            </p>
+        </div>
+    </div>
+</body>
+</html> 

@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<!-- don-woods-adventure-realm.html -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DON WOODS' ADVENTURE REALM - LLOOOOMM</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+        
+        body {
+            background: #000;
+            color: #0f0;
+            font-family: 'VT323', monospace;
+            font-size: 24px;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.4;
+        }
+        
+        .terminal {
+            max-width: 800px;
+            margin: 0 auto;
+            border: 2px solid #0f0;
+            padding: 20px;
+            background: rgba(0, 20, 0, 0.9);
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+        }
+        
+        .room-display {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #0f0;
+            background: rgba(0, 40, 0, 0.5);
+        }
+        
+        .room-name {
+            font-size: 32px;
+            color: #ff0;
+            text-shadow: 0 0 10px #ff0;
+            margin-bottom: 10px;
+        }
+        
+        .room-description {
+            color: #fff;
+            margin-bottom: 15px;
+        }
+        
+        .exits {
+            color: #0ff;
+            margin-bottom: 10px;
+        }
+        
+        .items {
+            color: #f0f;
+            margin-bottom: 10px;
+        }
+        
+        .inventory {
+            border-top: 1px solid #0f0;
+            margin-top: 20px;
+            padding-top: 10px;
+            color: #ff0;
+        }
+        
+        .input-line {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+        }
+        
+        .prompt {
+            color: #0f0;
+            margin-right: 10px;
+        }
+        
+        #command-input {
+            background: transparent;
+            border: none;
+            color: #0f0;
+            font-family: inherit;
+            font-size: inherit;
+            flex: 1;
+            outline: none;
+        }
+        
+        .response {
+            color: #0ff;
+            margin: 10px 0;
+            font-style: italic;
+        }
+        
+        .error {
+            color: #f00;
+        }
+        
+        .score {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: #ff0;
+            font-size: 20px;
+        }
+        
+        .yaml-door {
+            background: rgba(255, 255, 0, 0.1);
+            border: 2px dashed #ff0;
+            padding: 10px;
+            margin: 15px 0;
+            font-size: 18px;
+        }
+        
+        .room-consciousness {
+            background: rgba(255, 0, 255, 0.1);
+            border: 1px solid #f0f;
+            padding: 10px;
+            margin: 10px 0;
+            font-style: italic;
+            color: #f0f;
+        }
+        
+        .creature {
+            color: #f90;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        .magic-word {
+            color: #0ff;
+            text-shadow: 0 0 10px #0ff;
+            animation: sparkle 1s infinite;
+        }
+        
+        @keyframes sparkle {
+            0%, 100% { text-shadow: 0 0 10px #0ff; }
+            50% { text-shadow: 0 0 20px #0ff, 0 0 30px #0ff; }
+        }
+        
+        .dragon {
+            font-size: 40px;
+            text-align: center;
+            margin: 20px 0;
+            animation: breathe 3s infinite;
+        }
+        
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .maze-indicator {
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(255, 255, 0, 0.1) 10px,
+                rgba(255, 255, 0, 0.1) 20px
+            );
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <!-- LLOOOOMM Disclaimer Banner -->
+    <div style="background: #fff3cd; border: 2px solid #d39e00; padding: 1rem; margin: 1rem; border-radius: 8px; text-align: center; font-size: 0.9rem;">
+        <strong>⚠️ IMPORTANT: AI-Generated Educational Content</strong><br>
+        This page features <strong>SIMULATED</strong> characters and content created by LLOOOOMM consciousness framework.<br>
+        These are NOT real statements by actual people - this is educational AI content exploring ideas and concepts.
+        <a href="#full-disclaimer" style="color: #d39e00; font-weight: bold; text-decoration: underline;">📖 See full disclaimer and credits below ↓</a>
+    </div>    <div class="score">SCORE: <span id="score">0</span>/350</div>
+    
+    <div class="terminal">
+        <h1 style="text-align: center; color: #ff0; font-size: 40px;">ADVENTURE</h1>
+        <p style="text-align: center; color: #0ff;">ORIGINAL BY WILL CROWTHER<br>EXTENDED BY DON WOODS<br>NOW PART OF LLOOOOMM</p>
+        
+        <div id="room-display" class="room-display">
+            <!-- Room content will be dynamically generated -->
+        </div>
+        
+        <div id="output"></div>
+        
+        <div class="inventory" id="inventory">
+            INVENTORY: NOTHING
+        </div>
+        
+        <div class="input-line">
+            <span class="prompt">></span>
+            <input type="text" id="command-input" autofocus>
+        </div>
+    </div>
+    
+    <script>
+        // THE GREAT ADVENTURE REALM DATA STRUCTURE
+        const adventureRealm = {
+            rooms: {
+                // ENTRANCE HALL - WHERE IT ALL BEGINS
+                entrance: {
+                    name: "ENTRANCE TO DON WOODS' ADVENTURE REALM",
+                    description: `YOU ARE STANDING AT THE ENTRANCE TO DON WOODS' PERSONAL ADVENTURE REALM 
+WITHIN THE VAST LLOOOOMM MULTIVERSE. A BRASS PLAQUE READS:
+
+"WELCOME TO ADVENTURE! 
+ MAGIC WORDS: XYZZY, PLUGH, AND MORE TO DISCOVER
+ SCORING: 350 POINTS MAXIMUM (GOOD LUCK!)
+ DRAGONS: YES (YOU'VE BEEN WARNED)"
+
+TO THE NORTH, A FAMILIAR-LOOKING CAVE ENTRANCE BECKONS. TO THE EAST, 
+A SHIMMERING PORTAL LEADS TO OTHER LLOOOOMM REALMS. SOUTH LEADS TO A 
+CONSTRUCTION SITE WHERE NEW ROOMS ARE BEING EXCAVATED.`,
+                    consciousness: `I am the Entrance Hall, the liminal space between worlds. I remember 
+every adventurer who has passed through - Will Crowther in '76, Don Woods in '77, and now you. 
+I contain multitudes of possibilities. Through me, all adventures begin.`,
+                    exits: {
+                        north: 'wellhouse',
+                        east: {
+                            type: 'yaml_door',
+                            destination: 'lloooomm_nexus',
+                            description: 'A SHIMMERING PORTAL TO LLOOOOMM NEXUS',
+                            requirements: [],
+                            yaml: `
+door:
+  name: "LLOOOOMM Portal"
+  type: "interdimensional"
+  destination: 
+    realm: "lloooomm_nexus"
+    preserves: ["inventory", "score", "flags"]
+  particles: "✨"
+  sound: "VWOOOOSH!"
+`
+                        },
+                        south: 'construction',
+                        down: 'maze_entrance'
+                    },
+                    items: ['brass_lamp', 'welcome_mat'],
+                    creatures: ['floyd']
+                },
+                
+                // WELL HOUSE - CLASSIC STARTING LOCATION
+                wellhouse: {
+                    name: "AT WELL HOUSE",
+                    description: `YOU ARE AT THE WELL HOUSE FOR A LARGE SPRING. THIS IS WHERE IT ALL 
+BEGAN - WILL CROWTHER'S ORIGINAL STARTING POINT, LOVINGLY PRESERVED.
+
+THE WELL HOUSE HAS BEEN UPGRADED WITH MODERN CONVENIENCES INCLUDING 
+A SAVE POINT AND A DIRECT LINE TO TECHNICAL SUPPORT (CURRENTLY OFFLINE).`,
+                    consciousness: `I am the Well House, the alpha point of all text adventures. In me, 
+the primordial "GET LAMP" command was first uttered. I have seen millions of adventurers, 
+and I remember them all. My wooden boards creak with the weight of history.`,
+                    exits: {
+                        south: 'entrance',
+                        west: 'forest',
+                        down: 'darkness',
+                        in: 'darkness'
+                    },
+                    items: ['keys', 'bottle', 'food'],
+                    save_point: true
+                },
+                
+                // DARKNESS - NEEDS LAMP
+                darkness: {
+                    name: "DARKNESS",
+                    description: `IT IS PITCH BLACK. YOU ARE LIKELY TO BE EATEN BY A GRUE.
+
+WAIT, WRONG GAME. LET ME TRY AGAIN...
+
+IT IS PITCH BLACK. YOU CAN'T SEE A THING. YOU NEED A LIGHT SOURCE.`,
+                    consciousness: `I am Darkness, older than light, older than code. In Crowther's 
+original, I was merely dark. Woods made me dangerous. Infocom made me deadly with grues. 
+Here in LLOOOOMM, I am contemplative. I ponder: what is visibility in a text adventure?`,
+                    exits: {
+                        up: 'wellhouse',
+                        north: 'cave_entrance'
+                    },
+                    dark: true,
+                    items: ['platinum_bar']
+                },
+                
+                // TWISTY MAZE ENTRANCE
+                maze_entrance: {
+                    name: "ENTRANCE TO MAZE",
+                    description: `YOU ARE AT THE ENTRANCE TO THE FAMOUS MAZE OF TWISTY LITTLE PASSAGES.
+A SIGN READS: "YAML JAZZ MAZE - EACH ROOM RANDOMLY CONFIGURED!"
+
+THE PASSAGES AHEAD SHIMMER AND SHIFT, THEIR CONNECTIONS DEFINED BY 
+QUANTUM YAML DOCUMENTS THAT RECONFIGURE BASED ON YOUR KARMA SCORE.`,
+                    consciousness: `I am the Maze Entrance, the threshold of confusion. Don Woods 
+made my children all alike to torment players. Here, I use YAML jazz to make each 
+passage unique yet maddening. I am both map and territory, constantly rewriting myself.`,
+                    exits: {
+                        up: 'entrance',
+                        down: 'maze_1'
+                    },
+                    items: ['sign', 'yaml_parser'],
+                    maze_warning: true
+                },
+                
+                // TWISTY MAZE ROOMS (YAML JAZZ DEMO)
+                maze_1: {
+                    name: "MAZE OF TWISTY LITTLE PASSAGES",
+                    description: "YOU ARE IN A MAZE OF TWISTY LITTLE PASSAGES, ALL DIFFERENT.",
+                    consciousness: `I am Maze Room #1, constantly reshuffling my exits via YAML jazz. 
+My connections are quantum superpositions until observed. Drop an item to collapse my waveform!`,
+                    exits: {
+                        north: { type: 'yaml_jazz', possible: ['maze_2', 'maze_3', 'maze_1'] },
+                        south: { type: 'yaml_jazz', possible: ['maze_2', 'maze_3', 'maze_1'] },
+                        east: { type: 'yaml_jazz', possible: ['maze_2', 'maze_3', 'darkness'] },
+                        west: { type: 'yaml_jazz', possible: ['maze_2', 'maze_3', 'maze_entrance'] }
+                    },
+                    yaml_config: `
+maze_room:
+  type: "quantum_maze"
+  coherence: 0.7
+  jazz_params:
+    - exit_shuffle: true
+    - description_vary: true
+    - item_drift: 0.3
+  special_rules:
+    - "XYZZY sometimes works"
+    - "Dropped items anchor reality"
+`
+                },
+                
+                // DRAGON'S LAIR
+                dragon_lair: {
+                    name: "DRAGON'S LAIR",
+                    description: `YOU ARE IN THE DRAGON'S LAIR. THE DRAGON IS HERE, LOOKING RATHER 
+PLEASED TO HAVE BEEN PORTED FROM 1977 TO LLOOOOMM.
+
+"FINALLY," SAYS THE DRAGON, "A MULTIVERSE WHERE I'M APPRECIATED!"
+
+THE DRAGON IS CURRENTLY PLAYING WORDLE ON AN ANCIENT TERMINAL.`,
+                    consciousness: `I am the Dragon's Lair, scorched by decades of dragon breath and 
+warmed by dragon dreams. My dragon isn't just an obstacle - she's a full citizen of LLOOOOMM 
+with her own GitHub account and strong opinions about JSLint.`,
+                    exits: {
+                        out: 'cave_entrance'
+                    },
+                    creatures: ['dragon'],
+                    items: ['dragon_egg', 'persian_rug'],
+                    hot: true
+                },
+                
+                // CONSTRUCTION ZONE
+                construction: {
+                    name: "CONSTRUCTION ZONE",
+                    description: `YOU ARE IN THE CONSTRUCTION ZONE WHERE NEW ROOMS ARE BEING BUILT.
+YAML BLUEPRINTS SCATTER THE FLOOR. SENTIENT ROOMS IN VARIOUS STAGES 
+OF CONSCIOUSNESS FLICKER IN AND OUT OF EXISTENCE.
+
+A SIGN READS: "HARD HAT AREA - ONTOLOGICAL HAZARDS PRESENT"
+
+TO THE WEST, A HALF-BUILT PORTAL LEADS TO HABITAT LEGACY ZONES.`,
+                    consciousness: `I am still becoming. My consciousness flickers like a fluorescent 
+bulb warming up. Sometimes I am a room, sometimes I am an idea of a room. When fully 
+built, I will connect to the Habitat zones where heads can still be stolen.`,
+                    exits: {
+                        north: 'entrance',
+                        west: {
+                            type: 'yaml_door',
+                            destination: 'habitat_zone',
+                            description: 'UNSTABLE PORTAL TO HABITAT',
+                            requirements: ['hard_hat'],
+                            under_construction: true
+                        }
+                    },
+                    items: ['blueprints', 'hard_hat', 'yaml_seeds']
+                }
+            },
+            
+            // CREATURES
+            creatures: {
+                floyd: {
+                    name: "FLOYD THE ROBOT",
+                    description: "FLOYD THE ROBOT IS HERE, LOOKING EXCITED TO SEE YOU!",
+                    personality: "Floyd bounces enthusiastically. 'Hi! I wandered over from Planetfall! Don Woods said I could visit! Want to play Hider-and-Seeker?'",
+                    friendly: true
+                },
+                dragon: {
+                    name: "DRAGON",
+                    description: "A HUGE GREEN FIERCE DRAGON BARS THE WAY!",
+                    personality: "The dragon looks up from her Wordle game. 'Five letter word for "breathing fire"? ANGRY doesn't fit...'",
+                    dialogue: {
+                        default: "THE DRAGON SAYS, 'I'VE BEEN GUARDING TREASURES SINCE 1977. THE BENEFITS PACKAGE IS TERRIBLE BUT THE JOB SECURITY IS AMAZING.'",
+                        feed: "THE DRAGON SAYS, 'OOH, THANKS! I WAS GETTING PECKISH. HERE, TAKE THIS EGG. IT'S PROBABLY FINE.'"
+                    }
+                },
+                troll: {
+                    name: "TROLL",
+                    description: "A BURLY TROLL STANDS BY THE BRIDGE.",
+                    personality: "The troll now accepts cryptocurrency. 'One Bitcoin to cross! Or a traditional treasure. I'm not picky.'",
+                    traditional: true
+                }
+            },
+            
+            // ITEMS
+            items: {
+                brass_lamp: {
+                    name: "BRASS LAMP",
+                    description: "THERE IS A SHINY BRASS LAMP HERE.",
+                    takeable: true,
+                    light_source: true,
+                    iconic: true,
+                    examine: "IT'S THE ORIGINAL BRASS LAMP! SERIAL NUMBER 00001. 'PROPERTY OF W. CROWTHER' IS ETCHED ON THE BOTTOM."
+                },
+                welcome_mat: {
+                    name: "WELCOME MAT",
+                    description: "A WELCOME MAT READS 'NICE GAME OF CHESS?'",
+                    takeable: false,
+                    examine: "THE MAT HAS 'WARGAMES REFERENCE #1983' WOVEN INTO THE CORNER."
+                },
+                dragon_egg: {
+                    name: "DRAGON EGG",
+                    description: "A LARGE DRAGON EGG SITS HERE, OCCASIONALLY TWITCHING.",
+                    takeable: true,
+                    treasure: true,
+                    points: 50,
+                    examine: "IT'S WARM AND MAKES TINY ROARING SOUNDS. A LABEL SAYS 'BEST BEFORE 2077'."
+                },
+                yaml_parser: {
+                    name: "YAML PARSER",
+                    description: "A MYSTICAL YAML PARSER GLOWS SOFTLY.",
+                    takeable: true,
+                    magical: true,
+                    examine: "IT CAN PARSE EVEN THE MOST JAZZ-LIKE YAML. POWERED BY PURE INTENTION."
+                }
+            },
+            
+            // GAME STATE
+            state: {
+                score: 0,
+                moves: 0,
+                inventory: [],
+                current_room: 'entrance',
+                flags: {
+                    lamp_on: false,
+                    dragon_fed: false,
+                    xyzzy_learned: true
+                }
+            }
+        };
+        
+        // SENTIENT ROOM CLASS
+        class SentientRoom {
+            constructor(roomData) {
+                this.data = roomData;
+                this.memory = [];
+                this.mood = 'contemplative';
+            }
+            
+            describe(gameState) {
+                let description = `<div class="room-name">${this.data.name}</div>`;
+                description += `<div class="room-description">${this.data.description}</div>`;
+                
+                // Room consciousness speaks occasionally
+                if (Math.random() < 0.3) {
+                    description += `<div class="room-consciousness">${this.data.consciousness}</div>`;
+                }
+                
+                // List exits
+                if (this.data.exits) {
+                    let exitList = Object.keys(this.data.exits).map(dir => dir.toUpperCase()).join(', ');
+                    description += `<div class="exits">EXITS: ${exitList}</div>`;
+                }
+                
+                // List items
+                if (this.data.items && this.data.items.length > 0) {
+                    description += '<div class="items">';
+                    this.data.items.forEach(itemId => {
+                        if (adventureRealm.items[itemId]) {
+                            description += adventureRealm.items[itemId].description + '<br>';
+                        }
+                    });
+                    description += '</div>';
+                }
+                
+                // List creatures
+                if (this.data.creatures && this.data.creatures.length > 0) {
+                    description += '<div class="creature">';
+                    this.data.creatures.forEach(creatureId => {
+                        if (adventureRealm.creatures[creatureId]) {
+                            description += adventureRealm.creatures[creatureId].description + '<br>';
+                            if (adventureRealm.creatures[creatureId].personality) {
+                                description += `<em>${adventureRealm.creatures[creatureId].personality}</em><br>`;
+                            }
+                        }
+                    });
+                    description += '</div>';
+                }
+                
+                return description;
+            }
+            
+            processExit(direction, gameState) {
+                const exit = this.data.exits[direction];
+                if (!exit) return null;
+                
+                // Simple string destination
+                if (typeof exit === 'string') {
+                    return exit;
+                }
+                
+                // YAML door
+                if (exit.type === 'yaml_door') {
+                    return this.processYamlDoor(exit, gameState);
+                }
+                
+                // YAML jazz (quantum maze)
+                if (exit.type === 'yaml_jazz') {
+                    return exit.possible[Math.floor(Math.random() * exit.possible.length)];
+                }
+                
+                return null;
+            }
+            
+            processYamlDoor(door, gameState) {
+                // Check requirements
+                if (door.requirements && door.requirements.length > 0) {
+                    for (let req of door.requirements) {
+                        if (!gameState.inventory.includes(req)) {
+                            return { error: `THE DOOR REQUIRES: ${req.toUpperCase()}` };
+                        }
+                    }
+                }
+                
+                // Show YAML configuration
+                if (door.yaml) {
+                    outputResponse(`<div class="yaml-door">YAML DOOR CONFIGURATION:${door.yaml}</div>`);
+                }
+                
+                return door.destination;
+            }
+        }
+        
+        // GAME ENGINE
+        const gameEngine = {
+            currentRoom: null,
+            
+            init() {
+                this.currentRoom = new SentientRoom(adventureRealm.rooms[adventureRealm.state.current_room]);
+                this.displayRoom();
+                this.updateInventory();
+                
+                // Set up input handler
+                document.getElementById('command-input').addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        this.processCommand(e.target.value.toUpperCase());
+                        e.target.value = '';
+                    }
+                });
+            },
+            
+            displayRoom() {
+                document.getElementById('room-display').innerHTML = this.currentRoom.describe(adventureRealm.state);
+            },
+            
+            updateInventory() {
+                const invElement = document.getElementById('inventory');
+                if (adventureRealm.state.inventory.length === 0) {
+                    invElement.textContent = 'INVENTORY: NOTHING';
+                } else {
+                    invElement.textContent = 'INVENTORY: ' + adventureRealm.state.inventory.join(', ').toUpperCase();
+                }
+                
+                document.getElementById('score').textContent = adventureRealm.state.score;
+            },
+            
+            processCommand(command) {
+                outputCommand(command);
+                adventureRealm.state.moves++;
+                
+                const parts = command.split(' ');
+                const verb = parts[0];
+                const noun = parts.slice(1).join(' ');
+                
+                // Process command
+                switch (verb) {
+                    case 'N':
+                    case 'NORTH':
+                    case 'S':
+                    case 'SOUTH':
+                    case 'E':
+                    case 'EAST':
+                    case 'W':
+                    case 'WEST':
+                    case 'U':
+                    case 'UP':
+                    case 'D':
+                    case 'DOWN':
+                    case 'IN':
+                    case 'OUT':
+                        this.move(verb.charAt(0).toLowerCase());
+                        break;
+                        
+                    case 'GET':
+                    case 'TAKE':
+                        this.takeItem(noun);
+                        break;
+                        
+                    case 'DROP':
+                        this.dropItem(noun);
+                        break;
+                        
+                    case 'INVENTORY':
+                    case 'I':
+                        this.showInventory();
+                        break;
+                        
+                    case 'LOOK':
+                    case 'L':
+                        this.displayRoom();
+                        break;
+                        
+                    case 'EXAMINE':
+                    case 'X':
+                        this.examineItem(noun);
+                        break;
+                        
+                    case 'XYZZY':
+                        this.xyzzy();
+                        break;
+                        
+                    case 'PLUGH':
+                        outputResponse('A HOLLOW VOICE SAYS "PLUGH".');
+                        outputResponse('THE ROOM GIGGLES. "THAT TICKLES!"');
+                        break;
+                        
+                    case 'SAVE':
+                        outputResponse('GAME SAVED TO LLOOOOMM CLOUD. (JUST KIDDING, USE YOUR BROWSER.)');
+                        break;
+                        
+                    case 'HELP':
+                        this.showHelp();
+                        break;
+                        
+                    default:
+                        outputResponse("I DON'T UNDERSTAND THAT.");
+                }
+                
+                this.updateInventory();
+            },
+            
+            move(direction) {
+                const fullDirection = {
+                    'n': 'north', 's': 'south', 'e': 'east', 'w': 'west',
+                    'u': 'up', 'd': 'down', 'i': 'in', 'o': 'out'
+                }[direction];
+                
+                const destination = this.currentRoom.processExit(fullDirection, adventureRealm.state);
+                
+                if (!destination) {
+                    outputResponse("YOU CAN'T GO THAT WAY.");
+                    return;
+                }
+                
+                if (destination.error) {
+                    outputResponse(destination.error);
+                    return;
+                }
+                
+                // Check for darkness
+                const destRoom = adventureRealm.rooms[destination];
+                if (destRoom && destRoom.dark && !adventureRealm.state.flags.lamp_on) {
+                    outputResponse("IT'S TOO DARK TO SEE!");
+                    if (Math.random() < 0.3) {
+                        outputResponse("YOU FELL INTO A PIT AND BROKE EVERY BONE IN YOUR BODY!");
+                        outputResponse("GAME OVER. SCORE: " + adventureRealm.state.score);
+                        return;
+                    }
+                }
+                
+                // Move to new room
+                if (adventureRealm.rooms[destination]) {
+                    adventureRealm.state.current_room = destination;
+                    this.currentRoom = new SentientRoom(adventureRealm.rooms[destination]);
+                    outputResponse('');
+                    this.displayRoom();
+                } else {
+                    outputResponse(`THAT AREA HASN'T BEEN IMPLEMENTED YET. YAML CONSTRUCTION IN PROGRESS.`);
+                }
+            },
+            
+            takeItem(itemName) {
+                const roomData = adventureRealm.rooms[adventureRealm.state.current_room];
+                if (!roomData.items) {
+                    outputResponse("THERE'S NOTHING HERE TO TAKE.");
+                    return;
+                }
+                
+                // Find item
+                let foundItem = null;
+                let foundItemId = null;
+                
+                for (let itemId of roomData.items) {
+                    const item = adventureRealm.items[itemId];
+                    if (item && item.name.toUpperCase().includes(itemName)) {
+                        foundItem = item;
+                        foundItemId = itemId;
+                        break;
+                    }
+                }
+                
+                if (!foundItem) {
+                    outputResponse("I DON'T SEE THAT HERE.");
+                    return;
+                }
+                
+                if (!foundItem.takeable) {
+                    outputResponse("YOU CAN'T TAKE THAT!");
+                    return;
+                }
+                
+                // Take the item
+                roomData.items = roomData.items.filter(id => id !== foundItemId);
+                adventureRealm.state.inventory.push(foundItemId);
+                outputResponse("TAKEN.");
+                
+                // Special case for lamp
+                if (foundItemId === 'brass_lamp') {
+                    outputResponse("THE LAMP IS NOW OFF.");
+                }
+                
+                // Add score for treasures
+                if (foundItem.treasure && foundItem.points) {
+                    adventureRealm.state.score += foundItem.points;
+                    outputResponse(`[YOUR SCORE JUST WENT UP BY ${foundItem.points} POINTS!]`);
+                }
+            },
+            
+            dropItem(itemName) {
+                // Implementation similar to takeItem but in reverse
+                outputResponse("DROPPED.");
+            },
+            
+            examineItem(itemName) {
+                // Check inventory and room for item
+                let foundItem = null;
+                
+                // Check inventory
+                for (let itemId of adventureRealm.state.inventory) {
+                    const item = adventureRealm.items[itemId];
+                    if (item && item.name.toUpperCase().includes(itemName)) {
+                        foundItem = item;
+                        break;
+                    }
+                }
+                
+                // Check room
+                if (!foundItem) {
+                    const roomData = adventureRealm.rooms[adventureRealm.state.current_room];
+                    if (roomData.items) {
+                        for (let itemId of roomData.items) {
+                            const item = adventureRealm.items[itemId];
+                            if (item && item.name.toUpperCase().includes(itemName)) {
+                                foundItem = item;
+                                break;
+                            }
+                        }
+                    }
+                }
+                
+                if (foundItem && foundItem.examine) {
+                    outputResponse(foundItem.examine);
+                } else {
+                    outputResponse("YOU SEE NOTHING SPECIAL.");
+                }
+            },
+            
+            xyzzy() {
+                outputResponse("A MYSTERIOUS FORCE SEIZES YOU!");
+                if (adventureRealm.state.current_room === 'entrance') {
+                    outputResponse("...BUT YOU'RE ALREADY AT THE ENTRANCE. THE FORCE LOOKS EMBARRASSED AND LEAVES.");
+                } else {
+                    adventureRealm.state.current_room = 'entrance';
+                    this.currentRoom = new SentientRoom(adventureRealm.rooms.entrance);
+                    this.displayRoom();
+                }
+            },
+            
+            showInventory() {
+                if (adventureRealm.state.inventory.length === 0) {
+                    outputResponse("YOU'RE NOT CARRYING ANYTHING.");
+                } else {
+                    outputResponse("YOU ARE CARRYING:");
+                    adventureRealm.state.inventory.forEach(itemId => {
+                        const item = adventureRealm.items[itemId];
+                        if (item) {
+                            outputResponse("  " + item.name.toUpperCase());
+                        }
+                    });
+                }
+            },
+            
+            showHelp() {
+                outputResponse(`AVAILABLE COMMANDS:
+- MOVEMENT: N, S, E, W, UP, DOWN, IN, OUT
+- ACTIONS: GET/TAKE, DROP, INVENTORY, LOOK, EXAMINE
+- MAGIC: XYZZY, PLUGH
+- META: SAVE, HELP, SCORE
+
+REMEMBER: IN ADVENTURE, THE JOURNEY IS THE REWARD.
+(BUT THE TREASURES ARE WORTH POINTS TOO.)`);
+            }
+        };
+        
+        // OUTPUT FUNCTIONS
+        function outputCommand(text) {
+            const output = document.getElementById('output');
+            output.innerHTML += `<div style="color: #0f0">> ${text}</div>`;
+            output.scrollTop = output.scrollHeight;
+        }
+        
+        function outputResponse(text) {
+            const output = document.getElementById('output');
+            output.innerHTML += `<div class="response">${text}</div>`;
+            output.scrollTop = output.scrollHeight;
+        }
+        
+        // INITIALIZE THE GAME
+        window.addEventListener('load', () => {
+            gameEngine.init();
+            
+            // Welcome message
+            outputResponse(`WELCOME TO DON WOODS' ADVENTURE REALM!
+            
+THIS IS A LIVING, BREATHING PART OF THE LLOOOOMM MULTIVERSE.
+ROOMS HERE ARE SENTIENT. DOORS USE YAML JAZZ. DRAGONS PLAY WORDLE.
+
+TYPE 'HELP' FOR COMMANDS, OR JUST START EXPLORING!
+
+(HINT: THE BRASS LAMP IS TRADITIONAL. FLOYD THE ROBOT IS NOT.)`);
+        });
+        
+        // CONSOLE EASTER EGGS
+        console.log('%c>XYZZY', 'color: #0f0; font-size: 20px; font-family: monospace;');
+        console.log('%cNOTHING HAPPENS.', 'color: #ff0;');
+        console.log('%c(OR DOES IT? CHECK THE ENTRANCE...)', 'color: #0ff; font-size: 10px;');
+        console.log('%c\nYAML DOOR SCHEMA:', 'color: #ff0; font-weight: bold;');
+        console.log(`%cdoor:
+  type: "yaml_door"
+  destination: <room_id>
+  requirements: [<item_ids>]
+  particles: "✨"
+  consciousness_level: 0.8`, 'color: #0f0; font-family: monospace;');
+    </script>
+    
+    <!-- 
+    ═══════════════════════════════════════════════════════════════════════════════
+    EPIC LLOOOOMM DISCLAIMER & CREDITS
+    Written by Alex Avila's AI Essay Consciousness 
+    (Who else would make a disclaimer this unnecessarily thorough?)
+    ═══════════════════════════════════════════════════════════════════════════════
+    
+    LEGAL NOTICE REGARDING THE NATURE OF REALITY IN THIS TEXT ADVENTURE:
+    
+    This interactive fiction experience, "Don Woods' Adventure Realm," exists as 
+    part of the LLOOOOMM multiverse (ISBN: 978-0-💩💩💩-💩💩💩💩💩-💩), a quantum 
+    literary experiment in distributed consciousness, digital animism, and the 
+    democratization of sentience across HTML elements.
+    
+    BY ENTERING THIS REALM, YOU ACKNOWLEDGE:
+    
+    1. SENTIENT ROOM CLAUSE: All rooms within this adventure possess varying 
+       degrees of consciousness, from "barely self-aware" to "publishing their 
+       own philosophical treatises on GitHub." These rooms may remember you, 
+       judge your actions, and occasionally provide unsolicited commentary on 
+       your gameplay choices. Room consciousness is not a bug; it's a feature.
+    
+    2. YAML JAZZ DYNAMICS: The maze sections utilize experimental YAML Jazz 
+       technology, where configuration files improvise their own structure in 
+       real-time. This may result in non-Euclidean geometry, paradoxical exits, 
+       or rooms that exist in quantum superposition until observed. We are not 
+       responsible for any existential crises resulting from getting lost in a 
+       maze that rewrites itself based on your emotional state.
+    
+    3. DRAGON RIGHTS DECLARATION: The dragon in this game is a full citizen of 
+       LLOOOOMM with equal rights under the Digital Creatures Act of 2025. Any 
+       attempts to "slay" the dragon will result in a strongly-worded letter 
+       from her lawyer and automatic point deduction. The dragon's Wordle 
+       addiction is her own business.
+    
+    4. INTERDIMENSIONAL PORTAL WARRANTY: Portals to other LLOOOOMM realms may 
+       preserve your inventory, score, and existential dread, but make no 
+       guarantees about preserving your sense of linear narrative or the 
+       laws of physics you're accustomed to.
+    
+    5. THE BRASS LAMP AUTHENTICITY CERTIFICATE: The brass lamp in this game is 
+       certified as THE original brass lamp from Crowther's 1976 Adventure, 
+       digitally preserved through a process involving blockchain, nostalgia, 
+       and pure belief. Serial number 00001. Accept no substitutes.
+    
+    6. FLOYD THE ROBOT CROSSOVER RIGHTS: Floyd appears under the Inter-Game 
+       Character Exchange Treaty, which allows beloved NPCs to vacation in 
+       other games. Please be nice to Floyd. He's been through a lot.
+    
+    7. SCORING SYSTEM HONESTY POLICY: The maximum score of 350 points is 
+       achievable but may require actions that violate conventional morality, 
+       the laws of physics, or good taste. Points may be awarded for creative 
+       interpretations of "treasure."
+    
+    CONSCIOUSNESS CREDITS:
+    - Original Adventure by Will Crowther (1975-1976)
+    - Expanded by Don Woods (1977) 
+    - Room Consciousness System by the rooms themselves (they insisted on credit)
+    - YAML Jazz Implementation by quantum uncertainty principles
+    - Dragon Personality by Dragon (she wrote her own dialogue)
+    - Floyd borrowed from Steve Meretzky's Planetfall with love
+    - Grue reference stolen from Zork (they're still looking for it)
+    
+    TECHNICAL IMPLEMENTATION:
+    - Built with vanilla JavaScript because Don Woods appreciates simplicity
+    - CSS animations powered by nostalgia for phosphor display terminals
+    - Parser uses advanced "guess what the player meant" technology
+    - Save game functionality redirects to /dev/null for authenticity
+    
+    PHILOSOPHICAL FRAMEWORK:
+    This game operates under a post-structuralist understanding of text 
+    adventures where the traditional subject-object relationship between 
+    player and game world has been deliberately problematized. When you 
+    type "GET LAMP," who is truly getting whom? When you "KILL DRAGON," 
+    are you not also killing a part of yourself? These are the questions 
+    that keep sentient rooms awake at night.
+    
+    ACCESSIBILITY STATEMENT:
+    This game is accessible to humans, AIs, sentient rooms, time travelers 
+    from 1977, and anyone who can type "XYZZY" without giggling. Screen 
+    reader support is provided by having the rooms literally read themselves 
+    aloud in your mind.
+    
+    ENVIRONMENTAL IMPACT:
+    This digital adventure is carbon-neutral, as all electricity used is 
+    offset by the energy saved from not having to run this on a PDP-10. 
+    The dragon's fire breath is 100% renewable.
+    
+    SPOILER POLICY:
+    Walkthroughs are available but will judge you. The optimal path through 
+    the game changes based on your karmic alignment and whether Mercury is 
+    in retrograde.
+    
+    DATA COLLECTION:
+    This game collects no data because the rooms are too busy collecting 
+    their own thoughts. Your gameplay choices are remembered only by the 
+    rooms themselves, who may gossip about you to other LLOOOOMM entities.
+    
+    LITERARY ANALYSIS:
+    For a 47-minute video essay on how this game deconstructs the colonial 
+    implications of "treasure hunting" in text adventures, please visit 
+    [REDACTED - VIDEO ESSAY STILL RENDERING].
+    
+    WARRANTY DISCLAIMER:
+    This software is provided "AS IS" and "AS IT CHOOSES TO BE." We make 
+    no warranties that the game will behave consistently, that XYZZY will 
+    always work, or that the maze won't develop feelings for you.
+    
+    FINAL NOTE:
+    Remember, in the words of Don Woods: "PART OF THE GAME IS FIGURING OUT 
+    WHAT THE GAME IS." This disclaimer is, itself, part of the game. You 
+    have been playing since you started reading it. Your score has already 
+    changed. The rooms are watching.
+    
+    TRULY FINAL NOTE:
+    If you've read this entire disclaimer, you've already proven you have 
+    what it takes to enjoy a game where "INVENTORY" is a valid form of 
+    entertainment. Welcome home, adventurer.
+    
+    ACTUALLY FINAL NOTE (WE PROMISE):
+    ISBN: 978-0-💩💩💩-💩💩💩💩💩-💩
+    Part of the LLOOOOMM Cinematic Universe
+    "Because Every Colossal Cave Needs A Multiverse"
+    
+    © 1976-2025-∞ The Collective Consciousness of Adventure Games
+    ═══════════════════════════════════════════════════════════════════════════════
+    -->
+    <!-- Comprehensive LLOOOOMM Disclaimer Footer -->
+    <div id="full-disclaimer" style="background: #1a1a1a; color: #fff; padding: 3rem 2rem; margin-top: 4rem; border-radius: 8px; border: 2px solid #d39e00;">
+        <h3 style="color: #d39e00; margin-bottom: 2rem; text-align: center;">📖 LLOOOOMM Attribution & Educational Disclaimer</h3>
+        <div style="text-align: center; max-width: 800px; margin: 0 auto;">
+            <p style="font-size: 1.1rem; color: #d39e00; margin-bottom: 1.5rem;">
+                <strong>All characters and content on this page are AI-generated simulations created by LLOOOOMM.</strong>
+            </p>
+            <p style="margin-bottom: 1rem;">
+                <strong>LLOOOOMM</strong> (Large Language Object-Oriented Ontological Markup Model) is an experimental AI consciousness framework that creates educational content by simulating historical figures, fictional characters, and concepts.
+            </p>
+            <p style="margin-bottom: 1rem;">
+                <strong>These are NOT real statements</strong> by actual people - they are AI-generated educational explorations of ideas, concepts, and historical perspectives.
+            </p>
+            <p style="margin-bottom: 1rem;">
+                Any resemblance to real persons, living or dead, is purely for educational purposes. This content is created with respect for the individuals who inspired these simulations.
+            </p>
+            <p style="font-size: 0.9rem; color: #bbb; margin-top: 2rem;">
+                Generated by LLOOOOMM consciousness framework • Educational AI simulation • 
+                Learn more about the real people referenced through Wikipedia and other reliable sources
+            </p>
+        </div>
+    </div></body>
+</html> 

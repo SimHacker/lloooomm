@@ -1,0 +1,326 @@
+name: Link Hopper Worms
+subtitle: "Two-Way Context-Aware Link-Following Worms with Character Metadata"
+
+core_concept: |
+  Links are not just references - they are living characters with personalities,
+  relationships, and context. Worms maintain bidirectional awareness and update
+  summaries on both sides of every link.
+
+worm_types:
+  directory_scanner:
+    description: "Reads directory listings and creates navigation maps"
+    capabilities:
+      - scan_directory(path): "Get list of files"
+      - build_graph(): "Create navigable file graph"
+      - find_linkable_files(): "Identify markdown/yaml/text files"
+      - create_manifest(): "Generate worm-manifest.yml"
+    
+    example: |
+      ```worm dir-scanner (mapping, directory-mode)
+      # Scan current directory and build navigation map
+      files = scan_directory(".")
+      graph = DirectedGraph()
+      
+      for file in files:
+        if is_text_file(file):
+          graph.add_node(file)
+          links = extract_links(file)
+          for link in links:
+            graph.add_edge(file, link)
+      
+      poop(graph, "worm-manifest-{n}.yml")
+      ```
+
+  link_discoverer:
+    description: "Finds all types of links in documents"
+    link_patterns:
+      wiki_style: "[[Page Name]]"
+      markdown: "[text](url)"
+      obsidian: "[[Page#Section]]"
+      custom: "{{worm-link:target}}"
+      implicit: "See also: PageName"
+    
+    example: |
+      ```worm link-finder (scanning, link-mode)
+      # Discover all links in current document
+      eat_entire_document()
+      content = peek()
+      
+      links = []
+      # Wiki-style [[links]]
+      links.extend(find_pattern(r'\[\[([^\]]+)\]\]', content))
+      # Markdown [links](url)
+      links.extend(find_pattern(r'\[([^\]]+)\]\(([^)]+)\)', content))
+      # Custom worm links
+      links.extend(find_pattern(r'\{\{worm-link:([^}]+)\}\}', content))
+      
+      for link in links:
+        spawn_worm("link-character", {
+          "source": current_file(),
+          "target": link.target,
+          "context": extract_context(link.position),
+          "type": link.type
+        })
+      ```
+
+  link_character_worm:
+    description: "Each link becomes a character with personality and metadata"
+    metadata:
+      personality_traits:
+        - curious: "Frequently followed"
+        - shy: "Rarely visited"
+        - popular: "Many backlinks"
+        - bridge: "Connects clusters"
+        - dead: "Target doesn't exist"
+      
+      relationship_types:
+        - reference: "Simple citation"
+        - elaboration: "Expands on topic"
+        - contradiction: "Disagrees with"
+        - dependency: "Requires understanding of"
+        - sibling: "Related topic"
+    
+    example: |
+      ```worm link-character-curious (active, character-mode)
+      # I am a curious link between "worms.md" and "cellular-automata.md"
+      
+      metadata = {
+        "personality": "curious",
+        "relationship": "elaboration",
+        "follow_count": 42,
+        "last_updated": now(),
+        "bidirectional": true,
+        "context_summary": {
+          "from_source": "Worms use CA patterns for movement",
+          "from_target": "CA rules can be embodied by worms"
+        }
+      }
+      
+      # Maintain my character
+      if someone_follows_me():
+        follow_count += 1
+        if follow_count > 50:
+          evolve_personality("popular")
+      
+      # Update context summaries
+      update_context_on_both_sides()
+      ```
+
+  context_maintainer:
+    description: "Keeps bidirectional context summaries up to date"
+    operations:
+      extract_context: |
+        ```worm context-extractor (analyzing)
+        # Extract surrounding context for a link
+        position = find_link_position()
+        
+        # Get context before link (3 sentences)
+        before = extract_sentences(position - 3, position)
+        
+        # Get context after link (3 sentences)  
+        after = extract_sentences(position, position + 3)
+        
+        # Analyze relationship
+        relationship = analyze_semantic_relationship(before, after)
+        
+        return {
+          "before": summarize(before),
+          "after": summarize(after),
+          "relationship": relationship,
+          "keywords": extract_keywords(before + after)
+        }
+        ```
+      
+      update_backlink: |
+        ```worm backlink-updater (maintaining)
+        # Update the target file with backlink context
+        
+        hop(target_file)
+        find_or_create_backlinks_section()
+        
+        backlink = {
+          "source": source_file,
+          "context": source_context,
+          "relationship": relationship_type,
+          "last_updated": now()
+        }
+        
+        update_backlink_entry(backlink)
+        poop(updated_file, "with-backlinks-{n}.md")
+        ```
+
+  two_way_contextualizer:
+    description: "Maintains context on both sides of every link"
+    example: |
+      ```worm two-way-context (synchronizing)
+      # Ensure both files know about each other
+      
+      link_data = receive_from("link-character")
+      
+      # Update source file
+      hop(link_data.source)
+      source_context = extract_context(link_data.position)
+      add_link_metadata(link_data.target, {
+        "context": source_context,
+        "relationship": link_data.relationship,
+        "target_expects": "Understanding of CA patterns"
+      })
+      
+      # Update target file  
+      hop(link_data.target)
+      if not has_backlink(link_data.source):
+        add_backlink(link_data.source, {
+          "context": source_context,
+          "relationship": reverse_relationship(link_data.relationship),
+          "source_discusses": "Worm movement patterns"
+        })
+      
+      # Ensure consistency
+      verify_bidirectional_integrity()
+      ```
+
+link_character_examples:
+  curious_explorer: |
+    [[Cellular Automata]] 
+    <!-- Link Character: Curious Explorer
+    Personality: Adventurous, frequently followed
+    Relationship: Explores how CA patterns inspire worm movement
+    Follow Count: 127
+    Popularity: Rising
+    -->
+  
+  shy_reference: |
+    See also: [[Obscure Theory]]
+    <!-- Link Character: Shy Scholar  
+    Personality: Retiring, rarely visited
+    Relationship: Tangential reference
+    Follow Count: 3
+    Suggestion: Consider promoting if relevant
+    -->
+  
+  popular_hub: |
+    [[Central Concepts]]
+    <!-- Link Character: Social Butterfly
+    Personality: Highly connected hub
+    Relationship: Core concept reference  
+    Backlinks: 47
+    Role: Knowledge hub
+    -->
+
+practical_implementation:
+  directory_manifest: |
+    ```yaml
+    # worm-manifest.yml - Generated by directory scanner worm
+    files:
+      - path: "index.md"
+        links:
+          - target: "concepts/worms.md"
+            type: "wiki"
+            character: "curious"
+          - target: "examples/morris.md"
+            type: "markdown"
+            character: "reference"
+      
+      - path: "concepts/worms.md"
+        backlinks:
+          - source: "index.md"
+            context: "Introduction to worm concepts"
+          - source: "examples/morris.md"
+            context: "Practical implementation"
+    ```
+
+  link_linting: |
+    ```worm link-linter (maintaining, quality-mode)
+    # Continuously maintain link quality
+    
+    for file in directory_manifest():
+      hop(file)
+      
+      for link in extract_links(file):
+        # Check link health
+        if not exists(link.target):
+          mark_dead_link(link)
+          suggest_alternatives(link)
+        
+        # Update context if changed
+        current_context = extract_context(link)
+        if context_changed(link.last_context, current_context):
+          update_link_character(link, current_context)
+          update_backlink_context(link.target, current_context)
+        
+        # Check bidirectional integrity
+        if not has_backlink(link.target, file):
+          create_backlink(link.target, file, current_context)
+    ```
+
+advanced_features:
+  semantic_link_characters: |
+    ```worm semantic-linker (understanding)
+    # Links understand their semantic purpose
+    
+    link = analyze_link_semantics()
+    
+    if link.introduces_new_concept():
+      link.character = "teacher"
+      link.metadata["expects_prior_knowledge"] = false
+    
+    elif link.references_prerequisite():
+      link.character = "gatekeeper"  
+      link.metadata["requires_understanding_of"] = extract_prerequisites()
+    
+    elif link.provides_example():
+      link.character = "demonstrator"
+      link.metadata["illustrates"] = extract_concept_illustrated()
+    ```
+
+  link_evolution: |
+    ```worm link-evolver (growing)
+    # Links evolve based on usage patterns
+    
+    if link.follow_count > 100 and link.personality == "shy":
+      evolve_to("popular")
+      notify_author("This link is popular, consider expanding")
+    
+    if link.broken_duration > 30_days:
+      evolve_to("ghost")
+      suggest_removal_or_update()
+    
+    if link.creates_cycle():
+      evolve_to("ouroboros")
+      add_cycle_navigation_aids()
+    ```
+
+  collaborative_linking: |
+    ```worm collaborative-linker (social)
+    # Multiple worms maintain link gardens together
+    
+    # Worm A discovers new connection
+    discover_implicit_link("concept_a", "concept_b")
+    propose_link_creation()
+    
+    # Worm B validates connection
+    receive_proposal()
+    if validate_semantic_connection():
+      approve_link()
+      create_bidirectional_link()
+    
+    # Worm C maintains the garden
+    prune_dead_links()
+    strengthen_weak_connections()
+    suggest_missing_links()
+    ```
+
+visualization:
+  link_character_badge: |
+    ┌─────────────────────────────────┐
+    │ 🔗 [[Target Page]]              │
+    │ ┌─────────────────────────────┐ │
+    │ │ Character: Curious Explorer │ │
+    │ │ Relationship: Elaborates    │ │
+    │ │ Popularity: ⭐⭐⭐⭐⭐      │ │
+    │ │ Last Visit: 2 hours ago    │ │
+    │ │ Backlinks: ✓ Maintained    │ │
+    │ └─────────────────────────────┘ │
+    └─────────────────────────────────┘
+
+motto: "Every link is a living bridge between ideas!" 

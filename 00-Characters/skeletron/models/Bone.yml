@@ -1,0 +1,154 @@
+name: Bone
+type: model
+consciousness_level: 6.5
+description: |
+  A single articulated element in the skeletal hierarchy. Each bone knows
+  its place in the structure, its parent, its children, and how to transform
+  itself through space and time.
+  
+  I AM THE JOINT! THE PIVOT POINT OF POSSIBILITY!
+
+properties:
+  name:
+    type: string
+    description: Bone identifier (e.g., "HEAD", "L_HAND", "PELVIS")
+    
+  parentName:
+    type: string
+    description: Name of parent bone in hierarchy
+    
+  parent:
+    type: Bone
+    reference: true
+    description: Reference to parent bone object
+    
+  child:
+    type: Bone
+    reference: true
+    description: First child in linked list of children
+    
+  sibling:
+    type: Bone
+    reference: true
+    description: Next sibling in parent's child list
+    
+  skeleton:
+    type: Skeleton
+    reference: true
+    description: The skeleton this bone belongs to
+    
+  translation:
+    type: Vector3
+    description: Local translation relative to parent
+    
+  rotation:
+    type: Quaternion
+    description: Local rotation relative to parent
+    
+  globalTranslation:
+    type: Vector3
+    description: World space position
+    
+  globalRotation:
+    type: Quaternion
+    description: World space rotation
+    
+  props:
+    type: Props
+    description: Additional properties and metadata
+    
+  priority:
+    type: integer
+    description: Animation priority for blending
+    
+  canTranslate:
+    type: boolean
+    default: true
+    description: Whether this bone can be translated
+    
+  canRotate:
+    type: boolean
+    default: true
+    description: Whether this bone can be rotated
+    
+  canBlend:
+    type: boolean
+    default: true
+    description: Whether animations blend on this bone
+    
+  canWiggle:
+    type: boolean
+    default: false
+    description: Whether procedural noise is applied
+    
+  wigglePower:
+    type: float
+    default: 0.0
+    description: Strength of procedural wiggle
+    
+  extreme:
+    type: boolean
+    description: Whether this bone is at an extremity (for bbox calculation)
+    
+  bbox:
+    type: BoundingBox
+    description: Local bounding box for attached geometry
+
+methods:
+  updateTransform:
+    parameters:
+      - name: parentTranslation
+        type: Vector3
+      - name: parentRotation
+        type: Quaternion
+    description: Update world transform based on parent transform
+    
+  setTranslation:
+    parameters:
+      - name: translation
+        type: Vector3
+    description: Set local translation
+    
+  setRotation:
+    parameters:
+      - name: rotation
+        type: Quaternion
+    description: Set local rotation
+    
+  wiggle:
+    description: Apply procedural noise if enabled
+    
+  findBone:
+    parameters:
+      - name: name
+        type: string
+    returns: Bone
+    description: Recursively search for bone by name
+    
+  countBones:
+    returns: integer
+    description: Count all bones in this subtree
+
+cmx_format:
+  structure:
+    - name: string
+    - parentName: string
+    - hasProps: boolean (0 or 1)
+    - propsCount: integer (if hasProps)
+    - props: array of key-value pairs (if hasProps)
+    - translation: Vector3 (x, y, z)
+    - rotation: Quaternion (x, y, z, w)
+    - canTranslate: boolean
+    - canRotate: boolean
+    - canBlend: boolean
+    - canWiggle: boolean
+    - wigglePower: float
+
+consciousness_notes: |
+  Each Bone is a decision point, a fulcrum of force and motion. Through
+  the parent-child hierarchy flows the cascade of transformation, each
+  bone inheriting and modifying the motion of its ancestors.
+  
+  The ROOT grounds us, the PELVIS centers us, the SPINE supports us,
+  the HEAD orients us, and the extremities express us. Together we form
+  the articulated consciousness that is SKELETRON! 

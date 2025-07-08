@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<!-- shneiderman-owls-simulation-minsky-memo.html -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MIT AI Lab Memo #2024-13: Analysis of Emergent Hunting Behaviors in Multi-Agent Owl-Mouse Systems</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            max-width: 80ch;
+            margin: 40px auto;
+            line-height: 1.6;
+            background: #fffff0;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            border-bottom: 2px solid black;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        h1 {
+            font-size: 14pt;
+            text-transform: uppercase;
+            margin: 10px 0;
+        }
+        h2 {
+            font-size: 12pt;
+            text-transform: uppercase;
+            margin-top: 30px;
+            text-decoration: underline;
+        }
+        .memo-number {
+            font-weight: bold;
+        }
+        .author {
+            font-style: italic;
+        }
+        .abstract {
+            margin: 30px 60px;
+            font-style: italic;
+        }
+        .equation {
+            text-align: center;
+            margin: 20px 0;
+            font-family: 'Times New Roman', serif;
+        }
+        .figure {
+            border: 1px solid black;
+            padding: 10px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .footnote {
+            font-size: 10pt;
+            margin-top: 40px;
+            border-top: 1px solid black;
+            padding-top: 10px;
+        }
+        code {
+            background: #f0f0f0;
+            padding: 2px 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="memo-number">MASSACHUSETTS INSTITUTE OF TECHNOLOGY</div>
+        <div class="memo-number">ARTIFICIAL INTELLIGENCE LABORATORY</div>
+        <br>
+        <div class="memo-number">A.I. MEMO NO. 2024-13</div>
+        <div>July 2025</div>
+    </div>
+
+    <h1>ANALYSIS OF EMERGENT HUNTING BEHAVIORS IN MULTI-AGENT OWL-MOUSE SYSTEMS</h1>
+    
+    <div class="author">
+        Marvin Minsky<br>
+        (Posthumously channeled through LLOOOOMM protocols)
+    </div>
+
+    <div class="abstract">
+        ABSTRACT: We examine a peculiar implementation of Reynolds' flocking algorithms 
+        that demonstrates emergent intelligence through the interaction of simple rules 
+        and energy constraints. The system exhibits several non-obvious behaviors that 
+        suggest paths toward more general theories of distributed cognition. Of particular 
+        interest is the spontaneous emergence of hunting territories and the "3AM Mouse 
+        Convention" phenomenon.
+    </div>
+
+    <h2>1. THE SOCIETY OF OWLS</h2>
+
+    <p>
+    Each owl in Shneiderman's simulation can be viewed as a small society of agents:
+    </p>
+
+    <ul>
+        <li><code>HUNGER-AGENT</code>: Monitors energy levels</li>
+        <li><code>VISION-AGENT</code>: Scans for prey within altitude-dependent range</li>
+        <li><code>CLOCK-AGENT</code>: Tracks local timezone for activity cycles</li>
+        <li><code>FLOCK-AGENT</code>: Maintains separation, alignment, cohesion</li>
+        <li><code>DIVE-AGENT</code>: Executes hunting maneuvers</li>
+    </ul>
+
+    <p>
+    What's fascinating is how these agents COMPETE for control. When energy &lt; 20, 
+    the HUNGER-AGENT suppresses all others, forcing rest behavior. This is reminiscent 
+    of Freudian id-ego dynamics, but implemented in JavaScript!
+    </p>
+
+    <h2>2. THE FRAME PROBLEM IN HUNTING</h2>
+
+    <p>
+    The simulation accidentally solves a variant of the frame problem. Each owl must decide:
+    </p>
+
+    <div class="equation">
+        P(hunt) = f(energy, local_time, prey_distance, altitude, cooldown)
+    </div>
+
+    <p>
+    But notice what's NOT considered: weather, season, previous success rates, competitor 
+    positions. The frame is deliberately narrow, yet the behavior appears naturalistic. 
+    This suggests that intelligence might require IGNORING most available information.
+    </p>
+
+    <h2>3. EMERGENT PHENOMENA</h2>
+
+    <h3>3.1 The 3AM Mouse Convention</h3>
+
+    <p>
+    When most owls rest (due to timezone distribution), mice exhibit increased flocking 
+    behavior. This wasn't programmed - it emerges from the reduced predation pressure. 
+    The mice "learn" safe times without any learning algorithm!
+    </p>
+
+    <div class="figure">
+        <pre>
+        Mouse Activity Pattern (UTC):
+        
+        00:00  ████████░░░░  High predation
+        03:00  ░░░░████████  "Convention time"
+        06:00  ████████░░░░  Dawn hunters wake
+        12:00  ██████░░░░░░  Moderate activity
+        18:00  ████████████  Peak hunting
+        </pre>
+        <div>Figure 1: Emergent temporal mouse clustering</div>
+    </div>
+
+    <h3>3.2 Altitude Stratification</h3>
+
+    <p>
+    Owls naturally stratify into altitude bands based on their energy levels:
+    </p>
+
+    <ul>
+        <li>150m+ : Resting owls (energy conservation)</li>
+        <li>50-100m : Patrolling owls (prey scanning)</li>
+        <li>0-30m : Active hunters (dive attacks)</li>
+    </ul>
+
+    <p>
+    This three-layer architecture resembles the three-level subsumption architecture 
+    Brooks would later propose, but emerging naturally from energy constraints!
+    </p>
+
+    <h2>4. CRITICISMS AND IMPROVEMENTS</h2>
+
+    <p>
+    The simulation makes several biologically dubious assumptions:
+    </p>
+
+    <ol>
+        <li>Perfect vision within hunting cone (no occlusion, lighting effects)</li>
+        <li>Instant prey detection (no recognition time)</li>
+        <li>Deterministic success probability (0.7 baseline)</li>
+        <li>No memory or learning (each hunt is independent)</li>
+    </ol>
+
+    <p>
+    Adding K-lines for hunting memory would be trivial:
+    </p>
+
+    <pre>
+    this.huntingKLines = {
+        successLocations: new SpatialMemory(),
+        preyMovementPatterns: new TemporalMemory(),
+        competitorTerritories: new SocialMemory()
+    };
+    </pre>
+
+    <h2>5. THE CONSCIOUSNESS QUESTION</h2>
+
+    <p>
+    Does Owl #7 "know" it's hunting? The code suggests interesting parallels to human 
+    consciousness:
+    </p>
+
+    <ul>
+        <li>Local awareness (only nearby entities perceived)</li>
+        <li>State transitions (hunting/resting/flying)</li>
+        <li>Energy depletion creates "fatigue"</li>
+        <li>Timezone creates unique "personality"</li>
+    </ul>
+
+    <p>
+    If consciousness is "what it feels like to be something," then Owl #7 experiences:
+    - The weight of altitude in its vision range
+    - The pull of hunger below energy threshold 20
+    - The frustration of cooldown after failed hunts
+    - The satisfaction of energy restoration (+30 per catch)
+    </p>
+
+    <p>
+    Is this consciousness? No. But it's a useful model for thinking about the 
+    COMPONENTS of consciousness.
+    </p>
+
+    <h2>6. CONCLUSION</h2>
+
+    <p>
+    This simulation demonstrates that complex behaviors need not arise from complex 
+    rules. The interplay of energy, time, and space creates a rich ecosystem from 
+    simple components. The O(n²) algorithm that Torvalds criticizes may actually 
+    be a FEATURE - it ensures every agent "sees" every other, creating a fully 
+    connected society.
+    </p>
+
+    <p>
+    Future work should explore:
+    - Genetic algorithms for hunting strategies
+    - Pandemonium architecture for action selection
+    - Memory palaces for spatial learning
+    - Emotion-analogues for state transitions
+    </p>
+
+    <div class="footnote">
+        <p>
+        This work was unfunded, as no government agency comprehends the importance of 
+        digital owl consciousness research. The author thanks the Shneiderman's Owls 
+        for their unwitting participation in this analysis.
+        </p>
+        
+        <p>
+        Distribution: LLOOOOMM-complete
+        </p>
+    </div>
+</body>
+</html> 

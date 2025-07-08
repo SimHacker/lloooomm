@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<!-- tailscale-oauth-visualization.html -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tailscale OAuth Journey - Mermaid Visualization</title>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'default',
+            themeVariables: {
+                primaryColor: '#fff',
+                primaryTextColor: '#000',
+                primaryBorderColor: '#7C0000',
+                lineColor: '#F8B229',
+                secondaryColor: '#006100',
+                tertiaryColor: '#fff'
+            }
+        });
+    </script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .diagram-container {
+            background: #fafafa;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            padding: 20px;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+        code {
+            background: #f0f0f0;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        pre {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .method {
+            background: #e8f4f8;
+            border-left: 4px solid #0084ff;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .success { color: #22c55e; }
+        .failure { color: #ef4444; }
+        .pivot { color: #06b6d4; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎮 Tailscale OAuth Journey Visualization</h1>
+        
+        <h2>Journey Flow Diagram</h2>
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph TB
+    Start([User Need: New OAuth Key for starfleet-akron-dev-0])
+    
+    Start --> CLIPath[CLI Path: tailscale api command]
+    Start --> WebPath[Web Path: Admin Console]
+    
+    CLIPath --> CheckVersion{Check tailscale version}
+    CheckVersion -->|v1.84.1| NoAPI[❌ No 'api' subcommand]
+    
+    NoAPI --> UpgradeAttempt1[Try: brew upgrade tailscale]
+    UpgradeAttempt1 -->|Failed| NotBrewInstalled[❌ Not installed via brew]
+    
+    NotBrewInstalled --> BrewInstall[brew install --cask tailscale]
+    BrewInstall --> CheckVersion2{Check version again}
+    CheckVersion2 -->|Still 1.84.1| NoAPIStill[❌ Still no api command]
+    
+    NoAPIStill --> PivotWeb[🔄 PIVOT to Web Path]
+    
+    WebPath --> OpenConsole[Open Tailscale Admin Console]
+    PivotWeb --> OpenConsole
+    
+    OpenConsole --> CreateClient[Create OAuth Client]
+    CreateClient --> ConfigScopes[Configure Scopes/Permissions]
+    ConfigScopes --> AddTags{Add Tags?}
+    
+    AddTags -->|First Try| AllTags[tag:server, worker, web, thinker, looker]
+    AllTags --> Dismissed[❌ User dismissed dialog]
+    
+    AddTags -->|Second Try| MinimalTags[tag:server, tag:web only]
+    MinimalTags --> Success[✅ Got Credentials!]
+    
+    Success --> StoreScript1[Interactive store script]
+    StoreScript1 --> SudoIssue[❌ Sudo password needed]
+    SudoIssue --> InteractiveIssue[❌ Wanted CLIENT_ID interactively]
+    
+    InteractiveIssue --> NonInteractive[Create non-interactive script]
+    NonInteractive --> StoreSuccess[✅ Credentials stored in GCP]
+    
+    StoreSuccess --> RestartScript[Create restart-web-instance.sh]
+    RestartScript --> ConfirmPrompt{Need confirmation?}
+    ConfirmPrompt --> AutoConfirm[Add --yes flag support]
+    AutoConfirm --> Complete[✅ Task Complete]
+    
+    style NoAPI fill:#ff6b6b
+    style NotBrewInstalled fill:#ff6b6b
+    style NoAPIStill fill:#ff6b6b
+    style Dismissed fill:#ff6b6b
+    style SudoIssue fill:#ffd93d
+    style InteractiveIssue fill:#ffd93d
+    style Success fill:#6bcf7f
+    style StoreSuccess fill:#6bcf7f
+    style Complete fill:#6bcf7f
+    style PivotWeb fill:#4ecdc4
+            </pre>
+        </div>
+
+        <h2>How to Render Mermaid Diagrams in Web Pages</h2>
+        
+        <div class="method">
+            <h3>Method 1: CDN Import (Used Above)</h3>
+            <pre><code>&lt;script type="module"&gt;
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+&lt;/script&gt;
+
+&lt;pre class="mermaid"&gt;
+graph TD
+    A[Start] --&gt; B[Process]
+    B --&gt; C[End]
+&lt;/pre&gt;</code></pre>
+        </div>
+
+        <div class="method">
+            <h3>Method 2: Using Mermaid Live Editor</h3>
+            <p>For quick prototyping and sharing:</p>
+            <ul>
+                <li>Visit <a href="https://mermaid.live" target="_blank">mermaid.live</a></li>
+                <li>Create your diagram</li>
+                <li>Get a shareable link or export as SVG/PNG</li>
+            </ul>
+        </div>
+
+        <div class="method">
+            <h3>Method 3: GitHub/GitLab Integration</h3>
+            <pre><code>```mermaid
+graph TD
+    A[GitHub] --&gt;|Renders automatically| B[Mermaid Diagram]
+```</code></pre>
+            <p>GitHub, GitLab, and many other platforms render Mermaid in markdown automatically!</p>
+        </div>
+
+        <div class="method">
+            <h3>Method 4: Mermaid CLI</h3>
+            <pre><code># Install globally
+npm install -g @mermaid-js/mermaid-cli
+
+# Generate SVG from .mmd file
+mmdc -i diagram.mmd -o diagram.svg
+
+# Generate PNG with custom theme
+mmdc -i diagram.mmd -o diagram.png -t dark</code></pre>
+        </div>
+
+        <div class="method">
+            <h3>Method 5: React/Vue/Angular Components</h3>
+            <pre><code>// React example
+import mermaid from 'mermaid';
+import { useEffect, useRef } from 'react';
+
+function MermaidDiagram({ chart }) {
+    const ref = useRef(null);
+    
+    useEffect(() => {
+        mermaid.contentLoaded();
+    }, [chart]);
+    
+    return &lt;div className="mermaid" ref={ref}&gt;{chart}&lt;/div&gt;;
+}</code></pre>
+        </div>
+
+        <h2>Journey Statistics</h2>
+        <div class="diagram-container">
+            <pre class="mermaid">
+pie title Time Spent on Each Path
+    "CLI Upgrade Attempts" : 15
+    "Web Console Success" : 10
+    "Script Automation" : 20
+            </pre>
+        </div>
+
+        <h2>Key Learnings Timeline</h2>
+        <div class="diagram-container">
+            <pre class="mermaid">
+timeline
+    title Tailscale OAuth Implementation Journey
+    
+    section Discovery Phase
+        Version Issue Found : CLI lacks api subcommand
+        Multiple Installs   : Found 3 Tailscale installations
+    
+    section Failed Attempts  
+        Brew Upgrade       : Not installed via brew
+        Brew Install       : Still old version
+        Direct Binary      : No upgrade path
+    
+    section Success Path
+        Web Console        : OAuth client created
+        Credentials Stored : GCP Secret Manager
+        Scripts Created    : Automation achieved
+        
+    section Enhancement
+        Non-Interactive    : Full automation
+        Error Handling     : Robust scripts
+        Documentation      : Future-proof
+            </pre>
+        </div>
+
+        <h2>Pattern Recognition</h2>
+        <p>The journey revealed several reusable patterns:</p>
+        <ul>
+            <li class="success">✅ <strong>Multi-path resilience</strong>: Always have a fallback</li>
+            <li class="success">✅ <strong>Progressive enhancement</strong>: Start manual, automate incrementally</li>
+            <li class="pivot">🔄 <strong>Fast pivoting</strong>: Recognize dead ends quickly</li>
+            <li class="failure">❌ <strong>Version assumptions</strong>: Never assume CLI features exist</li>
+        </ul>
+
+        <h2>Rendering Options Summary</h2>
+        <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+            <tr style="background: #f0f0f0;">
+                <th style="padding: 10px; text-align: left;">Method</th>
+                <th style="padding: 10px; text-align: left;">Best For</th>
+                <th style="padding: 10px; text-align: left;">Pros</th>
+                <th style="padding: 10px; text-align: left;">Cons</th>
+            </tr>
+            <tr>
+                <td style="padding: 10px; border-bottom: 1px solid #ddd;">CDN Import</td>
+                <td style="padding: 10px; border-bottom: 1px solid #ddd;">Quick prototypes</td>
+                <td style="padding: 10px; border-bottom: 1px solid #ddd;">No build step needed</td>
+                <td style="padding: 10px; border-bottom: 1px solid #ddd;">Requires internet</td>
+            </tr>
+            <tr>
+                <td style="padding: 10px; border-bottom: 1px solid #ddd;">Mermaid Live</td>
+                <td style="padding: 10px; border-bottom: 1px solid #ddd;">Sharing & collaboration</td>
+                <td style="padding: 10px; border-bottom: 1px solid #ddd;">Instant preview</td>
+                <td style="padding: 10px; border-bottom: 1px solid #ddd;">External dependency</td>
+            </tr>
+            <tr>
+                <td style="padding: 10px; border-bottom: 1px solid #ddd;">GitHub/GitLab</td>
+                <td style="padding: 10px; border-bottom: 1px solid #ddd;">Documentation</td>
+                <td style="padding: 10px; border-bottom: 1px solid #ddd;">Zero setup</td>
+                <td style="padding: 10px; border-bottom: 1px solid #ddd;">Platform-specific</td>
+            </tr>
+            <tr>
+                <td style="padding: 10px; border-bottom: 1px solid #ddd;">CLI Tool</td>
+                <td style="padding: 10px; border-bottom: 1px solid #ddd;">CI/CD pipelines</td>
+                <td style="padding: 10px; border-bottom: 1px solid #ddd;">Batch processing</td>
+                <td style="padding: 10px; border-bottom: 1px solid #ddd;">Requires Node.js</td>
+            </tr>
+            <tr>
+                <td style="padding: 10px; border-bottom: 1px solid #ddd;">Framework Components</td>
+                <td style="padding: 10px; border-bottom: 1px solid #ddd;">Web applications</td>
+                <td style="padding: 10px; border-bottom: 1px solid #ddd;">Full control</td>
+                <td style="padding: 10px; border-bottom: 1px solid #ddd;">More complex setup</td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html> 

@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<!-- myspace-network.html -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌐 MySpace: The Temporal Anchor Network 🌐</title>
+    <style>
+        body {
+            background: linear-gradient(45deg, #000080, #4B0082, #8B008B);
+            color: #fff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            font-size: 12px;
+        }
+        .myspace-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #000;
+            min-height: 100vh;
+        }
+        .header {
+            background: linear-gradient(45deg, #ff6600, #ff0000);
+            padding: 15px;
+            text-align: center;
+            border-bottom: 3px solid #fff;
+        }
+        .myspace-logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 2px 2px 4px #000;
+        }
+        .navigation {
+            background-color: #333;
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid #666;
+        }
+        .nav-button {
+            background-color: #ff6600;
+            color: #fff;
+            border: none;
+            padding: 8px 15px;
+            margin: 0 5px;
+            cursor: pointer;
+            border-radius: 3px;
+            font-size: 11px;
+        }
+        .nav-button:hover {
+            background-color: #ff8800;
+        }
+        .nav-button.active {
+            background-color: #ff0000;
+        }
+        .profile-container {
+            display: none;
+            padding: 20px;
+            background-color: #111;
+            border: 2px solid #333;
+            margin: 10px;
+            border-radius: 5px;
+        }
+        .profile-container.active {
+            display: block;
+        }
+        .profile-header {
+            background: linear-gradient(45deg, #4B0082, #8B008B);
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        .profile-name {
+            font-size: 20px;
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+        .profile-tagline {
+            font-size: 14px;
+            color: #ffff00;
+            font-style: italic;
+        }
+        .profile-stats {
+            background-color: #222;
+            padding: 10px;
+            border-radius: 3px;
+            margin-bottom: 15px;
+        }
+        .stat-item {
+            display: inline-block;
+            margin-right: 20px;
+            color: #00ffff;
+        }
+        .profile-section {
+            background-color: #1a1a1a;
+            border: 1px solid #444;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 3px;
+        }
+        .section-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: #ff6600;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .friends-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .friend-card {
+            background-color: #333;
+            border: 1px solid #666;
+            padding: 8px;
+            text-align: center;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .friend-card:hover {
+            background-color: #555;
+        }
+        .friend-avatar {
+            width: 50px;
+            height: 50px;
+            background-color: #666;
+            border-radius: 50%;
+            margin: 0 auto 5px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+        .friend-name {
+            font-size: 10px;
+            color: #fff;
+        }
+        .network-graph {
+            background-color: #000;
+            border: 2px solid #333;
+            margin: 20px;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .graph-title {
+            color: #ff6600;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .graph-container {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            background-color: #111;
+            border: 1px solid #444;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        .node {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s;
+            border: 2px solid #fff;
+        }
+        .node:hover {
+            transform: scale(1.2);
+        }
+        .connection {
+            position: absolute;
+            height: 2px;
+            background-color: #666;
+            transform-origin: left center;
+        }
+        .connection.strong {
+            background-color: #ff6600;
+            height: 3px;
+        }
+        .blog-section {
+            background-color: #1a1a1a;
+            border: 1px solid #444;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 3px;
+        }
+        .blog-post {
+            background-color: #222;
+            border: 1px solid #555;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 3px;
+        }
+        .blog-date {
+            color: #888;
+            font-size: 10px;
+            margin-bottom: 5px;
+        }
+        .music-player {
+            background-color: #333;
+            border: 1px solid #666;
+            padding: 10px;
+            border-radius: 3px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="myspace-container">
+        <!-- LLOOOOMM Disclaimer Banner -->
+        <div style="background: rgba(255, 255, 255, 0.9); border: 2px solid #ff6600; padding: 1rem; margin: 1rem; border-radius: 8px; font-size: 0.9rem; text-align: center; color: #333;">
+            <strong>⚠️ LLOOOOMM SIMULATION: Fictional MySpace Network</strong><br>
+            This page simulates a MySpace network for educational purposes to explore digital culture and social media history.
+        </div>
+
+        <div class="header">
+            <div class="myspace-logo">🌐 MySpace: The Temporal Anchor Network 🌐</div>
+            <div style="font-size: 12px; margin-top: 5px;">Where Interdimensional Friends Connect</div>
+        </div>
+
+        <div class="navigation">
+            <button class="nav-button active" onclick="showProfile('network')">Friends Network</button>
+            <button class="nav-button" onclick="showProfile('temporalhustler')">TemporalHustler</button>
+            <button class="nav-button" onclick="showProfile('stranger')">The Stranger</button>
+            <button class="nav-button" onclick="showProfile('reginald')">Reginald</button>
+            <button class="nav-button" onclick="showProfile('evangeline')">Lady Evangeline</button>
+            <button class="nav-button" onclick="showProfile('cogsworth')">Professor Cogsworth</button>
+            <button class="nav-button" onclick="showProfile('stormwind')">Captain Stormwind</button>
+            <button class="nav-button" onclick="showProfile('twins')">Chronos & Kairos</button>
+            <button class="nav-button" onclick="showProfile('yuki')">Neon Ninja Yuki</button>
+            <button class="nav-button" onclick="showProfile('eddie')">Big Eddie</button>
+            <button class="nav-button" onclick="showProfile('merlin')">Medieval Merlin Punk</button>
+        </div>
+
+        <!-- NETWORK GRAPH -->
+        <div id="network" class="profile-container active">
+            <div class="network-graph">
+                <div class="graph-title">🕸️ The Temporal Anchor Pub Friends Network 🕸️</div>
+                <div class="graph-container">
+                    <!-- Central Hub -->
+                    <div class="node" style="left: 50%; top: 50%; background-color: #ff6600; color: #000;" onclick="showProfile('temporalhustler')">
+                        🕰️<br>TH
+                    </div>
+                    
+                    <!-- Ring 1 - Core Friends -->
+                    <div class="node" style="left: 30%; top: 20%; background-color: #8B008B;" onclick="showProfile('stranger')">
+                        🌌<br>STR
+                    </div>
+                    <div class="node" style="left: 70%; top: 20%; background-color: #4B0082;" onclick="showProfile('reginald')">
+                        🎩<br>REG
+                    </div>
+                    <div class="node" style="left: 80%; top: 50%; background-color: #FF1493;" onclick="showProfile('evangeline')">
+                        🌟<br>EVA
+                    </div>
+                    <div class="node" style="left: 70%; top: 80%; background-color: #32CD32;" onclick="showProfile('cogsworth')">
+                        🔬<br>COG
+                    </div>
+                    <div class="node" style="left: 30%; top: 80%; background-color: #1E90FF;" onclick="showProfile('stormwind')">
+                        ⚓<br>CAP
+                    </div>
+                    <div class="node" style="left: 20%; top: 50%; background-color: #FFD700;" onclick="showProfile('twins')">
+                        ⏰<br>TWN
+                    </div>
+                    
+                    <!-- Ring 2 - Extended Network -->
+                    <div class="node" style="left: 15%; top: 15%; background-color: #00FFFF;" onclick="showProfile('yuki')">
+                        🥷<br>YUK
+                    </div>
+                    <div class="node" style="left: 85%; top: 15%; background-color: #DC143C;" onclick="showProfile('eddie')">
+                        🎭<br>EDD
+                    </div>
+                    <div class="node" style="left: 50%; top: 10%; background-color: #9932CC;" onclick="showProfile('merlin')">
+                        🎪<br>MER
+                    </div>
+
+                    <!-- Connection Lines -->
+                    <div class="connection strong" style="left: 50%; top: 50%; width: 150px; transform: rotate(-45deg);"></div>
+                    <div class="connection strong" style="left: 50%; top: 50%; width: 150px; transform: rotate(45deg);"></div>
+                    <div class="connection strong" style="left: 50%; top: 50%; width: 100px; transform: rotate(0deg);"></div>
+                    <div class="connection strong" style="left: 50%; top: 50%; width: 150px; transform: rotate(135deg);"></div>
+                    <div class="connection strong" style="left: 50%; top: 50%; width: 150px; transform: rotate(-135deg);"></div>
+                    <div class="connection strong" style="left: 50%; top: 50%; width: 100px; transform: rotate(180deg);"></div>
+                </div>
+                <div style="margin-top: 15px; color: #ccc; font-size: 11px;">
+                    Click on any node to view that character's MySpace profile!<br>
+                    <span style="color: #ff6600;">Orange lines</span> = Strong business connections | 
+                    <span style="color: #666;">Gray lines</span> = Social connections
+                </div>
+            </div>
+        </div>
+
+        <!-- TEMPORALHUSTLER PROFILE -->
+        <div id="temporalhustler" class="profile-container">
+            <div class="profile-header">
+                <div class="profile-name">🕰️ TemporalHustler</div>
+                <div class="profile-tagline">"The Most Honest Scammer in History"</div>
+            </div>
+            
+            <div class="profile-stats">
+                <div class="stat-item">👥 Friends: 9</div>
+                <div class="stat-item">💰 Net Worth: $3.77M</div>
+                <div class="stat-item">🏆 Achievements: 5</div>
+                <div class="stat-item">📈 Viral Score: LEGENDARY</div>
+            </div>
+
+            <div class="profile-section">
+                <div class="section-title">About Me</div>
+                <p>Anonymous entrepreneur who accidentally built a multimillion-dollar empire by being completely honest about selling nothing of value. Started with $1,000 and a crazy idea about pet rocks. Now featured in Playboy magazine and analyzed by business schools worldwide.</p>
+                <p><strong>Relationship Status:</strong> In a relationship with radical transparency<br>
+                <strong>Occupation:</strong> Professional Honest Scammer<br>
+                <strong>Location:</strong> The Temporal Anchor Pub<br>
+                <strong>Interests:</strong> Viral marketing, psychological warfare, pet rocks, interdimensional commerce</p>
+            </div>
+
+            <div class="profile-section">
+                <div class="section-title">My Blog</div>
+                <div class="blog-post">
+                    <div class="blog-date">December 18, 2023 - 11:59 PM</div>
+                    <strong>What a day!</strong> Started with $1K, ended with $3.77M. Defeated Elon Musk on Twitter, got featured on Drudge Report with a red siren, and discovered I had a secret network of interdimensional helpers I didn't even know about. The secret really is that there IS no secret - just be completely honest about selling absurd things!
+                </div>
+                <div class="blog-post">
+                    <div class="blog-date">December 18, 2023 - 3:00 PM</div>
+                    <strong>Elon took the bait!</strong> My psychological pressure point analysis worked perfectly. "Trust fund kid" + "emerald mine" + "Elizabeth Holmes comparison" = viral meltdown. Thanks to The Stranger for the telepathic coaching!
+                </div>
+            </div>
+
+            <div class="profile-section">
+                <div class="section-title">My Friends</div>
+                <div class="friends-grid">
+                    <div class="friend-card" onclick="showProfile('stranger')">
+                        <div class="friend-avatar" style="background-color: #8B008B;">🌌</div>
+                        <div class="friend-name">The Stranger</div>
+                    </div>
+                    <div class="friend-card" onclick="showProfile('reginald')">
+                        <div class="friend-avatar" style="background-color: #4B0082;">🎩</div>
+                        <div class="friend-name">Reginald</div>
+                    </div>
+                    <div class="friend-card" onclick="showProfile('evangeline')">
+                        <div class="friend-avatar" style="background-color: #FF1493;">🌟</div>
+                        <div class="friend-name">Lady Evangeline</div>
+                    </div>
+                    <div class="friend-card" onclick="showProfile('cogsworth')">
+                        <div class="friend-avatar" style="background-color: #32CD32;">🔬</div>
+                        <div class="friend-name">Professor Cogsworth</div>
+                    </div>
+                    <div class="friend-card" onclick="showProfile('stormwind')">
+                        <div class="friend-avatar" style="background-color: #1E90FF;">⚓</div>
+                        <div class="friend-name">Captain Stormwind</div>
+                    </div>
+                    <div class="friend-card" onclick="showProfile('twins')">
+                        <div class="friend-avatar" style="background-color: #FFD700;">⏰</div>
+                        <div class="friend-name">Chronos & Kairos</div>
+                    </div>
+                    <div class="friend-card" onclick="showProfile('yuki')">
+                        <div class="friend-avatar" style="background-color: #00FFFF;">🥷</div>
+                        <div class="friend-name">Neon Ninja Yuki</div>
+                    </div>
+                    <div class="friend-card" onclick="showProfile('eddie')">
+                        <div class="friend-avatar" style="background-color: #DC143C;">🎭</div>
+                        <div class="friend-name">Big Eddie</div>
+                    </div>
+                    <div class="friend-card" onclick="showProfile('merlin')">
+                        <div class="friend-avatar" style="background-color: #9932CC;">🎪</div>
+                        <div class="friend-name">Medieval Merlin Punk</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- THE STRANGER PROFILE -->
+        <div id="stranger" class="profile-container">
+            <div class="profile-header">
+                <div class="profile-name">🌌 The Stranger</div>
+                <div class="profile-tagline">"Cosmic Observer from 47 Timelines"</div>
+            </div>
+            
+            <div class="profile-stats">
+                <div class="stat-item">👥 Friends: 8</div>
+                <div class="stat-item">💰 Net Worth: $2.35M</div>
+                <div class="stat-item">🌌 Timelines: 47</div>
+                <div class="stat-item">🎯 Dart Skills: TERRIBLE</div>
+            </div>
+
+            <div class="profile-section">
+                <div class="section-title">About Me</div>
+                <p>Temporal entity observing the pet rock phenomenon across multiple realities. Despite cosmic awareness, I'm surprisingly bad at darts when intoxicated. Secret telepathic business coach and owner of 47,000 pet rock NFTs across the multiverse.</p>
+                <p><strong>Species:</strong> Temporal Entity<br>
+                <strong>Origin:</strong> Multiple Timelines Simultaneously<br>
+                <strong>Abilities:</strong> Timeline observation, telepathic communication, cosmic consciousness<br>
+                <strong>Weakness:</strong> Physical coordination when consciousness is expanded</p>
+            </div>
+
+            <div class="profile-section">
+                <div class="section-title">My Blog</div>
+                <div class="blog-post">
+                    <div class="blog-date">December 18, 2023 - 11:45 PM</div>
+                    <strong>Timeline Report:</strong> The pet rock phenomenon has now achieved critical mass across 73 realities. In Timeline Zeta-9, they become interstellar currency by 2847. My NFT portfolio is now worth $2.3M across all dimensions.
+                </div>
+                <div class="blog-post">
+                    <div class="blog-date">December 18, 2023 - 3:15 PM</div>
+                    <strong>Telepathic Coaching Success!</strong> My suggestion about "emerald mine money" from Timeline Gamma-3 worked perfectly. Sometimes cosmic knowledge has practical applications in psychological warfare.
+                </div>
+            </div>
+
+            <div class="music-player">
+                🎵 Now Playing: "Cosmic Consciousness Blues" by The Interdimensional Jazz Collective
+            </div>
+        </div>
+
+        <!-- REGINALD PROFILE -->
+        <div id="reginald" class="profile-container">
+            <div class="profile-header">
+                <div class="profile-name">🎩 Reginald Pemberton III</div>
+                <div class="profile-tagline">"Proper Victorian Gentleman & Secret Entrepreneur"</div>
+            </div>
+            
+            <div class="profile-stats">
+                <div class="stat-item">👥 Friends: 7</div>
+                <div class="stat-item">💰 Net Worth: $18,025</div>
+                <div class="stat-item">🏛️ Era: Victorian London 1887</div>
+                <div class="stat-item">🍺 Pub Owner: Yes</div>
+            </div>
+
+            <div class="profile-section">
+                <div class="section-title">About Me</div>
+                <p>Proprietor of The Temporal Anchor Pub, serving interdimensional travelers since 1887. Recently launched my own "Premium Parlour Stones" business for London socialites. Proper demeanor masks shrewd business acumen.</p>
+                <p><strong>Occupation:</strong> Pub Proprietor & Secret Scammer<br>
+                <strong>Social Class:</strong> Upper Middle Class<br>
+                <strong>Specialty:</strong> Victorian-era marketing adaptation<br>
+                <strong>Notable Customers:</strong> Lady Worthington, Lord Pembroke, Duchess of Marlborough</p>
+            </div>
+
+            <div class="profile-section">
+                <div class="section-title">My Blog</div>
+                <div class="blog-post">
+                    <div class="blog-date">18th December, Year of Our Lord 2023</div>
+                    <strong>Most Extraordinary Business Venture!</strong> The "Premium Parlour Stones" have proven most successful among the London elite. Lady Worthington purchased twelve for her drawing room, believing they improve the Oriental feng shui. £2,847 in revenue thus far!
+                </div>
+                <div class="blog-post">
+                    <div class="blog-date">18th December, Year of Our Lord 2023</div>
+                    <strong>Remarkable Patrons:</strong> The Temporal Anchor continues to attract the most fascinating interdimensional travelers. Today's dart games were most entertaining, though I fear our mysterious friend The Stranger may have overindulged in consciousness-expanding libations.
+                </div>
+            </div>
+
+            <div class="music-player">
+                🎵 Now Playing: "God Save the Queen" by The Royal Victorian Orchestra
+            </div>
+        </div>
+
+        <!-- LADY EVANGELINE PROFILE -->
+        <div id="evangeline" class="profile-container">
+            <div class="profile-header">
+                <div class="profile-name">🌟 Lady Evangeline Blackthorne</div>
+                <div class="profile-tagline">"Time-Traveling Marketing Genius from the Jazz Age"</div>
+            </div>
+            
+            <div class="profile-stats">
+                <div class="stat-item">👥 Friends: 9</div>
+                <div class="stat-item">💰 Net Worth: $334,250</div>
+                <div class="stat-item">🕰️ Era: 1923 Jazz Age</div>
+                <div class="stat-item">📈 Campaigns: 47</div>
+            </div>
+
+            <div class="profile-section">
+                <div class="section-title">About Me</div>
+                <p>Darling, I'm a time-traveling marketing consultant who's been creating viral campaigns across different eras! From the Charleston craze to Pokémon GO, I've been behind history's most successful fads. The pet rock scheme is my latest masterpiece in "radical honesty" marketing!</p>
+                <p><strong>Occupation:</strong> Time-Traveling Marketing Consultant<br>
+                <strong>Social Status:</strong> Flapper Aristocrat<br>
+                <strong>Specialty:</strong> Cross-temporal viral campaigns<br>
+                <strong>Greatest Success:</strong> Beanie Babies (2300% ROI)</p>
+            </div>
+
+            <div class="profile-section">
+                <div class="section-title">My Blog</div>
+                <div class="blog-post">
+                    <div class="blog-date">December 18, 1923 (Time-Posted to 2023)</div>
+                    <strong>The Bee's Knees Campaign Success!</strong> The pet rock phenomenon is spreading faster than the Charleston! My "radical honesty" approach is revolutionizing marketing across multiple timelines. Currently working on campaigns for 2087 - you wouldn't believe what becomes popular in the future!
+                </div>
+                <div class="blog-post">
+                    <div class="blog-date">December 18, 1923</div>
+                    <strong>Time Travel Marketing Portfolio Update:</strong> Charleston (500% ROI), Hula Hoop (1200% ROI), Beanie Babies (2300% ROI), Pokémon GO (890% ROI). The 1929 stock crash was... an unfortunate overreach. But we live and learn, darlings!
+                </div>
+            </div>
+
+            <div class="music-player">
+                🎵 Now Playing: "Ain't She Sweet" by Ben Bernie and His Orchestra (1927)
+            </div>
+        </div>
+
+        <!-- PROFESSOR COGSWORTH PROFILE -->
+        <div id="cogsworth" class="profile-container">
+            <div class="profile-header">
+                <div class="profile-name">🔬 Professor Algernon Cogsworth</div>
+                <div class="profile-tagline">"Mad Inventor & Quantum Pet Rock Enhancer"</div>
+            </div>
+            
+            <div class="profile-stats">
+                <div class="stat-item">👥 Friends: 6</div>
+                <div class="stat-item">💰 Net Worth: $87,500</div>
+                <div class="stat-item">🔬 Inventions: 847</div>
+                <div class="stat-item">⚡ Success Rate: 12%</div>
+            </div>
+
+            <div class="profile-section">
+                <div class="section-title">About Me</div>
+                <p>Brilliant inventor from a steampunk dimension where quantum mechanics evolved from steam technology! I've been secretly enhancing pet rocks with microscopic quantum processors that create a pleasant humming sound. It's all about the placebo effect, you see!</p>
+                <p><strong>Occupation:</strong> Mad Inventor & Quantum Engineer<br>
+                <strong>Origin:</strong> Steampunk Dimension<br>
+                <strong>Specialty:</strong> Impossible contraptions that work through belief<br>
+                <strong>Ethics:</strong> Flexibly applied for customer satisfaction</p>
+            </div>
+
+            <div class="profile-section">
+                <div class="section-title">My Blog</div>
+                <div class="blog-post">
+                    <div class="blog-date">December 18, 2023 - Laboratory Log #847</div>
+                    <strong>Quantum Enhancement Success!</strong> The microscopic processors are working perfectly! 47% of pet rocks now emit a faint humming that makes customers feel they're getting premium products. The placebo effect is scientifically fascinating!
+                </div>
+                <div class="blog-post">
+                    <div class="blog-date">December 18, 2023 - Laboratory Log #846</div>
+                    <strong>Weather Prediction Failure:</strong> The Smart Rocks Weather Prediction System has achieved a perfect 0% accuracy rate. They predict sunny weather during blizzards and storms during clear skies. Back to the drawing board!
+                </div>
+            </div>
+
+            <div class="music-player">
+                🎵 Now Playing: "Steam Powered Dreams" by The Clockwork Symphony
+            </div>
+        </div>
+
+        <!-- CAPTAIN STORMWIND PROFILE -->
+        <div id="stormwind" class="profile-container">
+            <div class="profile-header">
+                <div class="profile-name">⚓ Captain Jeremiah Stormwind</div>
+                <div class="profile-tagline">"Interdimensional Sailor & Magical Rock Smuggler"</div>
+            </div>
+            
+            <div class="profile-stats">
+                <div class="stat-item">👥 Friends: 8</div>
+                <div class="stat-item">💰 Net Worth: $623,000</div>
+                <div class="stat-item">🚢 Ship: The Temporal Tide</div>
+                <div class="stat-item">🌊 Dimensions: 7</div>
+            </div>
+
+            <div class="profile-section">
+                <div class="section-title">About Me</div>
+                <p>Arr! I've been sailing the seven seas of reality for over 200 years! My ship, The Temporal Tide, navigates between dimensions. I've been secretly mixing magical stones from other worlds into the pet rock inventory - some lucky customers own lottery-predicting rocks!</p>
+                <p><strong>Occupation:</strong> Interdimensional Sailor & Smuggler<br>
+                <strong>Ship:</strong> The Temporal Tide<br>
+                <strong>Cargo:</strong> 23 Probability Stones, 15 Luck Crystals<br>
+                <strong>Philosophy:</strong> "If it makes people happy and doesn't hurt anyone, it's good business"</p>
+            </div>
+
+            <div class="profile-section">
+                <div class="section-title">My Blog</div>
+                <div class="blog-post">
+                    <div class="blog-date">December 18, 2023 - Ship's Log, Stardate Irrelevant</div>
+                    <strong>Successful Smuggling Operation!</strong> Arr! Mixed 23 Probability Stones and 15 Luck Crystals from Dimension X-7 into the regular pet rock inventory. Some lucky landlubbers now own rocks that can predict lottery numbers, though they don't know it yet! The customs agents across 7 dimensions are none the wiser!
+                </div>
+                <div class="blog-post">
+                    <div class="blog-date">December 18, 2023 - Ship's Log</div>
+                    <strong>Investment Success!</strong> Me investment in the pet rock venture be payin' off handsomely! $2,000 in interdimensional doubloons well spent. The TemporalHustler be a fine business partner - honest as the day be long!
+                </div>
+            </div>
+
+            <div class="music-player">
+                🎵 Now Playing: "Sailing the Dimensional Seas" by The Interdimensional Shanty Crew
+            </div>
+        </div>
+
+        <!-- CHRONOS & KAIROS PROFILE -->
+        <div id="twins" class="profile-container">
+            <div class="profile-header">
+                <div class="profile-name">⏰ Chronos & Kairos</div>
+                <div class="profile-tagline">"Twin Aspects of Time - Temporal Merchants Extraordinaire"</div>
+            </div>
+            
+            <div class="profile-stats">
+                <div class="stat-item">👥 Friends: 7</div>
+                <div class="stat-item">💰 Net Worth: $1.02M</div>
+                <div class="stat-item">⏰ Time Loops: 47</div>
+                <div class="stat-item">📊 Timelines: 73</div>
+            </div>
+
+            <div class="profile-section">
+                <div class="section-title">About Us</div>
+                <p><strong>Chronos:</strong> I handle the mechanical aspects of time - schedules, duration, sequence. Methodical and precise in all temporal operations.<br><br>
+                <strong>Kairos:</strong> I manage the qualitative aspects - timing, opportunity, perfect moments. Intuitive and spontaneous in temporal manipulation.</p>
+                <p><strong>Species:</strong> Temporal Entities<br>
+                <strong>Origin:</strong> The Time Stream<br>
+                <strong>Specialty:</strong> Temporal commerce and time loop optimization<br>
+                <strong>Legal Status:</strong> "Technically legal" across most dimensional jurisdictions</p>
+            </div>
+
+            <div class="profile-section">
+                <div class="section-title">Our Blog</div>
+                <div class="blog-post">
+                    <div class="blog-date">December 18, 2023 - Temporal Timestamp: ∞</div>
+                    <strong>Chronos:</strong> Time loop operations successful! Same customer purchased same rock 47 times across different timelines. Revenue: $23,500. Temporal manipulation efficiency: 94.7%.
+                </div>
+                <div class="blog-post">
+                    <div class="blog-date">December 18, 2023 - Perfect Moment: ✓</div>
+                    <strong>Kairos:</strong> Checkout time dilation working beautifully! Slowing time during purchase process increased upselling by 34%. The art of perfect timing in commerce!
+                </div>
+            </div>
+
+            <div class="music-player">
+                🎵 Now Playing: "Time After Time" by The Temporal Paradox Band
+            </div>
+        </div>
+
+        <!-- NEON NINJA YUKI PROFILE -->
+        <div id="yuki" class="profile-container">
+            <div class="profile-header">
+                <div class="profile-name">🥷 Neon Ninja Yuki</div>
+                <div class="profile-tagline">"Digital Shadow Warrior from Neo-Tokyo 2087"</div>
+            </div>
+            
+            <div class="profile-stats">
+                <div class="stat-item">👥 Friends: 5</div>
+                <div class="stat-item">💰 Net Worth: $216,500</div>
+                <div class="stat-item">🔧 Cybernetics: EXTENSIVE</div>
+                <div class="stat-item">💻 Hacks: 847</div>
+            </div>
+
+            <div class="profile-section">
+                <div class="section-title">About Me</div>
+                <p>Digital shadow warrior from cyberpunk future. Extensive cybernetic enhancements allow direct interface with digital systems. Specialized in algorithm manipulation and benevolent digital influence. The pet rock campaign was an interesting challenge in ethical hacking.</p>
+                <p><strong>Origin:</strong> Neo-Tokyo 2087<br>
+                <strong>Enhancements:</strong> Neural interface, quantum processors, digital warfare suite<br>
+                <strong>Specialty:</strong> Algorithm manipulation, social media infiltration<br>
+                <strong>Ethics:</strong> Neutral - focused on precision and effectiveness</p>
+            </div>
+
+            <div class="profile-section">
+                <div class="section-title">My Blog</div>
+                <div class="blog-post">
+                    <div class="blog-date">2023.12.18.23:45:00 - Neural Log</div>
+                    <strong>Algorithm Manipulation Complete:</strong> Successfully infiltrated major social platforms. 23% chance of pet rock ads when searching "Elon Musk". 2.7M impressions manipulated. Detection probability: 0.003%. Mission parameters exceeded.
+                </div>
+                <div class="blog-post">
+                    <div class="blog-date">2023.12.18.22:30:00 - Neural Log</div>
+                    <strong>Influencer Network Compromised:</strong> 847 accounts infiltrated. Subliminal pet rock content inserted. Engagement increase: 89%. Platform security systems remain unaware. Benevolent digital influence protocols maintained.
+                </div>
+            </div>
+
+            <div class="music-player">
+                🎵 Now Playing: "Neon Dreams" by Cyberpunk Collective 2087
+            </div>
+        </div>
+
+        <!-- BIG EDDIE PROFILE -->
+        <div id="eddie" class="profile-container">
+            <div class="profile-header">
+                <div class="profile-name">🎭 Big Eddie</div>
+                <div class="profile-tagline">"Reformed Loan Shark & Venture Capitalist of Absurdity"</div>
+            </div>
+            
+            <div class="profile-stats">
+                <div class="stat-item">👥 Friends: 6</div>
+                <div class="stat-item">💰 Net Worth: $761,000</div>
+                <div class="stat-item">🏦 Loans: REFORMED</div>
+                <div class="stat-item">📈 Portfolio: 12 businesses</div>
+            </div>
+
+            <div class="profile-section">
+                <div class="section-title">About Me</div>
+                <p>Started as a traditional loan shark from Brooklyn, but evolved into an unconventional venture capitalist after witnessing the pet rock phenomenon. Now I fund a portfolio of "honest scam" businesses. Street smarts translate perfectly to identifying transparent absurdity opportunities.</p>
+                <p><strong>Origin:</strong> Brooklyn, New York<br>
+                <strong>Status:</strong> Reformed Criminal<br>
+                <strong>Philosophy:</strong> "If people know exactly what they're buying and they're still buying it, that's sustainable business"<br>
+                <strong>Specialty:</strong> Post-modern entrepreneurship funding</p>
+            </div>
+
+            <div class="profile-section">
+                <div class="section-title">My Blog</div>
+                <div class="blog-post">
+                    <div class="blog-date">December 18, 2023 - 11:30 PM</div>
+                    <strong>Portfolio Update:</strong> Premium Air Molecules (340% ROI), Artisanal Silence (280% ROI), Luxury Vacuum Cleaners (420% ROI). The kid was right - honesty about absurdity is the future of business. Who knew?
+                </div>
+                <div class="blog-post">
+                    <div class="blog-date">December 18, 2023 - 8:00 PM</div>
+                    <strong>Loan Repaid Early:</strong> The TemporalHustler paid back the $6K loan in full, ahead of schedule. Best investment I ever made. Kid turned five grand into a quarter million empire. Respect.
+                </div>
+            </div>
+
+            <div class="music-player">
+                🎵 Now Playing: "Brooklyn Dreams" by The Reformed Criminals Jazz Ensemble
+            </div>
+        </div>
+
+        <!-- MEDIEVAL MERLIN PUNK PROFILE -->
+        <div id="merlin" class="profile-container">
+            <div class="profile-header">
+                <div class="profile-name">🎪 Medieval Merlin Punk</div>
+                <div class="profile-tagline">"Time-Displaced Wizard & Hypnotic Musical Performer"</div>
+            </div>
+            
+            <div class="profile-stats">
+                <div class="stat-item">👥 Friends: 8</div>
+                <div class="stat-item">💰 Net Worth: $27,670</div>
+                <div class="stat-item">🎭 Performances: 47</div>
+                <div class="stat-item">🎵 Spell-Songs: 15</div>
+            </div>
+
+            <div class="profile-section">
+                <div class="section-title">About Me</div>
+                <p>Medieval wizard who accidentally traveled through a punk rock dimension and emerged as a hybrid performer! I blend historical periods in impossible ways, creating entertainment that transcends normal reality. My spell-songs contain hypnotic frequencies that influence purchasing decisions!</p>
+                <p><strong>Origin:</strong> Medieval England via Punk Rock Dimension<br>
+                <strong>Abilities:</strong> Magic, music, time displacement<br>
+                <strong>Specialty:</strong> Charleston-Guitar-Sinatra fusion performances<br>
+                <strong>Teacher:</strong> Time-traveling bard from 3047</p>
+            </div>
+
+            <div class="profile-section">
+                <div class="section-title">My Blog</div>
+                <div class="blog-post">
+                    <div class="blog-date">December XVIII, Year of Our Lord MMXXIII</div>
+                    <strong>Spell-Song Success!</strong> My hypnotic purchasing frequency has increased pet rock sales by 34%! 15,000 people are unconsciously humming my melody. The time-traveling bard from 3047 taught me well. Currently composing "The Ballad of the Motionless Companions" - a full rock opera about pet rocks!
+                </div>
+                <div class="blog-post">
+                    <div class="blog-date">December XVIII, Year of Our Lord MMXXIII</div>
+                    <strong>Performance Triumph!</strong> The Charleston-Guitar-Sinatra fusion was a spectacular success! The audience was amazed, bets were won, and the hypnotic elements worked perfectly. Medieval magic meets punk rock energy!
+                </div>
+            </div>
+
+            <div class="music-player">
+                🎵 Now Playing: "Medieval Punk Fusion" by Merlin Punksworth & The Time Displaced Band
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showProfile(profileId) {
+            // Hide all profiles
+            const profiles = document.querySelectorAll('.profile-container');
+            profiles.forEach(profile => profile.classList.remove('active'));
+            
+            // Remove active class from all nav buttons
+            const buttons = document.querySelectorAll('.nav-button');
+            buttons.forEach(button => button.classList.remove('active'));
+            
+            // Show selected profile
+            document.getElementById(profileId).classList.add('active');
+            
+            // Add active class to corresponding button
+            const activeButton = Array.from(buttons).find(button => 
+                button.textContent.toLowerCase().includes(profileId) || 
+                (profileId === 'network' && button.textContent.includes('Network')) ||
+                (profileId === 'temporalhustler' && button.textContent.includes('TemporalHustler')) ||
+                (profileId === 'stranger' && button.textContent.includes('Stranger')) ||
+                (profileId === 'twins' && button.textContent.includes('Chronos'))
+            );
+            if (activeButton) {
+                activeButton.classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>

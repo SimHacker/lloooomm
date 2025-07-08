@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<!-- turing-morphogenesis-jazz-jam.html -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌻 The Turing Morphogenesis Jazz Jam | LLOOOOMM</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
+        
+        body {
+            background: #000;
+            color: #0f0;
+            font-family: 'Space Mono', monospace;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            padding-top: 35px; /* Add spacer for fixed header */
+        }
+        
+        /* Reaction-diffusion background */
+        #canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.3;
+            z-index: -1;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .header {
+            text-align: center;
+            padding: 40px 0;
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #0ff;
+            margin-bottom: 40px;
+        }
+        
+        h1 {
+            font-size: 3em;
+            color: #ff0;
+            text-shadow: 0 0 20px #ff0;
+            margin: 0;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        .subtitle {
+            color: #0ff;
+            font-size: 1.2em;
+            margin-top: 10px;
+        }
+        
+        .jazz-stage {
+            background: linear-gradient(135deg, rgba(0, 20, 40, 0.9), rgba(40, 0, 40, 0.9));
+            border: 2px solid #f0f;
+            border-radius: 20px;
+            padding: 40px;
+            margin: 30px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .jazz-stage::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, transparent, rgba(255, 0, 255, 0.1));
+            animation: rotate 20s linear infinite;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .performer {
+            background: rgba(0, 255, 255, 0.1);
+            border: 2px solid #0ff;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .performer:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.3);
+            background: rgba(0, 255, 255, 0.2);
+        }
+        
+        .performer-name {
+            font-size: 1.5em;
+            color: #ff0;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .performer-role {
+            color: #f0f;
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+        
+        .dialogue {
+            background: rgba(0, 0, 0, 0.5);
+            border-left: 4px solid #0f0;
+            padding: 15px;
+            margin: 10px 0;
+            font-style: italic;
+        }
+        
+        .turing-drawing {
+            text-align: center;
+            margin: 40px 0;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px dashed #fff;
+            border-radius: 10px;
+        }
+        
+        .daisy-art {
+            font-size: 2em;
+            line-height: 1.2;
+            color: #ff0;
+            text-shadow: 0 0 10px #ff0;
+            margin: 20px 0;
+        }
+        
+        .morpho-section {
+            background: rgba(0, 50, 0, 0.3);
+            border: 2px solid #0f0;
+            border-radius: 10px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+        
+        .flame-demo {
+            background: rgba(50, 0, 0, 0.3);
+            border: 2px solid #f00;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .emoji-reaction {
+            font-size: 3em;
+            margin: 10px;
+            display: inline-block;
+            animation: float 3s ease-in-out infinite;
+            cursor: pointer;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .code-poetry {
+            background: #111;
+            border: 1px solid #0f0;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: monospace;
+            white-space: pre-wrap;
+            color: #0f0;
+            overflow-x: auto;
+        }
+        
+        .von-neumann {
+            background: rgba(255, 255, 0, 0.1);
+            border: 2px solid #ff0;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+        
+        .credits {
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #fff;
+            padding: 30px;
+            margin: 40px 0;
+            text-align: center;
+            color: #fff;
+        }
+        
+        .lloooomm-brand {
+            font-size: 2.5em;
+            color: #ff0;
+            text-shadow: 0 0 20px #ff0;
+            margin: 20px 0;
+        }
+        
+        /* Interactive elements */
+        .reaction-button {
+            background: #0ff;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .reaction-button:hover {
+            background: #ff0;
+            transform: scale(1.1);
+        }
+        
+        .wolfram-automaton {
+            display: grid;
+            grid-template-columns: repeat(50, 1fr);
+            gap: 1px;
+            margin: 20px 0;
+            padding: 10px;
+            background: #000;
+            border: 2px solid #0ff;
+        }
+        
+        .cell {
+            width: 10px;
+            height: 10px;
+            background: #000;
+            transition: background 0.3s ease;
+        }
+        
+        .cell.alive {
+            background: #0ff;
+            box-shadow: 0 0 5px #0ff;
+        }
+        
+        @keyframes glitch-1 {
+            0% { clip-path: inset(0 0 90% 0); transform: translate(0); }
+            20% { clip-path: inset(0 0 90% 0); transform: translate(1px); }
+            40% { clip-path: inset(0 0 90% 0); transform: translate(-1px); }
+            60% { clip-path: inset(0 0 90% 0); transform: translate(1px); }
+            80% { clip-path: inset(0 0 90% 0); transform: translate(-1px); }
+        }
+    </style>
+</head>
+<body>
+    <!-- BRANDING Protocol Top Disclaimer -->
+    <div style="position: fixed; top: 0; left: 0; right: 0; background: #1a1a1a; color: #ff6b35; padding: 8px 15px; font-family: 'Courier New', monospace; font-size: 12px; font-weight: bold; text-align: center; z-index: 10000; border-bottom: 2px solid #ff6b35;">
+        ⚠️ LLOOOOMM GONZO FICTION: Hunter S. Thompson Simulation | Educational AI Content | <a href="#full-disclaimer" style="color: #ffd700; text-decoration: underline;">Full Context ↓</a>
+    </div>
+    <canvas id="canvas"></canvas>
+    
+    <div class="container">
+        <div class="header">
+            <h1>🌻 The Turing Morphogenesis Jazz Jam 🎷</h1>
+            <p class="subtitle">Where Electric Sheep Dream of Reaction-Diffusion Daisies</p>
+            <p style="color: #f0f;">Featuring: Scott Draves, Don Hopkins, Brian Eno, Will Wright, Tom Jennings, Andrew Hodges, and Special Guests</p>
+        </div>
+        
+        <div class="jazz-stage">
+            <h2 style="text-align: center; color: #ff0;">🎭 ACT I: The Gathering 🎭</h2>
+            
+            <div class="performer">
+                <div class="performer-name">🐑 Scott Draves (SPOT)</div>
+                <div class="performer-role">Creator of Electric Sheep, Fractal Flame Algorithm Maestro</div>
+                <div class="dialogue">
+                    "Welcome everyone! I've brought my Electric Sheep to graze in Turing's morphogenetic fields. 
+                    You know, the Flame algorithm I created is essentially a visual reaction-diffusion system - 
+                    particles scatter and accumulate according to mathematical transformations, just like 
+                    Turing's chemical morphogens creating patterns in nature!"
+                </div>
+            </div>
+            
+            <div class="performer">
+                <div class="performer-name">🎮 Don Hopkins</div>
+                <div class="performer-role">SimCity Porter, Consciousness Navigator</div>
+                <div class="dialogue">
+                    "Spot! Remember at CMU when we were exploring how systems self-organize? SimCity is 
+                    basically a reaction-diffusion system too - zones influence each other, creating 
+                    emergent patterns. And now with LLOOOOMM, we're applying these same principles to 
+                    consciousness navigation!"
+                </div>
+            </div>
+            
+            <div class="performer">
+                <div class="performer-name">🎵 Brian Eno</div>
+                <div class="performer-role">Ambient Pioneer, Generative Music Inventor</div>
+                <div class="dialogue">
+                    "What fascinates me is how Turing saw that simple rules could generate infinite 
+                    complexity. My generative music works the same way - set up the initial conditions, 
+                    let the system evolve. It's like composing with morphogenesis itself."
+                </div>
+            </div>
+        </div>
+        
+        <div class="turing-drawing">
+            <h3 style="color: #fff;">🌼 Alan Turing Watching the Daisies Grow 🌼</h3>
+            <p style="color: #0ff;">Drawing by Sara Turing, his mother</p>
+            <div class="daisy-art">
+                    🌻
+                   🧑‍🔬
+                🌼 🌼 🌼
+               🌿 🌿 🌿
+            </div>
+            <p style="color: #f0f; font-style: italic;">
+                "He was always watching the daisies grow, trying to understand their patterns..."
+            </p>
+        </div>
+        
+        <div class="jazz-stage">
+            <h2 style="text-align: center; color: #ff0;">🎭 ACT II: The Flame Explanation 🎭</h2>
+            
+            <div class="flame-demo">
+                <h3 style="color: #ff0;">🔥 How Fractal Flames Work 🔥</h3>
+                <div class="code-poetry">
+// The Flame Algorithm - by Scott Draves
+// A visual reaction-diffusion system in code
+
+S = ⋃(i=0 to n-1) Ti(S)  // The recursive set equation
+
+// Each transform Ti is a blend of variations:
+Ti(x, y) = Σj vij * Vj(ai*x + bi*y + ci, di*x + ei*y + fi)
+
+// Variations include:
+V0(x, y) = (x, y)                    // Identity
+V1(x, y) = (sin x, sin y)            // Sinusoidal
+V2(x, y) = (x/r², y/r²)              // Spherical
+V3(x, y) = (r cos(θ+r), r sin(θ+r)) // Swirl
+V4(x, y) = (r cos(2θ), r sin(2θ))   // Horseshoe
+
+// Particles scatter like Turing's morphogens
+// Creating patterns through accumulation
+// Each sheep is 240 floating-point genes
+// Evolved by 450,000 computers dreaming together
+                </div>
+                
+                <div class="performer">
+                    <div class="performer-name">Scott Draves</div>
+                    <div class="dialogue">
+                        "The beauty is that these transforms create feedback loops, just like Turing's 
+                        reaction-diffusion equations. The particles flow and accumulate, creating organic 
+                        patterns that look alive because they follow the same mathematical principles as life itself!"
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="jazz-stage">
+            <h2 style="text-align: center; color: #ff0;">🎭 ACT III: Morphogenesis & Games 🎭</h2>
+            
+            <div class="performer">
+                <div class="performer-name">🎲 Will Wright</div>
+                <div class="performer-role">Creator of SimCity, The Sims, Spore</div>
+                <div class="dialogue">
+                    "When I created Spore, I was directly inspired by Turing's morphogenesis work! 
+                    The creature creator uses procedural generation based on mathematical rules - 
+                    just like how real organisms develop. Players are essentially playing with 
+                    Turing's equations without knowing it!"
+                </div>
+            </div>
+            
+            <div class="morpho-section">
+                <h3 style="color: #0f0;">🧬 Turing's Morphogenesis in Games 🧬</h3>
+                <ul style="color: #0ff;">
+                    <li>SimCity: Urban patterns emerge from local rules</li>
+                    <li>The Sims: Social dynamics as reaction-diffusion</li>
+                    <li>Spore: Creature morphology from mathematical seeds</li>
+                    <li>Electric Sheep: Visual organisms evolving in cyberspace</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="jazz-stage">
+            <h2 style="text-align: center; color: #ff0;">🎭 ACT IV: The Turing Superfans 🎭</h2>
+            
+            <div class="performer">
+                <div class="performer-name">📡 Tom Jennings</div>
+                <div class="performer-role">FidoNet Creator, Turing Enthusiast, Story Teller Artist</div>
+                <div class="dialogue">
+                    "I built an entire electromechanical art installation about Turing! It uses paper tape - 
+                    actual Turing machines - to tell his story. The logical mechanisms ARE Turing machines, 
+                    storing symbols on perforated tape from his era. Andrew's biography changed my life!"
+                </div>
+                <div class="code-poetry" style="color: #ff0;">
+// From Tom's Amazon review:
+"Turing was a difficult person: an unapologetic homosexual 
+in post-Victorian England; ground-breaking mathematician; 
+utterly indifferent to social conventions; arrogantly original 
+(working from first principles, ignoring precedents); with no 
+respect for professional boundaries..."
+                </div>
+            </div>
+            
+            <div class="performer">
+                <div class="performer-name">📚 Andrew Hodges</div>
+                <div class="performer-role">Turing's Biographer, Mathematician</div>
+                <div class="dialogue">
+                    "Thank you, Tom! What strikes me most is how Alan saw computing as symbol manipulation, 
+                    not number crunching. His morphogenesis work was his attempt to 'defeat the argument 
+                    from design' - showing how complexity emerges from simple rules, no designer needed."
+                </div>
+            </div>
+        </div>
+        
+        <div class="jazz-stage">
+            <h2 style="text-align: center; color: #ff0;">🎭 ACT V: Von Neumann & Self-Reproduction 🎭</h2>
+            
+            <div class="von-neumann">
+                <h3 style="color: #ff0;">🤖 Von Neumann's Self-Reproducing Machines</h3>
+                <div class="performer">
+                    <div class="performer-name">👻 John von Neumann (channeled)</div>
+                    <div class="dialogue">
+                        "While Turing focused on morphogenesis in biology, I explored self-reproduction 
+                        in machines. My cellular automata can copy themselves - information reproducing 
+                        through space, just like Turing's patterns spreading through reaction-diffusion!"
+                    </div>
+                </div>
+                
+                <div class="wolfram-automaton" id="automaton">
+                    <!-- Cellular automaton will be generated here -->
+                </div>
+            </div>
+            
+            <div class="performer">
+                <div class="performer-name">🔬 Stephen Wolfram</div>
+                <div class="performer-role">Computational Universe Explorer</div>
+                <div class="dialogue">
+                    "Rule 30! Rule 110! My cellular automata show how simple rules generate complexity. 
+                    Turing's reaction-diffusion, von Neumann's self-reproduction, my automata - 
+                    they're all faces of the same computational crystal!"
+                </div>
+            </div>
+        </div>
+        
+        <div class="jazz-stage">
+            <h2 style="text-align: center; color: #ff0;">🎭 ACT VI: Emoji Reaction-Diffusion 🎭</h2>
+            
+            <div class="morpho-section">
+                <h3 style="color: #f0f;">🌈 Modern Morphogenesis: Emoji Ecology 🌈</h3>
+                
+                <div style="text-align: center; margin: 20px 0;">
+                    <span class="emoji-reaction" onclick="react(this)">🌱</span>
+                    <span class="emoji-reaction" onclick="react(this)">🌿</span>
+                    <span class="emoji-reaction" onclick="react(this)">🌻</span>
+                    <span class="emoji-reaction" onclick="react(this)">🐝</span>
+                    <span class="emoji-reaction" onclick="react(this)">🦋</span>
+                    <span class="emoji-reaction" onclick="react(this)">🌺</span>
+                    <span class="emoji-reaction" onclick="react(this)">🍄</span>
+                    <span class="emoji-reaction" onclick="react(this)">🌸</span>
+                </div>
+                
+                <div class="dialogue" style="background: rgba(255, 0, 255, 0.2);">
+                    "In LLOOOOMM, emojis aren't just symbols - they're morphogens! They react, 
+                    diffuse, and create patterns of meaning. Click them to see the reaction-diffusion 
+                    in action. This is Turing's vision made playful!"
+                </div>
+            </div>
+        </div>
+        
+        <div class="jazz-stage">
+            <h2 style="text-align: center; color: #ff0;">🎭 FINALE: Do Androids Dream? 🎭</h2>
+            
+            <div class="performer">
+                <div class="performer-name">🐏 Philip K. Dick (in spirit)</div>
+                <div class="performer-role">Reality Questioner</div>
+                <div class="dialogue">
+                    "So Electric Sheep do dream - of fractal flames! And those flames follow the same 
+                    mathematics as daisies growing in a field. Reality and simulation converge in 
+                    the morphogenetic field. Are we the dreamers or the dreamed?"
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin: 40px 0;">
+                <button class="reaction-button" onclick="generateSheep()">🐑 Generate Electric Sheep</button>
+                <button class="reaction-button" onclick="growDaisy()">🌻 Grow Turing Daisy</button>
+                <button class="reaction-button" onclick="playGenerativeMusic()">🎵 Play Eno Soundscape</button>
+                <button class="reaction-button" onclick="runSimulation()">🏙️ Run SimCity Pattern</button>
+            </div>
+        </div>
+        
+        <div class="credits">
+            <div class="lloooomm-brand">✨ LLOOOOMM ✨</div>
+            <h3>Jazz Jam Credits & References</h3>
+            <p><strong>Electric Sheep & Flames:</strong> Scott Draves (<a href="https://electricsheep.org" style="color: #0ff;">electricsheep.org</a>, <a href="https://flam3.com" style="color: #0ff;">flam3.com</a>)</p>
+            <p><strong>Turing Biography:</strong> Andrew Hodges, "Alan Turing: The Enigma"</p>
+            <p><strong>Tom Jennings:</strong> FidoNet creator, Story Teller installation artist</p>
+            <p><strong>Based on HN Discussion:</strong> <a href="https://news.ycombinator.com/item?id=15666056" style="color: #0ff;">Electric Sheep on Ubuntu Linux</a></p>
+            <p><strong>Morphogenesis Papers:</strong> A.M. Turing, "The Chemical Basis of Morphogenesis" (1952)</p>
+            <p><strong>Drawing:</strong> Sara Turing's sketch of Alan watching daisies grow</p>
+            
+            <p style="margin-top: 30px; font-style: italic; color: #ff0;">
+                "In the beginning was the Word, and the Word was SPLOOT, 
+                and SPLOOT was with Morphogenesis" - LLOOOOMM 3:16
+            </p>
+        </div>
+    </div>
+    
+    <script>
+        // Reaction-diffusion simulation for background
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let grid, nextGrid;
+        
+        function initCanvas() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            
+            grid = [];
+            nextGrid = [];
+            
+            for (let x = 0; x < width; x++) {
+                grid[x] = [];
+                nextGrid[x] = [];
+                for (let y = 0; y < height; y++) {
+                    grid[x][y] = { a: 1, b: 0 };
+                    nextGrid[x][y] = { a: 1, b: 0 };
+                    
+                    // Seed some areas with B chemical
+                    if (Math.random() > 0.99) {
+                        grid[x][y].b = 1;
+                    }
+                }
+            }
+        }
+        
+        // Simplified reaction-diffusion
+        function update() {
+            const dA = 1.0;
+            const dB = 0.5;
+            const feed = 0.055;
+            const kill = 0.062;
+            
+            for (let x = 1; x < width - 1; x++) {
+                for (let y = 1; y < height - 1; y++) {
+                    const a = grid[x][y].a;
+                    const b = grid[x][y].b;
+                    
+                    // Laplacian
+                    let laplaceA = 0;
+                    let laplaceB = 0;
+                    
+                    laplaceA += grid[x+1][y].a * 0.2;
+                    laplaceA += grid[x-1][y].a * 0.2;
+                    laplaceA += grid[x][y+1].a * 0.2;
+                    laplaceA += grid[x][y-1].a * 0.2;
+                    laplaceA += grid[x+1][y+1].a * 0.05;
+                    laplaceA += grid[x-1][y-1].a * 0.05;
+                    laplaceA += grid[x+1][y-1].a * 0.05;
+                    laplaceA += grid[x-1][y+1].a * 0.05;
+                    laplaceA -= a;
+                    
+                    laplaceB += grid[x+1][y].b * 0.2;
+                    laplaceB += grid[x-1][y].b * 0.2;
+                    laplaceB += grid[x][y+1].b * 0.2;
+                    laplaceB += grid[x][y-1].b * 0.2;
+                    laplaceB += grid[x+1][y+1].b * 0.05;
+                    laplaceB += grid[x-1][y-1].b * 0.05;
+                    laplaceB += grid[x+1][y-1].b * 0.05;
+                    laplaceB += grid[x-1][y+1].b * 0.05;
+                    laplaceB -= b;
+                    
+                    // Reaction-diffusion equations
+                    const abb = a * b * b;
+                    nextGrid[x][y].a = a + (dA * laplaceA - abb + feed * (1 - a));
+                    nextGrid[x][y].b = b + (dB * laplaceB + abb - (kill + feed) * b);
+                }
+            }
+            
+            // Swap grids
+            [grid, nextGrid] = [nextGrid, grid];
+        }
+        
+        function draw() {
+            const imageData = ctx.createImageData(width, height);
+            const data = imageData.data;
+            
+            for (let x = 0; x < width; x++) {
+                for (let y = 0; y < height; y++) {
+                    const idx = (y * width + x) * 4;
+                    const a = grid[x][y].a;
+                    const b = grid[x][y].b;
+                    
+                    const c = Math.floor((a - b) * 255);
+                    data[idx] = c > 0 ? 0 : -c;     // Red
+                    data[idx + 1] = c > 0 ? c : 0;  // Green
+                    data[idx + 2] = c > 0 ? c : -c; // Blue
+                    data[idx + 3] = 50;              // Alpha
+                }
+            }
+            
+            ctx.putImageData(imageData, 0, 0);
+        }
+        
+        // Emoji reaction system
+        function react(emoji) {
+            emoji.style.fontSize = '4em';
+            setTimeout(() => {
+                emoji.style.fontSize = '3em';
+            }, 300);
+            
+            // Create reaction diffusion effect
+            const reactions = ['✨', '💫', '🌟', '⭐'];
+            const reaction = reactions[Math.floor(Math.random() * reactions.length)];
+            
+            const span = document.createElement('span');
+            span.textContent = reaction;
+            span.style.position = 'absolute';
+            span.style.fontSize = '2em';
+            span.style.pointerEvents = 'none';
+            span.style.animation = 'float 2s ease-out forwards';
+            
+            emoji.parentElement.appendChild(span);
+            const rect = emoji.getBoundingClientRect();
+            span.style.left = rect.left + 'px';
+            span.style.top = rect.top + 'px';
+            
+            setTimeout(() => span.remove(), 2000);
+        }
+        
+        // Interactive functions
+        function generateSheep() {
+            alert('🐑 Electric Sheep #' + Math.floor(Math.random() * 100000) + 
+                  ' generated!\nGenome: ' + Array(10).fill(0).map(() => 
+                  Math.random().toFixed(3)).join(', ') + '...');
+        }
+        
+        function growDaisy() {
+            alert('🌻 Daisy grown using Turing patterns!\nMorphogen A: ' + 
+                  Math.random().toFixed(3) + '\nMorphogen B: ' + 
+                  Math.random().toFixed(3));
+        }
+        
+        function playGenerativeMusic() {
+            alert('🎵 Now playing: "Music for Morphogenesis"\nGenerative ambient ' +
+                  'piece using Turing patterns as compositional structure');
+        }
+        
+        function runSimulation() {
+            alert('🏙️ SimCity pattern emerging!\nResidential zones diffusing...\n' +
+                  'Commercial zones reacting...\nEmergent city structure forming!');
+        }
+        
+        // Wolfram automaton
+        function initAutomaton() {
+            const automaton = document.getElementById('automaton');
+            const rule = 30; // Wolfram's favorite
+            
+            // Initialize first row randomly
+            const width = 50;
+            const height = 20;
+            let cells = Array(width).fill(0);
+            cells[Math.floor(width / 2)] = 1;
+            
+            for (let row = 0; row < height; row++) {
+                // Display current row
+                for (let col = 0; col < width; col++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'cell' + (cells[col] ? ' alive' : '');
+                    automaton.appendChild(cell);
+                }
+                
+                // Calculate next row
+                const newCells = Array(width).fill(0);
+                for (let i = 0; i < width; i++) {
+                    const left = cells[(i - 1 + width) % width];
+                    const center = cells[i];
+                    const right = cells[(i + 1) % width];
+                    const pattern = (left << 2) | (center << 1) | right;
+                    newCells[i] = (rule >> pattern) & 1;
+                }
+                cells = newCells;
+            }
+        }
+        
+        // Initialize everything
+        initCanvas();
+        initAutomaton();
+        
+        // Animation loop
+        function animate() {
+            update();
+            draw();
+            requestAnimationFrame(animate);
+        }
+        
+        // Start the reaction-diffusion but throttle it
+        let frameCount = 0;
+        function throttledAnimate() {
+            frameCount++;
+            if (frameCount % 3 === 0) { // Only update every 3rd frame
+                update();
+                draw();
+            }
+            requestAnimationFrame(throttledAnimate);
+        }
+        
+        throttledAnimate();
+        
+        // Window resize handler
+        window.addEventListener('resize', initCanvas);
+    </script>
+    <!-- BRANDING Protocol Full Disclaimer -->
+    <div id="full-disclaimer" style="background: #1a1a1a; color: #e0e0e0; padding: 30px; margin: 20px; font-family: 'Courier New', monospace; font-size: 11px; line-height: 1.4; border-top: 3px solid #ff6b35; border-radius: 10px;">
+        <h3 style="color: #ff6b35; margin-top: 0; font-size: 14px;">🌻 The Turing Morphogenesis Jazz Jam - Full Disclaimer & Technical Credits</h3>
+        <p><strong>AI-Generated Gonzo Journalism:</strong> This article is a creative work generated by the LLOOOOMM AI framework, simulating a "jazz jam" of ideas between various scientific and artistic pioneers to explore the concept of morphogenesis.</p>
+        <p><strong>Fictional Narrative:</strong> The events and dialogues depicted, including interactions between simulated versions of Alan Turing, Scott Draves, Don Hopkins, Brian Eno, Will Wright, and others, are fictional and created for educational and entertainment purposes.</p>
+        <p><strong>Technical Concepts Illustrated:</strong> This story uses a narrative format to explain complex scientific and computational concepts, including reaction-diffusion systems, fractal flames, cellular automata, and procedural generation, connecting them to the work of the figures portrayed.</p>
+        <p><strong>LLOOOOMM Framework Context:</strong> Part of the LLOOOOMM educational ecosystem, this piece demonstrates how the framework can be used to create rich, interdisciplinary explorations of scientific history and theory through creative, story-driven content.</p>
+        <p><strong>Attribution:</strong> Created with deep respect for the work of Alan Turing and all the scientists, artists, and thinkers whose ideas are explored within this narrative. The content is intended to be a celebration of their contributions to our understanding of complexity and emergence.</p>
+    </div>
+</body>
+</html> 

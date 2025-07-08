@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<!-- vitaboy-demo.html -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VitaBoy Animation Demo - By Skeletron</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+            background: #1a1a1a;
+            color: #00ff00;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #ff00ff;
+            text-shadow: 0 0 10px #ff00ff;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        .demo-area {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .canvas-container {
+            background: #000;
+            border: 2px solid #00ff00;
+            padding: 10px;
+            position: relative;
+        }
+        
+        canvas {
+            width: 100%;
+            height: 400px;
+            display: block;
+        }
+        
+        .controls {
+            background: #0a0a0a;
+            border: 2px solid #ff00ff;
+            padding: 20px;
+        }
+        
+        .control-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #00ffff;
+        }
+        
+        button {
+            background: #ff00ff;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        button:hover {
+            background: #00ff00;
+            transform: scale(1.05);
+        }
+        
+        select, input[type="range"] {
+            width: 100%;
+            background: #222;
+            color: #00ff00;
+            border: 1px solid #00ff00;
+            padding: 5px;
+            font-family: inherit;
+        }
+        
+        .info-panel {
+            background: #0a0a0a;
+            border: 2px solid #00ffff;
+            padding: 20px;
+            margin-top: 20px;
+            white-space: pre-wrap;
+            font-size: 12px;
+        }
+        
+        .skeleton-vis {
+            position: relative;
+            height: 400px;
+            overflow: hidden;
+        }
+        
+        .bone {
+            position: absolute;
+            background: #ff00ff;
+            transform-origin: left center;
+            height: 2px;
+            transition: all 0.1s;
+        }
+        
+        .joint {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #00ff00;
+            border-radius: 50%;
+            margin: -4px;
+            z-index: 10;
+        }
+        
+        .timeline {
+            background: #0a0a0a;
+            border: 2px solid #ffff00;
+            padding: 10px;
+            margin-top: 20px;
+            height: 100px;
+            position: relative;
+            overflow-x: auto;
+        }
+        
+        .timeline-track {
+            height: 30px;
+            background: #222;
+            margin: 5px 0;
+            position: relative;
+        }
+        
+        .timeline-clip {
+            position: absolute;
+            height: 100%;
+            background: #ff00ff;
+            opacity: 0.7;
+            border: 1px solid #fff;
+        }
+        
+        .playhead {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #00ff00;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🦴 VitaBoy Animation System Demo 🦴</h1>
+        <p style="text-align: center; color: #00ffff;">
+            Created by Skeletron - The Typo That Became a Hero!
+        </p>
+        
+        <div class="demo-area">
+            <div class="canvas-container">
+                <h3>Skeleton Visualization</h3>
+                <div class="skeleton-vis" id="skeleton-vis"></div>
+            </div>
+            
+            <div class="controls">
+                <h3>Animation Controls</h3>
+                
+                <div class="control-group">
+                    <label>Select Animation:</label>
+                    <select id="animation-select">
+                        <option value="idle">Idle</option>
+                        <option value="walk">Walk</option>
+                        <option value="wave">Wave</option>
+                        <option value="dance">Dance</option>
+                        <option value="sploot">SPLOOT!</option>
+                    </select>
+                </div>
+                
+                <div class="control-group">
+                    <label>Animation Speed: <span id="speed-value">1.0</span></label>
+                    <input type="range" id="speed-slider" min="0.1" max="3.0" step="0.1" value="1.0">
+                </div>
+                
+                <div class="control-group">
+                    <label>Blend Weight: <span id="weight-value">1.0</span></label>
+                    <input type="range" id="weight-slider" min="0" max="1" step="0.1" value="1.0">
+                </div>
+                
+                <div class="control-group">
+                    <button id="play-btn">▶ Play</button>
+                    <button id="pause-btn">⏸ Pause</button>
+                    <button id="stop-btn">⏹ Stop</button>
+                </div>
+                
+                <div class="control-group">
+                    <label>Animation Mode:</label>
+                    <button id="mode-once">Once</button>
+                    <button id="mode-loop">Loop</button>
+                    <button id="mode-pingpong">Ping-Pong</button>
+                </div>
+                
+                <div class="control-group">
+                    <label>Enable Wiggle:</label>
+                    <input type="checkbox" id="wiggle-check">
+                    <label>Wiggle Power: <span id="wiggle-value">0.1</span></label>
+                    <input type="range" id="wiggle-slider" min="0" max="1" step="0.05" value="0.1">
+                </div>
+            </div>
+        </div>
+        
+        <div class="timeline" id="timeline">
+            <h3>Animation Timeline</h3>
+            <div class="timeline-track" id="timeline-track">
+                <div class="timeline-clip" style="left: 0; width: 100px;"></div>
+                <div class="playhead" id="playhead"></div>
+            </div>
+        </div>
+        
+        <div class="info-panel" id="info-panel">
+Skeleton Info:
+- Bones: <span id="bone-count">0</span>
+- Current Animation: <span id="current-anim">None</span>
+- Frame: <span id="current-frame">0</span>
+- Elapsed: <span id="elapsed-time">0.0</span>s
+
+Active Practices:
+<span id="practice-list">None</span>
+
+Bone Hierarchy:
+<span id="bone-hierarchy">Loading...</span>
+        </div>
+    </div>
+
+    <script type="module">
+        // Import gl-matrix for math operations
+        import { vec3, mat4, quat } from 'https://cdn.skypack.dev/gl-matrix';
+        
+        // Make gl-matrix available globally for our modules
+        window.vec3 = vec3;
+        window.mat4 = mat4;
+        window.quat = quat;
+        
+        // Simple skeleton visualization
+        class SkeletonVisualizer {
+            constructor(container) {
+                this.container = container;
+                this.bones = new Map();
+                this.joints = new Map();
+            }
+            
+            createBone(name, startX, startY, endX, endY) {
+                const bone = document.createElement('div');
+                bone.className = 'bone';
+                bone.id = `bone-${name}`;
+                
+                const length = Math.sqrt((endX - startX) ** 2 + (endY - startY) ** 2);
+                const angle = Math.atan2(endY - startY, endX - startX);
+                
+                bone.style.left = startX + 'px';
+                bone.style.top = startY + 'px';
+                bone.style.width = length + 'px';
+                bone.style.transform = `rotate(${angle}rad)`;
+                
+                this.container.appendChild(bone);
+                this.bones.set(name, bone);
+                
+                // Create joint at start position
+                const joint = document.createElement('div');
+                joint.className = 'joint';
+                joint.style.left = startX + 'px';
+                joint.style.top = startY + 'px';
+                
+                this.container.appendChild(joint);
+                this.joints.set(name, joint);
+            }
+            
+            updateBone(name, startX, startY, endX, endY) {
+                const bone = this.bones.get(name);
+                const joint = this.joints.get(name);
+                
+                if (bone) {
+                    const length = Math.sqrt((endX - startX) ** 2 + (endY - startY) ** 2);
+                    const angle = Math.atan2(endY - startY, endX - startX);
+                    
+                    bone.style.left = startX + 'px';
+                    bone.style.top = startY + 'px';
+                    bone.style.width = length + 'px';
+                    bone.style.transform = `rotate(${angle}rad)`;
+                }
+                
+                if (joint) {
+                    joint.style.left = startX + 'px';
+                    joint.style.top = startY + 'px';
+                }
+            }
+            
+            clear() {
+                this.container.innerHTML = '';
+                this.bones.clear();
+                this.joints.clear();
+            }
+        }
+        
+        // Create demo skeleton
+        function createDemoSkeleton() {
+            const skeleton = {
+                name: 'Demo Skeleton',
+                bones: [
+                    // Root
+                    { name: 'root', parent: null, x: 200, y: 300 },
+                    
+                    // Spine
+                    { name: 'spine', parent: 'root', x: 200, y: 250 },
+                    { name: 'chest', parent: 'spine', x: 200, y: 200 },
+                    { name: 'neck', parent: 'chest', x: 200, y: 170 },
+                    { name: 'head', parent: 'neck', x: 200, y: 140 },
+                    
+                    // Left arm
+                    { name: 'l_shoulder', parent: 'chest', x: 170, y: 190 },
+                    { name: 'l_elbow', parent: 'l_shoulder', x: 140, y: 220 },
+                    { name: 'l_hand', parent: 'l_elbow', x: 120, y: 250 },
+                    
+                    // Right arm
+                    { name: 'r_shoulder', parent: 'chest', x: 230, y: 190 },
+                    { name: 'r_elbow', parent: 'r_shoulder', x: 260, y: 220 },
+                    { name: 'r_hand', parent: 'r_elbow', x: 280, y: 250 },
+                    
+                    // Left leg
+                    { name: 'l_hip', parent: 'root', x: 180, y: 300 },
+                    { name: 'l_knee', parent: 'l_hip', x: 170, y: 350 },
+                    { name: 'l_foot', parent: 'l_knee', x: 165, y: 390 },
+                    
+                    // Right leg
+                    { name: 'r_hip', parent: 'root', x: 220, y: 300 },
+                    { name: 'r_knee', parent: 'r_hip', x: 230, y: 350 },
+                    { name: 'r_foot', parent: 'r_knee', x: 235, y: 390 }
+                ]
+            };
+            
+            return skeleton;
+        }
+        
+        // Animation data
+        const animations = {
+            idle: {
+                duration: 2.0,
+                loop: true,
+                keyframes: {
+                    chest: [
+                        { time: 0, y: 200 },
+                        { time: 1, y: 195 },
+                        { time: 2, y: 200 }
+                    ]
+                }
+            },
+            wave: {
+                duration: 1.5,
+                loop: false,
+                keyframes: {
+                    r_shoulder: [
+                        { time: 0, rotation: 0 },
+                        { time: 0.5, rotation: -90 },
+                        { time: 1.5, rotation: 0 }
+                    ],
+                    r_elbow: [
+                        { time: 0.5, rotation: 0 },
+                        { time: 0.7, rotation: -30 },
+                        { time: 0.9, rotation: 30 },
+                        { time: 1.1, rotation: -30 },
+                        { time: 1.3, rotation: 0 }
+                    ]
+                }
+            }
+        };
+        
+        // Initialize demo
+        const visualizer = new SkeletonVisualizer(document.getElementById('skeleton-vis'));
+        const skeleton = createDemoSkeleton();
+        
+        // Build bone map
+        const boneMap = new Map();
+        skeleton.bones.forEach(bone => {
+            boneMap.set(bone.name, bone);
+        });
+        
+        // Draw skeleton
+        function drawSkeleton() {
+            visualizer.clear();
+            
+            skeleton.bones.forEach(bone => {
+                if (bone.parent) {
+                    const parent = boneMap.get(bone.parent);
+                    visualizer.createBone(bone.name, parent.x, parent.y, bone.x, bone.y);
+                }
+            });
+        }
+        
+        // Update info panel
+        function updateInfo() {
+            document.getElementById('bone-count').textContent = skeleton.bones.length;
+            
+            // Build hierarchy string
+            let hierarchy = '';
+            function addBone(bone, indent = '') {
+                hierarchy += indent + '- ' + bone.name + '\n';
+                const children = skeleton.bones.filter(b => b.parent === bone.name);
+                children.forEach(child => addBone(child, indent + '  '));
+            }
+            
+            const roots = skeleton.bones.filter(b => !b.parent);
+            roots.forEach(root => addBone(root));
+            
+            document.getElementById('bone-hierarchy').textContent = hierarchy;
+        }
+        
+        // Animation state
+        let currentAnimation = null;
+        let animationTime = 0;
+        let isPlaying = false;
+        let animationSpeed = 1.0;
+        let lastTime = performance.now();
+        
+        // Animation loop
+        function animate() {
+            const now = performance.now();
+            const deltaTime = (now - lastTime) * 0.001; // Convert to seconds
+            lastTime = now;
+            
+            if (isPlaying && currentAnimation) {
+                animationTime += deltaTime * animationSpeed;
+                
+                // Update animation based on mode
+                const anim = animations[currentAnimation];
+                if (anim) {
+                    if (animationTime >= anim.duration) {
+                        if (anim.loop) {
+                            animationTime = animationTime % anim.duration;
+                        } else {
+                            animationTime = anim.duration;
+                            isPlaying = false;
+                        }
+                    }
+                    
+                    // Update timeline playhead
+                    const progress = animationTime / anim.duration;
+                    document.getElementById('playhead').style.left = (progress * 100) + '%';
+                    
+                    // Update info
+                    document.getElementById('current-anim').textContent = currentAnimation;
+                    document.getElementById('elapsed-time').textContent = animationTime.toFixed(2);
+                }
+            }
+            
+            requestAnimationFrame(animate);
+        }
+        
+        // Control handlers
+        document.getElementById('animation-select').addEventListener('change', (e) => {
+            currentAnimation = e.target.value;
+            animationTime = 0;
+        });
+        
+        document.getElementById('play-btn').addEventListener('click', () => {
+            isPlaying = true;
+        });
+        
+        document.getElementById('pause-btn').addEventListener('click', () => {
+            isPlaying = false;
+        });
+        
+        document.getElementById('stop-btn').addEventListener('click', () => {
+            isPlaying = false;
+            animationTime = 0;
+        });
+        
+        document.getElementById('speed-slider').addEventListener('input', (e) => {
+            animationSpeed = parseFloat(e.target.value);
+            document.getElementById('speed-value').textContent = animationSpeed.toFixed(1);
+        });
+        
+        document.getElementById('weight-slider').addEventListener('input', (e) => {
+            document.getElementById('weight-value').textContent = e.target.value;
+        });
+        
+        document.getElementById('wiggle-slider').addEventListener('input', (e) => {
+            document.getElementById('wiggle-value').textContent = e.target.value;
+        });
+        
+        // Initialize
+        drawSkeleton();
+        updateInfo();
+        animate();
+        
+        // Easter egg: SPLOOT animation
+        animations.sploot = {
+            duration: 1.0,
+            loop: false,
+            keyframes: {
+                spine: [
+                    { time: 0, y: 250 },
+                    { time: 0.5, y: 350 }
+                ],
+                l_hip: [
+                    { time: 0, x: 180, rotation: 0 },
+                    { time: 0.5, x: 100, rotation: -90 }
+                ],
+                r_hip: [
+                    { time: 0, x: 220, rotation: 0 },
+                    { time: 0.5, x: 300, rotation: 90 }
+                ]
+            }
+        };
+        
+        console.log("🦴 VitaBoy Demo Loaded! - Skeletron says: 'Every typo has a skeleton!'");
+    </script>
+</body>
+</html> 

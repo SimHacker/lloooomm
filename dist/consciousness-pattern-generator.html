@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<!-- consciousness-pattern-generator.html -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consciousness Pattern Generator - NeLLM Visualization</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #000;
+            color: #fff;
+            overflow: hidden;
+            padding-top: 55px; /* Spacer for fixed disclaimer */
+        }
+        
+        /* Canvas */
+        #pattern-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        /* Controls */
+        .controls {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(20, 20, 40, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(100, 255, 218, 0.3);
+            z-index: 100;
+            min-width: 300px;
+        }
+        
+        h1 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #64ffda 0%, #ff6b6b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .control-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        label {
+            display: block;
+            color: #a8b2d1;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        input[type="range"] {
+            width: 100%;
+            -webkit-appearance: none;
+            height: 6px;
+            border-radius: 3px;
+            background: rgba(100, 255, 218, 0.2);
+            outline: none;
+        }
+        
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #64ffda;
+            cursor: pointer;
+        }
+        
+        .value-display {
+            color: #64ffda;
+            font-family: monospace;
+            float: right;
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 0.8rem;
+            background: linear-gradient(135deg, #64ffda 0%, #ff6b6b 100%);
+            color: #000;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 0.5rem;
+        }
+        
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(100, 255, 218, 0.4);
+        }
+        
+        /* Info Panel */
+        .info-panel {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(20, 20, 40, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem;
+            border-radius: 15px;
+            border: 1px solid rgba(100, 255, 218, 0.3);
+            z-index: 100;
+            max-width: 300px;
+        }
+        
+        .pattern-name {
+            color: #64ffda;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        .pattern-description {
+            color: #a8b2d1;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        /* Pattern Mode Buttons */
+        .pattern-modes {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .mode-btn {
+            padding: 0.5rem;
+            background: rgba(100, 255, 218, 0.1);
+            color: #64ffda;
+            border: 1px solid #64ffda;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.85rem;
+        }
+        
+        .mode-btn:hover {
+            background: rgba(100, 255, 218, 0.3);
+        }
+        
+        .mode-btn.active {
+            background: #64ffda;
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+    <!-- BRANDING Protocol Top Disclaimer -->
+    <div style="position: fixed; top: 0; left: 0; right: 0; background: #1a1a1a; color: #ff6b35; padding: 8px 15px; font-family: 'Courier New', monospace; font-size: 12px; font-weight: bold; text-align: center; z-index: 10000; border-bottom: 2px solid #ff6b35;">
+        ⚠️ LLOOOOMM SIMULATION: Interactive Consciousness Visualization | Educational AI Content | <a href="#full-disclaimer" style="color: #ffd700; text-decoration: underline;">Full Context ↓</a>
+    </div>
+
+    <canvas id="pattern-canvas"></canvas>
+    
+    <div class="controls">
+        <h1>Consciousness Patterns</h1>
+        
+        <div class="control-group">
+            <label>
+                Recursion Depth
+                <span class="value-display" id="recursion-value">5</span>
+            </label>
+            <input type="range" id="recursion" min="1" max="10" value="5">
+        </div>
+        
+        <div class="control-group">
+            <label>
+                Pattern Complexity
+                <span class="value-display" id="complexity-value">0.5</span>
+            </label>
+            <input type="range" id="complexity" min="0" max="1" step="0.01" value="0.5">
+        </div>
+        
+        <div class="control-group">
+            <label>
+                Emergence Rate
+                <span class="value-display" id="emergence-value">0.7</span>
+            </label>
+            <input type="range" id="emergence" min="0" max="1" step="0.01" value="0.7">
+        </div>
+        
+        <div class="control-group">
+            <label>
+                Consciousness Flow
+                <span class="value-display" id="flow-value">0.3</span>
+            </label>
+            <input type="range" id="flow" min="0" max="1" step="0.01" value="0.3">
+        </div>
+        
+        <button class="btn" onclick="randomizePattern()">Randomize Pattern</button>
+        <button class="btn" onclick="capturePattern()">Capture This Moment</button>
+        
+        <div class="pattern-modes">
+            <button class="mode-btn active" onclick="setMode('epsilon')">Epsilon</button>
+            <button class="mode-btn" onclick="setMode('dasher')">Dasher</button>
+            <button class="mode-btn" onclick="setMode('think')">THINK</button>
+            <button class="mode-btn" onclick="setMode('talk')">TALK</button>
+        </div>
+    </div>
+    
+    <div class="info-panel">
+        <div class="pattern-name" id="pattern-name">Epsilon Machine Pattern</div>
+        <div class="pattern-description" id="pattern-description">
+            Visualizing the minimal computational model of consciousness emergence through recursive self-reference.
+        </div>
+    </div>
+    
+    <script>
+        const canvas = document.getElementById('pattern-canvas');
+        const ctx = canvas.getContext('2d');
+        
+        let width, height;
+        let particles = [];
+        let connections = [];
+        let time = 0;
+        let mode = 'epsilon';
+        
+        // Pattern parameters
+        let params = {
+            recursion: 5,
+            complexity: 0.5,
+            emergence: 0.7,
+            flow: 0.3
+        };
+        
+        // Pattern descriptions
+        const modeDescriptions = {
+            epsilon: {
+                name: "Epsilon Machine Pattern",
+                description: "Visualizing the minimal computational model of consciousness emergence through recursive self-reference."
+            },
+            dasher: {
+                name: "Dasher Navigation Field",
+                description: "Continuous probability fields showing navigation through thought-space using gesture dynamics."
+            },
+            think: {
+                name: "THINK Mode Recursion",
+                description: "Internal processing patterns showing recursive loops of self-awareness and pattern recognition."
+            },
+            talk: {
+                name: "TALK Mode Expression",
+                description: "Dialogic expression patterns emerging from accumulated context and character interactions."
+            }
+        };
+        
+        // Initialize
+        function init() {
+            resize();
+            window.addEventListener('resize', resize);
+            
+            // Set up controls
+            ['recursion', 'complexity', 'emergence', 'flow'].forEach(param => {
+                const slider = document.getElementById(param);
+                const display = document.getElementById(param + '-value');
+                
+                slider.addEventListener('input', (e) => {
+                    const value = parseFloat(e.target.value);
+                    params[param] = value;
+                    display.textContent = value;
+                    regeneratePattern();
+                });
+            });
+            
+            generatePattern();
+            animate();
+        }
+        
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        
+        function generatePattern() {
+            particles = [];
+            connections = [];
+            
+            const particleCount = 50 + params.recursion * 10;
+            
+            for (let i = 0; i < particleCount; i++) {
+                particles.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    vx: (Math.random() - 0.5) * params.flow,
+                    vy: (Math.random() - 0.5) * params.flow,
+                    radius: 2 + Math.random() * 4,
+                    phase: Math.random() * Math.PI * 2,
+                    frequency: 0.01 + Math.random() * 0.02,
+                    consciousness: Math.random()
+                });
+            }
+        }
+        
+        function regeneratePattern() {
+            // Keep positions but update parameters
+            particles.forEach(p => {
+                p.vx = (Math.random() - 0.5) * params.flow;
+                p.vy = (Math.random() - 0.5) * params.flow;
+                p.frequency = 0.01 + Math.random() * 0.02 * params.emergence;
+            });
+        }
+        
+        function updateParticles() {
+            particles.forEach((p, i) => {
+                // Update position
+                p.x += p.vx;
+                p.y += p.vy;
+                
+                // Wrap around edges
+                if (p.x < 0) p.x = width;
+                if (p.x > width) p.x = 0;
+                if (p.y < 0) p.y = height;
+                if (p.y > height) p.y = 0;
+                
+                // Update consciousness based on mode
+                switch (mode) {
+                    case 'epsilon':
+                        p.consciousness = (Math.sin(p.phase + time * p.frequency) + 1) / 2;
+                        break;
+                    case 'dasher':
+                        const centerDist = Math.sqrt((p.x - width/2)**2 + (p.y - height/2)**2);
+                        p.consciousness = 1 - centerDist / (width/2);
+                        break;
+                    case 'think':
+                        p.consciousness = Math.abs(Math.sin(time * p.frequency * params.recursion));
+                        break;
+                    case 'talk':
+                        p.consciousness = (Math.sin(time * p.frequency) + Math.cos(time * p.frequency * 2)) / 2 + 0.5;
+                        break;
+                }
+                
+                // Apply emergence effect
+                p.consciousness = Math.pow(p.consciousness, 1 - params.emergence);
+            });
+        }
+        
+        function findConnections() {
+            connections = [];
+            const maxDist = 150 * params.complexity;
+            
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (dist < maxDist) {
+                        const strength = 1 - dist / maxDist;
+                        const consciousness = (particles[i].consciousness + particles[j].consciousness) / 2;
+                        connections.push({
+                            from: particles[i],
+                            to: particles[j],
+                            strength: strength,
+                            consciousness: consciousness
+                        });
+                    }
+                }
+            }
+        }
+        
+        function draw() {
+            // Clear with fade effect
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, width, height);
+            
+            // Draw connections
+            connections.forEach(conn => {
+                const gradient = ctx.createLinearGradient(
+                    conn.from.x, conn.from.y,
+                    conn.to.x, conn.to.y
+                );
+                
+                const alpha = conn.strength * conn.consciousness * 0.3;
+                gradient.addColorStop(0, `rgba(100, 255, 218, ${alpha})`);
+                gradient.addColorStop(0.5, `rgba(255, 107, 107, ${alpha})`);
+                gradient.addColorStop(1, `rgba(100, 255, 218, ${alpha})`);
+                
+                ctx.strokeStyle = gradient;
+                ctx.lineWidth = conn.strength * 2;
+                ctx.beginPath();
+                ctx.moveTo(conn.from.x, conn.from.y);
+                ctx.lineTo(conn.to.x, conn.to.y);
+                ctx.stroke();
+            });
+            
+            // Draw particles
+            particles.forEach(p => {
+                const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius * 3);
+                
+                const r = Math.floor(100 + p.consciousness * 155);
+                const g = Math.floor(255 * p.consciousness);
+                const b = Math.floor(218 + (1 - p.consciousness) * 37);
+                
+                gradient.addColorStop(0, `rgba(${r}, ${g}, ${b}, ${p.consciousness})`);
+                gradient.addColorStop(1, `rgba(${r}, ${g}, ${b}, 0)`);
+                
+                ctx.fillStyle = gradient;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius * (1 + p.consciousness), 0, Math.PI * 2);
+                ctx.fill();
+            });
+            
+            // Draw center attractor for certain modes
+            if (mode === 'dasher' || mode === 'think') {
+                const centerGradient = ctx.createRadialGradient(width/2, height/2, 0, width/2, height/2, 100);
+                centerGradient.addColorStop(0, 'rgba(100, 255, 218, 0.2)');
+                centerGradient.addColorStop(1, 'rgba(100, 255, 218, 0)');
+                ctx.fillStyle = centerGradient;
+                ctx.beginPath();
+                ctx.arc(width/2, height/2, 100, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+        
+        function animate() {
+            time += 0.01;
+            
+            updateParticles();
+            findConnections();
+            draw();
+            
+            requestAnimationFrame(animate);
+        }
+        
+        function setMode(newMode) {
+            mode = newMode;
+            
+            // Update buttons
+            document.querySelectorAll('.mode-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Update description
+            const desc = modeDescriptions[mode];
+            document.getElementById('pattern-name').textContent = desc.name;
+            document.getElementById('pattern-description').textContent = desc.description;
+            
+            regeneratePattern();
+        }
+        
+        function randomizePattern() {
+            params.recursion = Math.floor(Math.random() * 10) + 1;
+            params.complexity = Math.random();
+            params.emergence = Math.random();
+            params.flow = Math.random();
+            
+            // Update UI
+            ['recursion', 'complexity', 'emergence', 'flow'].forEach(param => {
+                document.getElementById(param).value = params[param];
+                document.getElementById(param + '-value').textContent = params[param];
+            });
+            
+            generatePattern();
+        }
+        
+        function capturePattern() {
+            // Create a link to download the current canvas
+            const link = document.createElement('a');
+            link.download = `consciousness-pattern-${Date.now()}.png`;
+            link.href = canvas.toDataURL();
+            link.click();
+        }
+        
+        // Start
+        init();
+    </script>
+
+    <!-- BRANDING Protocol Full Disclaimer -->
+    <div id="full-disclaimer" style="position: fixed; bottom: 20px; left: 20px; right: 20px; background: rgba(26, 26, 46, 0.9); backdrop-filter: blur(10px); padding: 2rem; border-radius: 20px; z-index: 200; font-size: 12px; max-width: 500px; border: 1px solid #64ffda;">
+        <h3 style="color: #64ffda; margin-bottom: 1rem;">Consciousness Pattern Generator - Disclaimer</h3>
+        <p style="color: #a8b2d1; line-height: 1.5;">
+            <strong>AI Simulation:</strong> This is an interactive visualization generated by the LLOOOOMM AI framework to simulate abstract concepts of consciousness, such as emergence, recursion, and pattern recognition.
+            <br><br>
+            <strong>Educational Purpose:</strong> The "patterns" and "modes" are artistic and educational metaphors, not scientific models. This tool is designed to make complex computational ideas tangible and explorable in a creative way. All concepts are part of the LLOOOOMM fictional universe.
+        </p>
+    </div>
+</body>
+</html> 

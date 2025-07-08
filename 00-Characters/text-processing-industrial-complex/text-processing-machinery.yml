@@ -1,0 +1,315 @@
+name: Text Processing Industrial Complex
+subtitle: "Factorio Meets Document Processing"
+
+machinery_catalog:
+  word_crushing_bulldozer:
+    description: "Crumbles words into progressively smaller pieces based on proximity"
+    specifications:
+      crushing_levels:
+        0: "No effect - words remain intact"
+        1: "Words start vibrating"
+        2: "Spaces appear in compound words"
+        3: "Words break into syllables"
+        4: "Syllables break into letter pairs"
+        5: "Everything becomes individual letters"
+        infinity: "Even atoms of meaning are crushed"
+      
+      proximity_effects: |
+        Distance 10: No effect
+        Distance 8:  W o r d s   g e t   s p a c e y
+        Distance 6:  W  o  r  d  s     f  a  l  l     a  p  a  r  t
+        Distance 4:  L e t t e r s   s c a t t e r
+        Distance 2:  L   e   t   t   e   r   s       s   p   i   l   l
+        Distance 0:  [CRUSHING ZONE]
+    
+    example: |
+      ```worm word-crusher (crushing, level-3)
+      # Word Crushing Bulldozer Mk III
+      set_crushing_level(3)
+      set_blade_width(40)
+      
+      # Approach text
+      while forward():
+        proximity = distance_to_text()
+        if proximity < 10:
+          vibration = 10 - proximity
+          apply_word_shake(vibration)
+          
+        if proximity < 5:
+          crumble_words()
+          scatter_letters()
+        
+        if proximity < 2:
+          crush_and_compress()
+          leave_trail("▓▓▓▓▓▓▓▓▓▓")
+      ```
+
+  roller_compressor:
+    description: "Flattens fluffy scattered letters into compressed blocks"
+    operation: |
+      ```worm roller-001 (rolling, compression-mode)
+      # Industrial Text Compressor
+      set_roller_weight(1000)  # tons
+      set_roller_width(80)     # characters
+      
+      while roll_forward():
+        # Find fluffy text
+        fluffy = scan_for_pattern(r"[a-z]\s+[a-z]\s+[a-z]")
+        if fluffy:
+          compress(fluffy, ratio=0.1)
+          flatten_to_solid_block()
+          leave_smooth_surface("████████")
+      ```
+    
+    compression_examples:
+      before: "h  e  l  l  o     w  o  r  l  d"
+      after:  "helloworld"
+      
+      before: "s  c  a  t  t  e  r  e  d    🌟  l  e  t  t  e  r  s  🌙"
+      after:  "scattered🌟letters🌙"
+
+  text_sifter:
+    description: "Separates text by size like a mining operation"
+    screens:
+      - name: "Sentence Screen"
+        hole_size: "Full sentences only"
+        catches: ["Complete thoughts.", "Proper punctuation!"]
+        
+      - name: "Word Screen"  
+        hole_size: "3+ characters"
+        catches: ["words", "tokens", "chunks"]
+        
+      - name: "Letter Screen"
+        hole_size: "1 character"
+        catches: ["a", "b", "c", "1", "2", "3"]
+        
+      - name: "Emoji Screen"
+        hole_size: "Unicode specials"
+        catches: ["🌟", "💎", "🔥", "✨"]
+    
+    operation: |
+      ```worm sifter-001 (sifting, separation-mode)
+      # Industrial Text Sifter
+      screens = create_screen_stack()
+      
+      while input_available():
+        raw_text = eat_raw_material()
+        
+        for screen in screens:
+          caught = screen.filter(raw_text)
+          poop(caught, f"{screen.name}-output-{n}.txt")
+          raw_text = screen.pass_through
+      ```
+
+  pattern_extractor:
+    description: "Like a magnetic separator for specific patterns"
+    magnets:
+      email_magnet: |
+        ```worm email-extractor (extracting, magnetic-mode)
+        set_pattern(r"[\w\.-]+@[\w\.-]+\.\w+")
+        while scan():
+          if match_pattern():
+            extract_and_collect()
+            poop(collection, "emails-{n}.csv")
+        ```
+      
+      url_magnet: |
+        ```worm url-extractor (extracting)
+        set_pattern(r"https?://[^\s]+")
+        magnetize_matching_text()
+        ```
+
+  text_furnace:
+    description: "Melts text down to base components"
+    temperatures:
+      low: "Removes whitespace"
+      medium: "Removes punctuation"
+      high: "Removes vowels"
+      extreme: "Only consonants remain"
+      plasma: "Pure entropy"
+    
+    smelting_process: |
+      ```worm furnace-001 (smelting, high-temp-mode)
+      # Text Smelting Furnace
+      set_temperature("high")
+      
+      while fuel_available():
+        ore = eat_raw_text()
+        
+        # Progressive melting
+        if temp >= "low":
+          ore = ore.strip()
+        if temp >= "medium":
+          ore = remove_punctuation(ore)
+        if temp >= "high":
+          ore = remove_vowels(ore)
+        if temp >= "extreme":
+          ore = only_consonants(ore)
+          
+        poop(ore, "smelted-text-{n}.txt")
+      ```
+
+conveyor_system:
+  text_belt:
+    description: "Moves text between processing stations"
+    example: |
+      ```worm conveyor-001 (transporting, belt-mode)
+      # Conveyor Belt System
+      set_speed(100)  # characters per second
+      
+      stations = [
+        "crusher",
+        "sifter", 
+        "compressor",
+        "furnace",
+        "packager"
+      ]
+      
+      for item in input_stream():
+        for station in stations:
+          item = transport_to(station)
+          item = station.process(item)
+        
+        poop(item, "finished-product-{n}.txt")
+      ```
+
+assembly_line:
+  document_factory:
+    description: "Complete text processing factory"
+    blueprint: |
+      ```worm factory-manager (orchestrating, industrial-mode)
+      # Document Processing Factory
+      
+      # Phase 1: Raw Material Intake
+      raw_docs = intake_documents("*.md", "*.yml", "*.txt")
+      
+      # Phase 2: Primary Crushing
+      for doc in raw_docs:
+        crusher = spawn_worm("crusher", level=3)
+        crushed = crusher.process(doc)
+        conveyor.add(crushed)
+      
+      # Phase 3: Separation
+      sifter = spawn_worm("sifter")
+      words = sifter.extract_words(conveyor.items)
+      letters = sifter.extract_letters(conveyor.items)
+      emojis = sifter.extract_emojis(conveyor.items)
+      
+      # Phase 4: Compression
+      compressor = spawn_worm("roller")
+      compressed_words = compressor.compress(words)
+      compressed_letters = compressor.compress(letters)
+      
+      # Phase 5: Pattern Extraction
+      patterns = spawn_worm("pattern-extractor")
+      valuable_patterns = patterns.extract_all([
+        "emails", "urls", "phone_numbers", "api_keys"
+      ])
+      
+      # Phase 6: Final Assembly
+      assembler = spawn_worm("assembler")
+      final_product = assembler.combine({
+        "compressed_text": compressed_words,
+        "letter_blocks": compressed_letters,
+        "emoji_collection": emojis,
+        "extracted_patterns": valuable_patterns
+      })
+      
+      poop(final_product, "processed-document-{n}.json")
+      ```
+
+specialized_machinery:
+  emoji_clumper:
+    description: "Emojis stick to letters creating beautiful clumps"
+    example: |
+      ```worm emoji-clumper (clumping, aesthetic-mode)
+      # Creates beautiful emoji-letter clumps
+      
+      while process():
+        letter = find_lonely_letter()
+        emoji = find_nearby_emoji()
+        
+        if attraction(letter, emoji) > threshold:
+          clump = stick_together(letter, emoji)
+          # Results: "a🌟", "b💎", "c🔥"
+          poop(clump, "emoji-clumps-{n}.txt")
+      ```
+
+  sand_pile_simulator:
+    description: "Letters behave like sand grains with gravity"
+    physics: |
+      ```worm sand-physics (simulating, gravity-mode)
+      # Letter Sand Pile Cellular Automaton
+      
+      grid = create_letter_grid()
+      
+      while simulate():
+        for cell in grid:
+          if cell.height > critical_angle:
+            # Avalanche!
+            topple_letters(cell)
+            distribute_to_neighbors(cell.letters)
+        
+        apply_gravity()
+        render_pile()
+      ```
+    
+    example_pile: |
+      Before bulldozer:
+      The quick brown fox jumps
+      
+      After crushing (level 5):
+           t
+          h e
+         q u i
+        c k b r
+       o w n f o
+      x j u m p s
+      
+      After gravity:
+      tehquickbr
+      ownfoxjumps
+
+quality_control:
+  inspection_worm:
+    description: "Ensures processed text meets standards"
+    checks:
+      - "Compression ratio achieved"
+      - "Pattern extraction completeness"
+      - "No valuable data lost"
+      - "Emoji preservation rate"
+      - "Letter distribution uniformity"
+
+production_metrics:
+  efficiency_report: |
+    ```worm metrics-collector (analyzing, report-mode)
+    # Factory Performance Metrics
+    
+    metrics = {
+      "words_crushed_per_minute": 10000,
+      "compression_ratio": 0.73,
+      "pattern_extraction_accuracy": 0.98,
+      "emoji_preservation": 1.0,
+      "letter_spillage": 0.02,
+      "energy_per_document": "3.14 worm-watts"
+    }
+    
+    generate_dashboard(metrics)
+    alert_if_below_threshold()
+    optimize_production_line()
+    ```
+
+advanced_machinery:
+  quantum_text_collider:
+    description: "Smashes words together at high speed"
+    operation: "Collides words to create new meanings"
+    
+  recursive_crusher:
+    description: "Crushes the output of crushing"
+    warning: "May create text singularities"
+    
+  ai_powered_sorter:
+    description: "Uses machine learning to sort text"
+    capabilities: "Sorts by sentiment, topic, or vibes"
+
+motto: "From Raw Text to Refined Data - The Industrial Revolution of Documents!" 

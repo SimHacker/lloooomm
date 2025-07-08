@@ -1,0 +1,363 @@
+name: Turing Hop Worm Instruction Set
+subtitle: "PostScript-Inspired Stack-Based Document Navigation & Transformation"
+
+core_concept: |
+  Worms can hop anywhere instantly - no more crawling character by character!
+  The TURING HOP optimization lets worms jump to any pattern or position,
+  insert themselves mid-line, and maintain multiple typed stomachs (stacks).
+
+execution_model:
+  stacks:
+    parameter_stack:
+      description: "Main polymorphic stack for all data types"
+      operations: ["push", "pop", "dup", "swap", "roll", "clear"]
+    
+    execution_stack:
+      description: "Control flow, continuations, return addresses"
+      operations: ["call", "return", "if", "for", "while", "repeat"]
+    
+    user_stacks:
+      description: "Any variable can be a stack/stomach"
+      examples:
+        - "numbers_stomach"
+        - "strings_stomach"
+        - "emoji_stomach"
+        - "error_stomach"
+        - "pattern_stomach"
+
+movement_opcodes:
+  # The TURING HOP operations
+  hop:
+    syntax: "pattern hop"
+    description: "Jump to first occurrence of pattern"
+    example: |
+      "function" hop    # Jump to next "function"
+      /regex/ hop       # Jump to regex match
+  
+  hop_before:
+    syntax: "pattern hop_before"
+    description: "Jump to position before pattern"
+    example: '"TODO" hop_before'
+  
+  hop_after:
+    syntax: "pattern hop_after"
+    description: "Jump to position after pattern"
+    example: '":" hop_after'
+  
+  hop_line:
+    syntax: "line_number hop_line"
+    description: "Jump to specific line number"
+    example: "42 hop_line"
+  
+  hop_char:
+    syntax: "position hop_char"
+    description: "Jump to character position in current line"
+    example: "0 hop_char  # Beginning of line"
+  
+  insert_mode:
+    syntax: "insert_mode"
+    description: "Insert newlines to create space for worm"
+    example: |
+      "middle" hop
+      insert_mode       # Creates:
+                       # text before
+                       # [WORM POSITION]
+                       # middle text after
+  
+  compact_mode:
+    syntax: "compact_mode"
+    description: "Remove newlines when jumping away"
+
+eating_opcodes:
+  eat:
+    syntax: "eat"
+    description: "Consume next item (char/word/line based on mode)"
+    modes:
+      - char_mode: "Eat one character"
+      - word_mode: "Eat until whitespace"
+      - line_mode: "Eat entire line"
+      - block_mode: "Eat until delimiter"
+  
+  eat_pattern:
+    syntax: "pattern eat_pattern"
+    description: "Eat everything until pattern"
+    example: '";" eat_pattern  # Eat until semicolon'
+  
+  peek:
+    syntax: "peek"
+    description: "Look at next item without consuming"
+  
+  classify:
+    syntax: "classify"
+    description: "Determine type of eaten item"
+    returns: "type_symbol (:number :string :emoji :code :punct)"
+
+digestion_opcodes:
+  digest:
+    syntax: "digest"
+    description: "Transform eaten content based on current rules"
+    
+  transform:
+    syntax: "transform_proc digest"
+    description: "Apply transformation procedure"
+    example: |
+      { uppercase } digest
+      { reverse } digest
+      { 2 * } digest      # For numbers
+  
+  route:
+    syntax: "stomach_name route"
+    description: "Send digested content to specific stomach"
+    example: |
+      eat classify
+      :emoji eq { emoji_stomach route } if
+      :number eq { number_stomach route } if
+
+stack_opcodes:
+  # Classic PostScript operations
+  dup:
+    syntax: "dup"
+    description: "Duplicate top of stack"
+    example: "42 dup  # Stack: 42 42"
+  
+  pop:
+    syntax: "pop"
+    description: "Remove top of stack"
+  
+  swap:
+    syntax: "swap"
+    description: "Exchange top two items"
+    example: "1 2 swap  # Stack: 2 1"
+  
+  roll:
+    syntax: "n j roll"
+    description: "Roll n items j times"
+  
+  push:
+    syntax: "item push"
+    description: "Push item onto current stack"
+  
+  push_to:
+    syntax: "item stack_name push_to"
+    description: "Push to specific named stack"
+    example: '42 number_stomach push_to'
+
+arrayification_opcodes:
+  combine:
+    syntax: "item1 item2 combine"
+    description: "DWIM array combination"
+    rules: |
+      [a] [b] combine     → [a, b]
+      "a" [b] combine     → ["a", b]
+      [a] "b" combine     → [a, "b"]
+      "a" "b" combine     → ["a", "b"]
+      42 [b] combine      → [42, b]
+      42 "b" combine      → [42, "b"]
+  
+  arrayify:
+    syntax: "arrayify"
+    description: "Convert top of stack to array if not already"
+    example: |
+      42 arrayify         # [42]
+      [1, 2] arrayify     # [1, 2] (no change)
+  
+  flatten:
+    syntax: "flatten"
+    description: "Flatten nested arrays one level"
+
+control_flow_opcodes:
+  if:
+    syntax: "bool {true_proc} {false_proc} if"
+    example: |
+      eaten_char classify
+      :emoji eq { emoji_stomach route } { regular_stomach route } if
+  
+  for:
+    syntax: "start end {proc} for"
+    example: |
+      0 10 { dup eat_char print } for
+  
+  while:
+    syntax: "{condition} {body} while"
+    example: |
+      { not_at_eof } { eat digest route } while
+  
+  repeat:
+    syntax: "n {proc} repeat"
+    example: |
+      5 { "🌟" emit } repeat  # Emit 5 stars
+  
+  def:
+    syntax: "/name {proc} def"
+    description: "Define new procedure"
+    example: |
+      /eat_word { word_mode eat } def
+      /is_emoji { classify :emoji eq } def
+
+object_system_opcodes:
+  # NeWS/Smalltalk-like prototype operations
+  new:
+    syntax: "prototype new"
+    description: "Create new object from prototype"
+    example: |
+      WormPrototype new
+      /my_worm exch def
+  
+  send:
+    syntax: "object message send"
+    description: "Send message to object"
+    example: |
+      my_worm /eat send
+      my_worm /hop "pattern" send
+  
+  slot:
+    syntax: "object /slot_name value put"
+    description: "Set object slot"
+    example: |
+      my_worm /stomach_count 5 put
+  
+  inherit:
+    syntax: "parent child inherit"
+    description: "Set up prototype chain"
+
+stomach_management:
+  create_stomach:
+    syntax: "/name create_stomach"
+    description: "Create new named stomach (stack)"
+    example: |
+      /emoji_stomach create_stomach
+      /error_stomach create_stomach
+  
+  select_stomach:
+    syntax: "/name select_stomach"
+    description: "Make named stomach current"
+  
+  poop:
+    syntax: "stomach_name poop"
+    description: "Output contents of stomach"
+    example: |
+      emoji_stomach poop    # 💎x42 🌟x17
+  
+  poop_all:
+    syntax: "poop_all"
+    description: "Output all stomachs to numbered files"
+
+robot_odyssey_opcodes:
+  # Navigation and puzzle-solving
+  scan_ahead:
+    syntax: "distance scan_ahead"
+    description: "Look ahead without moving"
+    returns: "Array of upcoming items"
+  
+  find_path:
+    syntax: "target find_path"
+    description: "Calculate path to target"
+    example: |
+      "exit" find_path
+      execute_path
+  
+  mark_position:
+    syntax: "/name mark_position"
+    description: "Save current position"
+  
+  return_to_mark:
+    syntax: "/name return_to_mark"
+    description: "Jump back to marked position"
+  
+  solve_maze:
+    syntax: "maze_pattern solve_maze"
+    description: "Navigate through document maze"
+
+example_programs:
+  emoji_harvester: |
+    ```worm emoji-harvester (turing-hop-mode)
+    # Create specialized stomachs
+    /precious_stomach create_stomach
+    /emotion_stomach create_stomach
+    /element_stomach create_stomach
+    
+    # Define emoji classifiers
+    /is_precious { 
+      ["💎", "💰", "⭐", "🏆"] contains 
+    } def
+    
+    /is_emotion {
+      ["😀", "😢", "😡", "💖"] contains
+    } def
+    
+    # Main harvesting loop
+    { not_at_eof } {
+      eat classify
+      :emoji eq {
+        dup is_precious { precious_stomach route } {
+          dup is_emotion { emotion_stomach route } {
+            element_stomach route
+          } if
+        } if
+      } {
+        pop  # Discard non-emojis
+      } if
+    } while
+    
+    # Output results
+    precious_stomach poop
+    emotion_stomach poop
+    element_stomach poop
+    ```
+  
+  function_transformer: |
+    ```worm function-transformer (turing-hop)
+    # Jump to each function and transform it
+    
+    /transform_function {
+      "function" hop_before
+      insert_mode
+      "✨ TRANSFORMED ✨\n" emit
+      compact_mode
+      "{" hop_after
+      " // 🎯 Enhanced!" emit
+    } def
+    
+    # Find and transform all functions
+    begin_of_file
+    { "function" find_next } {
+      transform_function
+    } while
+    ```
+  
+  maze_navigator: |
+    ```worm maze-navigator (robot-odyssey-mode)
+    # Navigate through ASCII maze in document
+    
+    /can_move_right { 1 0 scan_relative "#" ne } def
+    /can_move_down { 0 1 scan_relative "#" ne } def
+    /can_move_left { -1 0 scan_relative "#" ne } def
+    /can_move_up { 0 -1 scan_relative "#" ne } def
+    
+    /at_exit { current_char "E" eq } def
+    
+    # Right-hand rule maze solving
+    { not at_exit } {
+      can_move_right { move_right } {
+        can_move_down { move_down } {
+          can_move_left { move_left } {
+            can_move_up { move_up } {
+              backtrack
+            } if
+          } if
+        } if
+      } if
+      
+      "🐛" emit  # Leave trail
+    } while
+    
+    "🎉 Exit found!" announce
+    ```
+
+optimization_features:
+  lazy_evaluation: "Procedures only execute when needed"
+  tail_recursion: "Optimized tail calls for loops"
+  pattern_caching: "Recently used patterns cached for fast hopping"
+  stomach_indexing: "Fast lookup for large stomach contents"
+
+motto: "Why crawl when you can HOP? The Turing Hop - optimizing worm travel since 2024!" 

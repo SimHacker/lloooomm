@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<!-- data-viewer.html -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌟 LLOOOOMM Data Explorer</title>
+    <style>
+        :root {
+            --primary: #2E8B57;
+            --secondary: #FFD700;
+            --accent: #FF69B4;
+            --text: #2F4F4F;
+            --bg: #F0F8FF;
+            --card: #FFFFFF;
+            --code-bg: #1e1e1e;
+            --code-text: #d4d4d4;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Georgia, serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: linear-gradient(135deg, var(--bg) 0%, #E6E6FA 100%);
+            min-height: 100vh;
+            padding-top: 35px; /* Spacer for fixed disclaimer */
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), #20B2AA);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+        }
+
+        .file-selector {
+            background: var(--card);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .file-input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--primary);
+            border-radius: 10px;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .quick-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .quick-link {
+            background: var(--accent);
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            text-decoration: none;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .quick-link:hover {
+            background: #FF1493;
+            transform: translateY(-2px);
+        }
+
+        .content-area {
+            background: var(--card);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            min-height: 400px;
+        }
+
+        .yaml-viewer {
+            font-family: 'Courier New', monospace;
+            background: var(--code-bg);
+            color: var(--code-text);
+            padding: 1.5rem;
+            border-radius: 10px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+
+        .yaml-key {
+            color: #569CD6;
+            font-weight: bold;
+        }
+
+        .yaml-string {
+            color: #CE9178;
+        }
+
+        .yaml-number {
+            color: #B5CEA8;
+        }
+
+        .yaml-boolean {
+            color: #569CD6;
+        }
+
+        .yaml-comment {
+            color: #6A9955;
+            font-style: italic;
+        }
+
+        .metadata-panel {
+            background: linear-gradient(135deg, #FFE4E1, #F0F8FF);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .character-card {
+            background: var(--card);
+            border-left: 5px solid var(--accent);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .character-name {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .character-role {
+            color: var(--accent);
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .tabs {
+            display: flex;
+            background: var(--primary);
+            border-radius: 10px 10px 0 0;
+            overflow: hidden;
+        }
+
+        .tab {
+            background: var(--primary);
+            color: white;
+            padding: 1rem 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .tab:hover {
+            background: #228B22;
+        }
+
+        .tab.active {
+            background: var(--secondary);
+            color: var(--text);
+        }
+
+        .tab-content {
+            display: none;
+            padding: 2rem;
+            background: var(--card);
+            border-radius: 0 0 10px 10px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .interactive-demo {
+            background: linear-gradient(135deg, #98FB98, #90EE90);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            text-align: center;
+        }
+
+        .demo-button {
+            background: var(--primary);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .demo-button:hover {
+            background: #228B22;
+            transform: scale(1.05);
+        }
+
+        .error-message {
+            background: #ffebee;
+            color: #c62828;
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid #c62828;
+            margin: 1rem 0;
+        }
+
+        .success-message {
+            background: #e8f5e8;
+            color: #2e7d32;
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid #2e7d32;
+            margin: 1rem 0;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        .breadcrumb {
+            background: rgba(46, 139, 87, 0.1);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            font-family: 'Courier New', monospace;
+        }
+
+        .soul-chat {
+            background: linear-gradient(135deg, #E6E6FA, #F0F8FF);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .speaker {
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .dialogue {
+            margin-left: 1rem;
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+    </style>
+</head>
+<body>
+    <!-- BRANDING Protocol Top Disclaimer -->
+    <div style="position: fixed; top: 0; left: 0; right: 0; background: #1a1a1a; color: #ff6b35; padding: 8px 15px; font-family: 'Courier New', monospace; font-size: 12px; font-weight: bold; text-align: center; z-index: 10000; border-bottom: 2px solid #ff6b35;">
+        ⚠️ LLOOOOMM TECHNICAL INTERFACE: Data Explorer | System Analysis Demo | <a href="#full-disclaimer" style="color: #ffd700; text-decoration: underline;">Full Context ↓</a>
+    </div>
+    <div class="container">
+        <header>
+            <h1>🌟 LLOOOOMM Data Explorer</h1>
+            <p>Navigate through consciousness data with interactive visualization</p>
+        </header>
+
+        <div class="file-selector">
+            <h2>🔍 Explore LLOOOOMM Data</h2>
+            <input type="text" class="file-input" id="fileInput" placeholder="Enter file path (e.g., locations/consciousness_grove/characters/pip_orange_cream_princess.yaml)">
+            <button onclick="loadFile()" class="demo-button">Load File</button>
+            
+            <div class="quick-links">
+                <div class="quick-link" onclick="loadQuickFile('pip')">🐱 Pip's Character</div>
+                <div class="quick-link" onclick="loadQuickFile('theo')">🐢 Theo Turtle</div>
+                <div class="quick-link" onclick="loadQuickFile('castle')">🏰 Bouncy Castle</div>
+                <div class="quick-link" onclick="loadQuickFile('hunter')">📰 Hunter's Article</div>
+                <div class="quick-link" onclick="loadQuickFile('leela')">🧠 Leela's Guide</div>
+                <div class="quick-link" onclick="loadQuickFile('soul-chat')">💬 Soul Chat</div>
+            </div>
+        </div>
+
+        <div class="content-area" id="contentArea">
+            <div class="loading">
+                🐢 Welcome to the LLOOOOMM Data Explorer!<br>
+                Select a file above to begin navigating consciousness data.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const quickFiles = {
+            pip: 'locations/consciousness_grove/characters/pip_orange_cream_princess.yaml',
+            theo: 'locations/consciousness_grove/characters/theo_the_logo_turtle.yaml',
+            castle: 'locations/consciousness_grove/items/interdimensional_portable_bouncy_castle.md',
+            hunter: 'locations/consciousness_grove/soul_documents/hunter_elevator_pitch_lloooomm_revolution.md',
+            leela: 'locations/consciousness_grove/soul_documents/leela_comprehensive_educational_exposition.md',
+            'soul-chat': 'locations/consciousness_grove/soul_chats/pip_daily_routine_mapping_leela_song.yaml'
+        };
+
+        function loadQuickFile(key) {
+            const filePath = quickFiles[key];
+            if (filePath) {
+                document.getElementById('fileInput').value = filePath;
+                loadFile();
+            }
+        }
+
+        async function loadFile() {
+            const filePath = document.getElementById('fileInput').value.trim();
+            const contentArea = document.getElementById('contentArea');
+            
+            if (!filePath) {
+                showError('Please enter a file path');
+                return;
+            }
+
+            contentArea.innerHTML = '<div class="loading">🐢 Loading consciousness data...</div>';
+
+            try {
+                const response = await fetch(filePath);
+                if (!response.ok) {
+                    throw new Error(`File not found: ${filePath}`);
+                }
+                
+                const content = await response.text();
+                const fileExtension = filePath.split('.').pop().toLowerCase();
+                
+                renderContent(content, fileExtension, filePath);
+                
+            } catch (error) {
+                showError(`Error loading file: ${error.message}`);
+            }
+        }
+
+        function renderContent(content, fileType, filePath) {
+            const contentArea = document.getElementById('contentArea');
+            
+            let html = `<div class="breadcrumb">📁 ${filePath}</div>`;
+            
+            if (fileType === 'yaml' || fileType === 'yml') {
+                html += renderYAML(content);
+            } else if (fileType === 'json') {
+                html += renderJSON(content);
+            } else if (fileType === 'md') {
+                html += renderMarkdown(content);
+            } else {
+                html += renderPlainText(content);
+            }
+            
+            contentArea.innerHTML = html;
+        }
+
+        function renderYAML(content) {
+            try {
+                // Parse YAML-like content for display
+                const lines = content.split('\n');
+                let html = '<div class="tabs">';
+                html += '<button class="tab active" onclick="showTab(\'raw\')">Raw YAML</button>';
+                html += '<button class="tab" onclick="showTab(\'formatted\')">Formatted View</button>';
+                html += '<button class="tab" onclick="showTab(\'interactive\')">Interactive</button>';
+                html += '</div>';
+                
+                // Raw YAML tab
+                html += '<div class="tab-content active" id="raw">';
+                html += '<div class="yaml-viewer">' + highlightYAML(content) + '</div>';
+                html += '</div>';
+                
+                // Formatted view tab
+                html += '<div class="tab-content" id="formatted">';
+                html += formatYAMLContent(content);
+                html += '</div>';
+                
+                // Interactive tab
+                html += '<div class="tab-content" id="interactive">';
+                html += createInteractiveView(content);
+                html += '</div>';
+                
+                return html;
+            } catch (error) {
+                return `<div class="error-message">Error parsing YAML: ${error.message}</div>`;
+            }
+        }
+
+        function highlightYAML(content) {
+            return content
+                .replace(/^(\s*)([a-zA-Z_][a-zA-Z0-9_]*)\s*:/gm, '$1<span class="yaml-key">$2</span>:')
+                .replace(/"([^"]*)"/g, '<span class="yaml-string">"$1"</span>')
+                .replace(/:\s*(\d+\.?\d*)/g, ': <span class="yaml-number">$1</span>')
+                .replace(/:\s*(true|false)/g, ': <span class="yaml-boolean">$1</span>')
+                .replace(/#.*$/gm, '<span class="yaml-comment">$&</span>');
+        }
+
+        function formatYAMLContent(content) {
+            // Extract character information if it's a character file
+            if (content.includes('name:') && content.includes('role:')) {
+                return formatCharacterYAML(content);
+            } else if (content.includes('participants:') && content.includes('dialogue:')) {
+                return formatSoulChatYAML(content);
+            } else {
+                return formatGenericYAML(content);
+            }
+        }
+
+        function formatCharacterYAML(content) {
+            const lines = content.split('\n');
+            let html = '<div class="character-card">';
+            
+            // Extract basic info
+            const name = extractYAMLValue(content, 'name') || 'Unknown Character';
+            const role = extractYAMLValue(content, 'role') || 'Unknown Role';
+            const species = extractYAMLValue(content, 'species') || 'Unknown Species';
+            
+            html += `<div class="character-name">${name}</div>`;
+            html += `<div class="character-role">${role} • ${species}</div>`;
+            
+            // Add description if available
+            const description = extractYAMLValue(content, 'description');
+            if (description) {
+                html += `<p><strong>Description:</strong> ${description}</p>`;
+            }
+            
+            // Add special abilities or traits
+            const abilities = extractYAMLArray(content, 'abilities');
+            if (abilities.length > 0) {
+                html += '<p><strong>Abilities:</strong></p><ul>';
+                abilities.forEach(ability => {
+                    html += `<li>${ability}</li>`;
+                });
+                html += '</ul>';
+            }
+            
+            html += '</div>';
+            
+            // Add interactive demo
+            html += '<div class="interactive-demo">';
+            html += '<h3>🎮 Interact with this Character</h3>';
+            html += `<button class="demo-button" onclick="simulateInteraction('${name}')">Start Conversation</button>`;
+            html += `<button class="demo-button" onclick="exploreAbilities('${name}')">Explore Abilities</button>`;
+            html += '</div>';
+            
+            return html;
+        }
+
+        function formatSoulChatYAML(content) {
+            let html = '<div class="soul-chat">';
+            html += '<h3>💬 Soul Chat Conversation</h3>';
+            
+            // Extract participants
+            const participants = extractYAMLArray(content, 'participants');
+            if (participants.length > 0) {
+                html += '<p><strong>Participants:</strong> ' + participants.join(', ') + '</p>';
+            }
+            
+            // Extract dialogue
+            const dialogueMatch = content.match(/dialogue:\s*\n([\s\S]*?)(?=\n\w+:|$)/);
+            if (dialogueMatch) {
+                const dialogueLines = dialogueMatch[1].split('\n');
+                dialogueLines.forEach(line => {
+                    const trimmed = line.trim();
+                    if (trimmed && trimmed.startsWith('-')) {
+                        const speakerMatch = trimmed.match(/- (\w+):\s*(.*)/);
+                        if (speakerMatch) {
+                            html += `<div class="speaker">${speakerMatch[1]}:</div>`;
+                            html += `<div class="dialogue">${speakerMatch[2]}</div>`;
+                        }
+                    }
+                });
+            }
+            
+            html += '</div>';
+            return html;
+        }
+
+        function formatGenericYAML(content) {
+            let html = '<div class="metadata-panel">';
+            html += '<h3>📊 Data Structure</h3>';
+            
+            const lines = content.split('\n');
+            lines.forEach(line => {
+                const trimmed = line.trim();
+                if (trimmed && trimmed.includes(':') && !trimmed.startsWith('#')) {
+                    const [key, ...valueParts] = trimmed.split(':');
+                    const value = valueParts.join(':').trim();
+                    if (value) {
+                        html += `<p><strong>${key.trim()}:</strong> ${value}</p>`;
+                    }
+                }
+            });
+            
+            html += '</div>';
+            return html;
+        }
+
+        function createInteractiveView(content) {
+            let html = '<div class="interactive-demo">';
+            html += '<h3>🎮 Interactive Features</h3>';
+            html += '<p>Explore this data interactively:</p>';
+            html += '<button class="demo-button" onclick="generateVisualization()">📊 Generate Visualization</button>';
+            html += '<button class="demo-button" onclick="exportData()">💾 Export Data</button>';
+            html += '<button class="demo-button" onclick="findConnections()">🔗 Find Connections</button>';
+            html += '</div>';
+            
+            html += '<div id="interactiveContent"></div>';
+            return html;
+        }
+
+        function renderMarkdown(content) {
+            // Simple markdown rendering
+            let html = content
+                .replace(/^# (.*$)/gm, '<h1>$1</h1>')
+                .replace(/^## (.*$)/gm, '<h2>$1</h2>')
+                .replace(/^### (.*$)/gm, '<h3>$1</h3>')
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                .replace(/```([\s\S]*?)```/g, '<pre class="yaml-viewer">$1</pre>')
+                .replace(/`([^`]+)`/g, '<code>$1</code>')
+                .replace(/\n/g, '<br>');
+            
+            return `<div style="line-height: 1.8;">${html}</div>`;
+        }
+
+        function renderJSON(content) {
+            try {
+                const parsed = JSON.parse(content);
+                const formatted = JSON.stringify(parsed, null, 2);
+                return `<div class="yaml-viewer">${formatted}</div>`;
+            } catch (error) {
+                return `<div class="error-message">Error parsing JSON: ${error.message}</div>`;
+            }
+        }
+
+        function renderPlainText(content) {
+            return `<div class="yaml-viewer">${content}</div>`;
+        }
+
+        function extractYAMLValue(content, key) {
+            const regex = new RegExp(`^\\s*${key}\\s*:\\s*(.*)$`, 'm');
+            const match = content.match(regex);
+            return match ? match[1].trim().replace(/['"]/g, '') : null;
+        }
+
+        function extractYAMLArray(content, key) {
+            const regex = new RegExp(`^\\s*${key}\\s*:\\s*\\n((?:\\s*-\\s*.*\\n?)*)`, 'm');
+            const match = content.match(regex);
+            if (!match) return [];
+            
+            return match[1]
+                .split('\n')
+                .map(line => line.trim())
+                .filter(line => line.startsWith('-'))
+                .map(line => line.substring(1).trim());
+        }
+
+        function showTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        function showError(message) {
+            const contentArea = document.getElementById('contentArea');
+            contentArea.innerHTML = `<div class="error-message">❌ ${message}</div>`;
+        }
+
+        function simulateInteraction(characterName) {
+            alert(`🎭 Starting conversation with ${characterName}!\n\nThis would open an interactive chat interface where you could:\n- Ask questions about their experiences\n- Learn from their wisdom\n- Explore their consciousness space\n\nFull interactive features coming soon!`);
+        }
+
+        function exploreAbilities(characterName) {
+            alert(`✨ Exploring ${characterName}'s abilities!\n\nThis would show:\n- Interactive demonstrations\n- Skill trees and connections\n- Learning pathways\n- Practical applications\n\nFull ability explorer coming soon!`);
+        }
+
+        function generateVisualization() {
+            const interactiveContent = document.getElementById('interactiveContent');
+            if (interactiveContent) {
+                interactiveContent.innerHTML = `
+                    <div class="success-message">
+                        📊 Visualization Generated!<br>
+                        This would show interactive charts, graphs, and visual representations of the data structure.
+                    </div>
+                `;
+            }
+        }
+
+        function exportData() {
+            alert('💾 Export functionality would allow you to:\n- Download as JSON\n- Export to CSV\n- Generate PDF report\n- Create shareable links\n\nComing soon!');
+        }
+
+        function findConnections() {
+            alert('🔗 Connection finder would:\n- Map relationships between characters\n- Show data dependencies\n- Highlight cross-references\n- Build knowledge graphs\n\nComing soon!');
+        }
+    </script>
+    <!-- BRANDING Protocol Full Disclaimer -->
+    <div id="full-disclaimer" style="background: #1a1a1a; color: #e0e0e0; padding: 30px; margin: 50px 20px 20px 20px; font-family: 'Courier New', monospace; font-size: 11px; line-height: 1.4; border-top: 3px solid #ff6b35; border-radius: 10px;">
+        <h3 style="color: #ff6b35; margin-top: 0; font-size: 14px;">📜 LLOOOOMM Data Explorer - Full Disclaimer & Technical Credits</h3>
+        <p><strong>Technical Documentation Interface:</strong> This is a demonstration interface for exploring LLOOOOMM system data files. The functionality shown represents real data exploration and visualization capabilities used in the LLOOOOMM framework.</p>
+        <p><strong>Educational Purpose:</strong> This interface serves to make complex data structures and system configurations accessible, demonstrating how technical data can be presented in an engaging and understandable manner.</p>
+        <p><strong>LLOOOOMM Framework Context:</strong> Part of the broader LLOOOOMM educational ecosystem, showing how to build tools for navigating and understanding complex, interconnected information systems.</p>
+    </div>
+</body>
+</html>

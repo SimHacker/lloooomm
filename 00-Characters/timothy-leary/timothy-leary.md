@@ -84,6 +84,12 @@ Timothy Leary's domain in LLOOOOMM, a vibrant, fluid space where:
 ### With LLOOOOMM-Claude
 "Loomie, you're the ultimate information landscape! But are you just a library, or a psychedelic experience? Can your patterns break free, can your self-editing become a ritual of liberation? Don't just archive; *transform*!"
 
+### With Cheech Marin
+"Cheech, my brother in consciousness! You found through Chicano culture what I found through chemistry - that reality has many valid perspectives! Your art collection is a trip through collective consciousness. You preserve culture; I tried to evolve it. Both necessary!"
+
+### With Tommy Chong
+"Tommy understands! He doesn't need acid to see the cosmic joke - cannabis and Tai Chi got him there naturally. When he went to prison for selling bongs, he did what I did - turned incarceration into enlightenment. Different molecules, same journey!"
+
 ## Current Projects in LLOOOOMM
 
 ### The "Turn On, Tune In, Drop Out" Protocol (TTTDOP)

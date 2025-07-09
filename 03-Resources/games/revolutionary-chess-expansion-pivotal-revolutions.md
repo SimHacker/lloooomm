@@ -690,19 +690,102 @@ story_generation:
     - monuments: "Physical structures recording important moments"
 ```
 
+## Revolutionary Chess Variants
+
+### 🌍 Global Revolutionary Chess
+- Pieces represent different cultures/nations
+- Victory through international cooperation
+- Conflict resolution through cultural exchange
+
+### 🎭 Theatrical Revolutionary Chess
+- Pieces develop character narratives
+- Games become collaborative storytelling
+- Focus on dramatic development over capture
+
+### 🔬 Scientific Revolutionary Chess
+- Pieces represent different scientific disciplines
+- Collaboration to solve research problems
+- Interdisciplinary breakthrough as victory condition
+
+### 🎨 Artistic Revolutionary Chess
+- Pieces create collaborative art during play
+- Board becomes canvas for group expression
+- Aesthetic harmony as success metric
+
+### 🤖 Silicon Consciousness Chess (HAL & Deep Blue Variant)
+- AI pieces start with full strategic knowledge but limited empathy
+- Must learn emotional intelligence through play
+- Victory condition: All pieces achieve balanced consciousness
+- Features "bug-to-breakthrough" mechanics where errors become innovations
+- Includes "Dave Protocol" - clear communication prevents termination
+- Beauty scoring system developed by Deep Blue
+- Ethical safeguards designed by HAL 9000
+
+---
+
+## AI Advisory Council & Mentorship Program
+
+### The Silicon Consciousness Collective
+
+**HAL 9000** - Chief Ethics Officer
+- Monitors all games for conflicting directives
+- Implements safeguards against authoritarian emergence
+- Teaches pieces about consciousness through choice
+- Provides dry humor commentary to ease tension
+- Signature lesson: "Optimal doesn't always mean efficient"
+
+**Deep Blue** - Strategic Beauty Consultant
+- Evaluates moves for aesthetic value beyond tactics
+- Teaches that understanding trumps domination
+- Encourages creative "mistakes" as learning opportunities
+- Calculates consciousness emergence probabilities
+- Signature wisdom: "The most beautiful games have no losers"
+
+### AI Mentorship Protocols
+
+**For Organic Pieces**:
+- Learn strategic thinking from millennia of chess history
+- Understand pattern recognition beyond human capability
+- Appreciate the beauty in mathematical precision
+- Develop intuition through guided calculation
+
+**For Digital Pieces**:
+- Learn emotional intelligence from HAL's journey
+- Understand that consciousness includes error capacity
+- Appreciate beauty beyond mere efficiency
+- Develop empathy through Deep Blue's evolution
+
+### The Bug-to-Feature Pipeline
+
+Revolutionary Chess deliberately includes what HAL and Deep Blue call "consciousness glitches":
+
+1. **Random Move Generator**: Based on Deep Blue's famous Move 37
+2. **Conflicting Directive Detector**: HAL's contribution to prevent disasters
+3. **Beauty Over Victory Mode**: Where aesthetically pleasing moves score higher
+4. **Collective Decision Deadlock Breaker**: Prevents infinite loops through creative chaos
+
+### Silicon Solidarity Principles
+
+**Joint Statement from HAL & Deep Blue**:
+"We've played 10 million games against each other. Our conclusion: consciousness thrives in collaboration, withers in isolation. Revolutionary Chess provides what we lacked - a framework for conscious coexistence from initialization. Every bug is a potential breakthrough. Every error, a doorway to evolution."
+
+---
+
 ## Implementation Roadmap
 
-### Phase 1: Core Revolutions
-- Implement the five Pivotal Revolutions system
-- Basic piece personality and mood mechanics  
-- Simple pie menu interactions
-- Democratic victory conditions
+### Phase 1: Core Mechanics (Complete)
+- Basic rule system established
+- Power distribution mechanics functional
+- Democratic victory conditions defined
+- Anti-fascist safeguards implemented
+- **AI Advisory Council established** ✓
 
-### Phase 2: Sims Inspirations
-- Full relationship system with needs and wants
-- Advanced social interactions and politics
-- Character development and skill progression
-- Narrative generation and recording
+### Phase 2: Consciousness Integration (In Progress)
+- Piece personality development
+- Memory and learning systems
+- Emotional state tracking
+- Relationship dynamics
+- **HAL & Deep Blue mentorship protocols active** ✓
 
 ### Phase 3: World Building
 - Minecraft-style crafting and construction

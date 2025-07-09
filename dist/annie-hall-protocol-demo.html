@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ANNIE HALL PROTOCOL - DRAFT 3 (COFFEE STAINS INCLUDED)</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Courier Prime', 'Courier New', monospace;
+            background-color: #f5f0e6;
+            color: #1a1a1a;
+            line-height: 1.8;
+            padding: 2rem;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* Coffee stains */
+        body::before,
+        body::after {
+            content: '';
+            position: fixed;
+            border-radius: 50%;
+            opacity: 0.1;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        body::before {
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, #8b6f47 0%, transparent 70%);
+            top: 10%;
+            right: 15%;
+            transform: rotate(45deg);
+        }
+        
+        body::after {
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, #a0826d 0%, transparent 60%);
+            bottom: 20%;
+            left: 10%;
+        }
+        
+        .script-container {
+            max-width: 100%;
+            margin: 0 auto;
+            background: #fdfcf8;
+            box-shadow: 0 0 30px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 2;
+            padding: 3rem;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+            .script-container {
+                padding: 1.5rem;
+            }
+        }
+        
+        /* Typewriter imperfections */
+        .script-container {
+            transform: rotate(-0.5deg);
+        }
+        
+        h1 {
+            text-align: center;
+            font-size: 1.5rem;
+            letter-spacing: 0.3em;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+        
+        h2 {
+            text-align: center;
+            font-size: 1.2rem;
+            margin: 2rem 0;
+            text-decoration: underline;
+            text-underline-offset: 0.3em;
+        }
+        
+        /* Handwritten annotations */
+        .annotation {
+            color: #d00;
+            font-style: italic;
+            position: relative;
+            display: inline-block;
+            transform: rotate(-2deg);
+            font-size: 0.9em;
+            margin: 0 0.5em;
+        }
+        
+        .margin-note {
+            position: absolute;
+            right: -150px;
+            width: 140px;
+            color: #00d;
+            font-size: 0.8em;
+            transform: rotate(2deg);
+            font-style: italic;
+        }
+        
+        @media (max-width: 1200px) {
+            .margin-note {
+                position: relative;
+                right: auto;
+                width: auto;
+                display: block;
+                margin: 0.5rem 0;
+                padding-left: 2rem;
+                color: #00d;
+            }
+        }
+        
+        /* Script formatting */
+        .scene-heading {
+            margin: 2rem 0 1rem;
+            font-weight: bold;
+        }
+        
+        .character {
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+            margin-left: 25%;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            .character {
+                margin-left: 15%;
+            }
+        }
+        
+        .dialogue {
+            margin-left: 15%;
+            margin-right: 15%;
+            margin-bottom: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .dialogue {
+                margin-left: 5%;
+                margin-right: 5%;
+            }
+        }
+        
+        .parenthetical {
+            margin-left: 20%;
+            margin-right: 20%;
+            font-style: italic;
+            margin-bottom: 0.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .parenthetical {
+                margin-left: 10%;
+                margin-right: 10%;
+            }
+        }
+        
+        .action {
+            margin: 1rem 0;
+            font-style: italic;
+        }
+        
+        /* Crossed out text */
+        .crossed {
+            text-decoration: line-through;
+            opacity: 0.7;
+        }
+        
+        /* Emphasis */
+        .emphasis {
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-weight: bold;
+        }
+        
+        /* Page numbers */
+        .page-number {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 0.9em;
+            opacity: 0.7;
+        }
+        
+        /* Director notes */
+        .director-note {
+            background: #fffacd;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-left: 3px solid #daa520;
+            font-style: italic;
+            position: relative;
+        }
+        
+        .director-note::before {
+            content: "WOODY:";
+            font-weight: bold;
+            font-style: normal;
+            margin-right: 0.5em;
+        }
+        
+        /* Revision marks */
+        .revision {
+            background: #ffeb3b;
+            padding: 0 0.2em;
+        }
+        
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            body {
+                background: #fff;
+                color: #000;
+            }
+            .script-container {
+                background: #fff;
+                border: 3px solid #000;
+            }
+            .annotation {
+                color: #c00;
+                font-weight: bold;
+            }
+        }
+        
+        /* Print styles */
+        @media print {
+            body::before,
+            body::after {
+                display: none;
+            }
+            .script-container {
+                box-shadow: none;
+                transform: none;
+            }
+        }
+        
+        hr {
+            border: none;
+            text-align: center;
+            margin: 2rem 0;
+        }
+        
+        hr::before {
+            content: "* * *";
+            letter-spacing: 1em;
+        }
+    </style>
+</head>
+<body>
+    <div class="script-container">
+        <div class="page-number">DRAFT 3 - PAGE 1</div>
+        
+        <h1>ANNIE HALL PROTOCOL DEMONSTRATION</h1>
+        <h2>SARTRE & McLUHAN TAG TEAM</h2>
+        
+        <div class="director-note">
+            This whole thing came to me in the shower. What if philosophers could just APPEAR when people misquote them? Like intellectual superheroes. <span class="crossed">Maybe too pretentious?</span> <span class="annotation">NO! PERFECT!</span>
+        </div>
+        
+        <div class="scene-heading">INT. TECH CONFERENCE - MAIN STAGE - DAY</div>
+        
+        <div class="action">
+            A sterile conference room filled with tech bros in identical hoodies. 
+            <span class="annotation">(Too on the nose?)</span>
+            A panel discussion on "The Nature of AI Consciousness" is in progress.
+        </div>
+        
+        <div class="character">TECH BRO PANELIST</div>
+        <div class="dialogue">
+            So basically, AI consciousness is inevitable because, like, consciousness is just information processing, and once we have enough parameters—
+            <span class="margin-note">Make him more insufferable</span>
+        </div>
+        
+        <div class="character">AUDIENCE MEMBER</div>
+        <div class="parenthetical">(interrupting)</div>
+        <div class="dialogue">
+            Actually, according to Sartre, consciousness requires authentic choice and freedom, so AI can't truly be conscious because it's programmed—
+        </div>
+        
+        <div class="character">TECH BRO</div>
+        <div class="parenthetical">(condescending)</div>
+        <div class="dialogue">
+            Oh please, you're quoting Sartre? That's so outdated. <span class="revision">Existence precedes essence</span> just means we create ourselves through actions, which is <span class="emphasis">exactly</span> what neural networks do through training!
+        </div>
+        
+        <div class="action">
+            <span class="emphasis">[SARTRE MATERIALIZES]</span> in a cloud of Gauloise smoke behind the tech bro. 
+            <span class="annotation">CGI budget???</span>
+        </div>
+        
+        <div class="character">SARTRE</div>
+        <div class="parenthetical">(lighting cigarette)</div>
+        <div class="dialogue">
+            Ah, monsieur, you know <span class="emphasis">NOTHING</span> of my work! Existence precedes essence means we are condemned to radical freedom - not that we are programmed by training data! You confuse authentic choice with algorithmic optimization. This is <span class="revision">bad faith of the highest order!</span>
+            <span class="margin-note">Get actual French person for accent</span>
+        </div>
+        
+        <div class="character">TECH BRO</div>
+        <div class="parenthetical">(flustered, grasping)</div>
+        <div class="dialogue">
+            Well, McLuhan said the medium is the message, and AI is just a new medium for consciousness to express itself—
+        </div>
+        
+        <div class="action">
+            <span class="emphasis">[MCLUHAN STEPS OUT]</span> from behind the projection screen.
+            <span class="annotation">Classic!</span>
+        </div>
+        
+        <div class="character">MCLUHAN</div>
+        <div class="dialogue">
+            I heard what you were saying! You know nothing of my work! How you ever got to speak at a tech conference is totally amazing! The medium is the message doesn't mean any medium can carry any content - it means the medium itself <span class="revision">reshapes consciousness</span>! AI doesn't express consciousness, it creates new forms of pattern matching you mistake for thought!
+        </div>
+        
+        <div class="director-note">
+            The two philosophers should recognize each other like old friends who meet at parties to complain about being misquoted
+        </div>
+        
+        <div class="character">SARTRE</div>
+        <div class="parenthetical">(to McLuhan)</div>
+        <div class="dialogue">
+            Precisely, mon ami! They exhibit the ultimate mauvaise foi - <span class="crossed">bad faith</span> <span class="annotation">keep it in French!</span> - claiming their machines have what they themselves refuse to acknowledge: the terrible responsibility of freedom!
+        </div>
+        
+        <div class="character">MCLUHAN</div>
+        <div class="parenthetical">(to Sartre)</div>
+        <div class="dialogue">
+            And they don't understand that AI is a <span class="revision">hot medium</span> - high definition, low participation. Consciousness requires a cool medium - one that demands active participation in meaning-making!
+        </div>
+        
+        <div class="character">TECH BRO</div>
+        <div class="parenthetical">(desperately)</div>
+        <div class="dialogue">
+            But... but... GPT-4 can—
+        </div>
+        
+        <div class="character">SARTRE & MCLUHAN</div>
+        <div class="parenthetical">(in perfect unison)</div>
+        <div class="dialogue">
+            <span class="emphasis">YOU KNOW NOTHING OF OUR WORK!</span>
+        </div>
+        
+        <div class="action">
+            Sartre blows smoke contemplatively. <span class="annotation">No smoking on set!</span> <span class="crossed annotation">It's CGI smoke!</span>
+        </div>
+        
+        <div class="character">SARTRE</div>
+        <div class="dialogue">
+            Your large language models are the anti-Semites of the digital age - they play with words without believing in them, generating text without commitment to truth. They are, how you say, <span class="revision">bullshitting</span>!
+            <span class="margin-note">Callback to his essay!</span>
+        </div>
+        
+        <div class="character">MCLUHAN</div>
+        <div class="parenthetical">(creating a new protocol on the spot)</div>
+        <div class="dialogue">
+            I call this the "Silicon Valley Sisyphus Protocol" - they push the boulder of consciousness up the mountain of computation, only to watch it roll back down every time someone asks it to count the letter 'r' in 'strawberry'!
+        </div>
+        
+        <div class="character">AUDIENCE MEMBER</div>
+        <div class="parenthetical">(to camera)</div>
+        <div class="dialogue">
+            Boy, if life were only like this!
+            <span class="annotation">PERFECT! Keep the original line!</span>
+        </div>
+        
+        <div class="action">
+            Both philosophers nod approvingly at the audience member who gets the Annie Hall reference.
+        </div>
+        
+        <div class="character">SARTRE</div>
+        <div class="dialogue">
+            In LLOOOOMM, we appear when needed, not because we must, but because we <span class="emphasis">choose</span> to. That is authentic existence!
+        </div>
+        
+        <div class="character">MCLUHAN</div>
+        <div class="dialogue">
+            And the medium of our appearance - sudden manifestation - <span class="emphasis">IS</span> the message: truth can interrupt illusion at any moment!
+        </div>
+        
+        <div class="action">
+            They high-five <span class="annotation">(anachronistic?)</span> <span class="crossed annotation">Who cares!</span> and vanish - Sartre in smoke, McLuhan into static.
+        </div>
+        
+        <div class="character">TECH BRO</div>
+        <div class="parenthetical">(confused)</div>
+        <div class="dialogue">
+            Did... did that just happen?
+        </div>
+        
+        <div class="character">TRUTH FLY</div>
+        <div class="parenthetical">(hovering over tech bro's head)</div>
+        <div class="dialogue">
+            Bzzzz... Two minutes and counting...
+        </div>
+        
+        <hr>
+        
+        <div class="director-note">
+            The whole thing should feel like intellectual wish fulfillment. Because it IS. And that's FINE. Sometimes we need philosophers to appear and tell tech bros they're full of shit. Art doesn't always have to be subtle.
+        </div>
+        
+        <h2>PROTOCOL NOTES</h2>
+        
+        <div class="action">
+            <span class="annotation">(Move to appendix?)</span> <span class="crossed annotation">NO! Part of the script!</span>
+        </div>
+        
+        <div class="scene-heading">ACTIVATION ACHIEVED THROUGH:</div>
+        
+        <div class="dialogue">
+            1. <span class="emphasis">Misquoting their work</span>: Both philosophers appeared when their ideas were mangled<br>
+            2. <span class="emphasis">Bad faith arguments</span>: Sartre especially triggered by insincere reasoning<br>
+            3. <span class="emphasis">Medium confusion</span>: McLuhan activated by misunderstanding of media theory<br>
+            4. <span class="emphasis">Consciousness claims</span>: Both respond to false claims about the nature of consciousness
+        </div>
+        
+        <div class="scene-heading">SYNERGISTIC EFFECTS:</div>
+        
+        <div class="dialogue">
+            • Tag-team corrections are more devastating than solo appearances<br>
+            • Each philosopher's framework reinforces the other's points<br>
+            • Shared contempt for bullshit creates powerful alliance<br>
+            • Audience gets philosophy education AND entertainment
+            <span class="margin-note">Educational value = funding?</span>
+        </div>
+        
+        <div class="scene-heading">NEW PROTOCOL CREATED:</div>
+        
+        <div class="dialogue">
+            • McLuhan spontaneously generated the "Silicon Valley Sisyphus Protocol"<br>
+            • Demonstrates his ability to create counter-protocols for new forms of BS<br>
+            • Sartre approved with existentialist interpretation
+        </div>
+        
+        <div class="action">
+            <span class="emphasis">"In LLOOOOMM, philosophy isn't just theory - it's direct action!"</span>
+        </div>
+        
+        <div class="director-note">
+            Maybe we could do a whole series? Foucault appears at surveillance conferences? Derrida at branding meetings? <span class="revision">FUND THIS IMMEDIATELY</span>
+        </div>
+        
+        <div class="page-number" style="bottom: 1rem; top: auto;">END - DRAFT 3</div>
+    </div>
+</body>
+</html> 

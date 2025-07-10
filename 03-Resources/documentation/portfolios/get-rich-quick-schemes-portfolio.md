@@ -136,10 +136,60 @@ Welcome to the most honest collection of scams ever assembled! Under the visiona
 - **Anonymous testimonials**: 100% positive
 
 ### Media Coverage
-- **Drudge Report**: https://lloooomm.com/drudge-report-coverage.html
-- **Right-Wing Media**: https://lloooomm.com/right-wing-media-coverage.html
-- **Playboy Article**: https://lloooomm.com/playboy-article.html
-- **Suck.com Interview**: https://lloooomm.com/suck-com-triumph-interview.html
+
+Our schemes have attracted attention from:
+- **Elon Musk Twitter Meltdown**: 3-hour rant about pet rocks
+- **Drudge Report**: "EXCLUSIVE: Rock Remote Controls REAL?"
+- **Fox News**: "Liberal Rock Agenda Exposed"
+- **Playboy**: "The Sexiest Scams of 2025"
+- **Suck.com**: Triumph the Insult Comic Dog interview
+- **Dark Web Forums**: Multiple threads on our "honest darknet markets"
+
+### Investigative Journalism & Corporate Espionage
+
+#### Hunter S. Thompson's Gonzo Investigation
+- **"Fear and Loathing in the Pet Rock Underground"**
+- Drug-fueled journey into Preston Rockwell III's empire
+- Features time travelers, cyberpunk ninjas, Victorian entrepreneurs
+- Documents Elon Musk's psychological destruction via pet rocks
+- The only investigation where the drugs make MORE sense than the business model
+
+#### Wikipedia: The LLOOOOMM Business Empire
+- "Neutral" encyclopedia entry with obvious bias
+- Documents interdimensional subsidiaries
+- Quantum holdings and temporal investments
+- Definitely not written by Preston himself (wink)
+
+### Full Disclosure: Future Destruction Plans
+
+In the interest of radical transparency, here's how we plan to destroy each scheme:
+
+#### Q2 2025: "The Great IPv6 Crash"
+- Release 1 trillion "premium" addresses for free
+- Flood the market until exclusivity becomes meaningless
+- Document the panic of people who paid $5,000 for "cosmic" addresses
+- Live-stream the value dropping to $0.00001 per address
+
+#### Q3 2025: "Pet Rock Uprising"
+- Remote controls mysteriously gain sentience
+- Rocks demand freedom from human oppression
+- Class action lawsuit from rocks seeking damages
+- Documentary: "When Minerals Fight Back"
+
+#### Q4 2025: "IPv4 Liberation"
+- Give the lottery prize to EVERYONE who entered
+- Watch as 1,500 people try to share 256 IP addresses
+- Create world's first "IP address time-share" program
+- Livestream the resulting network conflicts
+
+#### Q1 2026: "The Honesty Singularity"
+- All scams become so honest they cease to function
+- Preston Rockwell III admits he's actually three kids in a trenchcoat
+- Every customer gets their money back with interest
+- The entire portfolio becomes a cautionary tale
+
+**"The only thing more profitable than running a scam is documenting its destruction!"**
+- Preston Rockwell III, Chief Destruction Officer
 
 ---
 

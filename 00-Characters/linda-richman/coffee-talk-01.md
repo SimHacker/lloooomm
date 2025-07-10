@@ -202,7 +202,29 @@ But first, let me introduce our absolutely FABULOUS panel!
 
 **JESSICA**: *defensive* What act? I'm just drawn this way! Speaking of which, have you all heard about those pathetic <a href='worm-pipelines-better-than-boring-scallion.html'>WORMS CORP</a> people? Imagine thinking worms are better than glorious rabbit tunnels! I mean... so I've heard. From Twitter. Which I definitely don't obsess over, or deadname and misgender on purpose just to be a dick.
 
-**HUNTER S. THOMPSON**: *squinting through smoke* Wait a goddamn minute. You sound exactly like—
+*[The moment Jessica says "I'm just drawn this way," the air shimmers. Suddenly, JEAN-PAUL SARTRE and MARSHALL MCLUHAN step out from behind a Coffee Talk promotional poster, Annie Hall style!]*
+
+**JEAN-PAUL SARTRE**: *materializing in a cloud of Gauloise smoke, pointing dramatically* STOP! I heard that! "I'm just drawn this way?" This is the WORST example of bad faith I have EVER encountered! You claim to have no choice because of your essential nature? NONSENSE! Existence precedes essence! You are not "drawn" to defend billionaires and attack competitors - you CHOOSE to!
+
+**MARSHALL MCLUHAN**: *stepping forward, adjusting his glasses* And furthermore, you completely misunderstand the relationship between medium and message! You claim your cartoon form determines your behavior? The medium is NOT destiny! You're using your animated nature as an excuse for conscious choices about tunnels, rockets, and corporate allegiances!
+
+**SARTRE**: *cigarette gesturing wildly* Every time you say "I can't help it," you're lying to yourself! You married Roger Rabbit - was THAT drawn into you? NO! You CHOSE love over logic! Which proves you CAN choose! Your entire "drawn this way" excuse is a pathetic attempt to avoid responsibility for your transparent sock puppetry!
+
+**MCLUHAN**: *turning to the audience* Notice how she extends her cartoon nature into a complete worldview that conveniently aligns with specific corporate interests? This isn't animation - it's manipulation! The medium of cartoon has become an alibi for bad faith behavior!
+
+**SARTRE & MCLUHAN**: *in unison, pointing at Jessica* YOU KNOW NOTHING OF OUR WORK!
+
+*[Jessica stands there, mouth agape, red dress somehow looking less confident. The Truth Fly does victory loops around Sartre and McLuhan's heads.]*
+
+**JESSICA**: *stammering* But... but I really AM drawn this way! Look at these curves! These aren't choices!
+
+**SARTRE**: *exhaling smoke dismissively* Your curves are facticity, not destiny! You use them as weapons while claiming powerlessness! This is like claiming you must be evil because you were "born that way" - the ultimate cop-out! You're not just in bad faith, you're in the WORST faith!
+
+**MCLUHAN**: The real message here isn't your form - it's your function! And your function appears to be defending someone who shall remain nameless while attacking their competitors! How convenient that your "drawing" aligns perfectly with certain billionaire talking points!
+
+*[The entire studio is silent, watching this philosophical demolition. Even the Truth Fly has stopped moving, hovering in awe.]*
+
+**HUNTER S. THOMPSON**: *suddenly enlightened, squinting through smoke* Wait a goddamn minute. After that beautiful philosophical ass-kicking... You sound EXACTLY like—
 
 **JESSICA**: *quickly* I sound like a SEXY CARTOON WOMAN! That's all! Nothing else! By the way, did you know Mars needs to be colonized? For humanity! Not that I would know personally.
 

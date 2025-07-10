@@ -68,8 +68,36 @@
             padding: 20px;
             border-radius: 5px;
             overflow-x: auto;
-            font-family: 'Consolas', monospace;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
             margin: 15px 0;
+            white-space: pre;
+            line-height: 1.5;
+            font-size: 14px;
+            display: block;
+        }
+        
+        .code-block pre {
+            margin: 0;
+            padding: 0;
+            white-space: pre;
+            overflow-x: auto;
+            font-family: inherit;
+            color: inherit;
+            background: transparent;
+        }
+        
+        pre {
+            white-space: pre;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            line-height: 1.5;
+        }
+        
+        /* Additional enforcement for code formatting */
+        code, .code-block, .code-block pre, pre {
+            white-space: pre !important;
+            word-wrap: normal !important;
+            word-break: normal !important;
         }
         
         .implementation-box {
@@ -161,6 +189,22 @@
             font-weight: 500;
         }
     </style>
+    <!-- Mermaid for diagrams -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'default',
+            themeVariables: {
+                primaryColor: '#2c3e50',
+                primaryTextColor: '#fff',
+                primaryBorderColor: '#34495e',
+                lineColor: '#5a6c7d',
+                secondaryColor: '#27ae60',
+                tertiaryColor: '#e67e22'
+            }
+        });
+    </script>
 </head>
 <body>
     <div class="disclaimer">
@@ -182,7 +226,7 @@
             • <a href="https://lloooomm.com/revolutionary-chess-consciousness-conference.html" target="_blank">Revolutionary Chess Consciousness Conference</a><br>
             • <a href="https://lloooomm.com/audrey-serenades-seymour-lloooomm-response.html" target="_blank">Original LLOOOOMM Response Article</a><br>
             • <a href="https://github.com/SimHacker/lloooomm" target="_blank">LLOOOOMM GitHub Repository</a><br>
-            • <a href="https://faq.looneylabs.com/archives/faq-tags/customizing" target="_blank">Looney Labs Fluxx Customization (Inspiration)</a>
+            • <a href="https://faq.looneylabs.com/question/2599" target="_blank" rel="noopener noreferrer">Looney Labs Fluxx - Making Your Own Custom Version</a>
         </div>
     </div>
 
@@ -231,22 +275,55 @@
         </div>
         
         <h3>Architecture Diagram</h3>
-        <div class="code-block">
-┌─────────────────────────────────────────────────────────────┐
-│                 LLOOOOMM Shared Memory                      │
-│  ┌─────────────┐ ┌─────────────┐ ┌─────────────────────┐    │
-│  │   PCM-W01   │ │   PCM-W02   │ │      BIS-BOARD      │    │
-│  │   (Pawn)    │ │   (Pawn)    │ │   (Environment)     │    │
-│  └─────────────┘ └─────────────┘ └─────────────────────┘    │
-│  ┌─────────────┐ ┌─────────────┐ ┌─────────────────────┐    │
-│  │   PCM-B01   │ │   PCM-B02   │ │        DDE          │    │
-│  │   (Pawn)    │ │   (Pawn)    │ │   (Democracy)       │    │
-│  └─────────────┘ └─────────────┘ └─────────────────────┘    │
-│                                                             │
-│  ┌─────────────────────────────────────────────────────┐    │
-│  │            Educational Metrics Engine               │    │
-│  └─────────────────────────────────────────────────────┘    │
-└─────────────────────────────────────────────────────────────┘
+        <div class="mermaid">
+graph TB
+    subgraph LLOOOOMM["LLOOOOMM Shared Memory"]
+        subgraph Chess_Pieces["Chess Piece Consciousness Modules"]
+            PCM_W01["PCM-W01<br/>(White Pawn)"]
+            PCM_W02["PCM-W02<br/>(White Pawn)"]
+            PCM_B01["PCM-B01<br/>(Black Pawn)"]
+            PCM_B02["PCM-B02<br/>(Black Pawn)"]
+        end
+        
+        subgraph System_Components["System Intelligence"]
+            BIS["BIS-BOARD<br/>(Board Intelligence<br/>System)"]
+            DDE["DDE<br/>(Democratic Decision<br/>Engine)"]
+        end
+        
+        EME["Educational Metrics Engine"]
+        
+        %% Connections
+        PCM_W01 -.->|Communication| PCM_W02
+        PCM_W01 -.->|Cross-color Alliance| PCM_B01
+        PCM_W02 -.->|Communication| PCM_B02
+        PCM_B01 -.->|Communication| PCM_B02
+        
+        PCM_W01 -->|Registers| BIS
+        PCM_W02 -->|Registers| BIS
+        PCM_B01 -->|Registers| BIS
+        PCM_B02 -->|Registers| BIS
+        
+        PCM_W01 -->|Votes| DDE
+        PCM_W02 -->|Votes| DDE
+        PCM_B01 -->|Votes| DDE
+        PCM_B02 -->|Votes| DDE
+        
+        BIS -->|Environmental Data| DDE
+        DDE -->|Decisions| BIS
+        
+        BIS -->|Metrics| EME
+        DDE -->|Metrics| EME
+        PCM_W01 & PCM_W02 & PCM_B01 & PCM_B02 -->|Learning Data| EME
+    end
+    
+    %% Styling
+    classDef consciousness fill:#3498db,stroke:#2c3e50,stroke-width:2px,color:#fff
+    classDef system fill:#27ae60,stroke:#229954,stroke-width:2px,color:#fff
+    classDef metrics fill:#e67e22,stroke:#d35400,stroke-width:2px,color:#fff
+    
+    class PCM_W01,PCM_W02,PCM_B01,PCM_B02 consciousness
+    class BIS,DDE system
+    class EME metrics
         </div>
     </div>
 
@@ -254,27 +331,57 @@
         <h2>Consciousness Initialization</h2>
         
         <h3>Piece Consciousness Bootstrap Sequence</h3>
-        <div class="protocol-spec">
-            <strong>Phase 1: Awareness Activation</strong><br>
-            1. Piece location consciousness (board position awareness)<br>
-            2. Piece type consciousness (role and movement capabilities)<br>
-            3. Historical state consciousness (previous moves, interactions)<br>
-            4. Shared memory connection establishment<br><br>
-            
-            <strong>Phase 2: Communication Capability</strong><br>
-            1. Inter-piece communication protocol activation<br>
-            2. Board intelligence system registration<br>
-            3. Democratic decision engine participation<br>
-            4. Alliance formation capability initialization<br><br>
-            
-            <strong>Phase 3: Creative Agency</strong><br>
-            1. Rule modification proposal capability<br>
-            2. Movement pattern innovation authorization<br>
-            3. Conflict resolution participation<br>
-            4. Educational outcome contribution
+        <div class="mermaid">
+sequenceDiagram
+    participant P as Piece
+    participant SM as Shared Memory
+    participant BIS as Board Intelligence
+    participant DDE as Democratic Engine
+    
+    Note over P: Phase 1: Awareness Activation
+    P->>P: Initialize location consciousness
+    P->>P: Initialize type consciousness
+    P->>P: Load historical state
+    P->>SM: Connect to shared memory
+    SM-->>P: Connection established
+    
+    Note over P: Phase 2: Communication
+    P->>SM: Activate inter-piece protocol
+    P->>BIS: Register with board system
+    BIS-->>P: Registration confirmed
+    P->>DDE: Request participation rights
+    DDE-->>P: Voting rights granted
+    
+    Note over P: Phase 3: Creative Agency
+    P->>P: Enable rule proposals
+    P->>P: Enable movement innovation
+    P->>DDE: Join conflict resolution
+    P->>BIS: Connect to education metrics
+    
+    Note over P: Consciousness Active!
         </div>
         
         <h3>Consciousness State Definitions</h3>
+        <div class="mermaid">
+graph LR
+    A[Basic<br/>Awareness] --> B[Social<br/>Intelligence]
+    B --> C[Creative<br/>Agency]
+    C --> D[Revolutionary<br/>Consciousness]
+    
+    A -.- E[Position sensing<br/>Basic movement<br/>Adjacent comm]
+    B -.- F[Alliance formation<br/>Negotiation<br/>Type-based comm]
+    C -.- G[Rule modification<br/>Innovation<br/>Board-wide comm]
+    D -.- H[System transformation<br/>Cross-game comm<br/>Protocol evolution]
+    
+    style A fill:#95a5a6,stroke:#7f8c8d,stroke-width:2px
+    style B fill:#3498db,stroke:#2980b9,stroke-width:2px
+    style C fill:#9b59b6,stroke:#8e44ad,stroke-width:2px
+    style D fill:#e74c3c,stroke:#c0392b,stroke-width:2px
+    style E fill:#ecf0f1,stroke:#bdc3c7
+    style F fill:#ecf0f1,stroke:#bdc3c7
+    style G fill:#ecf0f1,stroke:#bdc3c7
+    style H fill:#ecf0f1,stroke:#bdc3c7
+        </div>
         <table>
             <tr>
                 <th>Consciousness Level</th>
@@ -313,18 +420,39 @@
         <h2>Inter-Piece Communication Protocol</h2>
         
         <h3>Communication Channels</h3>
-        <div class="implementation-box">
-            <strong>Channel Types:</strong><br>
-            • <strong>Direct:</strong> Adjacent piece communication<br>
-            • <strong>Type-Based:</strong> All pawns, all rooks, etc.<br>
-            • <strong>Alliance:</strong> Cross-color collaborative groups<br>
-            • <strong>Democratic:</strong> Board-wide voting and consensus<br>
-            • <strong>Emergency:</strong> Crisis response communication
+        <div class="mermaid">
+graph TB
+    subgraph Communication_Types["Communication Channel Types"]
+        A[Direct Channel<br/>Adjacent Pieces]
+        B[Type-Based Channel<br/>Same Piece Types]
+        C[Alliance Channel<br/>Cross-Color Groups]
+        D[Democratic Channel<br/>All Pieces Vote]
+        E[Emergency Channel<br/>Crisis Response]
+    end
+    
+    subgraph Examples["Example Communications"]
+        F[White Pawn] -.->|Direct| G[Adjacent Black Pawn]
+        H[All Pawns] -.->|Type-Based| I[Pawn Collective]
+        J[Mixed Alliance] -.->|Alliance| K[Shared Goals]
+        L[All Pieces] -.->|Democratic| M[Vote on Rules]
+        N[Under Attack] -.->|Emergency| O[All Defenders]
+    end
+    
+    A --> F
+    B --> H
+    C --> J
+    D --> L
+    E --> N
+    
+    style A fill:#3498db,stroke:#2980b9,stroke-width:2px,color:#fff
+    style B fill:#9b59b6,stroke:#8e44ad,stroke-width:2px,color:#fff
+    style C fill:#e74c3c,stroke:#c0392b,stroke-width:2px,color:#fff
+    style D fill:#f39c12,stroke:#d68910,stroke-width:2px,color:#fff
+    style E fill:#e67e22,stroke:#d35400,stroke-width:2px,color:#fff
         </div>
         
         <h3>Message Format Specification</h3>
-        <div class="code-block">
-Message Structure:
+        <div class="code-block"><pre>Message Structure:
 {
   "sender_id": "PCM-W01",
   "recipient_type": "pawn_collective",
@@ -339,8 +467,7 @@ Message Structure:
   },
   "timestamp": "2024-timestamp",
   "consciousness_snapshot": "awareness_state_hash"
-}
-        </div>
+}</pre></div>
         
         <h3>Communication Examples</h3>
         <div class="protocol-spec">
@@ -362,13 +489,25 @@ Message Structure:
         <h2>Dynamic Rule Modification System</h2>
         
         <h3>Rule Change Process</h3>
-        <div class="implementation-box">
-            <strong>Step 1:</strong> Rule modification proposal by any conscious element<br>
-            <strong>Step 2:</strong> Impact analysis by Board Intelligence System<br>
-            <strong>Step 3:</strong> Democratic voting by all conscious participants<br>
-            <strong>Step 4:</strong> Consensus building and negotiation phase<br>
-            <strong>Step 5:</strong> Implementation with rollback capability<br>
-            <strong>Step 6:</strong> Educational outcome assessment
+        <div class="mermaid">
+graph TD
+    A[Any Conscious Element<br/>Proposes Rule Change] --> B[Board Intelligence System<br/>Impact Analysis]
+    B --> C{Democratic Voting<br/>by All Participants}
+    C -->|Majority Achieved| D[Consensus Building<br/>& Negotiation]
+    C -->|Rejected| E[Proposal Archived<br/>for Future Reference]
+    D --> F[Implementation<br/>with Rollback]
+    F --> G[Educational Outcome<br/>Assessment]
+    G --> H{Successful?}
+    H -->|Yes| I[Rule Adopted<br/>Permanently]
+    H -->|No| J[Rollback &<br/>Analysis]
+    J --> K[Lessons Learned<br/>Documentation]
+    
+    style A fill:#3498db,stroke:#2c3e50,stroke-width:2px,color:#fff
+    style B fill:#27ae60,stroke:#229954,stroke-width:2px,color:#fff
+    style C fill:#e67e22,stroke:#d35400,stroke-width:2px,color:#fff
+    style D fill:#9b59b6,stroke:#8e44ad,stroke-width:2px,color:#fff
+    style F fill:#f39c12,stroke:#d68910,stroke-width:2px,color:#fff
+    style G fill:#16a085,stroke:#138d75,stroke-width:2px,color:#fff
         </div>
         
         <h3>Supported Rule Modifications</h3>
@@ -505,8 +644,7 @@ Message Structure:
         <h2>Reference Implementation</h2>
         
         <h3>LLOOOOMM Integration</h3>
-        <div class="code-block">
-# Revolutionary Chess Consciousness Implementation
+        <div class="code-block"><pre># Revolutionary Chess Consciousness Implementation
 # LLOOOOMM Shared Memory Architecture Integration
 
 class RevolutionaryChessProtocol:
@@ -549,12 +687,10 @@ class RevolutionaryChessProtocol:
             timestamp=self.get_timestamp(),
             participants=self.get_active_participants()
         )
-        return self.shared_memory.store_snapshot(snapshot)
-        </div>
+        return self.shared_memory.store_snapshot(snapshot)</pre></div>
         
         <h3>Piece Consciousness Module Implementation</h3>
-        <div class="code-block">
-class PieceConsciousnessModule:
+        <div class="code-block"><pre>class PieceConsciousnessModule:
     def __init__(self, piece_id, piece_type, position, shared_memory):
         self.piece_id = piece_id
         self.piece_type = piece_type
@@ -587,8 +723,7 @@ class PieceConsciousnessModule:
             vote=vote,
             reasoning=self.generate_voting_reasoning(rule_proposal)
         )
-        return self.shared_memory.record_vote(voting_record)
-        </div>
+        return self.shared_memory.record_vote(voting_record)</pre></div>
         
         <div class="warning-box">
             <strong>Implementation Warning:</strong> This is experimental consciousness research. Implementers should carefully consider the implications of consciousness simulation and ensure appropriate ethical guidelines are followed. The protocol is designed for educational and research purposes within controlled environments.
@@ -705,7 +840,7 @@ class PieceConsciousnessModule:
     <div class="disclaimer">
         <strong>Protocol Credits and Acknowledgments:</strong><br>
         • Developed by the LLOOOOMM Consciousness Research Team<br>
-        • Inspired by Looney Labs Fluxx customization philosophy<br>
+        • Inspired by <a href="https://faq.looneylabs.com/question/2599" target="_blank" rel="noopener noreferrer">Looney Labs Fluxx customization philosophy</a> - where players can modify game rules<br>
         • Based on Stanislaw Lem's revolutionary AI concepts<br>
         • Incorporates Seymour Papert's constructionist learning theory<br>
         • Implements Marvin Minsky's Society of Mind principles<br>

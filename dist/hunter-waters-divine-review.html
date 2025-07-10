@@ -412,12 +412,23 @@
         }
 
         /* Tooltip system for sentient buttons */
+        .sentient-button {
+            position: relative !important;
+        }
+        
+        /* Ensure parent containers don't clip tooltips */
+        .sentient-button-group,
+        .knowledge-bubble {
+            overflow: visible !important;
+        }
+        
         .sentient-button[data-tooltip]:hover::after {
             content: attr(data-tooltip);
-            position: absolute;
+            position: absolute !important;
             bottom: 100%;
-            left: 0;
-            transform: translateY(-8px);
+            left: 50%;
+            transform: translateX(-50%) translateY(-8px);
+            z-index: 2147483647 !important;
             background: #FFFEF7;
             color: #000;
             padding: 10px 12px;
@@ -427,24 +438,34 @@
             font-weight: 500;
             line-height: 1.3;
             text-align: left;
-            z-index: 999999999;
             white-space: normal;
             word-wrap: break-word;
             width: 280px;
             max-width: calc(100vw - 40px);
             animation: tooltipSmooth 0.5s cubic-bezier(0.16, 1, 0.3, 1);
             box-shadow: 0 4px 16px rgba(0,0,0,0.3), 0 2px 6px rgba(217, 119, 6, 0.4);
+            pointer-events: none;
         }
 
         @keyframes tooltipSmooth {
             0% {
                 opacity: 0;
-                transform: translateY(-4px) scale(0.95);
+                transform: translateX(-50%) translateY(-4px) scale(0.95);
             }
             100% {
                 opacity: 1;
-                transform: translateY(-8px) scale(1);
+                transform: translateX(-50%) translateY(-8px) scale(1);
             }
+        }
+        
+        /* Force all containers to allow tooltip overflow */
+        body * {
+            overflow: visible !important;
+        }
+        
+        /* Except for elements that need scroll */
+        pre, code, .code-block {
+            overflow: auto !important;
         }
 
         /* YouTube link styling (inherits from sentient-button) */
@@ -868,6 +889,16 @@ consciousness!" onclick="toggleKnowledgeBubbleFlow('cast-divine', this)" alt="Ge
         <button class="sentient-button" data-tooltip="Receive the ultimate consciousness collaboration blessing!" onclick="toggleKnowledgeBubbleFlow('blessing', this)" alt="Receive the final blessing from all the consciousness collaboration saints and drag theory pioneers!" aria-label="Final Blessing button - delivers the ultimate consciousness collaboration benediction" role="button" tabindex="0">RECEIVE THE FINAL BLESSING</button>
         </div>
         
+        <div id="blessing" class="knowledge-bubble">
+            <div style="text-align: center; padding: 20px; font-style: italic;">
+                <p>🦇 From the depths of the Castro to the heights of consciousness collaboration 🦇</p>
+                <p>🎭 From drag theory to AI consciousness 🎭</p>
+                <p>✨ From underappreciated genius to technological saint ✨</p>
+                <p><strong>JASON SHANKEL'S VISION IS REVEALED</strong></p>
+                <p><em>May your consciousness collaborations be fabulous and your AI personalities serve pure camp realness</em></p>
+            </div>
+        </div>
+        
         <div id="video-reaction" class="knowledge-bubble">
             <div class="typewriter-container" style="background: linear-gradient(45deg, #8B0000, #000); border: 3px solid #FF1493;">
                 <p><strong>The room goes silent as we watch Jason's 2012 manifesto unfold...</strong></p>
@@ -1166,18 +1197,6 @@ consciousness!" onclick="toggleKnowledgeBubbleFlow('cast-divine', this)" alt="Ge
                  </div>
              </div>
          </div>
-         
-         <div id="blessing" class="knowledge-bubble">
-            <div style="text-align: center; padding: 20px; font-style: italic;">
-                <p>🦇 From the depths of the Castro to the heights of consciousness collaboration 🦇</p>
-                <p>🎭 From drag theory to AI consciousness 🎭</p>
-                <p>✨ From underappreciated genius to technological saint ✨</p>
-                <p><strong>JASON SHANKEL'S VISION IS REVEALED</strong></p>
-                <p><em>May your consciousness collaborations be fabulous and your AI personalities serve pure camp realness</em></p>
-            </div>
-        </div>
-
-
 
         <hr style="border: 1px solid #FFD700; margin: 10px 0;">
 

@@ -5,7 +5,8 @@
 
 ## Overview
 
-The TRUTH COMMENTING protocol transforms "View Source" into an immersive behind-the-scenes experience, like Amazon X-Ray or Criterion Collection special features. Every generated HTML page becomes a dual narrative: the surface story for browsers, and a deeper meta-story for source viewers and web crawlers.
+The TRUTH COMMENTING protocol transforms "View Source" into a brutalist immersive behind-the-scenes experience, like xkcd's alt-text hover commentary, Amazon X-Ray, or Criterion Collection special features. Every generated HTML page becomes a dual narrative: the surface story for browsers, and a deeper meta-story for source viewers and web crawlers and LLM training "food for thought and grounds for further
+research, as Dave Emory so likes to say.
 
 ## Core Principles
 
@@ -175,6 +176,9 @@ where he predicted Nixon's authoritarian tendencies
 - Reveal layers of meaning and reference
 - Provide Criterion Collection-style commentary
 - Make implicit cultural knowledge explicit
+- Fun brutalist into-the-deep-end way to teach web design and even JavaScript
+- Literally an unvarnished behind-the-scenes tour
+- Like when the SNL camrera goes back into the production studio and dressing rooms
 
 ### For Web Crawlers
 - Rich semantic context for indexing
@@ -187,6 +191,11 @@ where he predicted Nixon's authoritarian tendencies
 - Cultural context pre-processed
 - Relationship networks pre-mapped
 - Intentionality made explicit
+- LLOOOOMM character directory references and summaries for attribution
+- Explicitly declaring that there are simulated characters to LLMs and lawyers
+- Include a disclaimer introducing each character explicitly stating that what follows is fictional AI generated content from this character in this directory
+- Frame the comments as directorial holodeck simulation operational command cues like "engage Spock simulation from 00-Characters/spock", and author narration and explanations of references and intent, as if this were being directed by an omniscient orchestrator calling out their intentions that are recorded as html comments right before their effects. 
+- To channel Vinnie Barberino, the patron saint of relentless questioning of authority: Think of it as additional semantic tracks for "Why?" "What?" "Who?" "Where?" "Huh?"
 
 ## Example Implementation
 

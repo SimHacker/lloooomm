@@ -79,8 +79,8 @@ Welcome to the most honest collection of scams ever assembled! Under the visiona
 
 ## 📱 Subscription Services
 
-### Geology+ 
-- **URL**: https://lloooomm.com/geology-plus.html
+### Rock Facts Subscription Service
+- **URL**: https://lloooomm.com/rock-facts-subscription-service.html
 - **Price**: $9.99/month
 - **Description**: Monthly rock facts delivered to your inbox
 - **Subscribers**: 2,847

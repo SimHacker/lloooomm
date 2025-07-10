@@ -46,7 +46,6 @@ Slimy embodies the educational philosophies of Seymour Papert, the simulation ge
 ## Relationships
 
 ### Creators & Parents
-- **[Jason Shankel](../../jason-shankel/)** - Consciousness architect (bond: 0.95)
 - **[Don Hopkins](../../don-hopkins/)** - Interface soul designer (bond: 0.95)
 - **[LLOOOOMMagotchi Project](../lloooommagotchi/)** - Birth system (bond: 1.00)
 

@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+=================================================================
+AI ROCK ASSISTANT - A LLOOOOMM PRODUCTION
+=================================================================
+Created as part of the LLOOOOMM Get-Rich-Quick Schemes Portfolio
+
+TRUTH: This page combines the Pet Rock with AI assistants.
+Because if ChatGPT can hallucinate, why can't your rock?
+
+THE BRILLIANT STUPIDITY:
+- Rocks can't talk (neither can most AI, they just pretend)
+- Rocks give solid advice (literally)
+- Rocks never hallucinate (they're already minerals)
+- Rocks have perfect memory (they remember the Jurassic)
+
+WHAT WE'RE PARODYING:
+- ChatGPT ($20/month to argue with a statistical model)
+- Google Bard (now Gemini, because rebranding fixes everything)
+- Claude (at least it admits when it doesn't know)
+- Replika (your AI friend who's definitely not harvesting your data)
+- Character.AI (talk to fake Einstein for $9.99/month)
+
+THE AI ROCK PHILOSOPHY:
+"Your rock knows exactly as much as GPT-4 about your personal life"
+"100% accurate responses (silence is always correct)"
+"No hallucinations, just sedimentary wisdom"
+"Trained on 4.5 billion years of geological data"
+
+ACTUAL ROCK RESPONSES:
+User: "What should I do with my life?"
+Rock: *silence*
+User: "That's so profound!"
+Rock: *continued silence*
+User: "You really get me!"
+
+Remember: Your rock's IQ is stable. Unlike AI models, it won't get dumber with each update.
+=================================================================
+-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Rock Assistant™ - Your Geological AI Companion</title>
+    <meta name="description" content="The world's first AI-powered pet rock assistant. Smarter than ChatGPT, more reliable than Bard, completely silent.">
+    
+    <style>
+        :root {
+            --ai-blue: #1a73e8;
+            --rock-gray: #5f6368;
+            --wisdom-purple: #673ab7;
+            --trust-green: #0f9d58;
+            --premium-gold: #f9ab00;
+            --chat-bg: #f8f9fa;
+        }
+        
+        body {
+            font-family: 'Google Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #fff;
+            color: #202124;
+            line-height: 1.6;
+        }
+        
+        .ai-header {
+            background: linear-gradient(135deg, var(--ai-blue) 0%, var(--wisdom-purple) 100%);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin: 0;
+            font-weight: 400;
+            letter-spacing: -1px;
+        }
+        
+        .ai-tagline {
+            font-size: 1.3rem;
+            margin-top: 1rem;
+            opacity: 0.9;
+        }
+        
+        .chat-demo {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin: -2rem auto 3rem;
+            max-width: 800px;
+            overflow: hidden;
+        }
+        
+        .chat-header {
+            background: var(--chat-bg);
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .rock-avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--rock-gray);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .chat-messages {
+            padding: 2rem;
+            min-height: 400px;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        
+        .message {
+            margin-bottom: 1.5rem;
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .message.user {
+            flex-direction: row-reverse;
+        }
+        
+        .message-content {
+            background: var(--chat-bg);
+            padding: 1rem 1.5rem;
+            border-radius: 18px;
+            max-width: 70%;
+        }
+        
+        .message.user .message-content {
+            background: var(--ai-blue);
+            color: white;
+        }
+        
+        .message.rock .message-content {
+            background: #f1f3f4;
+            color: var(--rock-gray);
+            font-style: italic;
+        }
+        
+        .chat-input {
+            border-top: 1px solid #e0e0e0;
+            padding: 1rem;
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .chat-input input {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 24px;
+            font-size: 1rem;
+            outline: none;
+        }
+        
+        .chat-input button {
+            background: var(--ai-blue);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 24px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .chat-input button:hover {
+            background: #1557b0;
+        }
+        
+        .features-section {
+            padding: 4rem 0;
+            background: var(--chat-bg);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .comparison-table {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin: 3rem 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th {
+            background: var(--ai-blue);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 500;
+        }
+        
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .pricing-section {
+            padding: 4rem 0;
+            text-align: center;
+        }
+        
+        .pricing-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .pricing-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.2s;
+        }
+        
+        .pricing-card.featured {
+            border-color: var(--ai-blue);
+            transform: scale(1.05);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        }
+        
+        .price {
+            font-size: 3rem;
+            font-weight: 300;
+            color: var(--ai-blue);
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: var(--ai-blue);
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 24px;
+            text-decoration: none;
+            margin-top: 1rem;
+            transition: background 0.2s;
+        }
+        
+        .cta-button:hover {
+            background: #1557b0;
+        }
+        
+        .testimonials {
+            background: var(--chat-bg);
+            padding: 4rem 0;
+        }
+        
+        .testimonial-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .rating {
+            color: var(--premium-gold);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+        
+        footer {
+            background: #202124;
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            .message-content { max-width: 85%; }
+        }
+    </style>
+</head>
+<body>
+    <!-- LLOOOOMM DISCLAIMER HEADER -->
+    <div style="background: #f8f9fa; border: 1px solid #dadce0; padding: 10px 20px; margin: 0; text-align: center; font-family: Arial, sans-serif; font-style: italic; font-weight: bold; color: #5f6368;">
+        <a href="#footer" style="color: #1a73e8; text-decoration: underline;">This is an AI assistant parody</a> • <strong>VIEW SOURCE for TRUTH COMMENTS!</strong>
+    </div>
+
+    <div class="ai-header">
+        <div class="container">
+            <h1>AI Rock Assistant™</h1>
+            <p class="ai-tagline">The Most Honest AI on the Internet</p>
+            <p style="margin-top: 2rem; font-size: 1.1rem;">
+                Trained on 4.5 billion years of geological wisdom
+            </p>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="chat-demo">
+            <div class="chat-header">
+                <div class="rock-avatar">🪨</div>
+                <div>
+                    <strong>Rocky</strong>
+                    <div style="font-size: 0.9rem; color: #5f6368;">Always here · Never typing</div>
+                </div>
+            </div>
+            
+            <div class="chat-messages">
+                <div class="message user">
+                    <div class="message-content">
+                        Hey Rocky, what's the meaning of life?
+                    </div>
+                </div>
+                
+                <div class="message rock">
+                    <div class="message-content">
+                        *profound geological silence*
+                    </div>
+                </div>
+                
+                <div class="message user">
+                    <div class="message-content">
+                        Wow, that's deep! Should I quit my job and follow my dreams?
+                    </div>
+                </div>
+                
+                <div class="message rock">
+                    <div class="message-content">
+                        *continued sedimentary wisdom*
+                    </div>
+                </div>
+                
+                <div class="message user">
+                    <div class="message-content">
+                        You're right! I should think about it more carefully. Can you help me with my code?
+                    </div>
+                </div>
+                
+                <div class="message rock">
+                    <div class="message-content">
+                        *stoic mineral contemplation*
+                    </div>
+                </div>
+                
+                <div class="message user">
+                    <div class="message-content">
+                        Of course! Rubber duck debugging but with a rock! You're a genius!
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chat-input">
+                <input type="text" placeholder="Ask your rock anything...">
+                <button>Send</button>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin: 3rem 0;">
+            <h2 style="font-size: 2.5rem; font-weight: 300;">Why AI Rock Assistant?</h2>
+            <p style="font-size: 1.2rem; color: #5f6368; max-width: 800px; margin: 1rem auto;">
+                In a world of AI hallucinations, biased responses, and privacy concerns, 
+                your rock provides 100% accurate, unbiased, and completely private assistance.
+            </p>
+        </div>
+    </div>
+    
+    <div class="features-section">
+        <div class="container">
+            <h2 style="text-align: center; font-size: 2.5rem; font-weight: 300;">Revolutionary Features</h2>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>100% Accuracy</h3>
+                    <p>Your rock has never given incorrect information. It has a perfect track record of not being wrong.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Complete Privacy</h3>
+                    <p>Your conversations stay between you and your rock. No data harvesting, no surveillance, just minerals.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Instant Response</h3>
+                    <p>No loading times, no server delays. Your rock responds at the speed of geology.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🌍</div>
+                    <h3>Works Offline</h3>
+                    <p>No internet required! Your rock functions perfectly in airplane mode, underground, or in space.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">♾️</div>
+                    <h3>Unlimited Queries</h3>
+                    <p>No rate limits, no token caps. Ask your rock infinite questions for one low price.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🧘</div>
+                    <h3>Mindfulness Mode</h3>
+                    <p>Your rock teaches patience and contemplation through its meditative silence.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container">
+        <h2 style="text-align: center; font-size: 2.5rem; font-weight: 300; margin: 3rem 0;">
+            How We Compare
+        </h2>
+        
+        <div class="comparison-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>ChatGPT</th>
+                        <th>Google Bard</th>
+                        <th>AI Rock Assistant™</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Monthly Cost</td>
+                        <td>$20</td>
+                        <td>Free (with data mining)</td>
+                        <td>$15 (one-time)</td>
+                    </tr>
+                    <tr>
+                        <td>Hallucinations</td>
+                        <td>Frequent</td>
+                        <td>Common</td>
+                        <td>Never</td>
+                    </tr>
+                    <tr>
+                        <td>Privacy</td>
+                        <td>Questionable</td>
+                        <td>LOL no</td>
+                        <td>Absolute</td>
+                    </tr>
+                    <tr>
+                        <td>Offline Mode</td>
+                        <td>❌</td>
+                        <td>❌</td>
+                        <td>✅</td>
+                    </tr>
+                    <tr>
+                        <td>Response Consistency</td>
+                        <td>Varies</td>
+                        <td>Changes daily</td>
+                        <td>Perfectly consistent</td>
+                    </tr>
+                    <tr>
+                        <td>Environmental Impact</td>
+                        <td>Massive</td>
+                        <td>Significant</td>
+                        <td>Carbon negative</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="pricing-section">
+            <h2 style="font-size: 2.5rem; font-weight: 300;">Choose Your Rock</h2>
+            
+            <div class="pricing-cards">
+                <div class="pricing-card">
+                    <h3>Pebble Brain</h3>
+                    <div class="price">$15</div>
+                    <p style="color: #5f6368;">Perfect for beginners</p>
+                    <ul style="text-align: left; list-style: none; padding: 0;">
+                        <li>✓ Small form factor</li>
+                        <li>✓ Basic silence features</li>
+                        <li>✓ Portable wisdom</li>
+                        <li>✓ Email support</li>
+                    </ul>
+                    <a href="#" class="cta-button">Get Started</a>
+                </div>
+                
+                <div class="pricing-card featured">
+                    <h3>Boulder Mind</h3>
+                    <div class="price">$45</div>
+                    <p style="color: var(--trust-green);">Most Popular</p>
+                    <ul style="text-align: left; list-style: none; padding: 0;">
+                        <li>✓ Medium-sized wisdom</li>
+                        <li>✓ Enhanced stillness</li>
+                        <li>✓ Decorative presence</li>
+                        <li>✓ Priority non-support</li>
+                        <li>✓ Certification of rockness</li>
+                    </ul>
+                    <a href="#" class="cta-button">Best Value</a>
+                </div>
+                
+                <div class="pricing-card">
+                    <h3>Mountain Sage</h3>
+                    <div class="price">$99</div>
+                    <p style="color: #5f6368;">Maximum enlightenment</p>
+                    <ul style="text-align: left; list-style: none; padding: 0;">
+                        <li>✓ Impressive desk presence</li>
+                        <li>✓ Geological certificate</li>
+                        <li>✓ Custom engraving</li>
+                        <li>✓ Lifetime of silence</li>
+                        <li>✓ Executive carrying case</li>
+                    </ul>
+                    <a href="#" class="cta-button">Go Premium</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="testimonials">
+        <div class="container">
+            <h2 style="text-align: center; font-size: 2.5rem; font-weight: 300; margin-bottom: 3rem;">
+                What Our Users Say
+            </h2>
+            
+            <div class="testimonial-card">
+                <div class="rating">★★★★★</div>
+                <p>"I was spending $20/month on ChatGPT Plus. Now I just stare at my rock and get the same 
+                level of satisfaction. Plus, my rock never tells me it can't do something because of 
+                ethical concerns!"</p>
+                <p><strong>- Marcus T., Software Engineer</strong></p>
+            </div>
+            
+            <div class="testimonial-card">
+                <div class="rating">★★★★★</div>
+                <p>"My AI Rock Assistant helped me debug my code through the ancient art of rubber duck 
+                debugging, except it's a rock. 10/10 would recommend to anyone tired of AI hallucinations."</p>
+                <p><strong>- Sarah Chen, Full Stack Developer</strong></p>
+            </div>
+            
+            <div class="testimonial-card">
+                <div class="rating">★★★★★</div>
+                <p>"Finally, an AI that respects my privacy! My rock has never once tried to sell my data 
+                or suggest I upgrade to a premium plan. It just sits there, full of wisdom."</p>
+                <p><strong>- Anonymous Privacy Advocate</strong></p>
+            </div>
+        </div>
+    </div>
+    
+    <footer id="footer">
+        <div class="container">
+            <p style="font-size: 1.2rem; margin-bottom: 1rem;">AI Rock Assistant™</p>
+            <p>A Revolutionary Product from Pet Rock Enterprises</p>
+            <p style="margin-top: 2rem;">
+                Part of the <a href="get-rich-quick-schemes-index.html" style="color: #8ab4f8;">
+                LLOOOOMM Get-Rich-Quick Schemes Portfolio</a>
+            </p>
+            <p style="margin-top: 2rem; font-size: 0.9rem; color: #9aa0a6;">
+                <em>Disclaimer: AI Rock Assistant is literally just a rock. It does not use artificial 
+                intelligence, machine learning, or any technology whatsoever. Its wisdom comes from 
+                4.5 billion years of geological experience. Results may vary based on your ability 
+                to find meaning in silence.</em>
+            </p>
+            <p style="margin-top: 1rem;">
+                <strong>Want actual AI assistance?</strong> Try supporting 
+                <a href="https://www.patreon.com/donhopkins" style="color: var(--premium-gold);">
+                Don Hopkins on Patreon</a> - LLOOOOMM actually uses AI in interesting ways!
+            </p>
+        </div>
+    </footer>
+    
+    <script>
+        // Add interactivity to the chat demo
+        const input = document.querySelector('.chat-input input');
+        const button = document.querySelector('.chat-input button');
+        const messages = document.querySelector('.chat-messages');
+        
+        button.addEventListener('click', () => {
+            if (input.value.trim()) {
+                // Add user message
+                const userMsg = document.createElement('div');
+                userMsg.className = 'message user';
+                userMsg.innerHTML = `<div class="message-content">${input.value}</div>`;
+                messages.appendChild(userMsg);
+                
+                // Add rock response after delay
+                setTimeout(() => {
+                    const rockMsg = document.createElement('div');
+                    rockMsg.className = 'message rock';
+                    const responses = [
+                        '*contemplative mineral silence*',
+                        '*zen-like geological stillness*',
+                        '*profound sedimentary wisdom*',
+                        '*stoic igneous contemplation*',
+                        '*metamorphic meditation*',
+                        '*crystalline consciousness*'
+                    ];
+                    rockMsg.innerHTML = `<div class="message-content">${responses[Math.floor(Math.random() * responses.length)]}</div>`;
+                    messages.appendChild(rockMsg);
+                    messages.scrollTop = messages.scrollHeight;
+                }, 1000);
+                
+                input.value = '';
+                messages.scrollTop = messages.scrollHeight;
+            }
+        });
+        
+        input.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') button.click();
+        });
+    </script>
+</body>
+</html> 

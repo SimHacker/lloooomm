@@ -163,27 +163,10 @@ they're running OBSIDIAN blockchain code).
         }
         
         .tagline {
-            font-size: 20px;
+            font-size: 18px;
             color: #DDA0DD;
-            margin-bottom: 30px;
-        }
-        
-        .disclaimer-header {
-            font-family: Arial, Helvetica, sans-serif;
-            font-style: italic;
-            font-weight: bold;
-            color: white;
-            font-size: 16px;
             margin-top: 10px;
-        }
-        
-        .disclaimer-header a {
-            color: white;
-            text-decoration: underline;
-        }
-        
-        .disclaimer-header a:hover {
-            color: #FFD700;
+            font-style: italic;
         }
         
         .container {
@@ -241,8 +224,8 @@ they're running OBSIDIAN blockchain code).
             background: #007AFF;
             color: white;
             border: none;
-            border-radius: 20px;
-            width: 80px;
+            border-radius: 50%;
+            width: 40px;
             height: 40px;
             font-weight: bold;
             cursor: pointer;
@@ -490,16 +473,14 @@ they're running OBSIDIAN blockchain code).
     <div class="header">
         <h1>🪨 ROCK FACTS 💎</h1>
         <p class="tagline">Daily Geological Wisdom & Programming Crystals from Brad Myers' Collection</p>
-        <p class="disclaimer-header">
-            <a href="#footer-disclaimer">This is a fictionalized parody</a> • <strong>VIEW SOURCE for TRUTH COMMENTS!</strong>
-        </p>
     </div>
     
     <div class="container">
         <!-- Phone Mockup showing the prank -->
         <div class="phone-mockup">
             <div class="phone-screen" id="phoneScreen">
-                <!-- ... existing code ... -->
+                <div class="message system">Welcome to Rock Facts! 🪨</div>
+                <div class="message system">Enter your phone number to subscribe to hourly rock facts and Brad Myers' programming wisdom!</div>
             </div>
             <div class="phone-input-area">
                 <input type="text" id="userInput" placeholder="Type here..." class="phone-text-input">
@@ -516,7 +497,7 @@ they're running OBSIDIAN blockchain code).
             <div class="vine-art">
                 🌿🌿🌿🌿🌿🌿🌿🌿🌿<br>
                 The Longest Vine in CMU Computer Science<br>
-                🌿🌿🌿🌿🌿🌿🌿🌿��
+                🌿🌿🌿🌿🌿🌿🌿🌿🌿
             </div>
             <p>
                 Brad Myers is a wise new-age hippie professor at Carnegie Mellon University who believes 
@@ -689,7 +670,7 @@ they're running OBSIDIAN blockchain code).
         </div>
     </div>
     
-    <div class="footer" id="footer-disclaimer">
+    <div class="footer">
         <p>
             🪨 A LLOOOOMM Production 🪨<br>
             Inspired by the Reddit Cat Facts prank and Brad Myers' crystalline research<br>
@@ -1311,15 +1292,13 @@ they're running OBSIDIAN blockchain code).
             gainNode.connect(audioContext.destination);
             
             if (type === 'send') {
-                // Upward swoosh for sending
                 oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
                 oscillator.frequency.exponentialRampToValueAtTime(1200, audioContext.currentTime + 0.1);
                 gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
                 gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
             } else if (type === 'receive') {
-                // Downward swoosh for receiving
-                oscillator.frequency.setValueAtTime(600, audioContext.currentTime);
-                oscillator.frequency.exponentialRampToValueAtTime(400, audioContext.currentTime + 0.15);
+                oscillator.frequency.setValueAtTime(400, audioContext.currentTime);
+                oscillator.frequency.exponentialRampToValueAtTime(600, audioContext.currentTime + 0.15);
                 gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
                 gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.15);
             }
@@ -1432,46 +1411,40 @@ they're running OBSIDIAN blockchain code).
             const scheduleNext = () => {
                 const delay = 15000 + Math.random() * 30000;
                 autoMessageInterval = setTimeout(() => {
-                    // Only send message if tab is visible
-                    if (!document.hidden) {
-                        sendRandomFact();
-                    }
+                    sendRandomFact();
                     scheduleNext();
                 }, delay);
             };
             scheduleNext();
         }
         
-        // Pause/resume auto messages based on tab visibility
-        document.addEventListener('visibilitychange', () => {
-            if (document.hidden) {
-                // Tab is hidden, clear the interval
-                if (autoMessageInterval) {
-                    clearTimeout(autoMessageInterval);
-                    autoMessageInterval = null;
-                }
-            } else {
-                // Tab is visible again, restart auto messages if subscribed
-                if (isSubscribed && !autoMessageInterval) {
-                    startAutoMessages();
-                }
-            }
-        });
-        
         // Event listeners
         document.getElementById('sendButton').addEventListener('click', handleUserInput);
         document.getElementById('userInput').addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
-                e.preventDefault();
-                // Animate the send button when Enter is pressed
-                const sendButton = document.getElementById('sendButton');
-                sendButton.classList.add('blink');
-                setTimeout(() => sendButton.classList.remove('blink'), 300);
                 handleUserInput();
             }
         });
         
         // Subscribe button functionality
+        function subscribe() {
+            const input = document.getElementById('phoneInput');
+            const phone = input.value || '555-ROCKS';
+            
+            // Simulate subscription
+            const responses = [
+                `Welcome to Rock Facts! ${phone} has been subscribed! Brad's crystals have blessed your number. First fact incoming...`,
+                `Congratulations ${phone}! You've subscribed to PREMIUM Rock Facts! To cancel, solve P=NP. Good luck!`,
+                `Success! ${phone} will receive hourly rock facts forever! Chlorophyll Collins is watering itself in celebration!`,
+                `${phone} added to our blockchain! Just kidding, we use a regular database because we're not idiots!`
+            ];
+            
+            alert(responses[Math.floor(Math.random() * responses.length)]);
+            input.value = '';
+            
+            // Focus on the phone mockup
+            document.getElementById('phoneScreen').scrollIntoView({ behavior: 'smooth' });
+        }
         
         // Add falling crystals
         function createCrystal() {
@@ -1498,22 +1471,6 @@ they're running OBSIDIAN blockchain code).
         window.unlikelyStringOfCharactersThatNoOneWillEverType = function() {
             console.log("%cCommand not recognized. Here's another fact: Geodes look boring on the outside but are beautiful inside - just like legacy code after refactoring!", "color: #90EE90;");
         };
-        
-        // Focus input on page load and send initial unsolicited message
-        window.addEventListener('load', () => {
-            document.getElementById('userInput').focus();
-            
-            // Send initial unsolicited message after 1 second
-            setTimeout(() => {
-                addMessage("Thanks for subscribing to Rock Facts! You'll now receive fun facts about rocks and Brad Myers' crystal-powered programming every hour! 🪨", 'rock-facts');
-                isSubscribed = true;
-                
-                setTimeout(() => {
-                    sendRandomFact();
-                    startAutoMessages();
-                }, 1500);
-            }, 1000);
-        });
     </script>
 </body>
 </html> 

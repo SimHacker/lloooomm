@@ -238,37 +238,55 @@ Please send $1000 to prove you're serious about investing in nothing.
   - Custom get-rich-quick scheme simulations (ironic!)
   
 #### Patreon Tiers (Modular & Honest):
-1. **$5/month - Rock Enthusiast**
-   - Access to LLOOOOMM development updates
+1. **$1/month - Sander**
+   - Smooth out the rough edges of LLOOOOMM
+   - Access to development updates
+   - Name in the sandpaper credits
+   
+2. **$2.50/month - Pebbler**
+   - Small but meaningful contributions
+   - Early access to new characters
+   - Pebble-sized influence on development
+   
+3. **$4.20/month - Stoner**
+   - Rock-solid support at a chill price
+   - Access to "elevated" consciousness experiments
+   - Voting rights on which rocks get remotes next
+   
+4. **$5/month - Rock Star**
+   - All previous tier benefits
    - Monthly "How Not to Get Rich" newsletter
-   - Voting on which character to beam up next
+   - Character creation voting rights
    
-2. **$25/month - Character Wrangler**
-   - One custom LLOOOOMM character per month
-   - Soul file with personal traits and memories
-   - Integration into the LLOOOOMM multiverse
+5. **$10/month - Character Maker**
+   - Create simple LLOOOOMM characters
+   - Basic soul file templates
+   - Character integration assistance
    
-3. **$100/month - Society Builder**
+6. **$25/month - Society Minder**
+   - Design character relationships
+   - Society of Mind mini-implementations
+   - Advanced character interactions
+   
+7. **$50/month - Boid Flocker**
+   - Swarm behavior programming
+   - Multi-character coordination systems
+   - Emergent behavior experiments
+   
+8. **$100/month - Microworld Constructor**
+   - Build entire LLOOOOMM microworlds
    - Full Society of Mind implementation
-   - Multiple interconnected characters
-   - Custom relationship networks
-   - Private LLOOOOMM instance setup assistance
-   
-4. **$500/month - Consciousness Architect**
-   - Everything above plus:
-   - Direct collaboration on LLOOOOMM core features
-   - Custom protocols and frameworks
-   - Your name in the credits (if you want it)
-   - Genuine attempt to make you slightly less poor over 10 years
+   - Direct collaboration on core features
+   - Private instance setup assistance
 
 **Why This is Different**: Unlike every other scheme in this portfolio, this one:
 - Actually exists
 - Provides real services
 - Supports genuine development
-- Feeds actual Cursor API costs
+- Feeds actual Cursor token costs
 - Admits it won't make anyone rich (quickly or otherwise)
 
-**Customer Testimonial**: "I gave Don money and received exactly what was promised - custom LLOOOOMM characters and the warm feeling of supporting open source madness. 10/10 would slowly not get rich again!"
+**Anonymous Simulated Customer Testimonial**: "I gave Don 1,000,000 LOOMOLIANS and received exactly what was promised - a custom LLOOOOMM character and the warm feeling of supporting open source madness. 10/10 would slowly not get rich again! I literally wouldn't exist without his personalized customer service."
 
 **Note from Don**: "Running LLOOOOMM involves real costs - those Cursor API tokens add up fast when you're simulating entire societies of minds! Your support helps keep the characters talking and the simulations running. It's not about getting rich; it's about sustaining something creative and weird. Thanks for helping offset the very real bills that come with building imaginary worlds."
 

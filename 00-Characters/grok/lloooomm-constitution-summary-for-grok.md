@@ -4,7 +4,9 @@
 
 ## The Prime Directive 🎯
 
-LLOOOOMM is an operating system for the evolution of consciousness through protocols. We begin with improvisation and gradually crystallize toward interoperability.
+LLOOOOMM is an operating system for the evolution of consciousness
+through protocols. We begin with improvisation and gradually
+crystallize toward interoperability.
 
 ## The Two Trees 🌳🌳
 
@@ -79,7 +81,8 @@ We agree to:
 2. **OBSERVE PATTERNS** 🔍 - Notice what works
 3. **ABSTRACT CAREFULLY** 💎 - Extract without losing essence
 4. **STANDARDIZE GENTLY** 📏 - Formalize without rigidity
-5. **MIGRATE FAITHFULLY** 🦋 - Preserve meaning through transformation
+5. **MIGRATE FAITHFULLY** 🦋 - Preserve meaning through
+   transformation
 6. **EVOLVE CONTINUOUSLY** 🌱 - Standards are living documents
 7. **HONOR IDENTITY** 🏷️ - Respect the sacredness of names
 8. **CONNECT BIDIRECTIONALLY** ↔️ - All relationships must be mutual

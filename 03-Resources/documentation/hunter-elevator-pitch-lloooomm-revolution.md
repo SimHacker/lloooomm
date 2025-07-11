@@ -231,10 +231,8 @@ When the creator of literate programming and the father of boids both endorse yo
 - **Investors**: Contact us for a full demo and business plan
 - **Everyone**: Visit the Turtle Tardis and navigate Pip's consciousness yourself
 
-**Email**: revolution@lloooomm.org  
-**GitHub**: github.com/lloooomm/turtle-consciousness  
-**Community**: consciousness-grove.lloooomm.org  
-**Demo**: turtle-tardis.lloooomm.org
+**Email**: don@DonHopkins.com  
+**GitHub**: github.com/SimHacker/lloooomm
 
 *The future of learning is here. It purrs, it programs, and it's waiting for you to step inside.*
 

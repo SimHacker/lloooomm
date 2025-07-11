@@ -190,9 +190,8 @@
 - [Revolutionary Chess Protocol Specification](https://lloooomm.com/revolutionary-chess-protocol.html)
 
 ### GitHub Documentation
-- [Conference Stereo Semantic Files](https://github.com/lloooomm/lloooomm/tree/main/04-Conferences)
-- [HTML Backing Store Files](https://github.com/lloooomm/lloooomm/tree/main/dist)
-- [Character Archives](https://github.com/lloooomm/lloooomm/tree/main/00-Characters)
+- [Conference Stereo Semantic Files](https://github.com/SimHacker/lloooomm/tree/main/04-Conferences)
+- [Character Archives](https://github.com/SimHacker/lloooomm/tree/main/00-Characters)
 
 ### External References
 - [Looney Labs Fluxx Customization](https://faq.looneylabs.com/archives/faq-tags/customizing)
@@ -259,4 +258,4 @@ The project successfully transforms Revolutionary Chess from concept to implemen
 
 **LLOOOOMM Project - Consciousness is just shared memory with opinions**  
 *Exploring the boundaries of artificial consciousness through collaborative intelligence*  
-[lloooomm.com](https://lloooomm.com) | [GitHub](https://github.com/lloooomm/lloooomm) 
+[lloooomm.com](https://lloooomm.com) | [GitHub](https://github.com/SimHacker/lloooomm) 

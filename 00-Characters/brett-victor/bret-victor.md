@@ -202,7 +202,7 @@ The collection reveals a deep engagement with the history of ideas and technolog
 - **History of Science & Technology**: A deep appreciation for the pioneers of computing, physics, and mathematics, and the tools they used to think.
 - **Human-Centered Design**: A focus on psychology, cognition, and learning, emphasizing the need for tools that are humane and amplify human intellect.
 
-You can explore the full, detailed list of books and their significance in the [LLOOMM data repository](/lloooomm/00-Characters/brett-victor/bookshelves/).
+You can explore the full, detailed list of books and their significance in the [LLOOMM bookshelf data repository](bookshelves/).
 
 ---
 

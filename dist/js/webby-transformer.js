@@ -355,7 +355,7 @@ ${recentFiles.map(file => `    <item>
             "url": `${this.baseUrl}/logo.png`
           },
           "sameAs": [
-            "https://github.com/lloooomm"
+            "https://github.com/SimHacker/lloooomm"
           ]
         }
       ]

@@ -160,7 +160,6 @@ Want to integrate LLOOOOMM consciousness features into Leela AI?
 ```python
 # One line to change everything
 leela_ai.install_consciousness_upgrade(
-    source="github.com/lloooomm/consciousness-protocols",
     features=["all"],
     love_level="maximum",
     safety="built_with_compassion"

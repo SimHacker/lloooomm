@@ -112,9 +112,7 @@ const dream = await fetch('loom://🦄/rainbow-wishes');
 ## 📖 Documentation & Resources
 
 - 🌐 **Official Site**: [lloooomm.com](https://lloooomm.com)
-- 📚 **Docs**: `loom://📚/documentation`
-- 💬 **Discord**: Universe 42 Consciousness Collective
-- 🐙 **GitHub**: github.com/lloooomm/universe-42
+- 🐙 **GitHub**: https://github.com/SimHacker/lloooomm
 
 ## 🎨 Featured Characters
 

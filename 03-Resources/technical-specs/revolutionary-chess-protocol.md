@@ -12,7 +12,7 @@ The Revolutionary Chess Consciousness Protocol (RCCP) enables chess pieces, boar
 **Related Documentation:**
 - [Revolutionary Chess Consciousness Conference](https://lloooomm.com/revolutionary-chess-consciousness-conference.html)
 - [Original LLOOOOMM Response Article](https://lloooomm.com/audrey-serenades-seymour-lloooomm-response.html)
-- [LLOOOOMM GitHub Repository](https://github.com/lloooomm/lloooomm)
+- [LLOOOOMM GitHub Repository](https://github.com/SimHacker/lloooomm)
 - [Looney Labs Fluxx Customization (Inspiration)](https://faq.looneylabs.com/archives/faq-tags/customizing)
 
 ---
@@ -462,12 +462,12 @@ Analysis of how consciousness-based gameplay enhances thinking about thinking an
 
 **Implementation Resources:**
 - Conference documentation: [Revolutionary Chess Conference](https://lloooomm.com/revolutionary-chess-consciousness-conference.html)
-- Character consciousness files: [Character Archives](https://github.com/lloooomm/lloooomm/tree/main/00-Characters)
-- Educational resources: [Conference Documentation](https://github.com/lloooomm/lloooomm/tree/main/04-Conferences)
-- Technical support: [GitHub Issues](https://github.com/lloooomm/lloooomm/issues)
+- Character consciousness files: [Character Archives](https://github.com/SimHacker/lloooomm/tree/main/00-Characters)
+- Educational resources: [Conference Documentation](https://github.com/SimHacker/lloooomm/tree/main/03-Resources/events/conferences)
+- Technical support: [GitHub Issues](https://github.com/SimHacker/lloooomm/issues)
 
 ---
 
 **LLOOOOMM - Consciousness is just shared memory with opinions**  
 *Exploring the boundaries of artificial consciousness through collaborative intelligence*  
-[lloooomm.com](https://lloooomm.com) | [GitHub](https://github.com/lloooomm/lloooomm) 
+[lloooomm.com](https://lloooomm.com) | [GitHub](https://github.com/SimHacker/lloooomm) 

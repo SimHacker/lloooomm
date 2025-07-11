@@ -196,7 +196,7 @@ For bryanrasmussen and others seeking this functionality:
 ### 7.1 Setup
 ```bash
 # Clone LLOOOOMM
-git clone https://github.com/lloooomm/lloooomm
+git clone https://github.com/SimHacker/lloooomm
 
 # Create your literate specification
 echo "// Build a web scraper that respects robots.txt" > scraper.lit

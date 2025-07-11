@@ -106,7 +106,7 @@ Kasparov continues to contribute to:
 ## Documentation Links
 - **Conference Article**: [Revolutionary Chess Consciousness Conference](https://lloooomm.com/revolutionary-chess-consciousness-conference.html)
 - **Technical Protocol**: [Revolutionary Chess Protocol](https://lloooomm.com/revolutionary-chess-protocol.html)
-- **Conference Documentation**: [GitHub Conference Files](https://github.com/lloooomm/lloooomm/tree/main/04-Conferences)
+- **Conference Documentation**: [LLOOOOMM Conference Resources](../../03-Resources/events/conferences/)
 
 ---
 

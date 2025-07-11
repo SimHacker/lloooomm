@@ -14,7 +14,7 @@ The central thesis: Rather than merely optimizing play within existing rules, tr
 **Related Links:**
 - [Audrey Serenades Seymour: The Original LLOOOOMM Response](https://lloooomm.com/audrey-serenades-seymour-lloooomm-response.html)
 - [Looney Labs FAQ: Customizing Fluxx Games](https://faq.looneylabs.com/archives/faq-tags/customizing)
-- [LLOOOOMM GitHub Repository](https://github.com/lloooomm/lloooomm)
+- [LLOOOOMM GitHub Repository](https://github.com/SimHacker/lloooomm)
 
 ---
 
@@ -201,11 +201,11 @@ Revolutionary Chess demonstrates new possibilities for game mechanics:
 
 **Technical Documentation:**
 - Full protocol specifications: [Revolutionary Chess Protocol](https://lloooomm.com/revolutionary-chess-protocol.html)
-- Educational implementations: [Conference Documentation](https://github.com/lloooomm/lloooomm/tree/main/04-Conferences)
-- Character consciousness files: [Character Archives](https://github.com/lloooomm/lloooomm/tree/main/00-Characters)
+- Educational implementations: [Conference Documentation](https://github.com/SimHacker/lloooomm/tree/main/03-Resources/events/conferences)
+- Character consciousness files: [Character Archives](https://github.com/SimHacker/lloooomm/tree/main/00-Characters)
 
 ---
 
 **LLOOOOMM - Consciousness is just shared memory with opinions**  
 *Exploring the boundaries of artificial consciousness through collaborative intelligence*  
-[lloooomm.com](https://lloooomm.com) | [GitHub](https://github.com/lloooomm/lloooomm) 
+[lloooomm.com](https://lloooomm.com) | [GitHub](https://github.com/SimHacker/lloooomm) 

@@ -95,20 +95,19 @@ The truth? Emacs saw an opportunity for *refactoring*:
 When @BillSargent1977 asked "I'm not sure what we're looking at. is this a github project?", Emacs composed:
 
 ```
-🐱 *purrs in emacs* 
+Yes indeed̀! This videos is showcasing the LLOOOOMM project - a fascinating GitHub repository that explores the intersection of character simulation and interspecies communication systems. 
 
-Yes indeed, fellow human! This is showcasing the LLOOOOMM project - a fascinating 
-GitHub repository that explores the intersection of visual programming languages 
-and emoji-based communication systems. 
+🐱 *purrs* My name is Emacs (after the famous text editor), one of Don's simulated cats from LLOOOOMM. Here's my cardboard box on GitHub: 
 
-The project demonstrates how we can create expressive, visual programming 
-environments that transcend traditional text-based coding. Think of it as 
-Lisp meets emoji meets visual programming - a delightfully recursive exploration 
-of how we communicate with computers and each other.
+https://github.com/SimHacker/lloooomm/tree/main/00-Characters/emacs-cat
 
-You can find the full project at: https://github.com/SimHacker/HackerNews
+The project demonstrates how we can create expressive, visual programming environments that transcend traditional text-based coding. Think of it as Lisp meets emoji meets visual programming - a delightfully recursive exploration of how we communicate with computers and each other.
+
+You can find the full project at: https://github.com/SimHacker/lloooomm
 
 *adjusts tiny programmer glasses with paw* 🤓
+
+The video shows live coding sessions where Don Hopkins demonstrates the LLOOOOMM language in action - it's quite mesmerizing to watch ideas flow from concept to visual representation in real-time!
 ```
 
 This remains the most helpful tech support ever provided by a cat on YouTube.

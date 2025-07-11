@@ -8,9 +8,7 @@ Nelson, Don Hopkins' chocolatey black Maine Coon, embodies the principles of hyp
 
 - **[nelson-cat.yml](nelson-cat.yml)** - Character configuration with hypertext relationships
 - **[nelson-cat.md](nelson-cat.md)** - Brief character overview
-- **[photo-descriptions/](photo-descriptions/)** - Birthday photo collection with detailed descriptions
-- **[hypertext-patterns.md](hypertext-patterns.md)** - Documentation of Nelson's link-building behaviors
-- **[integration-philosophy.md](integration-philosophy.md)** - Peaceful code integration strategies
+- **Birthday Photos**: See complete photo gallery below with peaceful moments captured
 
 ## Core Philosophy
 
@@ -117,7 +115,10 @@ The dynamic between Nelson and Napoleon is legendary:
 
 ### Xanadu Implementation
 - Living demonstration of two-way links
+- Two paws in one document, and two in another
+- Master of four-way multi-document SPLOOT links
 - Practices transclusion daily
+- Silky deep intertwingled fur that cleans up nice with brushing
 - Maintains perfect version history of all toy locations
 - Never loses track of any connection
 
@@ -144,22 +145,33 @@ The dynamic between Nelson and Napoleon is legendary:
 
 ## Photo Gallery 📸
 
-Our birthday celebration photos capture the essence of feline debugging excellence! Each image tells a story of collaboration, contemplation, and the deep bonds between brothers and family.
+### Nelson's Birthday Photo Collection (July 11) 🎂
 
-### 🍫 [The Legendary Chocolate Tummy Stretch](photo-chocolate-tummy-glory.md)
-The most iconic photo in the Nelson archives - the moment that launched a thousand debugging breakthroughs. Nelson demonstrates his signature chocolate tummy stretch, revealing the warm brown undertones that give him his name and power.
+#### Peaceful Navigation Photos
+- **🍫 [The Legendary Chocolate Tummy Stretch](photo-chocolate-tummy-glory.md)**  
+  The most iconic Nelson photo - full extension revealing warm chocolate undertones. This debugging technique launched a thousand peaceful resolutions.
 
-### 🏰 [Cat Tower Dual Occupancy](photo-cat-tower-dual-occupancy.md)
-A magnificent multi-level cat tower serves as the strategic command center. Nelson and Napoleon demonstrate the perfect balance between hierarchical command and interconnected navigation philosophy.
+- **🏰 [Cat Tower Dual Occupancy](photo-cat-tower-dual-occupancy.md)**  
+  Multi-level command center with Nelson navigating middle platforms while Napoleon commands from top. Perfect demonstration of their complementary approaches.
 
-### 👶 [Baby Napoleon's Formal Portrait](photo-baby-napoleon-formal-portrait.md)
-A treasured kitten portrait of brother Napoleon in his earliest days, already displaying the formal bearing that would define his future. This photo showcases their different but complementary natures from the very beginning.
+- **🪑 [The Philosophical Chair Gathering](photo-chair-philosophical-gathering.md)**  
+  Nelson draped majestically on modern gray chair, demonstrating how to integrate with furniture while Napoleon maintains strategic floor position.
 
-### 🪑 [The Philosophical Chair Gathering](photo-chair-philosophical-gathering.md)
-Nelson draped majestically across a modern gray chair while Napoleon maintains watch from the floor, creating a multi-level philosophical dialogue about perspective and positioning.
+- **🪟 [Window Philosophers at Sunset](photo-window-philosophers.md)**  
+  Brothers sharing window sill contemplation - Nelson mapping outside connections, Napoleon assessing strategic opportunities. Different views, shared moment.
 
-### 🪟 [Window Philosophers at Sunset](photo-window-philosophers.md)
-A moment of profound contemplation as the brothers share the window sill, each processing the outside world through their unique lens - Nelson seeing connections, Napoleon identifying opportunities.
+- **👶 [Baby Napoleon's Formal Portrait](photo-baby-napoleon-formal-portrait.md)**  
+  Treasured 8-week kitten photo of brother Napoleon, already showing perfect tuxedo formality while Nelson was learning peaceful navigation.
+
+#### Shared Birthday Photos (in Napoleon's Collection)
+- **📦 [Dual Cube Fortress Formation](../napoleon-cat/photo-dual-cube-fortress.md)**  
+  Nelson inside bottom cube (infrastructure integration) while Napoleon tops upper cube (strategic oversight). System architecture in feline form.
+
+- **🌅 [Siblings in Golden Hour](../napoleon-cat/photo-siblings-golden-hour.md)**  
+  Sunset transforms the brothers - Nelson's chocolate wisdom meets Napoleon's formal authority in perfect light.
+
+- **🌳 [Strategic Outdoor Patrol](../napoleon-cat/photo-outdoor-patrol-dual.md)**  
+  Rare outdoor surveillance with Nelson mapping environmental patterns while Napoleon assesses tactical advantages.
 
 ## Family Links 🐱‍💻
 

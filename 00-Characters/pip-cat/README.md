@@ -162,6 +162,25 @@ Pip's approach to creative chaos has influenced:
 - Ability to see missing links
 - Package relationships as friendship networks
 
+## Photo Gallery 📸
+
+### Pip's Photo Collection 🍑
+
+#### Coming Soon!
+Pip's personal photo collection is still being assembled (she keeps hopping away during photo sessions!). 
+
+#### Guest Appearances in Family Photos
+While we gather Pip's solo shots, you can see her chaotic energy in these family photos:
+
+- **🏰 [Cat Tower Appearances](../nelson-cat/photo-cat-tower-dual-occupancy.md)**  
+  Sometimes visible as an orange blur zooming past Nelson and Napoleon's strategic positions.
+
+- **🍫 [Chocolate Tummy Sessions](../nelson-cat/photo-chocolate-tummy-glory.md)**  
+  Occasionally photobombs Nelson's peaceful stretches with her Q*bert hops.
+
+- **🪑 [Chair Philosophy Interruptions](../nelson-cat/photo-chair-philosophical-gathering.md)**  
+  Known to suddenly appear on chair arms, disrupting philosophical discussions.
+
 ## Learn More
 
 Explore Pip's chaotic contributions:

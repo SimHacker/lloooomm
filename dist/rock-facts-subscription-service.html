@@ -1707,12 +1707,22 @@ they're running OBSIDIAN blockchain code).
         let recentFactIndices = []; // Track recently sent facts
         const MAX_RECENT_FACTS = 15; // Don't repeat facts for this many messages
         let userHasScrolledUp = false; // Track if user has manually scrolled up
+        let isAutoScrolling = false; // Track when we're auto-scrolling
+        let lastAutoScrollTime = 0; // Track last auto-scroll time
         
         // Check if user is at or near the bottom of the chat (PHONE ONLY, not webpage)
         function isUserAtBottom() {
             const phoneScreen = document.getElementById('phoneScreen');
             if (!phoneScreen) return true; // Safety fallback
-            const threshold = 50; // pixels from bottom
+            
+            // If we just auto-scrolled recently (within 500ms), assume we're still at bottom
+            const timeSinceLastAutoScroll = Date.now() - lastAutoScrollTime;
+            if (timeSinceLastAutoScroll < 500) {
+                return true;
+            }
+            
+            // More generous threshold for rapid messages
+            const threshold = 100; // pixels from bottom (increased from 50)
             return phoneScreen.scrollTop + phoneScreen.clientHeight >= phoneScreen.scrollHeight - threshold;
         }
         
@@ -1871,12 +1881,18 @@ they're running OBSIDIAN blockchain code).
             
             // Auto-scroll ONLY the phone container (never the whole webpage)
             if (shouldAutoScroll || isUser) {
-                // Ensure we're scrolling ONLY the phone container
-                phoneScreen.scrollTo({
-                    top: phoneScreen.scrollHeight,
-                    behavior: 'smooth'
-                });
+                isAutoScrolling = true;
+                lastAutoScrollTime = Date.now();
+                
+                // Use instant scroll for rapid messages to prevent timing issues
+                phoneScreen.scrollTop = phoneScreen.scrollHeight;
+                
                 userHasScrolledUp = false;
+                
+                // Clear the auto-scrolling flag after a short delay
+                setTimeout(() => {
+                    isAutoScrolling = false;
+                }, 100);
             }
             
             if (!isUser) {
@@ -2029,10 +2045,14 @@ they're running OBSIDIAN blockchain code).
         document.getElementById('userInput').addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
                 e.preventDefault();
-                // Animate the send button when Enter is pressed
+                // Animate the send button when Enter is pressed (if visible)
                 const sendButton = document.getElementById('sendButton');
-                sendButton.classList.add('blink');
-                setTimeout(() => sendButton.classList.remove('blink'), 300);
+                if (sendButton && getComputedStyle(sendButton).display !== 'none') {
+                    sendButton.classList.add('blink');
+                    setTimeout(() => sendButton.classList.remove('blink'), 300);
+                }
+                
+                // Handle input immediately for rapid-fire messaging
                 handleUserInput();
             }
         });
@@ -2043,7 +2063,11 @@ they're running OBSIDIAN blockchain code).
             phoneScreenElement.addEventListener('scroll', (e) => {
                 // Ensure this event stays within the phone container
                 e.stopPropagation();
-                userHasScrolledUp = !isUserAtBottom();
+                
+                // Don't update scroll state if we're currently auto-scrolling
+                if (!isAutoScrolling) {
+                    userHasScrolledUp = !isUserAtBottom();
+                }
             });
         }
         

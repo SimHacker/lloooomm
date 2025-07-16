@@ -142,7 +142,7 @@ they're running OBSIDIAN blockchain code).
         
         .header {
             background: rgba(139, 69, 19, 0.9);
-            padding: 30px;
+            padding: 15px 30px 12px 30px;
             text-align: center;
             box-shadow: 0 4px 20px rgba(0,0,0,0.5);
             position: relative;
@@ -150,11 +150,12 @@ they're running OBSIDIAN blockchain code).
         }
         
         .header h1 {
-            margin: 0;
-            font-size: 48px;
+            margin: 0 0 5px 0;
+            font-size: 36px;
             color: #FFD700;
             text-shadow: 3px 3px 6px rgba(0,0,0,0.7);
             animation: glow 2s ease-in-out infinite alternate;
+            line-height: 1.1;
         }
         
         @keyframes glow {
@@ -163,9 +164,10 @@ they're running OBSIDIAN blockchain code).
         }
         
         .tagline {
-            font-size: 20px;
+            font-size: 16px;
             color: #DDA0DD;
-            margin-bottom: 30px;
+            margin-bottom: 8px;
+            line-height: 1.2;
         }
         
         .disclaimer-header {
@@ -173,8 +175,9 @@ they're running OBSIDIAN blockchain code).
             font-style: italic;
             font-weight: bold;
             color: white;
-            font-size: 16px;
-            margin-top: 10px;
+            font-size: 14px;
+            margin-top: 5px;
+            line-height: 1.2;
         }
         
         .disclaimer-header a {
@@ -189,28 +192,190 @@ they're running OBSIDIAN blockchain code).
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: 15px 20px;
         }
         
         .phone-mockup {
             background: #1C1C1C;
             border-radius: 30px;
-            padding: 20px;
-            max-width: 400px;
-            margin: 40px auto;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+            padding: 15px;
+            width: 600px;
+            height: 380px;
+            margin: 15px auto;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.8);
             border: 2px solid #444;
+            display: flex;
+            flex-direction: column;
         }
         
         .phone-screen {
             background: #F5F5F5;
             border-radius: 20px;
-            padding: 20px;
-            min-height: 600px;
-            max-height: 600px;
-            overflow-y: auto;
+            padding: 0;
+            flex: 1;
             position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 0; /* Important for flex child to shrink */
+        }
+        
+        .messages-area {
+            flex: 1;
+            overflow-y: auto;
             overflow-x: hidden;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        /* Update message styling for better mobile experience */
+        .message {
+            padding: 12px 16px;
+            margin: 8px 0;
+            border-radius: 18px;
+            max-width: 85%;
+            word-wrap: break-word;
+            line-height: 1.4;
+        }
+        
+        .message.user {
+            background: #007AFF;
+            color: white;
+            margin-left: auto;
+            margin-right: 8px;
+        }
+        
+        .message.rock-facts {
+            background: white;
+            color: #333;
+            margin-right: auto;
+            margin-left: 8px;
+            border: 1px solid #e5e5e5;
+        }
+        
+        /* Mobile responsiveness - landscape design */
+        @media (max-width: 768px) {
+            .phone-mockup {
+                width: 95vw;
+                max-width: 600px;
+                height: 60vh;
+                min-height: 300px;
+                margin: 10px auto;
+                padding: 12px;
+            }
+            
+            .messages-area {
+                padding: 12px;
+            }
+            
+            .phone-input-area {
+                padding: 8px;
+                border-radius: 0 0 15px 15px;
+            }
+            
+            .phone-text-input {
+                font-size: 16px; /* Prevent zoom on iOS */
+            }
+            
+            .header h1 {
+                font-size: 28px;
+            }
+            
+            .tagline {
+                font-size: 14px;
+            }
+        }
+        
+        @media (max-width: 640px) {
+            .phone-mockup {
+                width: 98vw;
+                height: 50vh;
+                min-height: 280px;
+                margin: 8px auto;
+                padding: 10px;
+                border-radius: 20px;
+            }
+            
+            .messages-area {
+                padding: 10px;
+            }
+            
+            .phone-input-area {
+                padding: 6px;
+                gap: 8px;
+            }
+            
+            .phone-text-input {
+                font-size: 16px;
+                padding: 8px 12px;
+            }
+            
+            .send-button {
+                width: 60px;
+                height: 32px;
+                font-size: 13px;
+            }
+            
+            .message {
+                padding: 8px 12px;
+                margin: 4px 0;
+                font-size: 14px;
+                max-width: 88%;
+            }
+            
+            .header h1 {
+                font-size: 24px;
+            }
+            
+            .container {
+                padding: 8px 15px;
+            }
+        }
+        
+        /* Very small screens */
+        @media (max-width: 480px) {
+            .phone-mockup {
+                width: 99vw;
+                height: 45vh;
+                min-height: 250px;
+                margin: 5px auto;
+                padding: 8px;
+            }
+            
+            .messages-area {
+                padding: 8px;
+            }
+            
+            .phone-input-area {
+                padding: 4px;
+                gap: 6px;
+            }
+            
+            .send-button {
+                width: 50px;
+                height: 28px;
+                font-size: 11px;
+            }
+            
+            .message {
+                padding: 6px 10px;
+                font-size: 13px;
+                max-width: 90%;
+            }
+            
+            .header {
+                padding: 10px 20px 8px 20px;
+            }
+            
+            .header h1 {
+                font-size: 20px;
+            }
+            
+            .tagline {
+                font-size: 12px;
+            }
         }
         
         .phone-input-area {
@@ -221,6 +386,8 @@ they're running OBSIDIAN blockchain code).
             gap: 10px;
             align-items: center;
             border-radius: 0 0 20px 20px;
+            flex-shrink: 0; /* Don't let input area shrink */
+            margin-top: auto; /* Push to bottom */
         }
         
         .phone-text-input {
@@ -498,12 +665,14 @@ they're running OBSIDIAN blockchain code).
     <div class="container">
         <!-- Phone Mockup showing the prank -->
         <div class="phone-mockup">
-            <div class="phone-screen" id="phoneScreen">
-                <!-- ... existing code ... -->
-            </div>
-            <div class="phone-input-area">
-                <input type="text" id="userInput" placeholder="Type here..." class="phone-text-input">
-                <button id="sendButton" class="send-button">SEND</button>
+            <div class="phone-screen">
+                <div class="messages-area" id="phoneScreen">
+                    <!-- Messages will appear here -->
+                </div>
+                <div class="phone-input-area">
+                    <input type="text" id="userInput" placeholder="Type here..." class="phone-text-input">
+                    <button id="sendButton" class="send-button">SEND</button>
+                </div>
             </div>
         </div>
         
@@ -1259,6 +1428,222 @@ they're running OBSIDIAN blockchain code).
             {
                 text: "Congratulations! You've been selected for our premium Rock Facts NFT! Just kidding, we only do honest scams here. PYRITE is fool's gold, like Bitcoin! 🏆",
                 link: { label: "Pyrite (fool's gold)", url: "https://en.wikipedia.org/wiki/Pyrite" }
+            },
+            {
+                text: "BERYL (2007) helps with concurrent programming! Did you know beryl includes emeralds and aquamarine? More valuable than your DeFi portfolio! 💚",
+                link: { label: "Beryl mineral family", url: "https://en.wikipedia.org/wiki/Beryl" }
+            },
+            {
+                text: "Rock Fact: Stalactites hang tight from cave ceilings - formed by dripping minerals over millennia! Brad's ideas also crystallize slowly but last forever! 🦇",
+                link: { label: "Cave formations", url: "https://en.wikipedia.org/wiki/Stalactite" }
+            },
+            {
+                text: "TOPAZ (1991) handles interactive 3D graphics! Fun fact: Blue topaz is often irradiated to achieve its color - like how crypto values are artificially inflated! 💙",
+                link: { label: "Topaz treatments", url: "https://en.wikipedia.org/wiki/Topaz#Treatments" }
+            },
+            {
+                text: "Brad's TURQUOISE (1992) managed distributed systems! Turquoise was considered sacred by ancient civilizations - unlike crypto which is just plain cursed! 🏺",
+                link: { label: "Turquoise history", url: "https://en.wikipedia.org/wiki/Turquoise#Cultural_history" }
+            },
+            {
+                text: "Geological Fact: The Rock Cycle shows how rocks transform - igneous → sedimentary → metamorphic! Like Brad's career: student → professor → legend! 🔄",
+                link: { label: "Rock cycle diagram", url: "https://en.wikipedia.org/wiki/Rock_cycle" }
+            },
+            {
+                text: "MICA (1995) dealt with multimedia! Did you know mica can be split into sheets thinner than paper? More transparent than crypto accounting! 📄",
+                link: { label: "Mica properties", url: "https://en.wikipedia.org/wiki/Mica#Properties" }
+            },
+            {
+                text: "Rock wisdom: Basalt forms when lava hits water and cools rapidly! Brad's debugging happens just as fast when code hits reality! 🌊🔥",
+                link: { label: "Basalt formation", url: "https://en.wikipedia.org/wiki/Basalt#Formation" }
+            },
+            {
+                text: "CITRINE (1998) provided intelligent assistance! Natural citrine is rare - most is heat-treated amethyst! Like 'organic' crypto that's really just rebranded speculation! 💛",
+                link: { label: "Citrine vs treated amethyst", url: "https://en.wikipedia.org/wiki/Citrine#Heat_treatment" }
+            },
+            {
+                text: "Breaking News: Scientists discover crypto investors have the attention span of sedimentary rock formation! Meanwhile, SLATE (1999) improves code structure! 📰",
+                link: { label: "Slate metamorphism", url: "https://en.wikipedia.org/wiki/Slate#Formation" }
+            },
+            {
+                text: "Brad's TALISMAN (1986) was an early windowing system! Real talismans were believed to bring good luck - crypto talismans just bring bankruptcy! 🧿",
+                link: { label: "Talisman beliefs", url: "https://en.wikipedia.org/wiki/Talisman" }
+            },
+            {
+                text: "Fun Fact: Quartzite forms when sandstone metamorphoses under pressure! Brad's students also transform under pressure - into better programmers! ⚡",
+                link: { label: "Quartzite formation", url: "https://en.wikipedia.org/wiki/Quartzite#Formation" }
+            },
+            {
+                text: "GLASS (1985) managed overlapping windows! Volcanic glass (obsidian) was used for tools by ancient humans - more useful than blockchain! 🪟",
+                link: { label: "Obsidian tools", url: "https://en.wikipedia.org/wiki/Obsidian_use_in_Mesoamerica" }
+            },
+            {
+                text: "Geology 101: Feldspar makes up 60% of Earth's crust! Brad's FELDSPAR (2010) makes up 60% of API documentation tools! 🌍",
+                link: { label: "Feldspar abundance", url: "https://en.wikipedia.org/wiki/Feldspar#Occurrence" }
+            },
+            {
+                text: "Rock fact: Gypsum is so soft you can scratch it with your fingernail! Unlike crypto culture, which is hard to scratch... because it's all surface! 💅",
+                link: { label: "Gypsum hardness", url: "https://en.wikipedia.org/wiki/Gypsum#Physical_properties" }
+            },
+            {
+                text: "GARNET (1989) built user interfaces! Garnets have been used in jewelry for 5000 years - longer than any crypto will survive! 💎",
+                link: { label: "Garnet in antiquity", url: "https://en.wikipedia.org/wiki/Garnet#History" }
+            },
+            {
+                text: "Breaking: Local crypto investor discovers rocks have better long-term value retention! Brad's CRYSTAL (1993) manages constraints with crystalline precision! 🏛️",
+                link: { label: "Investment stones", url: "https://en.wikipedia.org/wiki/Gemstone#Investment" }
+            },
+            {
+                text: "Did you know? Magnetite is naturally magnetic! It attracts iron particles - unlike crypto which repels financial stability! 🧲",
+                link: { label: "Magnetite properties", url: "https://en.wikipedia.org/wiki/Magnetite#Magnetic_properties" }
+            },
+            {
+                text: "OPAL (1987) handled distributed computing! Real opals contain water and can crack if dried out - like crypto portfolios in bear markets! 🌈",
+                link: { label: "Opal composition", url: "https://en.wikipedia.org/wiki/Opal#Formation_and_composition" }
+            },
+            {
+                text: "Cave fact: Flowstone forms as mineral-rich water flows over surfaces! Brad's FLOWSTONE (imaginary) would handle data streams perfectly! 🏞️",
+                link: { label: "Flowstone formation", url: "https://en.wikipedia.org/wiki/Flowstone" }
+            },
+            {
+                text: "AGATE (1988) supported multi-user interfaces! Agates form in volcanic rock cavities over millions of years - still faster than Ethereum transactions! 🌋",
+                link: { label: "Agate formation", url: "https://en.wikipedia.org/wiki/Agate#Formation" }
+            },
+            {
+                text: "Rock wisdom: Schist forms when existing rocks get squeezed and heated! Like how Brad's debugging process transforms spaghetti code into art! 🎨",
+                link: { label: "Schist metamorphism", url: "https://en.wikipedia.org/wiki/Schist#Formation" }
+            },
+            {
+                text: "PERIDOT (1989) created graphical programming tools! Peridot is the gem form of olivine - found in meteorites and crypto investor tears! ☄️",
+                link: { label: "Peridot sources", url: "https://en.wikipedia.org/wiki/Peridot#Sources" }
+            },
+            {
+                text: "Geological alert: Limestone dissolves in acid rain! Crypto portfolios dissolve in any kind of rain! Brad's solutions are pH-balanced! ☔",
+                link: { label: "Acid rain effects", url: "https://en.wikipedia.org/wiki/Acid_rain#Effects_on_materials" }
+            },
+            {
+                text: "Brad's ORE (1984) managed resources! Fun fact: Hematite ore is the main source of iron - more useful than mining virtual coins! ⛏️",
+                link: { label: "Iron ore mining", url: "https://en.wikipedia.org/wiki/Iron_ore" }
+            },
+            {
+                text: "TOURMALINE (1986) handled user interface design! Tourmaline exhibits pyroelectricity - it generates electricity when heated! Unlike crypto which loses electricity when heated! ⚡",
+                link: { label: "Tourmaline pyroelectricity", url: "https://en.wikipedia.org/wiki/Tourmaline#Pyroelectricity_and_piezoelectricity" }
+            },
+            {
+                text: "Rock fact: Shale forms from compressed mud and clay! Most blockchains are built on compressed hype and FOMO - much less stable! 🏗️",
+                link: { label: "Shale formation", url: "https://en.wikipedia.org/wiki/Shale#Formation" }
+            },
+            {
+                text: "GOLD (1983) was an early constraint system! Actual gold has been valuable for 4000 years - crypto gold has been valuable for 4 minutes! 👑",
+                link: { label: "Gold in history", url: "https://en.wikipedia.org/wiki/Gold#History" }
+            },
+            {
+                text: "Mineralogy 101: Malachite's green color comes from copper! Brad's copper-based debugging turns code green with envy! 🐍",
+                link: { label: "Malachite color", url: "https://en.wikipedia.org/wiki/Malachite#Description" }
+            },
+            {
+                text: "CORAL (1990) supported collaborative environments! Real coral reefs are built by tiny organisms over centuries - like Brad's research community! 🪸",
+                link: { label: "Coral reef building", url: "https://en.wikipedia.org/wiki/Coral_reef#Formation" }
+            },
+            {
+                text: "Breaking: Geologists confirm that rocks have better fundamentals than most cryptocurrencies! Meanwhile, JADE continues building interfaces! 💚",
+                link: { label: "Fundamental analysis", url: "https://en.wikipedia.org/wiki/Fundamental_analysis" }
+            },
+            {
+                text: "Rock science: Conglomerate contains rounded pebbles - formed by ancient rivers! Brad's code contains polished algorithms - formed by ancient wisdom! 🏞️",
+                link: { label: "Conglomerate rock", url: "https://en.wikipedia.org/wiki/Conglomerate_(geology)" }
+            },
+            {
+                text: "MARQUISE (1984) handled windowing systems! Marquise cut diamonds maximize brilliance through math - unlike crypto math which minimizes brilliance! ✨",
+                link: { label: "Marquise cut", url: "https://en.wikipedia.org/wiki/Diamond_cut#Marquise" }
+            },
+            {
+                text: "Volcanic fact: Obsidian forms when felsic lava cools rapidly! Brad's debugging cools bugs rapidly before they can crystallize into features! 🌋",
+                link: { label: "Felsic lava", url: "https://en.wikipedia.org/wiki/Felsic#Volcanic_rocks" }
+            },
+            {
+                text: "SILK (1982) managed user interfaces! Real silk is produced by silkworms over weeks - crypto 'silk roads' produce arrests over months! 🐛",
+                link: { label: "Silk production", url: "https://en.wikipedia.org/wiki/Silk#Production" }
+            },
+            {
+                text: "Rock wisdom: Gneiss shows beautiful banding from metamorphic pressure! Brad's code shows beautiful structure from academic pressure! 📚",
+                link: { label: "Gneiss banding", url: "https://en.wikipedia.org/wiki/Gneiss#Mineralogy_and_formation" }
+            },
+            {
+                text: "LAPIDARY (1983) cut and polished user interfaces! Real lapidaries cut gems - crypto 'gems' cut your bank account! 💍",
+                link: { label: "Lapidary arts", url: "https://en.wikipedia.org/wiki/Lapidary" }
+            },
+            {
+                text: "Geological bulletin: Sandstone preserves ancient footprints for millions of years! Brad's footprints in HCI will last just as long! 👣",
+                link: { label: "Fossil footprints", url: "https://en.wikipedia.org/wiki/Trace_fossil#Footprints" }
+            },
+            {
+                text: "C32 (1981) was an early constraint language! Named after C32 Fuller's Syndrome - addiction to elegant geometric solutions! Unlike crypto's addiction to ugly financial solutions! 📐",
+                link: { label: "Buckminster Fuller", url: "https://en.wikipedia.org/wiki/Buckminster_Fuller" }
+            },
+            {
+                text: "Rock report: Travertine forms at hot springs from dissolved limestone! Brad's hot takes on programming dissolve misconceptions! ♨️",
+                link: { label: "Travertine formation", url: "https://en.wikipedia.org/wiki/Travertine#Formation" }
+            },
+            {
+                text: "AMULET (1990) created user interface toolkits! Amulets protect against evil - Brad's code protects against bugs! Same energy! 🛡️",
+                link: { label: "Protective amulets", url: "https://en.wikipedia.org/wiki/Amulet#Protective" }
+            },
+            {
+                text: "Fun fact: Hornblende is dark green to black amphibole! It's tougher than most crypto white papers - which are usually transparent! 📄",
+                link: { label: "Hornblende properties", url: "https://en.wikipedia.org/wiki/Hornblende" }
+            },
+            {
+                text: "GAMUT (1985) handled color management! The color gamut is the range of colors displayable - wider than crypto's range of excuses! 🌈",
+                link: { label: "Color gamut", url: "https://en.wikipedia.org/wiki/Gamut" }
+            },
+            {
+                text: "Rock science: Pegmatite contains very large crystals! Brad's very large ideas crystallize into pegmatite-sized innovations! 💎",
+                link: { label: "Pegmatite crystals", url: "https://en.wikipedia.org/wiki/Pegmatite#Crystal_size" }
+            },
+            {
+                text: "Breakthrough discovery: Scientists find that pet rocks have better ROI than most DeFi protocols! Brad approves this message! 🪨",
+                link: { label: "Pet rock ROI", url: "https://en.wikipedia.org/wiki/Pet_Rock" }
+            },
+            {
+                text: "KR (1980) was a knowledge representation language! 'KR' stands for 'Knowledge Representation' - unlike 'HODL' which stands for 'How Obviously Dumb, Loser!' 🧠",
+                link: { label: "Knowledge representation", url: "https://en.wikipedia.org/wiki/Knowledge_representation_and_reasoning" }
+            },
+            {
+                text: "Metamorphic news: Andalusite forms at high temperatures! It's polymorphic with sillimanite and kyanite - more stable than any stablecoin! 🔥",
+                link: { label: "Andalusite polymorphs", url: "https://en.wikipedia.org/wiki/Andalusite#Polymorphism" }
+            },
+            {
+                text: "Brad's research spans 40+ years - longer than the half-life of technetium-99! Meanwhile, crypto projects have the half-life of mayflies! ⏰",
+                link: { label: "Technetium half-life", url: "https://en.wikipedia.org/wiki/Technetium-99" }
+            },
+            {
+                text: "Rock fact: Breccia contains angular fragments - formed by tectonic stress! Brad's code contains elegant fragments - formed by academic stress! 🧩",
+                link: { label: "Breccia formation", url: "https://en.wikipedia.org/wiki/Breccia#Origin" }
+            },
+            {
+                text: "INCENSE (1979) was almost named after a gemstone but Xerox had corporate naming rules! Even in the 70s, corporate killed creativity! 🚫",
+                link: { label: "Corporate naming policies", url: "https://en.wikipedia.org/wiki/Brand_management#Naming" }
+            },
+            {
+                text: "Geological alert: Fool's gold (pyrite) can be worth more than Bitcoin during market crashes! At least pyrite looks like gold! ⚡",
+                link: { label: "Pyrite vs gold", url: "https://en.wikipedia.org/wiki/Pyrite#Confusion_with_gold" }
+            },
+            {
+                text: "Rock wisdom: Dolomite forms when limestone reacts with magnesium-rich water! Brad's wisdom forms when code reacts with real-world problems! 🧪",
+                link: { label: "Dolomitization process", url: "https://en.wikipedia.org/wiki/Dolomite_(rock)#Formation" }
+            },
+            {
+                text: "GILT (multiple versions) shows Brad's dedication to the gold standard! Unlike crypto's dedication to the scam standard! 🏆",
+                link: { label: "Gold standard history", url: "https://en.wikipedia.org/wiki/Gold_standard" }
+            },
+            {
+                text: "Breaking: Local rock collector's portfolio outperforms S&P 500 AND crypto! Diversification includes 40% granite, 30% quartz, 30% common sense! 📈",
+                link: { label: "Alternative investments", url: "https://en.wikipedia.org/wiki/Alternative_investment" }
+            },
+            {
+                text: "Crystallography fact: Minerals have repeating atomic structures! Brad's teaching has repeating successful structures! Unlike crypto's repeating bubble structures! 🔬",
+                link: { label: "Crystal structure", url: "https://en.wikipedia.org/wiki/Crystal_structure#Lattice_systems" }
             }
         ];
         
@@ -1268,6 +1653,85 @@ they're running OBSIDIAN blockchain code).
         let autoMessageInterval = null;
         let recentFactIndices = []; // Track recently sent facts
         const MAX_RECENT_FACTS = 15; // Don't repeat facts for this many messages
+        let userHasScrolledUp = false; // Track if user has manually scrolled up
+        
+        // Check if user is at or near the bottom of the chat (PHONE ONLY, not webpage)
+        function isUserAtBottom() {
+            const phoneScreen = document.getElementById('phoneScreen');
+            if (!phoneScreen) return true; // Safety fallback
+            const threshold = 50; // pixels from bottom
+            return phoneScreen.scrollTop + phoneScreen.clientHeight >= phoneScreen.scrollHeight - threshold;
+        }
+        
+        // Tokenize user input into searchable terms
+        function tokenizeInput(text) {
+            return text.toLowerCase()
+                .replace(/[^\w\s]/g, ' ') // Replace punctuation with spaces
+                .split(/\s+/) // Split on whitespace
+                .filter(token => token.length > 2) // Filter out short words
+                .filter(token => !['the', 'and', 'but', 'for', 'are', 'you', 'all', 'any', 'can', 'had', 'her', 'was', 'one', 'our', 'out', 'day', 'get', 'has', 'him', 'his', 'how', 'man', 'new', 'now', 'old', 'see', 'two', 'way', 'who', 'boy', 'did', 'its', 'let', 'put', 'say', 'she', 'too', 'use'].includes(token)); // Filter common words
+        }
+        
+        // Score a fact based on how many user tokens it contains
+        function scoreFact(fact, userTokens) {
+            const factText = (fact.text + ' ' + (fact.link ? fact.link.label : '')).toLowerCase();
+            let score = 0;
+            
+            for (const token of userTokens) {
+                const regex = new RegExp('\\b' + token.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b', 'gi');
+                const matches = factText.match(regex);
+                if (matches) {
+                    score += matches.length;
+                }
+            }
+            
+            return score;
+        }
+        
+        // Find the best matching fact based on user input
+        function findMatchingFact(userInput) {
+            const tokens = tokenizeInput(userInput);
+            if (tokens.length === 0) {
+                return getRandomUnrepeatedFact();
+            }
+            
+            // Score all facts
+            const scoredFacts = rockFacts.map((fact, index) => ({
+                fact,
+                index,
+                score: scoreFact(fact, tokens),
+                isRecent: recentFactIndices.includes(index)
+            })).filter(item => item.score > 0); // Only keep facts with matches
+            
+            if (scoredFacts.length === 0) {
+                return getRandomUnrepeatedFact();
+            }
+            
+            // First try non-recent matches
+            const nonRecentMatches = scoredFacts.filter(item => !item.isRecent);
+            if (nonRecentMatches.length > 0) {
+                const randomMatch = nonRecentMatches[Math.floor(Math.random() * nonRecentMatches.length)];
+                recentFactIndices.push(randomMatch.index);
+                
+                // Keep the recent list from growing too large
+                if (recentFactIndices.length > MAX_RECENT_FACTS) {
+                    recentFactIndices.shift();
+                }
+                
+                return randomMatch.fact;
+            }
+            
+            // If no non-recent matches, use any match
+            const randomMatch = scoredFacts[Math.floor(Math.random() * scoredFacts.length)];
+            recentFactIndices.push(randomMatch.index);
+            
+            // Keep the recent list from growing too large
+            if (recentFactIndices.length > MAX_RECENT_FACTS) {
+                recentFactIndices.shift();
+            }
+            
+            return randomMatch.fact;
+        }
         
         // Get a random fact that hasn't been sent recently
         function getRandomUnrepeatedFact() {
@@ -1330,6 +1794,13 @@ they're running OBSIDIAN blockchain code).
         
         function addMessage(content, className, isUser = false) {
             const phoneScreen = document.getElementById('phoneScreen');
+            if (!phoneScreen) {
+                console.error('Phone screen element not found!');
+                return;
+            }
+            
+            const shouldAutoScroll = isUserAtBottom(); // Check before adding message
+            
             const message = document.createElement('div');
             message.className = `message ${className}`;
             
@@ -1344,15 +1815,24 @@ they're running OBSIDIAN blockchain code).
             }
             
             phoneScreen.appendChild(message);
-            phoneScreen.scrollTop = phoneScreen.scrollHeight;
+            
+            // Auto-scroll ONLY the phone container (never the whole webpage)
+            if (shouldAutoScroll || isUser) {
+                // Ensure we're scrolling ONLY the phone container
+                phoneScreen.scrollTo({
+                    top: phoneScreen.scrollHeight,
+                    behavior: 'smooth'
+                });
+                userHasScrolledUp = false;
+            }
             
             if (!isUser) {
                 playSound('receive');
             }
         }
         
-        function sendRandomFact() {
-            const fact = getRandomUnrepeatedFact();
+        function sendRandomFact(userInput = null) {
+            const fact = userInput ? findMatchingFact(userInput) : getRandomUnrepeatedFact();
             addMessage(fact, 'rock-facts');
         }
         
@@ -1403,25 +1883,58 @@ they're running OBSIDIAN blockchain code).
                             "Cancellation requires proof of work. Mine 50 Bitcoin first. Here's another fact while you mine!"
                         ];
                         addMessage(responses[Math.floor(Math.random() * responses.length)], 'rock-facts');
-                        setTimeout(sendRandomFact, 1500);
+                        setTimeout(() => sendRandomFact(userText), 1500);
                     } else if (userLower.includes('help')) {
                         addMessage("Rock Facts Help: To stop receiving facts, simply evolve beyond the need for knowledge. Until then, enjoy!", 'rock-facts');
-                        setTimeout(sendRandomFact, 1500);
+                        setTimeout(() => sendRandomFact(userText), 1500);
                     } else if (userText.match(/^[a-z0-9]+$/i) && userText.length > 15) {
                         // They tried to type the cancellation code
                         addMessage("Almost correct! You were only " + Math.floor(Math.random() * 1000) + " characters off. Try again! Meanwhile...", 'rock-facts');
-                        setTimeout(sendRandomFact, 1500);
+                        setTimeout(() => sendRandomFact(userText), 1500);
                     } else {
-                        // Random responses to any input
-                        const responses = [
-                            "Interesting! That reminds me of this rock fact:",
-                            "I'll forward that to Brad's crystals for processing. Meanwhile:",
-                            "Message received by Chlorophyll Collins (Brad's vine). It says to tell you:",
-                            "Your message has been compressed into sedimentary layers. Here's your receipt:",
-                            "MEOW! Oh wait, wrong service. Here's a rock fact instead:"
-                        ];
-                        addMessage(responses[Math.floor(Math.random() * responses.length)], 'rock-facts');
-                        setTimeout(sendRandomFact, 1500);
+                        // Try to find a matching fact first
+                        const tokens = tokenizeInput(userText);
+                        if (tokens.length > 0) {
+                            // Check if we can find relevant facts
+                            const scoredFacts = rockFacts.map((fact, index) => ({
+                                score: scoreFact(fact, tokens),
+                                isRecent: recentFactIndices.includes(index)
+                            })).filter(item => item.score > 0);
+                            
+                            if (scoredFacts.length > 0) {
+                                // Found matching facts, use intelligent response
+                                const responses = [
+                                    "Interesting! That reminds me of this rock fact:",
+                                    "I'll forward that to Brad's crystals for processing. They found this:",
+                                    "Message received by Chlorophyll Collins (Brad's vine). It says to tell you:",
+                                    "Your message has been compressed into sedimentary layers. Here's your geological match:",
+                                    "Perfect! I found exactly what you're looking for:"
+                                ];
+                                addMessage(responses[Math.floor(Math.random() * responses.length)], 'rock-facts');
+                                setTimeout(() => sendRandomFact(userText), 1500);
+                            } else {
+                                // No matches found, use random response
+                                const responses = [
+                                    "That's fascinating! Here's a random rock fact:",
+                                    "I couldn't find that in my geological database, but here's something else:",
+                                    "MEOW! Oh wait, wrong service. Here's a rock fact instead:",
+                                    "Processing your request through Brad's crystals... meanwhile:",
+                                    "No matches found, but the rocks whisper this to you:"
+                                ];
+                                addMessage(responses[Math.floor(Math.random() * responses.length)], 'rock-facts');
+                                setTimeout(() => sendRandomFact(), 1500);
+                            }
+                        } else {
+                            // No meaningful tokens, random response
+                            const responses = [
+                                "Interesting! Here's a rock fact:",
+                                "MEOW! Oh wait, wrong service. Here's a rock fact instead:",
+                                "Message received. Here's your receipt:",
+                                "The crystals have spoken:"
+                            ];
+                            addMessage(responses[Math.floor(Math.random() * responses.length)], 'rock-facts');
+                            setTimeout(() => sendRandomFact(), 1500);
+                        }
                     }
                 }, 1000);
             }
@@ -1471,6 +1984,16 @@ they're running OBSIDIAN blockchain code).
             }
         });
         
+        // Track user scroll behavior (PHONE CONTAINER ONLY)
+        const phoneScreenElement = document.getElementById('phoneScreen');
+        if (phoneScreenElement) {
+            phoneScreenElement.addEventListener('scroll', (e) => {
+                // Ensure this event stays within the phone container
+                e.stopPropagation();
+                userHasScrolledUp = !isUserAtBottom();
+            });
+        }
+        
         // Subscribe button functionality
         
         // Add falling crystals
@@ -1501,7 +2024,19 @@ they're running OBSIDIAN blockchain code).
         
         // Focus input on page load and send initial unsolicited message
         window.addEventListener('load', () => {
-            document.getElementById('userInput').focus();
+            // Prevent any accidental document scrolling
+            document.body.style.overflow = 'visible';
+            document.documentElement.style.overflow = 'visible';
+            
+            // Store current scroll position to prevent unwanted scrolling
+            const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const currentScrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+            
+            // Focus input (user wants focus, landscape mode keeps it visible)
+            const userInput = document.getElementById('userInput');
+            if (userInput) {
+                userInput.focus();
+            }
             
             // Send initial unsolicited message after 1 second
             setTimeout(() => {

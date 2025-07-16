@@ -219,7 +219,7 @@ Under Preston's guidance, Loading Spinner Comedians™ revolutionized the wait-t
 - **ENTERPRISE**: Custom company roasts during boot-up
 - **QUANTUM**: Comedians that finish jokes before they start
 
-**The Stranger's Prophecy**: By 2024, loading screens become so entertaining that people deliberately slow their internet. Netflix adds "Slow Mode." A loading bar named "Gerald" wins the 2045 Nobel Prize in Literature.
+**The Stranger's Prophecy**: By 2027, loading screens become so entertaining that people deliberately slow their internet. Netflix adds "Slow Mode." A loading bar named "Gerald" wins the 2045 Nobel Prize in Literature.
 
 **Myers' Business Analysis**: *"Preston has created the first UI element that users actively want to see more of. My research showed people tolerate progress bars - Preston's innovation makes them desire them. It's the ultimate validation of progress bar psychology."*
 
